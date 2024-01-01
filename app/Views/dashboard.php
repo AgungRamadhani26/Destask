@@ -84,10 +84,10 @@
                 <div class="body_card">
                     <div class="row">
                         <div class="col-10">
-                            <button type="button" class="btn btn-primary btn-sm me-3 ms-5"><i class="bi bi-journal-plus"></i> Pekerjaan Baru</button>
-                            <button type="button" class="btn btn-success btn-sm me-3"><i class="bi bi-database-add"></i> Import Pekerjaan</button>
-                            <button type="button" class="btn btn-info btn-sm me-3"><i class="bi bi-question-diamond"></i> Detail Pekerjaan</button>
-                            <button type="button" class="btn btn-warning btn-sm"><i class="bi bi-download"></i> Download Pekerjaan</button>
+                            <button type="button" class="btn btn-primary btn-sm ms-5"><i class="bi bi-journal-plus"></i> Pekerjaan Baru</button>
+                            <button type="button" class="btn btn-success btn-sm ms-5"><i class="bi bi-database-add"></i> Import Pekerjaan</button>
+                            <button type="button" class="btn btn-info btn-sm ms-5"><i class="bi bi-question-diamond"></i> Detail Pekerjaan</button>
+                            <button type="button" class="btn btn-warning btn-sm ms-5"><i class=" bi bi-download"></i> Download Pekerjaan</button>
                         </div>
                         <div class="col-2">
                             <select name="" id="">
