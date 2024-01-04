@@ -33,7 +33,7 @@
                                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                     <i class="bi bi-briefcase-fill"></i>
                                 </div>
-                                <div class="ps-3">
+                                <div class="ps-3 pt-2 pb-2">
                                     <h5 class="judul_card">Total Pekerjaan</h5>
                                     <span class="text-danger small fw-bold">25</span>
                                 </div>
@@ -50,8 +50,8 @@
                                     <i class="bi bi-bullseye"></i>
                                 </div>
                                 <div class="ps-3">
-                                    <h5 class="judul_card">Target Tahun ini</h5>
-                                    <span class="text-danger small fw-bold">Rp 200.000.000</span>
+                                    <h5 class="judul_card">Target poin bulan ini</h5>
+                                    <span class="text-danger small fw-bold">600</span>
                                 </div>
                             </div>
                         </div>
@@ -83,13 +83,19 @@
             <div class="card">
                 <div class="body_card">
                     <div class="row">
-                        <div class="col-10">
-                            <button type="button" class="btn btn-primary btn-sm ms-5"><i class="bi bi-journal-plus"></i> Pekerjaan Baru</button>
-                            <button type="button" class="btn btn-success btn-sm ms-5"><i class="bi bi-database-add"></i> Import Pekerjaan</button>
-                            <button type="button" class="btn btn-info btn-sm ms-5"><i class="bi bi-question-diamond"></i> Detail Pekerjaan</button>
-                            <button type="button" class="btn btn-warning btn-sm ms-5"><i class=" bi bi-download"></i> Download Pekerjaan</button>
+                        <div class="col-2 ms-5">
+                            <button type="button" class="btn btn-primary"><i class="bi bi-journal-plus"></i> Pekerjaan Baru</button>
                         </div>
                         <div class="col-2">
+                            <button type="button" class="btn btn-success"><i class="bi bi-database-add"></i> Import Pekerjaan</button>
+                        </div>
+                        <div class="col-2">
+                            <button type="button" class="btn btn-info"><i class="bi bi-question-diamond"></i> Detail Pekerjaan</button>
+                        </div>
+                        <div class="col-2 me-5">
+                            <button type="button" class="btn btn-warning"><i class=" bi bi-download"></i> Download Pekerjaan</button>
+                        </div>
+                        <div class="col-2 ms-5">
                             <select name="" id="">
                                 <option value="opsi1">100</option>
                                 <option value="opsi2">500</option>
@@ -101,7 +107,6 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 </section>
 

@@ -6,7 +6,7 @@
 }
 
 .body_card{
-   padding: 15px 15px 15px 15px;
+   padding: 15px 10px 15px 10px;
 }
 
 .level_user_card .card-icon {
@@ -27,5 +27,11 @@
  .task_selesai_card .card-icon{
    color: #ca2eb8;
    background: #fbddf0;
+ }
+
+ .card_title_firter_poin_harian{
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-bottom: 20px;
  }
  

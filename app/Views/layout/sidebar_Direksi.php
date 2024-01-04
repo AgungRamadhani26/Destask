@@ -25,14 +25,7 @@
       <li class="nav-item">
          <a class="nav-link collapsed" href="">
             <i class="bi bi-bullseye"></i>
-            <span>Target Tahunan</span>
-         </a>
-      </li>
-
-      <li class="nav-item">
-         <a class="nav-link collapsed" href="">
-            <i class="bi bi-bullseye"></i>
-            <span>Target Bulanan</span>
+            <span>Kelola Poin Harian</span>
          </a>
       </li>
 
