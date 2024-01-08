@@ -6,6 +6,6 @@ class Home extends BaseController
 {
     public function index(): string
     {
-        return view('daftar_user');
+        return view('daftar_kategori_task');
     }
 }
