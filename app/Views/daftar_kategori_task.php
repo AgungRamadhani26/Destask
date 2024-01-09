@@ -21,7 +21,7 @@
                         <tr>
                            <th>No</th>
                            <th>Kategori Task</th>
-                           <th>Keterangan</th>
+                           <th>Deskripsi</th>
                            <th>Aksi</th>
                         </tr>
                      </thead>

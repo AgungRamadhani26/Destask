@@ -12,16 +12,16 @@
             <div class="card-body">
                <div class="table-responsive">
                   <h5 class="card-title">Daftar Status Pekerjaan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                     <button type="button" class="btn btn-success" title="Klik untuk menambah data status pekerjaan">
+                     <button type="button" class="btn btn-success" title="Klik untuk menambah data status pekerjaan" data-bs-toggle="modal" data-bs-target="#modaltambah_statuspekerjaan">
                         <i class="ri-add-fill"></i>
                      </button>
                   </h5>
-                  <table class="table table-striped datatable">
+                  <table class="table table-bordered datatable">
                      <thead>
                         <tr>
                            <th>No</th>
                            <th>Status Pekerjaan</th>
-                           <th>Keterangan</th>
+                           <th>Deskripsi</th>
                            <th>Aksi</th>
                         </tr>
                      </thead>
@@ -31,7 +31,7 @@
                            <td>On Progres</td>
                            <td>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis</td>
                            <td>
-                              <button type="button" class="btn btn-warning" title="Klik untuk mengedit"><i class="ri-edit-2-line"></i></button>
+                              <button type="button" class="btn btn-warning" title="Klik untuk mengedit" data-bs-toggle="modal" data-bs-target="#modaledit_statuspekerjaan"><i class="ri-edit-2-line"></i></button>
                               <button type="button" class="btn btn-danger" title="Klik untuk menghapus"><i class="ri-delete-bin-5-line"></i></button>
                            </td>
                         </tr>
@@ -88,5 +88,11 @@
       </div>
    </div>
 </section>
+
+<!--include Modal untuk menambah status pekerjaan baru-->
+<?= $this->include('/modal_add_statuspekerjaan'); ?>
+
+<!--include Modal untuk mengedit data status pekerjaan-->
+<?= $this->include('/modal_edit_statuspekerjaan'); ?>
 
 <?= $this->endSection(); ?>

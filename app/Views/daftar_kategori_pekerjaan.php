@@ -12,16 +12,16 @@
             <div class="card-body">
                <div class="table-responsive">
                   <h5 class="card-title">Daftar Kategori Pekerjaan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                     <button type="button" class="btn btn-success" title="Klik untuk menambah data kategori pekerjaan">
+                     <button type="button" class="btn btn-success" title="Klik untuk menambah data kategori pekerjaan" data-bs-toggle="modal" data-bs-target="#modaltambah_kategoripekerjaan">
                         <i class="ri-add-fill"></i>
                      </button>
                   </h5>
-                  <table class="table table-striped datatable">
+                  <table class="table table-bordered datatable">
                      <thead>
                         <tr>
                            <th>No</th>
                            <th>Kategori Pekerjaan</th>
-                           <th>Keterangan</th>
+                           <th>Deskripsi</th>
                            <th>Aksi</th>
                         </tr>
                      </thead>
@@ -31,7 +31,7 @@
                            <td>High</td>
                            <td>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis</td>
                            <td>
-                              <button type="button" class="btn btn-warning" title="Klik untuk mengedit"><i class="ri-edit-2-line"></i></button>
+                              <button type="button" class="btn btn-warning" title="Klik untuk mengedit" data-bs-toggle="modal" data-bs-target="#modaledit_kategoripekerjaan"><i class="ri-edit-2-line"></i></button>
                               <button type="button" class="btn btn-danger" title="Klik untuk menghapus"><i class="ri-delete-bin-5-line"></i></button>
                            </td>
                         </tr>
@@ -61,5 +61,11 @@
       </div>
    </div>
 </section>
+
+<!--include Modal untuk menambah kategori pekerjaan baru-->
+<?= $this->include('/modal_add_kategoripekerjaan'); ?>
+
+<!--include Modal untuk mengedit data kategori pekerjaan-->
+<?= $this->include('/modal_edit_kategoripekerjaan'); ?>
 
 <?= $this->endSection(); ?>
