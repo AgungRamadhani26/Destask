@@ -49,7 +49,7 @@
                   <div class="card-body">
                      <div class="table-responsive">
                         <h5 class="card-title">Daftar Bobot Task&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                           <button type="button" class="btn btn-success" title="Klik untuk menambah data poin harian">
+                           <button type="button" class="btn btn-success" title="Klik untuk menambah data bobot task" data-bs-toggle="modal" data-bs-target="#modaltambah_bobot_kategori_task">
                               <i class="ri-add-fill"></i>
                            </button>
                         </h5>
@@ -70,8 +70,8 @@
                                  <td>2024</td>
                                  <td>45</td>
                                  <td>
-                                    <button type="button" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></button>
-                                    <button type="button" class="btn btn-warning" title="Klik untuk mengedit"><i class="ri-edit-2-line"></i></button>
+                                    <button type="button" class="btn btn-info" title="Klik untuk melihat detail" data-bs-toggle="modal" data-bs-target="#modaldetail_bobot_kategori_task"><i class="ri-information-line"></i></button>
+                                    <button type="button" class="btn btn-warning" title="Klik untuk mengedit" data-bs-toggle="modal" data-bs-target="#modaledit_bobot_kategori_task"><i class="ri-edit-2-line"></i></button>
                                     <button type="button" class="btn btn-danger" title="Klik untuk menghapus"><i class="ri-delete-bin-5-line"></i></button>
                                  </td>
                               </tr>
@@ -162,5 +162,14 @@
       </section>
    </div>
 </div>
+
+<!--include Modal untuk menambah bobot kategori task baru-->
+<?= $this->include('/modal_add_bobot_kategoritask'); ?>
+
+<!--include Modal untuk mengedit data bobot kategori task-->
+<?= $this->include('/modal_edit_bobot_kategoritask'); ?>
+
+<!--include Modal untuk melihat detail data bobot kategori task-->
+<?= $this->include('/modal_detail_bobot_kategoritask'); ?>
 
 <?= $this->endSection(); ?>
