@@ -29,7 +29,7 @@
             </div>
             <div class="modal-footer">
                <button type="button" class="btn btn-secondary tombol-tutup-kategoritask_e" data-bs-dismiss="modal">Tutup</button>
-               <button type="button" class="btn btn-primary" id="tombol-simpan-add-kategoritask_e">Simpan</button>
+               <button type="button" class="btn btn-primary" id="tombol-simpan-edit-kategoritask_e">Simpan</button>
             </div>
          </form>
       </div>

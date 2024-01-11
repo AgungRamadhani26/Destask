@@ -29,7 +29,7 @@
             </div>
             <div class="modal-footer">
                <button type="button" class="btn btn-secondary tombol-tutup-usergroup" data-bs-dismiss="modal">Tutup</button>
-               <button type="button" class="btn btn-primary" id="tombol-simpan-add-usergroup">Simpan</button>
+               <button type="button" class="btn btn-primary" id="tombol-simpan-edit-usergroup">Simpan</button>
             </div>
          </form>
       </div>

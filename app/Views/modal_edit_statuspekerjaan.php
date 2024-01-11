@@ -29,7 +29,7 @@
             </div>
             <div class="modal-footer">
                <button type="button" class="btn btn-secondary tombol-tutup-statuspekerjaan_e" data-bs-dismiss="modal">Tutup</button>
-               <button type="button" class="btn btn-primary" id="tombol-simpan-add-statuspekerjaan_e">Simpan</button>
+               <button type="button" class="btn btn-primary" id="tombol-simpan-edit-statuspekerjaan_e">Simpan</button>
             </div>
          </form>
       </div>

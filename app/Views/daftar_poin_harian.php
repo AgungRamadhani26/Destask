@@ -84,7 +84,7 @@
             <div class="card-body">
                <div class="table-responsive">
                   <h5 class="card-title">Daftar Poin Harian&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                     <button type="button" class="btn btn-success" title="Klik untuk menambah data poin harian">
+                     <button type="button" class="btn btn-success" title="Klik untuk menambah data poin harian" data-bs-toggle="modal" data-bs-target="#modaltambah_poin_harian">
                         <i class="ri-add-fill"></i>
                      </button>
                   </h5>
@@ -95,7 +95,7 @@
                            <th>Tahun</th>
                            <th>Bulan</th>
                            <th>Grup</th>
-                           <th>Point Per Hari</th>
+                           <th>Poin Per Hari</th>
                            <th>Aksi</th>
                         </tr>
                      </thead>
@@ -107,7 +107,7 @@
                            <td>Mobile</td>
                            <td>25</td>
                            <td>
-                              <button type="button" class="btn btn-warning" title="Klik untuk mengedit"><i class="ri-edit-2-line"></i></button>
+                              <button type="button" class="btn btn-warning" title="Klik untuk mengedit" data-bs-toggle="modal" data-bs-target="#modaledit_poin_harian"><i class="ri-edit-2-line"></i></button>
                               <button type="button" class="btn btn-danger" title="Klik untuk menghapus"><i class="ri-delete-bin-5-line"></i></button>
                            </td>
                         </tr>
@@ -229,5 +229,11 @@
       </div>
    </div>
 </section>
+
+<!--include Modal untuk menambah poin harian baru-->
+<?= $this->include('/modal_add_poinharian'); ?>
+
+<!--include Modal untuk mengedit data poin harian-->
+<?= $this->include('/modal_edit_poinharian'); ?>
 
 <?= $this->endSection(); ?>
