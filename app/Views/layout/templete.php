@@ -11,7 +11,7 @@
    <?= $this->include('layout/navbar') ?>
 
    <!-- Include sidebar-->
-   <?= $this->include('layout/sidebar_hod') ?>
+   <?= $this->include('layout/sidebar_admin') ?>
 
    <!-- Render konten -->
    <main id="main" class="main">

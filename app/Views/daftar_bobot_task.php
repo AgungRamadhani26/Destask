@@ -53,7 +53,7 @@
                               <i class="ri-add-fill"></i>
                            </button>
                         </h5>
-                        <table class="table table-striped datatable">
+                        <table class="table table-bordered datatable">
                            <thead>
                               <tr>
                                  <th>No</th>
