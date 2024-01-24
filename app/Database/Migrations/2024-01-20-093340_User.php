@@ -36,8 +36,8 @@ class User extends Migration
                 'null'       => true
             ],
             'user_role' => [
-                'type'       => 'VARCHAR',
-                'constraint' => 50,
+                'type'       => 'ENUM',
+                'constraint' => ['staff', 'supervisi', 'admin', 'direksi', 'hod'],
                 'null'       => true
             ],
             'user_level' => [

@@ -30,6 +30,11 @@ class Notifikasi extends Migration
                 'constraint'     => 11,
                 'unsigned'       => true,
             ],
+            'id_kinerja' => [
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => true,
+            ],
             'judul_notifikasi' => [
                 'type'       => 'VARCHAR',
                 'constraint' => 50,
@@ -61,6 +66,7 @@ class Notifikasi extends Migration
         $this->forge->addForeignKey('id_user', 'user', 'id_user');
         $this->forge->addForeignKey('id_task', 'task', 'id_task');
         $this->forge->addForeignKey('id_pekerjaan', 'pekerjaan', 'id_pekerjaan');
+        $this->forge->addForeignKey('id_kinerja', 'kinerja', 'id_kinerja');
         $this->forge->createTable('notifikasi');
     }
 
