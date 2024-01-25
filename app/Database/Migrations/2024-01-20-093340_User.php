@@ -19,6 +19,7 @@ class User extends Migration
                 'type'           => 'INT',
                 'constraint'     => 11,
                 'unsigned'       => true,
+                'null'       => true
             ],
             'username' => [
                 'type'       => 'VARCHAR',
@@ -35,14 +36,9 @@ class User extends Migration
                 'constraint' => 50,
                 'null'       => true
             ],
-            'user_role' => [
+            'user_level' => [
                 'type'       => 'ENUM',
                 'constraint' => ['staff', 'supervisi', 'admin', 'direksi', 'hod'],
-                'null'       => true
-            ],
-            'user_level' => [
-                'type'       => 'VARCHAR',
-                'constraint' => 50,
                 'null'       => true
             ],
             'nama' => [
