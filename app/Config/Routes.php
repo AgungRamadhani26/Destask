@@ -15,4 +15,8 @@ $routes->post('/login', 'Autentikasi::login');
 $routes->get('/logout', 'Autentikasi::logout');
 
 //Routes dashboard
-$routes->get('/dashboard', 'Dashboard::index');
+$routes->get('/dashboard', 'Dashboard::lihat_dashboard');
+
+//Routes Usergroup
+//Untuk menampilkan halaman usergroup
+$routes->get('/usergroup/daftar_usergroup', 'Usergroup::daftar_usergroup');

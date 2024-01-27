@@ -44,17 +44,17 @@
       </li>
 
       <li class="nav-item">
-         <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+         <a class="nav-link <?= $url1 == '/daftar_pengguna' ? '' : 'collapsed' ?>" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
             <i class="bi bi-people"></i><span>Daftar Pengguna</span><i class="bi bi-chevron-down ms-auto"></i>
          </a>
-         <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+         <ul id="forms-nav" class="nav-content collapse <?= $url1 == '/daftar_pengguna' ? 'show' : '' ?>" data-bs-parent="#sidebar-nav">
             <li>
                <a href="">
                   <i class="bi bi-circle"></i><span>Kelola User</span>
                </a>
             </li>
             <li>
-               <a href="">
+               <a href="/usergroup/daftar_usergroup" class="<?= $url == '/usergroup/daftar_usergroup' ? 'active' : '' ?>">
                   <i class="bi bi-circle"></i><span>Kelola User Group</span>
                </a>
             </li>

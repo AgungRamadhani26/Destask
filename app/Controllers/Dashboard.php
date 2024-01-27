@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 class Dashboard extends BaseController
 {
-    public function index(): string
+    public function lihat_dashboard(): string
     {
         return view('dashboard');
     }
