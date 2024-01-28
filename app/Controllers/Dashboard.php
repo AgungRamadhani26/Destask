@@ -6,6 +6,10 @@ class Dashboard extends BaseController
 {
     public function lihat_dashboard(): string
     {
-        return view('dashboard');
+        $data = [
+            'url1' => '',
+            'url' => ''
+        ];
+        return view('dashboard', $data);
     }
 }

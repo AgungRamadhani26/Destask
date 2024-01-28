@@ -10,3 +10,6 @@
 
 <!-- Template Main JS File -->
 <script src="/assets/js/main.js"></script>
+
+<!--Backend-Ajax js File -->
+<script src="/assets/js/backend_ajax.js"></script>

@@ -218,9 +218,9 @@
 </section>
 
 <!--include Modal untuk menambah user baru-->
-<?= $this->include('/modal_add_user'); ?>
+<?= $this->include('user/modal_add_user'); ?>
 
 <!--include Modal untuk mengedit data user-->
-<?= $this->include('/modal_edit_user'); ?>
+<?= $this->include('user/modal_edit_user'); ?>
 
 <?= $this->endSection(); ?>

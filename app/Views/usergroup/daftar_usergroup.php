@@ -21,6 +21,7 @@
                         <tr>
                            <th>No</th>
                            <th>Nama Usergroup</th>
+                           <th>Deskripsi</th>
                            <th>Aksi</th>
                         </tr>
                      </thead>
