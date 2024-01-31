@@ -9,12 +9,12 @@
       </li>
 
       <li class="nav-item">
-         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+         <a class="nav-link <?= $url1 == '/data_master' ? '' : 'collapsed' ?>" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
             <i class="bi bi-menu-button-wide"></i><span>Data Master</span><i class="bi bi-chevron-down ms-auto"></i>
          </a>
-         <ul id="components-nav" class="nav-content collapse active" data-bs-parent="#sidebar-nav">
+         <ul id="components-nav" class="nav-content collapse <?= $url1 == '/data_master' ? 'show' : '' ?>" data-bs-parent="#sidebar-nav">
             <li>
-               <a href="" class="">
+               <a href="/status_pekerjaan/daftar_status_pekerjaan" class="<?= $url == '/status_pekerjaan/daftar_status_pekerjaan' ? 'active' : '' ?>">
                   <i class="bi bi-circle"></i><span>Status Pekerjaan</span>
                </a>
             </li>

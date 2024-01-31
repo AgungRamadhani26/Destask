@@ -16,7 +16,7 @@
                         <i class="ri-add-fill"></i>
                      </button>
                   </h5>
-                  <table class="table table-bordered datatable">
+                  <table class="table table-bordered">
                      <thead>
                         <tr>
                            <th>No</th>
@@ -26,60 +26,18 @@
                         </tr>
                      </thead>
                      <tbody>
-                        <tr>
-                           <td>1</td>
-                           <td>On Progres</td>
-                           <td>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis</td>
-                           <td>
-                              <button type="button" class="btn btn-warning" title="Klik untuk mengedit" data-bs-toggle="modal" data-bs-target="#modaledit_statuspekerjaan"><i class="ri-edit-2-line"></i></button>
-                              <button type="button" class="btn btn-danger" title="Klik untuk menghapus"><i class="ri-delete-bin-5-line"></i></button>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>2</td>
-                           <td>Selesai</td>
-                           <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum laborum</td>
-                           <td>
-                              <button type="button" class="btn btn-warning" title="Klik untuk mengedit"><i class="ri-edit-2-line"></i></button>
-                              <button type="button" class="btn btn-danger" title="Klik untuk menghapus"><i class="ri-delete-bin-5-line"></i></button>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>3</td>
-                           <td>Pending</td>
-                           <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere ipsam</td>
-                           <td>
-                              <button type="button" class="btn btn-warning" title="Klik untuk mengedit"><i class="ri-edit-2-line"></i></button>
-                              <button type="button" class="btn btn-danger" title="Klik untuk menghapus"><i class="ri-delete-bin-5-line"></i></button>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>4</td>
-                           <td>Cancle</td>
-                           <td>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Autem veritatis</td>
-                           <td>
-                              <button type="button" class="btn btn-warning" title="Klik untuk mengedit"><i class="ri-edit-2-line"></i></button>
-                              <button type="button" class="btn btn-danger" title="Klik untuk menghapus"><i class="ri-delete-bin-5-line"></i></button>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>5</td>
-                           <td>Support</td>
-                           <td>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Autem veritatis</td>
-                           <td>
-                              <button type="button" class="btn btn-warning" title="Klik untuk mengedit"><i class="ri-edit-2-line"></i></button>
-                              <button type="button" class="btn btn-danger" title="Klik untuk menghapus"><i class="ri-delete-bin-5-line"></i></button>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>6</td>
-                           <td>Bast</td>
-                           <td>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Autem veritatis</td>
-                           <td>
-                              <button type="button" class="btn btn-warning" title="Klik untuk mengedit"><i class="ri-edit-2-line"></i></button>
-                              <button type="button" class="btn btn-danger" title="Klik untuk menghapus"><i class="ri-delete-bin-5-line"></i></button>
-                           </td>
-                        </tr>
+                        <?php $i = 1 ?>
+                        <?php foreach ($status_pekerjaan as $sp) : ?>
+                           <tr>
+                              <td><?= $i++ ?></td>
+                              <td><?= $sp['nama_status_pekerjaan'] ?></td>
+                              <td><?= $sp['deskripsi_status_pekerjaan'] ?></td>
+                              <td>
+                                 <button type="button" class="btn btn-warning" title="Klik untuk mengedit" data-bs-toggle="modal" data-bs-target="#modaledit_statuspekerjaan" onclick="edit_status_pekerjaan(<?php echo $sp['id_status_pekerjaan'] ?>)"><i class=" ri-edit-2-line"></i></button>
+                                 <button type="button" class="btn btn-danger tombol-hapus-usergroup" title="Klik untuk menghapus" data-id_usergroup="<?= $sp['id_status_pekerjaan'] ?>"><i class="ri-delete-bin-5-line"></i></button>
+                              </td>
+                           </tr>
+                        <?php endforeach; ?>
                      </tbody>
                   </table>
                </div>
@@ -90,9 +48,9 @@
 </section>
 
 <!--include Modal untuk menambah status pekerjaan baru-->
-<?= $this->include('/modal_add_statuspekerjaan'); ?>
+<?= $this->include('status_pekerjaan/modal_add_statuspekerjaan'); ?>
 
 <!--include Modal untuk mengedit data status pekerjaan-->
-<?= $this->include('/modal_edit_statuspekerjaan'); ?>
+<?= $this->include('status_pekerjaan/modal_edit_statuspekerjaan'); ?>
 
 <?= $this->endSection(); ?>

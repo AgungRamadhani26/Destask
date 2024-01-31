@@ -142,3 +142,64 @@ $('.tombol-hapus-usergroup').on('click', function(e) {
       }
    });
 });
+
+
+
+//                                   //
+// PENGELOLAAN DATA STATUS PEKERJAAN //
+//                                   //
+
+//Proses untuk membersihkan form add dan edit status pekerjaan
+function bersihkanStatusPekerjaan(){
+   $('#nama_status_pekerjaan').val('');
+   $('#deskripsi_status_pekerjaan').val('');
+   $('#id_status_pekerjaan_e').val('');
+   $('#nama_status_pekerjaan_e').val('');
+   $('#deskripsi_status_pekerjaan_e').val('');
+}
+
+//Proses membersikan form add dan edit status pekerjaan jika mengclose modal
+$('.tombol-tutup-statuspekerjaan').on('click', function() {
+   if ($('sukses-statuspekerjaan').is(":visible")) {
+       window.location.href = current_url() + "?" + $_SERVER['QUERY_STRING'];
+   }
+   $('.alert').hide();
+   bersihkanStatusPekerjaan();
+});
+
+//Proses add status pekerjaan
+$('#tombol-simpan-add-statuspekerjaan').on('click', function(){
+   //Mengambil nilai berdasarkan id pada form
+   let $nama_status_pekerjaan = $('#nama_status_pekerjaan').val();
+   let $deskripsi_status_pekerjaan = $('#deskripsi_status_pekerjaan').val();
+   //Menggunakan request ajax
+   $.ajax({
+      url: "/status_pekerjaan/tambah_status_pekerjaan",
+      type: "POST",
+      data: {
+         nama_status_pekerjaan: $nama_status_pekerjaan,
+         deskripsi_status_pekerjaan: $deskripsi_status_pekerjaan
+      },
+      success: function(hasil){
+         var $obj = $.parseJSON(hasil);
+         if ($obj.sukses == false){
+            $('.sukses-statuspekerjaan').hide();
+            $('.error-statuspekerjaan').show();
+            $('.error-statuspekerjaan').html($obj.error);
+         }else {
+            $('.error-statuspekerjaan').hide();
+            $('.sukses-statuspekerjaan').show();
+            $('.sukses-statuspekerjaan').html($obj.sukses);
+            bersihkanStatusPekerjaan();
+            setTimeout(function(){location.reload();}, 1500);
+         }
+      }
+   })
+});
+//Untuk mentrigger ketika menekan enter maka akan sama dengan submit form
+$('#nama_status_pekerjaan').on('keypress', function(e){
+   if (e.which === 13){
+       e.preventDefault();
+       $('#tombol-simpan-add-statuspekerjaan').click();
+   }
+});
