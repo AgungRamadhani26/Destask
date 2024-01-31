@@ -34,7 +34,7 @@
                               <td><?= $sp['deskripsi_status_pekerjaan'] ?></td>
                               <td>
                                  <button type="button" class="btn btn-warning" title="Klik untuk mengedit" data-bs-toggle="modal" data-bs-target="#modaledit_statuspekerjaan" onclick="edit_status_pekerjaan(<?php echo $sp['id_status_pekerjaan'] ?>)"><i class=" ri-edit-2-line"></i></button>
-                                 <button type="button" class="btn btn-danger tombol-hapus-usergroup" title="Klik untuk menghapus" data-id_usergroup="<?= $sp['id_status_pekerjaan'] ?>"><i class="ri-delete-bin-5-line"></i></button>
+                                 <button type="button" class="btn btn-danger tombol-hapus-status-pekerjaan" title="Klik untuk menghapus" data-id_status_pekerjaan="<?= $sp['id_status_pekerjaan'] ?>"><i class="ri-delete-bin-5-line"></i></button>
                               </td>
                            </tr>
                         <?php endforeach; ?>

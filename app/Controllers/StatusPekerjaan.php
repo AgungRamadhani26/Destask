@@ -129,4 +129,11 @@ class StatusPekerjaan extends BaseController
         }
         return json_encode($hasil);
     }
+
+    //Fungsi delete_status_pekerjaan
+    public function delete_status_pekerjaan($id_status_pekerjaan)
+    {
+        $this->statusPekerjaanModel->delete($id_status_pekerjaan);
+        return redirect()->to('/status_pekerjaan/daftar_status_pekerjaan');
+    }
 }

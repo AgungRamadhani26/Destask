@@ -36,6 +36,8 @@ $routes->post('/status_pekerjaan/tambah_status_pekerjaan', 'StatusPekerjaan::tam
 //Untuk mengedit status pekerjaan
 $routes->get('/status_pekerjaan/edit_status_pekerjaan/(:num)', 'StatusPekerjaan::edit_status_pekerjaan/$1');
 $routes->post('/status_pekerjaan/update_status_pekerjaan', 'StatusPekerjaan::update_status_pekerjaan');
+//Untuk menghapus status pekerjaan
+$routes->delete('/status_pekerjaan/delete_status_pekerjaan/(:num)', 'StatusPekerjaan::delete_status_pekerjaan/$1');
 
 
 //Rotes User

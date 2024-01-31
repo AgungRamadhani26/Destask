@@ -100,7 +100,7 @@ $('#tombol-simpan-edit-usergroup').on('click', function(){
       }
    })
 });
-//Untuk mentrigger ketika menekan enter maka akan sama dengan submit form modal add user (sama dengan menekan save)
+//Untuk mentrigger ketika menekan enter maka akan sama dengan submit form
 $('#nama_usergroup_e').on('keypress', function(e){
    if (e.which === 13){
        e.preventDefault();
@@ -196,7 +196,7 @@ $('#tombol-simpan-add-statuspekerjaan').on('click', function(){
       }
    })
 });
-//Untuk mentrigger ketika menekan enter maka akan sama dengan submit form
+//Untuk mentrigger ketika menekan enter maka akan sama dengan submit
 $('#nama_status_pekerjaan').on('keypress', function(e){
    if (e.which === 13){
        e.preventDefault();
@@ -247,10 +247,45 @@ $('#tombol-simpan-edit-statuspekerjaan').on('click', function(){
       }
    })
 });
-//Untuk mentrigger ketika menekan enter maka akan sama dengan submit form modal add user (sama dengan menekan save)
-$('nama_status_pekerjaan_e').on('keypress', function(e){
+//Untuk mentrigger ketika menekan enter maka akan sama dengan submit form
+$('#nama_status_pekerjaan_e').on('keypress', function(e){
    if (e.which === 13){
        e.preventDefault();
        $('#tombol-simpan-edit-statuspekerjaan').click();
    }
+});
+
+//Proses hapus data status pekerjaan
+$('.tombol-hapus-status-pekerjaan').on('click', function(e) {
+   e.preventDefault();
+   var $id_status_pekerjaan = $(this).data('id_status_pekerjaan');
+   // Tampilkan sweet alert konfirmasi
+   Swal.fire({
+      title: 'Perhatian !',
+      text: 'Data status pekerjaan yang dihapus tidak dapat dikembalikan',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Ya, hapus data!"
+   }).then((result) => {
+      if (result.isConfirmed) {
+         // Mengirimkan permintaan penghapusan dengan AJAX
+         $.ajax({
+            type: "DELETE",
+            url: "/status_pekerjaan/delete_status_pekerjaan/" + $id_status_pekerjaan,
+            success: function() {
+               // Tampilkan sweet alert setelah penghapusan berhasil
+               Swal.fire({
+                  title: 'Berhasil :)',
+                  text: 'Data status pekerjaan berhasil dihapus',
+                  icon: 'success'
+               });
+               setTimeout(function() {
+                  location.reload();
+               }, 1000);
+            }
+         });
+      }
+   });
 });
