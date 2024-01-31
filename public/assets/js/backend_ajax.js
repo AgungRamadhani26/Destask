@@ -49,7 +49,7 @@ $('#tombol-simpan-add-usergroup').on('click', function(){
       }
    })
 });
-//Untuk mentrigger ketika menekan enter maka akan sama dengan submit form modal add user (sama dengan menekan save)
+//Untuk mentrigger ketika menekan enter maka akan sama dengan submit form
 $('#nama_usergroup').on('keypress', function(e){
    if (e.which === 13){
        e.preventDefault();
@@ -99,4 +99,46 @@ $('#tombol-simpan-edit-usergroup').on('click', function(){
          }
       }
    })
+});
+//Untuk mentrigger ketika menekan enter maka akan sama dengan submit form modal add user (sama dengan menekan save)
+$('#nama_usergroup_e').on('keypress', function(e){
+   if (e.which === 13){
+       e.preventDefault();
+       $('#tombol-simpan-edit-usergroup').click();
+   }
+});
+
+//Proses hapus data usergroup
+$('.tombol-hapus-usergroup').on('click', function(e) {
+   e.preventDefault();
+   var $id_usergroup = $(this).data('id_usergroup');
+   // Tampilkan sweet alert konfirmasi
+   Swal.fire({
+      title: 'Perhatian !',
+      text: 'Data usergroup yang dihapus tidak dapat dikembalikan',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Ya, hapus data!"
+   }).then((result) => {
+      if (result.isConfirmed) {
+         // Mengirimkan permintaan penghapusan dengan AJAX
+         $.ajax({
+            type: "DELETE",
+            url: "/usergroup/delete_usergroup/" + $id_usergroup,
+            success: function() {
+               // Tampilkan sweet alert setelah penghapusan berhasil
+               Swal.fire({
+                  title: 'Berhasil :)',
+                  text: 'Data usergroup berhasil dihapus',
+                  icon: 'success'
+               });
+               setTimeout(function() {
+                  location.reload();
+               }, 1500);
+            }
+         });
+      }
+   });
 });

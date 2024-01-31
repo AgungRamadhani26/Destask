@@ -49,7 +49,7 @@
          </a>
          <ul id="forms-nav" class="nav-content collapse <?= $url1 == '/daftar_pengguna' ? 'show' : '' ?>" data-bs-parent="#sidebar-nav">
             <li>
-               <a href="">
+               <a href="/user/daftar_user" class="<?= $url == '/user/daftar_user' ? 'active' : '' ?>">
                   <i class="bi bi-circle"></i><span>Kelola User</span>
                </a>
             </li>

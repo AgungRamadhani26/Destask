@@ -8,6 +8,9 @@
 <script src="/assets/library_fe/tinymce/tinymce.min.js"></script>
 <script src="/assets/library_fe/php-email-form/validate.js"></script>
 
+<!-- Sweet Alert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <!-- Template Main JS File -->
 <script src="/assets/js/main.js"></script>
 

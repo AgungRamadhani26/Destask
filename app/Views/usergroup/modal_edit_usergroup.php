@@ -2,7 +2,7 @@
 <div class="modal fade" id="modaledit_usergroup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
    <div class="modal-dialog">
       <div class="modal-content">
-         <form action="" method="" id="formUsergroup_e">
+         <form action="" method="POST" id="formUsergroup_e">
             <div class="modal-header bg-warning">
                <h5 class="modal-title" style="font-weight: bold; color: white;">Edit User Group</h5>
                <button type="button" class="btn-close tombol-tutup-usergroup" data-bs-dismiss="modal" aria-label="Close"></button>

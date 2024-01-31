@@ -129,4 +129,11 @@ class Usergroup extends BaseController
         }
         return json_encode($hasil);
     }
+
+    //Fungsi delete_usergroup
+    public function delete_usergroup($id_usergroup)
+    {
+        $this->usergroupModel->delete($id_usergroup);
+        return redirect()->to('/usergroup/daftar_usergroup');
+    }
 }

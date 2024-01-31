@@ -22,6 +22,13 @@ $routes->get('/dashboard', 'Dashboard::lihat_dashboard');
 $routes->get('/usergroup/daftar_usergroup', 'Usergroup::daftar_usergroup');
 //Untuk menambah usergroup
 $routes->post('/usergroup/tambah_usergroup', 'Usergroup::tambah_usergroup');
-//Untuk mengedit user
+//Untuk mengedit usergroup
 $routes->get('/usergroup/edit_usergroup/(:num)', 'Usergroup::edit_usergroup/$1');
 $routes->post('/usergroup/update_usergroup', 'Usergroup::update_usergroup');
+//Untuk menghapus usergroup
+$routes->delete('/usergroup/delete_usergroup/(:num)', 'Usergroup::delete_usergroup/$1');
+
+
+//Rotes User
+//Untuk menampilkan halaman user
+$routes->get('/user/daftar_user', 'User::daftar_user');

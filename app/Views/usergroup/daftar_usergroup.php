@@ -16,12 +16,11 @@
                         <i class="ri-add-fill"></i>
                      </button>
                   </h5>
-                  <table class="table table-bordered datatable">
+                  <table class="table table-bordered">
                      <thead>
                         <tr>
                            <th>No</th>
                            <th>Nama Usergroup</th>
-                           <th>Deskripsi</th>
                            <th>Aksi</th>
                         </tr>
                      </thead>
@@ -34,11 +33,7 @@
                               <td>
                                  <button type="button" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></button>
                                  <button type="button" class="btn btn-warning" title="Klik untuk mengedit" data-bs-toggle="modal" data-bs-target="#modaledit_usergroup" onclick="edit_usergroup(<?php echo $u['id_usergroup'] ?>)"><i class=" ri-edit-2-line"></i></button>
-                                 <form action="/usergroup/delete_usergroup/<?= $u['id_usergroup'] ?>" method="POST" class="d-inline">
-                                    <?= csrf_field(); ?>
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data user ?');"><i class="ri-delete-bin-5-line"></i></button>
-                                 </form>
+                                 <button type="button" class="btn btn-danger tombol-hapus-usergroup" title="Klik untuk menghapus" data-id_usergroup="<?= $u['id_usergroup'] ?>"><i class="ri-delete-bin-5-line"></i></button>
                               </td>
                            </tr>
                         <?php endforeach; ?>
