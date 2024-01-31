@@ -33,6 +33,9 @@ $routes->delete('/usergroup/delete_usergroup/(:num)', 'Usergroup::delete_usergro
 $routes->get('/status_pekerjaan/daftar_status_pekerjaan', 'StatusPekerjaan::daftar_status_pekerjaan');
 //Untuk menambah status pekerjaan
 $routes->post('/status_pekerjaan/tambah_status_pekerjaan', 'StatusPekerjaan::tambah_status_pekerjaan');
+//Untuk mengedit status pekerjaan
+$routes->get('/status_pekerjaan/edit_status_pekerjaan/(:num)', 'StatusPekerjaan::edit_status_pekerjaan/$1');
+$routes->post('/status_pekerjaan/update_status_pekerjaan', 'StatusPekerjaan::update_status_pekerjaan');
 
 
 //Rotes User

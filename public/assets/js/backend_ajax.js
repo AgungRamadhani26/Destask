@@ -44,7 +44,7 @@ $('#tombol-simpan-add-usergroup').on('click', function(){
             $('.sukses-usergroup').show();
             $('.sukses-usergroup').html($obj.sukses);
             bersihkanUsergroup();
-            setTimeout(function(){location.reload();}, 1500);
+            setTimeout(function(){location.reload();}, 1000);
          }
       }
    })
@@ -95,7 +95,7 @@ $('#tombol-simpan-edit-usergroup').on('click', function(){
             $('.sukses-usergroup_e').show();
             $('.sukses-usergroup_e').html($obj.sukses);
             bersihkanUsergroup();
-            setTimeout(function(){location.reload();}, 1500);
+            setTimeout(function(){location.reload();}, 1000);
          }
       }
    })
@@ -136,7 +136,7 @@ $('.tombol-hapus-usergroup').on('click', function(e) {
                });
                setTimeout(function() {
                   location.reload();
-               }, 1500);
+               }, 1000);
             }
          });
       }
@@ -191,7 +191,7 @@ $('#tombol-simpan-add-statuspekerjaan').on('click', function(){
             $('.sukses-statuspekerjaan').show();
             $('.sukses-statuspekerjaan').html($obj.sukses);
             bersihkanStatusPekerjaan();
-            setTimeout(function(){location.reload();}, 1500);
+            setTimeout(function(){location.reload();}, 1000);
          }
       }
    })
@@ -201,5 +201,56 @@ $('#nama_status_pekerjaan').on('keypress', function(e){
    if (e.which === 13){
        e.preventDefault();
        $('#tombol-simpan-add-statuspekerjaan').click();
+   }
+});
+
+//Proses edit usergroup
+function edit_status_pekerjaan($id){
+   $.ajax({
+      url: "/status_pekerjaan/edit_status_pekerjaan/" + $id,
+      type: "GET",
+      success: function(hasil){
+         var $obj = $.parseJSON(hasil);
+         if ($obj.id_usergroup != ''){
+            $('#id_status_pekerjaan_e').val($obj.id_status_pekerjaan);
+            $('#nama_status_pekerjaan_e').val($obj.nama_status_pekerjaan);
+            $('#deskripsi_status_pekerjaan_e').val($obj.deskripsi_status_pekerjaan);
+         }
+      }
+   });
+}
+$('#tombol-simpan-edit-statuspekerjaan').on('click', function(){
+   let $id_status_pekerjaan = $('#id_status_pekerjaan_e').val();
+   let $nama_status_pekerjaan = $('#nama_status_pekerjaan_e').val();
+   let $deskripsi_status_pekerjaan = $('#deskripsi_status_pekerjaan_e').val();
+   $.ajax({
+      url: "/status_pekerjaan/update_status_pekerjaan",
+      type: "POST",
+      data:{
+         id_status_pekerjaan: $id_status_pekerjaan,
+         nama_status_pekerjaan : $nama_status_pekerjaan ,
+         deskripsi_status_pekerjaan: $deskripsi_status_pekerjaan
+      },
+      success: function(hasil){
+         var $obj = $.parseJSON(hasil);
+         if ($obj.sukses == false){
+            $('.sukses-statuspekerjaan_e').hide();
+            $('.error-statuspekerjaan_e').show();
+            $('.error-statuspekerjaan_e').html($obj.error);
+         }else{
+            $('.error-statuspekerjaan_e').hide();
+            $('.sukses-statuspekerjaan_e').show();
+            $('.sukses-statuspekerjaan_e').html($obj.sukses);
+            bersihkanStatusPekerjaan();
+            setTimeout(function(){location.reload();}, 1000);
+         }
+      }
+   })
+});
+//Untuk mentrigger ketika menekan enter maka akan sama dengan submit form modal add user (sama dengan menekan save)
+$('nama_status_pekerjaan_e').on('keypress', function(e){
+   if (e.which === 13){
+       e.preventDefault();
+       $('#tombol-simpan-edit-statuspekerjaan').click();
    }
 });
