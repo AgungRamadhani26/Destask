@@ -16,7 +16,7 @@
                         <i class="ri-add-fill"></i>
                      </button>
                   </h5>
-                  <table class="table table-bordered datatable">
+                  <table class="table table-bordered">
                      <thead>
                         <tr>
                            <th>No</th>
@@ -26,42 +26,18 @@
                         </tr>
                      </thead>
                      <tbody>
-                        <tr>
-                           <td>1</td>
-                           <td>On Progres</td>
-                           <td>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis</td>
-                           <td>
-                              <button type="button" class="btn btn-warning" title="Klik untuk mengedit" data-bs-toggle="modal" data-bs-target="#modaledit_statustask"><i class="ri-edit-2-line"></i></button>
-                              <button type="button" class="btn btn-danger" title="Klik untuk menghapus"><i class="ri-delete-bin-5-line"></i></button>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>2</td>
-                           <td>Selesai</td>
-                           <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum laborum</td>
-                           <td>
-                              <button type="button" class="btn btn-warning" title="Klik untuk mengedit"><i class="ri-edit-2-line"></i></button>
-                              <button type="button" class="btn btn-danger" title="Klik untuk menghapus"><i class="ri-delete-bin-5-line"></i></button>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>3</td>
-                           <td>Pending</td>
-                           <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere ipsam</td>
-                           <td>
-                              <button type="button" class="btn btn-warning" title="Klik untuk mengedit"><i class="ri-edit-2-line"></i></button>
-                              <button type="button" class="btn btn-danger" title="Klik untuk menghapus"><i class="ri-delete-bin-5-line"></i></button>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>4</td>
-                           <td>Cancle</td>
-                           <td>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Autem veritatis</td>
-                           <td>
-                              <button type="button" class="btn btn-warning" title="Klik untuk mengedit"><i class="ri-edit-2-line"></i></button>
-                              <button type="button" class="btn btn-danger" title="Klik untuk menghapus"><i class="ri-delete-bin-5-line"></i></button>
-                           </td>
-                        </tr>
+                        <?php $i = 1 ?>
+                        <?php foreach ($status_task as $st) : ?>
+                           <tr>
+                              <td><?= $i++ ?></td>
+                              <td><?= $st['nama_status_task'] ?></td>
+                              <td><?= $st['deskripsi_status_task'] ?></td>
+                              <td>
+                                 <button type="button" class="btn btn-warning" title="Klik untuk mengedit" data-bs-toggle="modal" data-bs-target="#modaledit_statustask" onclick="edit_status_task(<?php echo $st['id_status_task'] ?>)"><i class="ri-edit-2-line"></i></button>
+                                 <button type="button" class="btn btn-danger" title="Klik untuk menghapus" data-id_status_task="<?= $st['id_status_task'] ?>"><i class="ri-delete-bin-5-line"></i></button>
+                              </td>
+                           </tr>
+                        <?php endforeach; ?>
                      </tbody>
                   </table>
                </div>
@@ -72,9 +48,9 @@
 </section>
 
 <!--include Modal untuk menambah status task baru-->
-<?= $this->include('/modal_add_statustask'); ?>
+<?= $this->include('status_task/modal_add_statustask'); ?>
 
 <!--include Modal untuk mengedit data status task-->
-<?= $this->include('/modal_edit_statustask'); ?>
+<?= $this->include('status_task/modal_edit_statustask'); ?>
 
 <?= $this->endSection(); ?>

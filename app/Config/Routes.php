@@ -39,6 +39,10 @@ $routes->post('/status_pekerjaan/update_status_pekerjaan', 'StatusPekerjaan::upd
 //Untuk menghapus status pekerjaan
 $routes->delete('/status_pekerjaan/delete_status_pekerjaan/(:num)', 'StatusPekerjaan::delete_status_pekerjaan/$1');
 
+//Routes Status Task
+//Untuk menampilkan halaman daftar status task
+$routes->get('/status_task/daftar_status_task', 'StatusTask::daftar_status_task');
+
 
 //Rotes User
 //Untuk menampilkan halaman user

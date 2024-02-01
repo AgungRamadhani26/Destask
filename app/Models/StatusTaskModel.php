@@ -13,4 +13,13 @@ class StatusTaskModel extends Model
     protected $allowedFields    = [
         'nama_status_task', 'deskripsi_status_task'
     ];
+
+    //Fungsi untuk mendapatkan data status task
+    public function getStatusTask($id_status_task = false)
+    {
+        if ($id_status_task == false) {
+            return $this->orderBy('created_at', 'DESC')->findAll();
+        }
+        return $this->where(['id_status_task' => $id_status_task])->first();
+    }
 }

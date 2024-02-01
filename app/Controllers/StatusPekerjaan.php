@@ -14,7 +14,7 @@ class StatusPekerjaan extends BaseController
         $this->statusPekerjaanModel = new StatusPekerjaanModel();
     }
 
-    //Fungsi daftar_usergroup
+    //Fungsi daftar_status_pekerjaan
     public function daftar_status_pekerjaan()
     {
         $data = [

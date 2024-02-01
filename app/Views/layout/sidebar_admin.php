@@ -24,7 +24,7 @@
                </a>
             </li>
             <li>
-               <a href="">
+               <a href="/status_task/daftar_status_task" class="<?= $url == '/status_task/daftar_status_task' ? 'active' : '' ?>">
                   <i class="bi bi-circle"></i><span>Status Task</span>
                </a>
             </li>
