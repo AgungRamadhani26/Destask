@@ -1,5 +1,6 @@
 <?php
 
+
 // Check PHP version.
 $minPhpVersion = '7.4'; // If you update this, don't forget to update `spark`.
 if (version_compare(PHP_VERSION, $minPhpVersion, '<')) {
@@ -28,6 +29,10 @@ if (getcwd() . DIRECTORY_SEPARATOR !== FCPATH) {
  * our autoloader, along with Composer's, loads our constants
  * and fires up an environment-specific bootstrapping.
  */
+// Mengizinkan CORS
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE');
+header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
 
 // Load our paths config file
 // This is the line that might need to be changed, depending on your folder structure.

@@ -24,3 +24,26 @@ class UserModel extends Model
         return $this->where(['id_user' => $id_user])->first();
     }
 }
+
+
+    function getIdentitas($identitas)
+    {
+        $builder = $this->table('user');
+
+        if (filter_var($identitas, FILTER_VALIDATE_EMAIL)) {
+            $credentials['email'] = $identitas;
+            unset($credentials['identifier']);
+            $data = $builder->where('email', $identitas)->first();
+        } else {
+            $credentials['username'] = $identitas;
+            unset($credentials['identifier']);
+            $data = $builder->where('username', $identitas)->first();
+        }
+
+        if ($data != null) {
+            return $data;
+        } else {
+            return null;
+        }
+    }
+}

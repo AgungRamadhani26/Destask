@@ -8,6 +8,7 @@ use CodeIgniter\Filters\DebugToolbar;
 use CodeIgniter\Filters\Honeypot;
 use CodeIgniter\Filters\InvalidChars;
 use CodeIgniter\Filters\SecureHeaders;
+use App\Filters\JwtFilter;
 use App\Filters\Cors;
 
 class Filters extends BaseConfig
@@ -26,6 +27,7 @@ class Filters extends BaseConfig
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
+        'jwtfilter'     => JwtFilter::class,
         'cors'          => Cors::class,
     ];
 
@@ -70,5 +72,23 @@ class Filters extends BaseConfig
      * Example:
      * 'isLoggedIn' => ['before' => ['account/*', 'profiles/*']]
      */
-    public array $filters = [];
+    public array $filters = [
+        'before' => [
+            'jwtfilter' => [
+                'api/user',
+                'api/pekerjaan',
+                'api/task',
+                'api/bobotKategoritask',
+                'api/harilibur',
+                'api/kategoripekerjaan',
+                'api/kategoritask',
+                'api/kinerja',
+                'api/notifikasi',
+                'api/personil',
+                'api/statuspekerjaan',
+                'api/statustask',
+                'api/targetpoinharian'
+            ],
+        ],
+    ];
 }
