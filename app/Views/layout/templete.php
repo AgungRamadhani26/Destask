@@ -11,7 +11,19 @@
    <?= $this->include('layout/navbar') ?>
 
    <!-- Include sidebar-->
-   <?= $this->include('layout/sidebar_admin') ?>
+   <?php
+   if (session()->get('user_level') == "staff") {
+      echo $this->include('layout/sidebar_staff');
+   } elseif (session()->get('user_level') == "supervisi") {
+      echo $this->include('layout/sidebar_supervisi');
+   } elseif (session()->get('user_level') == "admin") {
+      echo $this->include('layout/sidebar_admin');
+   } elseif (session()->get('user_level') == "direksi") {
+      echo $this->include('layout/sidebar_direksi');
+   } elseif (session()->get('user_level') == "hod") {
+      echo $this->include('layout/sidebar_hod');
+   }
+   ?>
 
    <!-- Render konten -->
    <main id="main" class="main">

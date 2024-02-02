@@ -5,7 +5,7 @@
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-   <link rel="stylesheet" href="assets/css/style_login.css">
+   <link rel="stylesheet" href="/assets/css/style_login.css">
    <!--Js untuk google recapcha-->
    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
    <title>DesTask</title>
@@ -16,7 +16,7 @@
       <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
          <div class="row gx-lg-5 align-items-center mb-5">
             <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
-               <img src="assets/img/logo_desnet.png" alt="logo desnet">
+               <img src="/assets/img/logo_desnet.png" alt="logo desnet">
                <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
                   Selamat Datang<br />
                   <span style="color: hsl(218, 81%, 75%)">di DesTask</span>
@@ -33,22 +33,37 @@
                <div class="card bg-glass">
                   <div class="card-body px-4 py-5 px-md-5">
                      <center>
-                        <img src="assets/img/logo_destask_login.png" alt="logo destask" height="100px" class="mb-4">
+                        <img src="/assets/img/logo_destask_login.png" alt="logo destask" height="100px" class="mb-4">
                      </center>
-                     <form>
+                     <form action="/login" method="POST">
+                        <?php if (session()->getFlashdata('error')) { ?>
+                           <div class="alert alert-danger">
+                              <?= session()->getFlashdata('error') ?>
+                           </div>
+                        <?php } ?>
+                        <?= csrf_field(); ?>
                         <div class="form-outline mb-4">
-                           <input type="email" id="form3Example3" class="form-control" placeholder="Email / Username" />
+                           <input type="text" class="form-control <?= (session()->getFlashdata('error_username_email')) ? 'is-invalid' : ''; ?>" name="username_email" placeholder="Email / Username" autofocus value="<?= session()->getFlashdata('username_email') ?>" />
+                           <div class=" invalid-feedback">
+                              <?= session()->getFlashdata('error_username_email') ?>
+                           </div>
                         </div>
                         <div class="form-outline mb-4">
-                           <input type="password" id="form3Example4" class="form-control" placeholder="Password" />
+                           <input type="password" class="form-control <?= (session()->getFlashdata('error_password')) ? 'is-invalid' : ''; ?>" name="password" placeholder=" Password" value="<?= session()->getFlashdata('password') ?>" />
+                           <div class=" invalid-feedback">
+                              <?= session()->getFlashdata('error_password') ?>
+                           </div>
                         </div>
                         <div class="row">
                            <div class="col-md-9 mb-4">
                               <!--Google Recapcha-->
-                              <div class="g-recaptcha" data-sitekey="6LfQ0D0kAAAAAL78dOEU7Z_CKv35PgQeAu1xby6K"></div>
+                              <div class="g-recaptcha <?= (session()->getFlashdata('error_captcha')) ? 'is-invalid' : ''; ?>" data-sitekey="<?= getenv('RECAPTCHA_SITEKEY') ?>"></div>
+                              <div class=" invalid-feedback">
+                                 <?= session()->getFlashdata('error_captcha') ?>
+                              </div>
                            </div>
                            <div class="col-md-3 mb-4">
-                              <button type="submit" class="btn btn-primary btn-block">
+                              <button type="submit" class="btn btn-primary btn-block" name="login" value="login">
                                  Login
                               </button>
                            </div>

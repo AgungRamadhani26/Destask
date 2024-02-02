@@ -13,4 +13,13 @@ class UserGroupModel extends Model
     protected $allowedFields    = [
         'nama_usergroup', 'deskripsi_usergroup'
     ];
+
+    //Fungsi untuk mendapatkan data usergroup
+    public function getUserGroup($id_usergroup = false)
+    {
+        if ($id_usergroup == false) {
+            return $this->orderBy('created_at', 'DESC')->findAll();
+        }
+        return $this->where(['id_usergroup' => $id_usergroup])->first();
+    }
 }

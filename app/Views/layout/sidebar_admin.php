@@ -9,12 +9,12 @@
       </li>
 
       <li class="nav-item">
-         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+         <a class="nav-link <?= $url1 == '/data_master' ? '' : 'collapsed' ?>" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
             <i class="bi bi-menu-button-wide"></i><span>Data Master</span><i class="bi bi-chevron-down ms-auto"></i>
          </a>
-         <ul id="components-nav" class="nav-content collapse active" data-bs-parent="#sidebar-nav">
+         <ul id="components-nav" class="nav-content collapse <?= $url1 == '/data_master' ? 'show' : '' ?>" data-bs-parent="#sidebar-nav">
             <li>
-               <a href="" class="">
+               <a href="/status_pekerjaan/daftar_status_pekerjaan" class="<?= $url == '/status_pekerjaan/daftar_status_pekerjaan' ? 'active' : '' ?>">
                   <i class="bi bi-circle"></i><span>Status Pekerjaan</span>
                </a>
             </li>
@@ -24,7 +24,7 @@
                </a>
             </li>
             <li>
-               <a href="">
+               <a href="/status_task/daftar_status_task" class="<?= $url == '/status_task/daftar_status_task' ? 'active' : '' ?>">
                   <i class="bi bi-circle"></i><span>Status Task</span>
                </a>
             </li>
@@ -44,17 +44,17 @@
       </li>
 
       <li class="nav-item">
-         <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+         <a class="nav-link <?= $url1 == '/daftar_pengguna' ? '' : 'collapsed' ?>" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
             <i class="bi bi-people"></i><span>Daftar Pengguna</span><i class="bi bi-chevron-down ms-auto"></i>
          </a>
-         <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+         <ul id="forms-nav" class="nav-content collapse <?= $url1 == '/daftar_pengguna' ? 'show' : '' ?>" data-bs-parent="#sidebar-nav">
             <li>
-               <a href="">
+               <a href="/user/daftar_user" class="<?= $url == '/user/daftar_user' ? 'active' : '' ?>">
                   <i class="bi bi-circle"></i><span>Kelola User</span>
                </a>
             </li>
             <li>
-               <a href="">
+               <a href="/usergroup/daftar_usergroup" class="<?= $url == '/usergroup/daftar_usergroup' ? 'active' : '' ?>">
                   <i class="bi bi-circle"></i><span>Kelola User Group</span>
                </a>
             </li>

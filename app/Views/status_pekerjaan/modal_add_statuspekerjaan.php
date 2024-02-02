@@ -15,15 +15,15 @@
                <div class="alert alert-success sukses-statuspekerjaan" role="alert" style="display: none">
                </div>
                <div class="row mb-3">
-                  <label for="nama" style="font-weight: 600;">Status Pekerjaan</label>
+                  <label for="nama_status_pekerjaan" style="font-weight: 600;">Status Pekerjaan</label>
                   <div class="col-sm-12">
-                     <input type="text" class="form-control" name="statuspekerjaan" id="statuspekerjaan">
+                     <input type="text" class="form-control" name="nama_status_pekerjaan" id="nama_status_pekerjaan">
                   </div>
                </div>
                <div class="row mb-3">
-                  <label for="deskripsi" style="font-weight: 600;">Deskripsi</label>
+                  <label for="deskripsi_status_pekerjaan" style="font-weight: 600;">Deskripsi</label>
                   <div class="col-sm-12">
-                     <textarea class="form-control" rows="3" name="deskripsi"></textarea>
+                     <textarea class="form-control" rows="3" name="deskripsi_status_pekerjaan" id="deskripsi_status_pekerjaan"></textarea>
                   </div>
                </div>
             </div>

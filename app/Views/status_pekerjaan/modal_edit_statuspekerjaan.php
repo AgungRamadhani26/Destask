@@ -14,22 +14,23 @@
                <!--Kalau sukses-->
                <div class="alert alert-success sukses-statuspekerjaan_e" role="alert" style="display: none">
                </div>
+               <input type="hidden" id="id_status_pekerjaan_e">
                <div class="row mb-3">
-                  <label for="nama" style="font-weight: 600;">Status Pekerjaan</label>
+                  <label for="nama_status_pekerjaan_e" style="font-weight: 600;">Status Pekerjaan</label>
                   <div class="col-sm-12">
-                     <input type="text" class="form-control" name="statuspekerjaan_e" id="statuspekerjaan_e">
+                     <input type="text" class="form-control" name="nama_status_pekerjaan_e" id="nama_status_pekerjaan_e">
                   </div>
                </div>
                <div class="row mb-3">
-                  <label for="deskripsi" style="font-weight: 600;">Deskripsi</label>
+                  <label for="deskripsi_status_pekerjaan_e" style="font-weight: 600;">Deskripsi</label>
                   <div class="col-sm-12">
-                     <textarea class="form-control" rows="3" name="deskripsi_e"></textarea>
+                     <textarea class="form-control" rows="3" name="deskripsi_status_pekerjaan_e" id="deskripsi_status_pekerjaan_e"></textarea>
                   </div>
                </div>
             </div>
             <div class="modal-footer">
-               <button type="button" class="btn btn-secondary tombol-tutup-statuspekerjaan_e" data-bs-dismiss="modal">Tutup</button>
-               <button type="button" class="btn btn-primary" id="tombol-simpan-edit-statuspekerjaan_e">Simpan</button>
+               <button type="button" class="btn btn-secondary tombol-tutup-statuspekerjaan" data-bs-dismiss="modal">Tutup</button>
+               <button type="button" class="btn btn-primary" id="tombol-simpan-edit-statuspekerjaan">Simpan</button>
             </div>
          </form>
       </div>
