@@ -13,7 +13,7 @@ function bersihkanUsergroup(){
 
 //Proses membersikan form add dan edit usergroup jika mengclose modal
 $('.tombol-tutup-usergroup').on('click', function() {
-   if ($('sukses-usergroup').is(":visible")) {
+   if ($('.sukses-usergroup').is(":visible")) {
        window.location.href = current_url() + "?" + $_SERVER['QUERY_STRING'];
    }
    $('.alert').hide();
@@ -160,7 +160,7 @@ function bersihkanStatusPekerjaan(){
 
 //Proses membersikan form add dan edit status pekerjaan jika mengclose modal
 $('.tombol-tutup-statuspekerjaan').on('click', function() {
-   if ($('sukses-statuspekerjaan').is(":visible")) {
+   if ($('.sukses-statuspekerjaan').is(":visible")) {
        window.location.href = current_url() + "?" + $_SERVER['QUERY_STRING'];
    }
    $('.alert').hide();
@@ -172,11 +172,13 @@ $('#tombol-simpan-add-statuspekerjaan').on('click', function(){
    //Mengambil nilai berdasarkan id pada form
    let $nama_status_pekerjaan = $('#nama_status_pekerjaan').val();
    let $deskripsi_status_pekerjaan = $('#deskripsi_status_pekerjaan').val();
+   let $csrf_token_name = $('input[name="csrf_token_name"]').val();
    //Menggunakan request ajax
    $.ajax({
       url: "/status_pekerjaan/tambah_status_pekerjaan",
       type: "POST",
       data: {
+         csrf_token_name: $csrf_token_name,
          nama_status_pekerjaan: $nama_status_pekerjaan,
          deskripsi_status_pekerjaan: $deskripsi_status_pekerjaan
       },
@@ -186,6 +188,7 @@ $('#tombol-simpan-add-statuspekerjaan').on('click', function(){
             $('.sukses-statuspekerjaan').hide();
             $('.error-statuspekerjaan').show();
             $('.error-statuspekerjaan').html($obj.error);
+            $('input[name="csrf_token_name"]').val(location.reload());
          }else {
             $('.error-statuspekerjaan').hide();
             $('.sukses-statuspekerjaan').show();
@@ -223,10 +226,12 @@ $('#tombol-simpan-edit-statuspekerjaan').on('click', function(){
    let $id_status_pekerjaan = $('#id_status_pekerjaan_e').val();
    let $nama_status_pekerjaan = $('#nama_status_pekerjaan_e').val();
    let $deskripsi_status_pekerjaan = $('#deskripsi_status_pekerjaan_e').val();
+   let $csrf_token_name = $('input[name="csrf_token_name"]').val();
    $.ajax({
       url: "/status_pekerjaan/update_status_pekerjaan",
       type: "POST",
       data:{
+         csrf_token_name: $csrf_token_name,
          id_status_pekerjaan: $id_status_pekerjaan,
          nama_status_pekerjaan : $nama_status_pekerjaan ,
          deskripsi_status_pekerjaan: $deskripsi_status_pekerjaan
@@ -289,3 +294,64 @@ $('.tombol-hapus-status-pekerjaan').on('click', function(e) {
       }
    });
 });
+
+
+
+//                              //
+// PENGELOLAAN DATA STATUS TASK //
+//                              //
+
+//Proses untuk membersihkan form add dan edit status task
+function bersihkanStatusTask(){
+   $('#nama_status_task').val('');
+   $('#deskripsi_status_task').val('');
+   $('#id_status_task_e').val('');
+   $('#nama_status_task_e').val('');
+   $('#deskripsi_status_task_e').val('');
+}
+
+//Proses membersikan form add dan edit status task jika mengclose modal
+$('.tombol-tutup-statustask').on('click', function() {
+   if ($('.sukses-statustask').is(":visible")) {
+       window.location.href = current_url() + "?" + $_SERVER['QUERY_STRING'];
+   }
+   $('.alert').hide();
+   bersihkanStatusTask();
+});
+
+//Proses add status task
+// $('#tombol-simpan-add-statustask').on('click', function(){
+//    //Mengambil nilai berdasarkan id pada form
+//    let $nama_status_task = $('#nama_status_task').val();
+//    let $deskripsi_status_task = $('#deskripsi_status_task').val();
+//    //Menggunakan request ajax
+//    $.ajax({
+//       url: "/status_task/tambah_status_task",
+//       type: "POST",
+//       data: {
+//          nama_status_task: $nama_status_task,
+//          deskripsi_status_task: $deskripsi_status_task
+//       },
+//       success: function(hasil){
+//          var $obj = $.parseJSON(hasil);
+//          if ($obj.sukses == false){
+//             $('.sukses-statustask').hide();
+//             $('.error-statustask').show();
+//             $('.error-statustask').html($obj.error);
+//          }else {
+//             $('.error-statustask').hide();
+//             $('.sukses-statustask').show();
+//             $('.sukses-statustask').html($obj.sukses);
+//             bersihkanStatusTask();
+//             setTimeout(function(){location.reload();}, 1000);
+//          }
+//       }
+//    })
+// });
+// //Untuk mentrigger ketika menekan enter maka akan sama dengan submit
+// $('#nama_status_task').on('keypress', function(e){
+//    if (e.which === 13){
+//        e.preventDefault();
+//        $('#tombol-simpan-add-statustask').click();
+//    }
+// });

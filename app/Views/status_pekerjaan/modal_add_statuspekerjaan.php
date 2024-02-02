@@ -3,6 +3,7 @@
    <div class="modal-dialog">
       <div class="modal-content">
          <form action="" method="POST" id="formStatuspekerjaan">
+            <?= csrf_field(); ?>
             <div class="modal-header bg-primary">
                <h5 class="modal-title" style="font-weight: bold; color: white;">Tambah Status Pekerjaan</h5>
                <button type="button" class="btn-close tombol-tutup-statuspekerjaan" data-bs-dismiss="modal" aria-label="Close"></button>

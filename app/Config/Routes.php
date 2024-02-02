@@ -42,6 +42,8 @@ $routes->delete('/status_pekerjaan/delete_status_pekerjaan/(:num)', 'StatusPeker
 //Routes Status Task
 //Untuk menampilkan halaman daftar status task
 $routes->get('/status_task/daftar_status_task', 'StatusTask::daftar_status_task');
+//Untuk menambah status task
+$routes->post('/status_task/tambah_status_task', 'StatusTask::tambah_status_task');
 
 
 //Rotes User
