@@ -5,6 +5,8 @@ use DateTime;
 
 class TaskController extends ResourceController{
     protected $modelName = 'App\Models\TaskModel';
+    protected $modelKategori = 'App\Models\KategoriTaskModel';
+    protected $modelBobot = 'App\Models\BobotKategoriTaskModel';
     protected $format = 'json';
 
     public function index(){
@@ -236,11 +238,11 @@ class TaskController extends ResourceController{
         return $this->respond($data, 200);
     }
 
-    public function showTaskByUser($iduser){
-        $model = new $this->modelName();
-        $data = $model->getWhere(['id_user' => $iduser])->getResult();
-        return $this->respond($data, 200);
-    }
+    // public function showTaskByUser($iduser){
+    //     $model = new $this->modelName();
+    //     $data = $model->getWhere(['id_user' => $iduser])->getResult();
+    //     return $this->respond($data, 200);
+    // }
 }
 
 ?>
