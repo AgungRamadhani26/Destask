@@ -43,7 +43,6 @@ class Filters extends BaseConfig
             // 'honeypot',
             'csrf',
             // 'invalidchars',
-            // 'cors'
         ],
         'after' => [
             'toolbar',
@@ -89,6 +88,9 @@ class Filters extends BaseConfig
                 'api/statustask',
                 'api/targetpoinharian'
             ],
+            'cors' => [
+                'api/*'
+            ]
         ],
     ];
 }
