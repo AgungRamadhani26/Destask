@@ -13,4 +13,13 @@ class KategoriTaskModel extends Model
     protected $allowedFields    = [
         'nama_kategori_task', 'deskripsi_kategori_task'
     ];
+
+    //Fungsi untuk mendapatkan data kategori task
+    public function getKategoriTask($id_kategori_task = false)
+    {
+        if ($id_kategori_task == false) {
+            return $this->orderBy('id_kategori_task', 'DESC')->findAll();
+        }
+        return $this->where(['id_kategori_task' => $id_kategori_task])->first();
+    }
 }

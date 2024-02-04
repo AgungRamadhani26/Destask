@@ -16,7 +16,7 @@
                         <i class="ri-add-fill"></i>
                      </button>
                   </h5>
-                  <table class="table table-bordered datatable">
+                  <table class="table table-striped table-bordered" id="myTable">
                      <thead>
                         <tr>
                            <th>No</th>
@@ -26,51 +26,22 @@
                         </tr>
                      </thead>
                      <tbody>
-                        <tr>
-                           <td>1</td>
-                           <td>Support</td>
-                           <td>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis</td>
-                           <td>
-                              <button type="button" class="btn btn-warning" title="Klik untuk mengedit" data-bs-toggle="modal" data-bs-target="#modaledit_kategoritask"><i class="ri-edit-2-line"></i></button>
-                              <button type="button" class="btn btn-danger" title="Klik untuk menghapus"><i class="ri-delete-bin-5-line"></i></button>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>2</td>
-                           <td>Analisa</td>
-                           <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum laborum</td>
-                           <td>
-                              <button type="button" class="btn btn-warning" title="Klik untuk mengedit"><i class="ri-edit-2-line"></i></button>
-                              <button type="button" class="btn btn-danger" title="Klik untuk menghapus"><i class="ri-delete-bin-5-line"></i></button>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>3</td>
-                           <td>Coding</td>
-                           <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere ipsam</td>
-                           <td>
-                              <button type="button" class="btn btn-warning" title="Klik untuk mengedit"><i class="ri-edit-2-line"></i></button>
-                              <button type="button" class="btn btn-danger" title="Klik untuk menghapus"><i class="ri-delete-bin-5-line"></i></button>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>4</td>
-                           <td>Testing</td>
-                           <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere ipsam</td>
-                           <td>
-                              <button type="button" class="btn btn-warning" title="Klik untuk mengedit"><i class="ri-edit-2-line"></i></button>
-                              <button type="button" class="btn btn-danger" title="Klik untuk menghapus"><i class="ri-delete-bin-5-line"></i></button>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>5</td>
-                           <td>Dokumentasi</td>
-                           <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere ipsam</td>
-                           <td>
-                              <button type="button" class="btn btn-warning" title="Klik untuk mengedit"><i class="ri-edit-2-line"></i></button>
-                              <button type="button" class="btn btn-danger" title="Klik untuk menghapus"><i class="ri-delete-bin-5-line"></i></button>
-                           </td>
-                        </tr>
+                        <?php $i = 1 ?>
+                        <?php foreach ($kategori_task as $kt) : ?>
+                           <tr>
+                              <td><?= $i++ ?></td>
+                              <td><?= $kt['nama_kategori_task'] ?></td>
+                              <td><?= $kt['deskripsi_kategori_task'] ?></td>
+                              <td>
+                                 <button type="button" class="btn btn-warning" title="Klik untuk mengedit" data-bs-toggle="modal" data-bs-target="#modaledit_kategoritask" onclick="edit_kategori_task(<?php echo $kt['id_kategori_task'] ?>)"><i class="ri-edit-2-line"></i></button>
+                                 <form action="/kategori_task/delete_kategori_task/<?= $kt['id_kategori_task']; ?>" method="POST" class="d-inline">
+                                    <?= csrf_field(); ?>
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data Kategori Task ?');"><i class="ri-delete-bin-5-line"></i></button>
+                                 </form>
+                              </td>
+                           </tr>
+                        <?php endforeach; ?>
                      </tbody>
                   </table>
                </div>
@@ -81,9 +52,9 @@
 </section>
 
 <!--include Modal untuk menambah kategori task baru-->
-<?= $this->include('/modal_add_kategoritask'); ?>
+<?= $this->include('kategori_task/modal_add_kategoritask'); ?>
 
 <!--include Modal untuk mengedit data kategori task-->
-<?= $this->include('/modal_edit_kategoritask'); ?>
+<?= $this->include('kategori_task/modal_edit_kategoritask'); ?>
 
 <?= $this->endSection(); ?>

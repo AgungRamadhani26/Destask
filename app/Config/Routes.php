@@ -131,11 +131,23 @@ $routes->delete('/status_pekerjaan/delete_status_pekerjaan/(:num)', 'StatusPeker
 $routes->get('/status_task/daftar_status_task', 'StatusTask::daftar_status_task');
 //Untuk menambah status task
 $routes->post('/status_task/tambah_status_task', 'StatusTask::tambah_status_task');
-//Untuk mengedit status pekerjaan
+//Untuk mengedit status task
 $routes->get('/status_task/edit_status_task/(:num)', 'StatusTask::edit_status_task/$1');
 $routes->post('/status_task/update_status_task', 'StatusTask::update_status_task');
 //Untuk menghapus status task
 $routes->delete('/status_task/delete_status_task/(:num)', 'StatusTask::delete_status_task/$1');
+
+//Routes Kategori Task
+//Untuk menampilkan halaman daftar kategori task
+$routes->get('/kategori_task/daftar_kategori_task', 'KategoriTask::daftar_kategori_task');
+//Untuk menambah kategori task
+$routes->post('/kategori_task/tambah_kategori_task', 'KategoriTask::tambah_kategori_task');
+//Untuk mengedit kategori task
+$routes->get('/kategori_task/edit_kategori_task/(:num)', 'KategoriTask::edit_kategori_task/$1');
+$routes->post('/kategori_task/update_kategori_task', 'KategoriTask::update_kategori_task');
+//Untuk menghapus kategori task
+$routes->delete('/kategori_task/delete_kategori_task/(:num)', 'KategoriTask::delete_kategori_task/$1');
+
 
 
 //Rotes User

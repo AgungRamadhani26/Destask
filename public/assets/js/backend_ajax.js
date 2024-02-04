@@ -83,10 +83,42 @@ function edit_status_task($id){
       type: "GET",
       success: function(hasil){
          var $obj = $.parseJSON(hasil);
-         if ($obj.id_status_task != '1'){
+         if ($obj.id_status_task != ''){
             $('#id_status_task_e').val($obj.id_status_task);
             $('#nama_status_task_e').val($obj.nama_status_task);
             $('#deskripsi_status_task_e').val($obj.deskripsi_status_task);
+         }
+      }
+   });
+}
+
+
+
+//                                //
+// PENGELOLAAN DATA KATEGORI TASK //
+//                                //
+
+//Proses membersikan form add dan edit kategori task jika mengclose modal
+$('.tombol-tutup-kategoritask').on('click', function() {
+   $('.alert').hide();
+   $('#nama_kategori_task').val('');
+   $('#deskripsi_kategori_task').val('');
+   $('#id_kategori_task_e').val('');
+   $('#nama_kategori_task_e').val('');
+   $('#deskripsi_kategori_task_e').val('');
+});
+
+//Proses edit kategori task
+function edit_kategori_task($id){
+   $.ajax({
+      url: "/kategori_task/edit_kategori_task/" + $id,
+      type: "GET",
+      success: function(hasil){
+         var $obj = $.parseJSON(hasil);
+         if ($obj.id_kategori_task != ''){
+            $('#id_kategori_task_e').val($obj.id_kategori_task);
+            $('#nama_kategori_task_e').val($obj.nama_kategori_task);
+            $('#deskripsi_kategori_task_e').val($obj.deskripsi_kategori_task);
          }
       }
    });

@@ -2,7 +2,7 @@
 <aside id="sidebar" class="sidebar">
    <ul class="sidebar-nav" id="sidebar-nav">
       <li class="nav-item">
-         <a class="nav-link " href="">
+         <a class="nav-link collapsed" href="">
             <i class="bi bi-grid"></i>
             <span>Dashboard</span>
          </a>
@@ -29,7 +29,7 @@
                </a>
             </li>
             <li>
-               <a href="">
+               <a href="/kategori_task/daftar_kategori_task" class="<?= $url == '/kategori_task/daftar_kategori_task' ? 'active' : '' ?>">
                   <i class="bi bi-circle"></i><span>Kategori Task</span>
                </a>
             </li>
