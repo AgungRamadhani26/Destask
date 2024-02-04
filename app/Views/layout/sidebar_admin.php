@@ -19,7 +19,7 @@
                </a>
             </li>
             <li>
-               <a href="">
+               <a href="/kategori_pekerjaan/daftar_kategori_pekerjaan" class="<?= $url == '/kategori_pekerjaan/daftar_kategori_pekerjaan' ? 'active' : '' ?>">
                   <i class="bi bi-circle"></i><span>Kategori Pekerjaan</span>
                </a>
             </li>

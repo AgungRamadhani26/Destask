@@ -62,6 +62,38 @@ function edit_status_pekerjaan($id){
 
 
 
+//                                     //
+// PENGELOLAAN DATA KATEGORI PEKERJAAN //
+//                                     //
+
+//Proses membersikan form add dan edit kategori pekerjaan jika mengclose modal
+$('.tombol-tutup-kategoripekerjaan').on('click', function() {
+   $('.alert').hide();
+   $('#nama_kategori_pekerjaan').val('');
+   $('#deskripsi_kategori_pekerjaan').val('');
+   $('#id_kategori_pekerjaan_e').val('');
+   $('#nama_kategori_pekerjaan_e').val('');
+   $('#deskripsi_kategori_pekerjaan_e').val('');
+});
+
+//Proses edit kategori pekerjaan
+function edit_kategori_pekerjaan($id){
+   $.ajax({
+      url: "/kategori_pekerjaan/edit_kategori_pekerjaan/" + $id,
+      type: "GET",
+      success: function(hasil){
+         var $obj = $.parseJSON(hasil);
+         if ($obj.id_kategori_pekerjaan != ''){
+            $('#id_kategori_pekerjaan_e').val($obj.id_kategori_pekerjaan);
+            $('#nama_kategori_pekerjaan_e').val($obj.nama_kategori_pekerjaan);
+            $('#deskripsi_kategori_pekerjaan_e').val($obj.deskripsi_kategori_pekerjaan);
+         }
+      }
+   });
+}
+
+
+
 //                              //
 // PENGELOLAAN DATA STATUS TASK //
 //                              //

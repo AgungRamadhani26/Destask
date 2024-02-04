@@ -16,7 +16,7 @@
                         <i class="ri-add-fill"></i>
                      </button>
                   </h5>
-                  <table class="table table-bordered datatable">
+                  <table class="table table-striped table-bordered" id="myTable">
                      <thead>
                         <tr>
                            <th>No</th>
@@ -26,33 +26,22 @@
                         </tr>
                      </thead>
                      <tbody>
-                        <tr>
-                           <td>1</td>
-                           <td>High</td>
-                           <td>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis</td>
-                           <td>
-                              <button type="button" class="btn btn-warning" title="Klik untuk mengedit" data-bs-toggle="modal" data-bs-target="#modaledit_kategoripekerjaan"><i class="ri-edit-2-line"></i></button>
-                              <button type="button" class="btn btn-danger" title="Klik untuk menghapus"><i class="ri-delete-bin-5-line"></i></button>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>2</td>
-                           <td>Medium</td>
-                           <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum laborum</td>
-                           <td>
-                              <button type="button" class="btn btn-warning" title="Klik untuk mengedit"><i class="ri-edit-2-line"></i></button>
-                              <button type="button" class="btn btn-danger" title="Klik untuk menghapus"><i class="ri-delete-bin-5-line"></i></button>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>3</td>
-                           <td>Low</td>
-                           <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere ipsam</td>
-                           <td>
-                              <button type="button" class="btn btn-warning" title="Klik untuk mengedit"><i class="ri-edit-2-line"></i></button>
-                              <button type="button" class="btn btn-danger" title="Klik untuk menghapus"><i class="ri-delete-bin-5-line"></i></button>
-                           </td>
-                        </tr>
+                        <?php $i = 1 ?>
+                        <?php foreach ($kategori_pekerjaan as $kp) : ?>
+                           <tr>
+                              <td><?= $i++ ?></td>
+                              <td><?= $kp['nama_kategori_pekerjaan'] ?></td>
+                              <td><?= $kp['deskripsi_kategori_pekerjaan'] ?></td>
+                              <td>
+                                 <button type="button" class="btn btn-warning" title="Klik untuk mengedit" data-bs-toggle="modal" data-bs-target="#modaledit_kategoripekerjaan" onclick="edit_kategori_pekerjaan(<?php echo $kp['id_kategori_pekerjaan'] ?>)"><i class="ri-edit-2-line"></i></button>
+                                 <form action="/kategori_pekerjaan/delete_kategori_pekerjaan/<?= $kp['id_kategori_pekerjaan']; ?>" method="POST" class="d-inline">
+                                    <?= csrf_field(); ?>
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data Kategori Pekerjaan ?');"><i class="ri-delete-bin-5-line"></i></button>
+                                 </form>
+                              </td>
+                           </tr>
+                        <?php endforeach; ?>
                      </tbody>
                   </table>
                </div>
@@ -63,9 +52,9 @@
 </section>
 
 <!--include Modal untuk menambah kategori pekerjaan baru-->
-<?= $this->include('/modal_add_kategoripekerjaan'); ?>
+<?= $this->include('kategori_pekerjaan/modal_add_kategoripekerjaan'); ?>
 
 <!--include Modal untuk mengedit data kategori pekerjaan-->
-<?= $this->include('/modal_edit_kategoripekerjaan'); ?>
+<?= $this->include('kategori_pekerjaan/modal_edit_kategoripekerjaan'); ?>
 
 <?= $this->endSection(); ?>

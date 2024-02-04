@@ -44,7 +44,6 @@ class KategoriTask extends BaseController
                     'required' => 'Deskripsi kategori task harus diisi'
                 ]
             ]
-
         ];
         $validasi->setRules($aturan);
         //Jika inputan valid
@@ -88,7 +87,6 @@ class KategoriTask extends BaseController
                     'required' => 'Deskripsi kategori task harus diisi'
                 ]
             ]
-
         ];
         $validasi->setRules($aturan);
         //Jika inputan valid
