@@ -15,7 +15,16 @@ class UserModel extends Model
         'user_level', 'nama', 'status_keaktifan', 'foto_profil'
     ];
 
-    
+    //Fungsi untuk mendapatkan data status user
+    public function getUser($id_user = false)
+    {
+        if ($id_user == false) {
+            return $this->orderBy('created_at', 'DESC')->findAll();
+        }
+        return $this->where(['id_user' => $id_user])->first();
+    }
+
+
     function getIdentitas($identitas)
     {
         $builder = $this->table('user');
@@ -37,6 +46,3 @@ class UserModel extends Model
         }
     }
 }
-
-
-    

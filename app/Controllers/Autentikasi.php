@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\UserModel;
-use PhpParser\Node\Stmt\Else_;
 
 class Autentikasi extends BaseController
 {

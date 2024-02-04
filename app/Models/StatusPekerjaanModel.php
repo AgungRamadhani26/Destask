@@ -18,7 +18,7 @@ class StatusPekerjaanModel extends Model
     public function getStatusPekerjaan($id_status_pekerjaan = false)
     {
         if ($id_status_pekerjaan == false) {
-            return $this->orderBy('created_at', 'DESC')->findAll();
+            return $this->orderBy('id_status_pekerjaan', 'DESC')->findAll();
         }
         return $this->where(['id_status_pekerjaan' => $id_status_pekerjaan])->first();
     }

@@ -16,3 +16,28 @@
 
 <!--Backend-Ajax js File -->
 <script src="/assets/js/backend_ajax.js"></script>
+
+<script>
+   $(document).ready(function() {
+      $('#myTable').DataTable();
+   });
+</script>
+
+<script>
+   <?php if (session()->getFlashdata('swal_icon')) { ?>
+      Swal.fire({
+         icon: '<?= session()->getFlashdata('swal_icon') ?>',
+         title: '<?= session()->getFlashdata('swal_title') ?>',
+         text: '<?= session()->getFlashdata('swal_text') ?>',
+      })
+   <?php } ?>
+</script>
+
+<!-- Konfigurasi Modal Open -->
+<?php if (session()->getFlashdata('modal')) : ?>
+   <script>
+      $(document).ready(function() {
+         $('#<?= session()->getFlashdata('modal'); ?>').modal('show');
+      });
+   </script>
+<?php endif; ?>

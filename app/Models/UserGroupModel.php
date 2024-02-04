@@ -18,7 +18,7 @@ class UserGroupModel extends Model
     public function getUserGroup($id_usergroup = false)
     {
         if ($id_usergroup == false) {
-            return $this->orderBy('created_at', 'DESC')->findAll();
+            return $this->orderBy('id_usergroup', 'DESC')->findAll();
         }
         return $this->where(['id_usergroup' => $id_usergroup])->first();
     }

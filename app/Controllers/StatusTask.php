@@ -12,6 +12,7 @@ class StatusTask extends BaseController
     public function __construct()
     {
         $this->statusTaskModel = new StatusTaskModel();
+        helper(['swal_helper']);
     }
 
     //Fungsi daftar_status_task
@@ -57,18 +58,72 @@ class StatusTask extends BaseController
                 'deskripsi_status_task' => $deskripsi_status_task
             ];
             $this->statusTaskModel->save($data_status_task);
-            // $hasil = [
-            //     'sukses' => "Berhasil menambah data status task",
-            //     'error' => false
-            // ];
-            session()->setFlashdata('pesan', 'Data berhasil ditambahkan.');
+            Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil menambah data Status Task');
+            return redirect()->to('status_task/daftar_status_task');
         } else {
-            // $hasil = [
-            //     'sukses' => false,
-            //     'error' => $validasi->listErrors()
-            // ];
-            session()->setFlashdata('pesan', 'Data berhasil ditambahkan.');
+            session()->setFlashdata('error', $validasi->listErrors());
+            return redirect()->withInput()->with('modal', 'modaltambah_statustask')->back();
         }
+    }
+
+    //Fungsi edit_status_task
+    public function edit_status_task($id_status_task)
+    {
+        return json_encode($this->statusTaskModel->find($id_status_task));
+    }
+    public function update_status_task()
+    {
+        $validasi = \Config\Services::validation();
+        $aturan = [
+            'nama_status_task_e' => [
+                'rules' => 'required|alpha_space',
+                'errors' => [
+                    'required' => 'Nama status task harus diisi',
+                    'alpha_space' => 'Nama status task hanya dapat berisi huruf'
+                ]
+            ],
+            'deskripsi_status_task_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Deskripsi status task harus diisi'
+                ]
+            ]
+
+        ];
+        $validasi->setRules($aturan);
+        //Jika inputan valid
+        if ($validasi->withRequest($this->request)->run()) {
+            //Mengambil data dari ajax
+            $id_status_task = $this->request->getPost('id_status_task_e');
+            $nama_status_task = preg_replace('/\s+/', ' ', trim(strval($this->request->getPost('nama_status_task_e'))));
+            $deskripsi_status_task = preg_replace('/\s+/', ' ', trim(strval($this->request->getPost('deskripsi_status_task_e'))));
+            // Memeriksa apakah data baru sama dengan data yang sudah ada
+            $existingData = $this->statusTaskModel->find($id_status_task);
+            if ($existingData['nama_status_task'] === $nama_status_task && $existingData['deskripsi_status_task'] === $deskripsi_status_task) {
+                session()->setFlashdata('info', 'Data status task tidak ada yang anda ubah');
+                return redirect()->withInput()->with('modal', 'modaledit_statustask')->back();
+            } else {
+                // Proses memasukkan data ke database
+                $data_status_task = [
+                    'id_status_task' => $id_status_task,
+                    'nama_status_task' => $nama_status_task,
+                    'deskripsi_status_task' => $deskripsi_status_task
+                ];
+                $this->statusTaskModel->save($data_status_task);
+                Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil mengedit data Status Task');
+                return redirect()->to('status_task/daftar_status_task');
+            }
+        } else {
+            session()->setFlashdata('error', $validasi->listErrors());
+            return redirect()->withInput()->with('modal', 'modaledit_statustask')->back();
+        }
+    }
+
+    //Fungsi delete_status_task
+    public function delete_status_task($id_status_task)
+    {
+        $this->statusTaskModel->delete($id_status_task);
+        Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Data status task berhasil dihapus');
         return redirect()->to('/status_task/daftar_status_task');
     }
 }

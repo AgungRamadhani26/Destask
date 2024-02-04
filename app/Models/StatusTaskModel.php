@@ -18,7 +18,7 @@ class StatusTaskModel extends Model
     public function getStatusTask($id_status_task = false)
     {
         if ($id_status_task == false) {
-            return $this->orderBy('created_at', 'DESC')->findAll();
+            return $this->orderBy('id_status_task', 'DESC')->findAll();
         }
         return $this->where(['id_status_task' => $id_status_task])->first();
     }
