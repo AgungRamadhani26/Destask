@@ -32,10 +32,11 @@ class StatusTask extends BaseController
         $validasi = \Config\Services::validation();
         $aturan = [
             'nama_status_task' => [
-                'rules' => 'required|alpha_space',
+                'rules' => 'required|alpha_space|is_unique[status_task.nama_status_task]',
                 'errors' => [
                     'required' => 'Nama status task harus diisi',
-                    'alpha_space' => 'Nama status task hanya dapat berisi huruf'
+                    'alpha_space' => 'Nama status task hanya dapat berisi huruf',
+                    'is_unique' => 'Status task sudah terdaftar, coba isi yang lain'
                 ]
             ],
             'deskripsi_status_task' => [
@@ -74,12 +75,20 @@ class StatusTask extends BaseController
     public function update_status_task()
     {
         $validasi = \Config\Services::validation();
+        //Cek nama_status_task, karena harus unik
+        $status_task_lama = $this->statusTaskModel->getStatusTask($this->request->getPost('id_status_task_e'));
+        if ($status_task_lama['nama_status_task'] == $this->request->getPost('nama_status_task_e')) {
+            $rule_status_task = 'required|alpha_space';
+        } else {
+            $rule_status_task = 'required|alpha_space|is_unique[status_task.nama_status_task]';
+        }
         $aturan = [
             'nama_status_task_e' => [
-                'rules' => 'required|alpha_space',
+                'rules' => $rule_status_task,
                 'errors' => [
                     'required' => 'Nama status task harus diisi',
-                    'alpha_space' => 'Nama status task hanya dapat berisi huruf'
+                    'alpha_space' => 'Nama status task hanya dapat berisi huruf',
+                    'is_unique' => 'Status task sudah terdaftar, coba isi yang lain'
                 ]
             ],
             'deskripsi_status_task_e' => [

@@ -1,35 +1,3 @@
-//                            //
-// PENGELOLAAN DATA USERGROUP //
-//                            //
-
-//Proses membersikan form add dan edit usergroup jika mengclose modal
-$('.tombol-tutup-usergroup').on('click', function() {
-   $('.alert').hide();
-   $('#nama_usergroup').val('');
-   $('#deskripsi_usergroup').val('');
-   $('#id_usergroup_e').val('');
-   $('#nama_usergroup_e').val('');
-   $('#deskripsi_usergroup_e').val('');
-});
-
-// //Proses edit usergroup
-function edit_usergroup($id){
-   $.ajax({
-      url: "/usergroup/edit_usergroup/" + $id,
-      type: "GET",
-      success: function(hasil){
-         var $obj = $.parseJSON(hasil);
-         if ($obj.id_usergroup != ''){
-            $('#id_usergroup_e').val($obj.id_usergroup);
-            $('#nama_usergroup_e').val($obj.nama_usergroup);
-            $('#deskripsi_usergroup_e').val($obj.deskripsi_usergroup);
-         }
-      }
-   });
-}
-
-
-
 //                                   //
 // PENGELOLAAN DATA STATUS PEKERJAAN //
 //                                   //
@@ -155,3 +123,53 @@ function edit_kategori_task($id){
       }
    });
 }
+
+
+
+//                            //
+// PENGELOLAAN DATA USERGROUP //
+//                            //
+
+//Proses membersikan form add dan edit usergroup jika mengclose modal
+$('.tombol-tutup-usergroup').on('click', function() {
+   $('.alert').hide();
+   $('#nama_usergroup').val('');
+   $('#deskripsi_usergroup').val('');
+   $('#id_usergroup_e').val('');
+   $('#nama_usergroup_e').val('');
+   $('#deskripsi_usergroup_e').val('');
+});
+
+// //Proses edit usergroup
+function edit_usergroup($id){
+   $.ajax({
+      url: "/usergroup/edit_usergroup/" + $id,
+      type: "GET",
+      success: function(hasil){
+         var $obj = $.parseJSON(hasil);
+         if ($obj.id_usergroup != ''){
+            $('#id_usergroup_e').val($obj.id_usergroup);
+            $('#nama_usergroup_e').val($obj.nama_usergroup);
+            $('#deskripsi_usergroup_e').val($obj.deskripsi_usergroup);
+         }
+      }
+   });
+}
+
+
+
+//                            //
+// PENGELOLAAN DATA USERGROUP //
+//                            //
+
+
+ // Jika level adalah 'staff' atau 'user', maka tampilkan userGroupContainer, jika tidak, sembunyikan
+document.getElementById('level').addEventListener('change', function() {
+   var level = this.value;
+   var userGroupContainer = document.getElementById('userGroupContainer');
+   if (level === 'staff' || level === 'supervisi') {
+      userGroupContainer.style.display = 'block';
+   } else {
+      userGroupContainer.style.display = 'none';
+   }
+});

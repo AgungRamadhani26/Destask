@@ -32,10 +32,11 @@ class KategoriPekerjaan extends BaseController
         $validasi = \Config\Services::validation();
         $aturan = [
             'nama_kategori_pekerjaan' => [
-                'rules' => 'required|alpha_space',
+                'rules' => 'required|alpha_space|is_unique[kategori_pekerjaan.nama_kategori_pekerjaan]',
                 'errors' => [
                     'required' => 'Nama kategori pekerjaan harus diisi',
-                    'alpha_space' => 'Nama kategori pekerjaan hanya dapat berisi huruf'
+                    'alpha_space' => 'Nama kategori pekerjaan hanya dapat berisi huruf',
+                    'is_unique' => 'Kategori pekerjaan sudah terdaftar, coba isi yang lain'
                 ]
             ],
             'deskripsi_kategori_pekerjaan' => [
@@ -73,12 +74,20 @@ class KategoriPekerjaan extends BaseController
     public function update_kategori_pekerjaan()
     {
         $validasi = \Config\Services::validation();
+        //Cek nama_kategori_pekerjaan, karena harus unik
+        $kategori_pekerjaan_lama = $this->kategoriPekerjaanModel->getKategoriPekerjaan($this->request->getPost('id_kategori_pekerjaan_e'));
+        if ($kategori_pekerjaan_lama['nama_kategori_pekerjaan'] == $this->request->getPost('nama_kategori_pekerjaan_e')) {
+            $rule_kategori_pekerjaan = 'required|alpha_space';
+        } else {
+            $rule_kategori_pekerjaan = 'required|alpha_space|is_unique[kategori_pekerjaan.nama_kategori_pekerjaan]';
+        }
         $aturan = [
             'nama_kategori_pekerjaan_e' => [
-                'rules' => 'required|alpha_space',
+                'rules' => $rule_kategori_pekerjaan,
                 'errors' => [
                     'required' => 'Nama kategori pekerjaan harus diisi',
-                    'alpha_space' => 'Nama kategori pekerjaan hanya dapat berisi huruf'
+                    'alpha_space' => 'Nama kategori pekerjaan hanya dapat berisi huruf',
+                    'is_unique' => 'Kategori pekerjaan sudah terdaftar, coba isi yang lain'
                 ]
             ],
             'deskripsi_kategori_pekerjaan_e' => [

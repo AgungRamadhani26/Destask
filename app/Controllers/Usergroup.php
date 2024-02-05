@@ -32,10 +32,11 @@ class Usergroup extends BaseController
         $validasi = \Config\Services::validation();
         $aturan = [
             'nama_usergroup' => [
-                'rules' => 'required|alpha_space',
+                'rules' => 'required|alpha_space|is_unique[usergroup.nama_usergroup]',
                 'errors' => [
                     'required' => 'Nama usergroup harus diisi',
-                    'alpha_space' => 'Nama usergroup hanya dapat berisi huruf'
+                    'alpha_space' => 'Nama usergroup hanya dapat berisi huruf',
+                    'is_unique' => 'Usergroup sudah terdaftar, coba isi yang lain'
                 ]
             ],
             'deskripsi_usergroup' => [
@@ -73,12 +74,20 @@ class Usergroup extends BaseController
     public function update_usergroup()
     {
         $validasi = \Config\Services::validation();
+        //Cek nama_usergroup, karena harus unik
+        $usergroup_lama = $this->usergroupModel->getUserGroup($this->request->getPost('id_usergroup_e'));
+        if ($usergroup_lama['nama_usergroup'] == $this->request->getPost('nama_usergroup_e')) {
+            $rule_usergroup = 'required|alpha_space';
+        } else {
+            $rule_usergroup = 'required|alpha_space|is_unique[usergroup.nama_usergroup]';
+        }
         $aturan = [
             'nama_usergroup_e' => [
-                'rules' => 'required|alpha_space',
+                'rules' => $rule_usergroup,
                 'errors' => [
                     'required' => 'Nama usergroup harus diisi',
-                    'alpha_space' => 'Nama usergroup hanya dapat berisi huruf'
+                    'alpha_space' => 'Nama usergroup hanya dapat berisi huruf',
+                    'is_unique' => 'Nama usergroup sudah terdaftar, coba isi yang lain'
                 ]
             ],
             'deskripsi_usergroup_e' => [

@@ -19,7 +19,7 @@ class UserModel extends Model
     public function getUser($id_user = false)
     {
         if ($id_user == false) {
-            return $this->orderBy('created_at', 'DESC')->findAll();
+            return $this->orderBy('id_user', 'DESC')->findAll();
         }
         return $this->where(['id_user' => $id_user])->first();
     }

@@ -32,10 +32,11 @@ class StatusPekerjaan extends BaseController
         $validasi = \Config\Services::validation();
         $aturan = [
             'nama_status_pekerjaan' => [
-                'rules' => 'required|alpha_space',
+                'rules' => 'required|alpha_space|is_unique[status_pekerjaan.nama_status_pekerjaan]',
                 'errors' => [
                     'required' => 'Nama status pekerjaan harus diisi',
-                    'alpha_space' => 'Nama status pekerjaan hanya dapat berisi huruf'
+                    'alpha_space' => 'Nama status pekerjaan hanya dapat berisi huruf',
+                    'is_unique' => 'Status pekerjaan sudah terdaftar, coba isi yang lain'
                 ]
             ],
             'deskripsi_status_pekerjaan' => [
@@ -73,12 +74,20 @@ class StatusPekerjaan extends BaseController
     public function update_status_pekerjaan()
     {
         $validasi = \Config\Services::validation();
+        //Cek nama_status_pekerjaan, karena harus unik
+        $status_pekerjaan_lama = $this->statusPekerjaanModel->getStatusPekerjaan($this->request->getPost('id_status_pekerjaan_e'));
+        if ($status_pekerjaan_lama['nama_status_pekerjaan'] == $this->request->getPost('nama_status_pekerjaan_e')) {
+            $rule_status_pekerjaan = 'required|alpha_space';
+        } else {
+            $rule_status_pekerjaan = 'required|alpha_space|is_unique[status_pekerjaan.nama_status_pekerjaan]';
+        }
         $aturan = [
             'nama_status_pekerjaan_e' => [
-                'rules' => 'required|alpha_space',
+                'rules' => $rule_status_pekerjaan,
                 'errors' => [
                     'required' => 'Nama status pekerjaan harus diisi',
-                    'alpha_space' => 'Nama status pekerjaan hanya dapat berisi huruf'
+                    'alpha_space' => 'Nama status pekerjaan hanya dapat berisi huruf',
+                    'is_unique' => 'Status pekerjaan sudah terdaftar, coba isi yang lain'
                 ]
             ],
             'deskripsi_status_pekerjaan_e' => [

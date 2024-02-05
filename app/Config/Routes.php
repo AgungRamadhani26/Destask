@@ -22,17 +22,6 @@ $routes->get('/logout', 'Autentikasi::logout');
 //Routes dashboard
 $routes->get('/dashboard', 'Dashboard::lihat_dashboard');
 
-//Routes Usergroup
-//Untuk menampilkan halaman daftar usergroup
-$routes->get('/usergroup/daftar_usergroup', 'Usergroup::daftar_usergroup');
-//Untuk menambah usergroup
-$routes->post('/usergroup/tambah_usergroup', 'Usergroup::tambah_usergroup');
-//Untuk mengedit usergroup
-$routes->get('/usergroup/edit_usergroup/(:num)', 'Usergroup::edit_usergroup/$1');
-$routes->post('/usergroup/update_usergroup', 'Usergroup::update_usergroup');
-//Untuk menghapus usergroup
-$routes->delete('/usergroup/delete_usergroup/(:num)', 'Usergroup::delete_usergroup/$1');
-
 //Routes Status Pekerjaan
 //Untuk menampilkan halaman daftar status pekerjaan
 $routes->get('/status_pekerjaan/daftar_status_pekerjaan', 'StatusPekerjaan::daftar_status_pekerjaan');
@@ -77,9 +66,26 @@ $routes->post('/kategori_task/update_kategori_task', 'KategoriTask::update_kateg
 //Untuk menghapus kategori task
 $routes->delete('/kategori_task/delete_kategori_task/(:num)', 'KategoriTask::delete_kategori_task/$1');
 
+//Routes Usergroup
+//Untuk menampilkan halaman daftar usergroup
+$routes->get('/usergroup/daftar_usergroup', 'Usergroup::daftar_usergroup');
+//Untuk menambah usergroup
+$routes->post('/usergroup/tambah_usergroup', 'Usergroup::tambah_usergroup');
+//Untuk mengedit usergroup
+$routes->get('/usergroup/edit_usergroup/(:num)', 'Usergroup::edit_usergroup/$1');
+$routes->post('/usergroup/update_usergroup', 'Usergroup::update_usergroup');
+//Untuk menghapus usergroup
+$routes->delete('/usergroup/delete_usergroup/(:num)', 'Usergroup::delete_usergroup/$1');
+
 //Rotes User
 //Untuk menampilkan halaman user
 $routes->get('/user/daftar_user', 'User::daftar_user');
+//Untuk menambah user
+$routes->post('/user/tambah_user', 'User::tambah_user');
+
+//Routes Profile
+//Untuk menampilkan halaman profile
+$routes->get('/profile/lihat_profil', 'Profile::lihat_profile');
 
 
 

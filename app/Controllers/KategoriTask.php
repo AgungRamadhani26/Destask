@@ -32,10 +32,11 @@ class KategoriTask extends BaseController
         $validasi = \Config\Services::validation();
         $aturan = [
             'nama_kategori_task' => [
-                'rules' => 'required|alpha_space',
+                'rules' => 'required|alpha_space|is_unique[kategori_task.nama_kategori_task]',
                 'errors' => [
                     'required' => 'Nama kategori task harus diisi',
-                    'alpha_space' => 'Nama kategori task hanya dapat berisi huruf'
+                    'alpha_space' => 'Nama kategori task hanya dapat berisi huruf',
+                    'is_unique' => 'Kategori task sudah terdaftar, coba isi yang lain'
                 ]
             ],
             'deskripsi_kategori_task' => [
@@ -73,12 +74,20 @@ class KategoriTask extends BaseController
     public function update_kategori_task()
     {
         $validasi = \Config\Services::validation();
+        //Cek nama_kategori_task, karena harus unik
+        $kategori_task_lama = $this->kategoriTaskModel->getKategoriTask($this->request->getPost('id_kategori_task_e'));
+        if ($kategori_task_lama['nama_kategori_task'] == $this->request->getPost('nama_kategori_task_e')) {
+            $rule_kategori_task = 'required|alpha_space';
+        } else {
+            $rule_kategori_task = 'required|alpha_space|is_unique[kategori_task.nama_kategori_task]';
+        }
         $aturan = [
             'nama_kategori_task_e' => [
-                'rules' => 'required|alpha_space',
+                'rules' => $rule_kategori_task,
                 'errors' => [
                     'required' => 'Nama kategori task harus diisi',
-                    'alpha_space' => 'Nama kategori task hanya dapat berisi huruf'
+                    'alpha_space' => 'Nama kategori task hanya dapat berisi huruf',
+                    'is_unique' => 'Kategori task sudah terdaftar, coba isi yang lain'
                 ]
             ],
             'deskripsi_kategori_task_e' => [
