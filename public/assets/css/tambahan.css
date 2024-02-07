@@ -48,4 +48,9 @@
 .table-bordered td{
   border: 1px solid #ddd;
 }
+
+.gambar{
+  width: 80px;
+  height: 110px;
+}
  

@@ -162,6 +162,16 @@ function edit_usergroup($id){
 // PENGELOLAAN DATA USERGROUP //
 //                            //
 
+//Proses membersikan form add dan edit user jika mengclose modal
+$('.tombol-tutup-user').on('click', function() {
+   $('.alert').hide();
+   $('#email').val('');
+   $('#nama').val('');
+   $('#level').val('');
+   $("input[name='usergroup']").prop('checked', false);
+   $('#foto_profile').val('');
+   $('.img-preview').attr('src', '');
+});
 
  // Jika level adalah 'staff' atau 'user', maka tampilkan userGroupContainer, jika tidak, sembunyikan
 document.getElementById('level').addEventListener('change', function() {
@@ -169,7 +179,18 @@ document.getElementById('level').addEventListener('change', function() {
    var userGroupContainer = document.getElementById('userGroupContainer');
    if (level === 'staff' || level === 'supervisi') {
       userGroupContainer.style.display = 'block';
-   } else {
+   } else{
       userGroupContainer.style.display = 'none';
    }
 });
+
+//fungsi untuk mempreview gambar sampul komik
+function previewImg() {
+   const fotoProfil = document.querySelector('#foto_profile');
+   const imgPreview = document.querySelector('.img-preview');
+   const fileFotoProfile = new FileReader();
+   fileFotoProfile.readAsDataURL(fotoProfil.files[0]);
+   fileFotoProfile.onload = function(e) {
+       imgPreview.src = e.target.result;
+   }
+}

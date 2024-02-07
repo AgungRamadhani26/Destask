@@ -11,8 +11,8 @@ class UserModel extends Model
     protected $useSoftDeletes   = true;
     protected $useTimestamps    = true;
     protected $allowedFields    = [
-        'id_usergroup', 'username', 'email', 'password', 'user_role',
-        'user_level', 'nama', 'status_keaktifan', 'foto_profil'
+        'id_usergroup', 'username', 'email', 'password',
+        'user_level', 'nama', 'foto_profil'
     ];
 
     //Fungsi untuk mendapatkan data status user

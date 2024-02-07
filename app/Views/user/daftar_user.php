@@ -20,10 +20,12 @@
                      <thead>
                         <tr>
                            <th>No</th>
+                           <th>Foto</th>
                            <th>Username</th>
                            <th>Email</th>
                            <th>Nama</th>
                            <th>User Level</th>
+                           <th>Usergroup</th>
                            <th>Aksi</th>
                         </tr>
                      </thead>
@@ -32,12 +34,33 @@
                         <?php foreach ($user as $ur) : ?>
                            <tr>
                               <td><?= $i++ ?></td>
+                              <td><img src="/assets/file_pengguna/foto_user/<?= $ur['foto_profil']; ?>" alt="" class="gambar"></td>
                               <td><?= $ur['username'] ?></td>
                               <td><?= $ur['email'] ?></td>
                               <td><?= $ur['nama'] ?></td>
-                              <td><?= $ur['user_level'] ?></td>
                               <td>
-                                 <button type="button" class="btn btn-secondary" title="Klik untuk menonaktifkan"><i class="bx bx-minus-circle"></i></button>
+                                 <?php if ($ur['user_level'] == 'staff') : ?>
+                                    <span class="badge rounded-pill bg-primary"> <?= $ur['user_level'] ?></span>
+                                 <?php elseif ($ur['user_level'] == 'supervisi') : ?>
+                                    <span class="badge rounded-pill bg-success"> <?= $ur['user_level'] ?></span>
+                                 <?php elseif ($ur['user_level'] == 'admin') : ?>
+                                    <span class="badge rounded-pill bg-danger"> <?= $ur['user_level'] ?></span>
+                                 <?php elseif ($ur['user_level'] == 'hod') : ?>
+                                    <span class="badge rounded-pill bg-warning"> <?= $ur['user_level'] ?></span>
+                                 <?php elseif ($ur['user_level'] == 'direksi') : ?>
+                                    <span class="badge rounded-pill bg-secondary"> <?= $ur['user_level'] ?></span>
+                                 <?php endif; ?>
+                              </td>
+                              <td>
+                                 <?php if ($ur['id_usergroup'] == '') : ?>
+                                    <?= '--------' ?>
+                                 <?php else : ?>
+                                    <?php foreach ($usergroup as $ug) : ?>
+                                       <?= $ur['id_usergroup'] == $ug['id_usergroup'] ? $ug['nama_usergroup'] : ''; ?>
+                                    <?php endforeach; ?>
+                                 <?php endif; ?>
+                              </td>
+                              <td>
                                  <button type="button" class="btn btn-warning" title="Klik untuk mengedit" data-bs-toggle="modal" data-bs-target="#modaledit_user" onclick="edit_user(<?php echo $ur['id_user'] ?>)"><i class="ri-edit-2-line"></i></button>
                                  <form action="/user/delete_user/<?= $ur['id_user'] ?>" method="POST" class="d-inline">
                                     <?= csrf_field(); ?>

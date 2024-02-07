@@ -46,11 +46,6 @@ class User extends Migration
                 'constraint' => 50,
                 'null'       => true
             ],
-            'status_keaktifan' => [
-                'type'       => 'INT',
-                'constraint' => 1,
-                'null'       => true,
-            ],
             'foto_profil' => [
                 'type'       => 'VARCHAR',
                 'constraint' => 100,

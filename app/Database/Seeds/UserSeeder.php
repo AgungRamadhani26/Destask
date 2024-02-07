@@ -18,7 +18,6 @@ class UserSeeder extends Seeder
                 'password'         => md5('123456'),
                 'user_level'       => 'admin',
                 'nama'             => 'Agung Ramadhani',
-                'status_keaktifan' => 1,
                 'foto_profil'      => 'agung.jpg',
                 'created_at'       => Time::now(),
                 'updated_at'       => Time::now()
@@ -30,7 +29,6 @@ class UserSeeder extends Seeder
                 'password'         => md5('123456'),
                 'user_level'       => 'staff',
                 'nama'             => 'Bima Satria',
-                'status_keaktifan' => 1,
                 'foto_profil'      => 'bima.jpg',
                 'created_at'       => Time::now(),
                 'updated_at'       => Time::now()
@@ -42,7 +40,6 @@ class UserSeeder extends Seeder
                 'password'         => md5('123456'),
                 'user_level'       => 'staff',
                 'nama'             => 'Jatmiko Adi Nugroho',
-                'status_keaktifan' => 1,
                 'foto_profil'      => 'jatmiko.jpg',
                 'created_at'       => Time::now(),
                 'updated_at'       => Time::now()
@@ -54,7 +51,6 @@ class UserSeeder extends Seeder
                 'password'         => md5('123456'),
                 'user_level'       => 'supervisi',
                 'nama'             => 'Putri Mayang Syafira',
-                'status_keaktifan' => 1,
                 'foto_profil'      => 'fira.jpg',
                 'created_at'       => Time::now(),
                 'updated_at'       => Time::now()
@@ -66,7 +62,6 @@ class UserSeeder extends Seeder
                 'password'         => md5('123456'),
                 'user_level'       => 'direksi',
                 'nama'             => 'Amanda Ninda Amalia',
-                'status_keaktifan' => 1,
                 'foto_profil'      => 'ninda.jpg',
                 'created_at'       => Time::now(),
                 'updated_at'       => Time::now()
@@ -78,7 +73,6 @@ class UserSeeder extends Seeder
                 'password'         => md5('123456'),
                 'user_level'       => 'hod',
                 'nama'             => 'Daffa Sinaga',
-                'status_keaktifan' => 1,
                 'foto_profil'      => 'dafa.jpg',
                 'created_at'       => Time::now(),
                 'updated_at'       => Time::now()
