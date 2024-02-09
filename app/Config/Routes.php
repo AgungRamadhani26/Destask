@@ -82,6 +82,9 @@ $routes->delete('/usergroup/delete_usergroup/(:num)', 'Usergroup::delete_usergro
 $routes->get('/user/daftar_user', 'User::daftar_user');
 //Untuk menambah user
 $routes->post('/user/tambah_user', 'User::tambah_user');
+//Untuk mengedit user
+$routes->get('/user/edit_user/(:num)', 'User::edit_user/$1');
+$routes->post('/user/update_user', 'User::update_user');
 
 //Routes Profile
 //Untuk menampilkan halaman profile

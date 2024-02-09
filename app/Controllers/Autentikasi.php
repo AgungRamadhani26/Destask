@@ -73,7 +73,6 @@ class Autentikasi extends BaseController
                             'email' => $dataUser['email'],
                             'user_level' => $dataUser['user_level'],
                             'nama' => $dataUser['nama'],
-                            'status_keaktifan' => $dataUser['status_keaktifan'],
                             'foto_profil' => $dataUser['foto_profil']
                         ];
                         session()->set($dataSesi);
@@ -86,7 +85,6 @@ class Autentikasi extends BaseController
                             'email' => $dataUser1['email'],
                             'user_level' => $dataUser1['user_level'],
                             'nama' => $dataUser1['nama'],
-                            'status_keaktifan' => $dataUser1['status_keaktifan'],
                             'foto_profil' => $dataUser1['foto_profil']
                         ];
                         session()->set($dataSesi);
