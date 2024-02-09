@@ -50,7 +50,23 @@
 }
 
 .gambar{
-  width: 80px;
-  height: 110px;
+  width: 50px;
+  height: 65px;
 }
+
+.centered_gambar {
+  text-align: center;
+}
+
+.centered_gambar img {
+  display: block;
+  margin: 0 auto;
+}
+
+.btn-group {
+  display: flex;
+  gap: 5px; /* Jarak antara tombol */
+}
+
+
  

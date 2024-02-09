@@ -34,7 +34,7 @@
                         <?php foreach ($user as $ur) : ?>
                            <tr>
                               <td><?= $i++ ?></td>
-                              <td><img src="/assets/file_pengguna/foto_user/<?= $ur['foto_profil']; ?>" alt="" class="gambar"></td>
+                              <td class="centered_gambar"><img src="/assets/file_pengguna/foto_user/<?= $ur['foto_profil']; ?>" alt="" class="gambar"></td>
                               <td><?= $ur['username'] ?></td>
                               <td><?= $ur['email'] ?></td>
                               <td><?= $ur['nama'] ?></td>
@@ -61,12 +61,16 @@
                                  <?php endif; ?>
                               </td>
                               <td>
-                                 <button type="button" class="btn btn-warning" title="Klik untuk mengedit" data-bs-toggle="modal" data-bs-target="#modaledit_user" onclick="edit_user(<?php echo $ur['id_user'] ?>)"><i class="ri-edit-2-line"></i></button>
-                                 <form action="/user/delete_user/<?= $ur['id_user'] ?>" method="POST" class="d-inline">
-                                    <?= csrf_field(); ?>
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data user ?');"><i class="ri-delete-bin-5-line"></i></button>
-                                 </form>
+                                 <div class="btn-group" role="group">
+                                    <div>
+                                       <button type="button" class="btn btn-warning" title="Klik untuk mengedit" data-bs-toggle="modal" data-bs-target="#modaledit_user" onclick="edit_user(<?php echo $ur['id_user'] ?>)"><i class="ri-edit-2-line"></i></button>
+                                    </div>
+                                    <form action="/user/delete_user/<?= $ur['id_user'] ?>" method="POST" class="d-inline">
+                                       <?= csrf_field(); ?>
+                                       <input type="hidden" name="_method" value="DELETE">
+                                       <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data user ?');"><i class="ri-delete-bin-5-line"></i></button>
+                                    </form>
+                                 </div>
                               </td>
                            </tr>
                         <?php endforeach; ?>

@@ -76,6 +76,8 @@ $routes->get('/usergroup/edit_usergroup/(:num)', 'Usergroup::edit_usergroup/$1')
 $routes->post('/usergroup/update_usergroup', 'Usergroup::update_usergroup');
 //Untuk menghapus usergroup
 $routes->delete('/usergroup/delete_usergroup/(:num)', 'Usergroup::delete_usergroup/$1');
+//Untuk melihat detail usergroup
+$routes->get('/usergroup/detail_usergroup/(:num)', 'Usergroup::detail_usergroup/$1');
 
 //Rotes User
 //Untuk menampilkan halaman user
@@ -85,6 +87,8 @@ $routes->post('/user/tambah_user', 'User::tambah_user');
 //Untuk mengedit user
 $routes->get('/user/edit_user/(:num)', 'User::edit_user/$1');
 $routes->post('/user/update_user', 'User::update_user');
+//Untuk menghapus user
+$routes->delete('/user/delete_user/(:num)', 'User::delete_user/$1');
 
 //Routes Profile
 //Untuk menampilkan halaman profile

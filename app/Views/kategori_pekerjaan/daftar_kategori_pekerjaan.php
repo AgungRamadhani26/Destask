@@ -33,12 +33,16 @@
                               <td><?= $kp['nama_kategori_pekerjaan'] ?></td>
                               <td><?= $kp['deskripsi_kategori_pekerjaan'] ?></td>
                               <td>
-                                 <button type="button" class="btn btn-warning" title="Klik untuk mengedit" data-bs-toggle="modal" data-bs-target="#modaledit_kategoripekerjaan" onclick="edit_kategori_pekerjaan(<?php echo $kp['id_kategori_pekerjaan'] ?>)"><i class="ri-edit-2-line"></i></button>
-                                 <form action="/kategori_pekerjaan/delete_kategori_pekerjaan/<?= $kp['id_kategori_pekerjaan']; ?>" method="POST" class="d-inline">
-                                    <?= csrf_field(); ?>
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data Kategori Pekerjaan ?');"><i class="ri-delete-bin-5-line"></i></button>
-                                 </form>
+                                 <div class="btn-group" role="group">
+                                    <div>
+                                       <button type="button" class="btn btn-warning" title="Klik untuk mengedit" data-bs-toggle="modal" data-bs-target="#modaledit_kategoripekerjaan" onclick="edit_kategori_pekerjaan(<?php echo $kp['id_kategori_pekerjaan'] ?>)"><i class="ri-edit-2-line"></i></button>
+                                    </div>
+                                    <form action="/kategori_pekerjaan/delete_kategori_pekerjaan/<?= $kp['id_kategori_pekerjaan']; ?>" method="POST" class="d-inline">
+                                       <?= csrf_field(); ?>
+                                       <input type="hidden" name="_method" value="DELETE">
+                                       <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data Kategori Pekerjaan ?');"><i class="ri-delete-bin-5-line"></i></button>
+                                    </form>
+                                 </div>
                               </td>
                            </tr>
                         <?php endforeach; ?>

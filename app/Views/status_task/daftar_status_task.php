@@ -33,12 +33,16 @@
                               <td><?= $st['nama_status_task'] ?></td>
                               <td><?= $st['deskripsi_status_task'] ?></td>
                               <td>
-                                 <button type="button" class="btn btn-warning" title="Klik untuk mengedit" data-bs-toggle="modal" data-bs-target="#modaledit_statustask" onclick="edit_status_task(<?php echo $st['id_status_task'] ?>)"><i class="ri-edit-2-line"></i></button>
-                                 <form action="/status_task/delete_status_task/<?= $st['id_status_task']; ?>" method="POST" class="d-inline">
-                                    <?= csrf_field(); ?>
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data Status Task ?');"><i class="ri-delete-bin-5-line"></i></button>
-                                 </form>
+                                 <div class="btn-group" role="group">
+                                    <div>
+                                       <button type="button" class="btn btn-warning" title="Klik untuk mengedit" data-bs-toggle="modal" data-bs-target="#modaledit_statustask" onclick="edit_status_task(<?php echo $st['id_status_task'] ?>)"><i class="ri-edit-2-line"></i></button>
+                                    </div>
+                                    <form action="/status_task/delete_status_task/<?= $st['id_status_task']; ?>" method="POST" class="d-inline">
+                                       <?= csrf_field(); ?>
+                                       <input type="hidden" name="_method" value="DELETE">
+                                       <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data Status Task ?');"><i class="ri-delete-bin-5-line"></i></button>
+                                    </form>
+                                 </div>
                               </td>
                            </tr>
                         <?php endforeach; ?>

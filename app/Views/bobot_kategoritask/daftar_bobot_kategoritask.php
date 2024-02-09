@@ -164,12 +164,12 @@
 </div>
 
 <!--include Modal untuk menambah bobot kategori task baru-->
-<?= $this->include('/modal_add_bobot_kategoritask'); ?>
+<?= $this->include('bobot_kategoritask/modal_add_bobot_kategoritask'); ?>
 
 <!--include Modal untuk mengedit data bobot kategori task-->
-<?= $this->include('/modal_edit_bobot_kategoritask'); ?>
+<?= $this->include('bobot_kategoritask/modal_edit_bobot_kategoritask'); ?>
 
 <!--include Modal untuk melihat detail data bobot kategori task-->
-<?= $this->include('/modal_detail_bobot_kategoritask'); ?>
+<?= $this->include('bobot_kategoritask/modal_detail_bobot_kategoritask'); ?>
 
 <?= $this->endSection(); ?>

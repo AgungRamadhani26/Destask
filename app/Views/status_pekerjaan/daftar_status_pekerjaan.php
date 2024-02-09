@@ -33,12 +33,16 @@
                               <td><?= $sp['nama_status_pekerjaan'] ?></td>
                               <td><?= $sp['deskripsi_status_pekerjaan'] ?></td>
                               <td>
-                                 <button type="button" class="btn btn-warning" title="Klik untuk mengedit" data-bs-toggle="modal" data-bs-target="#modaledit_statuspekerjaan" onclick="edit_status_pekerjaan(<?php echo $sp['id_status_pekerjaan'] ?>)"><i class="ri-edit-2-line"></i></button>
-                                 <form action="/status_pekerjaan/delete_status_pekerjaan/<?= $sp['id_status_pekerjaan']; ?>" method="POST" class="d-inline">
-                                    <?= csrf_field(); ?>
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data Status Pekerjaan ?');"><i class="ri-delete-bin-5-line"></i></button>
-                                 </form>
+                                 <div class="btn-group" role="group">
+                                    <div>
+                                       <button type="button" class="btn btn-warning" title="Klik untuk mengedit" data-bs-toggle="modal" data-bs-target="#modaledit_statuspekerjaan" onclick="edit_status_pekerjaan(<?php echo $sp['id_status_pekerjaan'] ?>)"><i class="ri-edit-2-line"></i></button>
+                                    </div>
+                                    <form action="/status_pekerjaan/delete_status_pekerjaan/<?= $sp['id_status_pekerjaan']; ?>" method="POST" class="d-inline">
+                                       <?= csrf_field(); ?>
+                                       <input type="hidden" name="_method" value="DELETE">
+                                       <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data Status Pekerjaan ?');"><i class="ri-delete-bin-5-line"></i></button>
+                                    </form>
+                                 </div>
                               </td>
                            </tr>
                         <?php endforeach; ?>

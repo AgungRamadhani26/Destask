@@ -231,4 +231,12 @@ class User extends BaseController
             return redirect()->withInput()->with('modal', 'modaledit_user')->back();
         }
     }
+
+    //Fungsi delete_user
+    public function delete_user($id_user)
+    {
+        $this->userModel->delete($id_user);
+        Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Data user berhasil dihapus');
+        return redirect()->to('/user/daftar_user');
+    }
 }

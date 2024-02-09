@@ -66,6 +66,17 @@ class Usergroup extends BaseController
         }
     }
 
+    //Fungsi detail_usergroup
+    public function detail_usergroup($id_usergroup)
+    {
+        $data = [
+            'usergroup' => $this->usergroupModel->getUserGroup($id_usergroup),
+            'url1' => '/daftar_pengguna',
+            'url' => '/usergroup/daftar_usergroup'
+        ];
+        return view('usergroup/detail_usergroup', $data);
+    }
+
     //Fungsi edit_usergroup
     public function edit_usergroup($id_usergroup)
     {

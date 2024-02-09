@@ -31,13 +31,19 @@
                               <td><?= $i++ ?></td>
                               <td><?= $u['nama_usergroup'] ?></td>
                               <td>
-                                 <button type="button" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></button>
-                                 <button type="button" class="btn btn-warning" title="Klik untuk mengedit" data-bs-toggle="modal" data-bs-target="#modaledit_usergroup" onclick="edit_usergroup(<?php echo $u['id_usergroup'] ?>)"><i class="ri-edit-2-line"></i></button>
-                                 <form action="/usergroup/delete_usergroup/<?= $u['id_usergroup']; ?>" method="POST" class="d-inline">
-                                    <?= csrf_field(); ?>
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data Usergroup ?');"><i class="ri-delete-bin-5-line"></i></button>
-                                 </form>
+                                 <div class="btn-group" role="group">
+                                    <div>
+                                       <a href="/usergroup/detail_usergroup/<?= $u['id_usergroup']; ?>" type="button" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
+                                    </div>
+                                    <div>
+                                       <button type="button" class="btn btn-warning" title="Klik untuk mengedit" data-bs-toggle="modal" data-bs-target="#modaledit_usergroup" onclick="edit_usergroup(<?php echo $u['id_usergroup'] ?>)"><i class="ri-edit-2-line"></i></button>
+                                    </div>
+                                    <form action="/usergroup/delete_usergroup/<?= $u['id_usergroup']; ?>" method="POST" class="d-inline">
+                                       <?= csrf_field(); ?>
+                                       <input type="hidden" name="_method" value="DELETE">
+                                       <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data Usergroup ?');"><i class="ri-delete-bin-5-line"></i></button>
+                                    </form>
+                                 </div>
                               </td>
                            </tr>
                         <?php endforeach; ?>

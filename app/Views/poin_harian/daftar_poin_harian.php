@@ -231,9 +231,9 @@
 </section>
 
 <!--include Modal untuk menambah poin harian baru-->
-<?= $this->include('/modal_add_poinharian'); ?>
+<?= $this->include('poin_harian/modal_add_poinharian'); ?>
 
 <!--include Modal untuk mengedit data poin harian-->
-<?= $this->include('/modal_edit_poinharian'); ?>
+<?= $this->include('poin_harian/modal_edit_poinharian'); ?>
 
 <?= $this->endSection(); ?>
