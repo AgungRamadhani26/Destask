@@ -15,7 +15,7 @@ class UserModel extends Model
         'user_level', 'nama', 'foto_profil'
     ];
 
-    //Fungsi untuk mendapatkan data status user
+    //Fungsi untuk mendapatkan data user
     public function getUser($id_user = false)
     {
         if ($id_user == false) {
@@ -24,7 +24,30 @@ class UserModel extends Model
         return $this->where(['id_user' => $id_user])->first();
     }
 
+    //Fungsi untuk mendapatkan data user berdasarkan usergroup
+    public function getUserByUserGroup($id_usergroup)
+    {
+        return $this->where('id_usergroup', $id_usergroup)
+            ->orderBy('id_user', 'DESC')
+            ->findAll();
+    }
 
+    //Fungsi untuk menghitung jumlah user aktif dengan user level staff berdasarkan usergroup
+    public function countUserStaffByUserGroup($id_usergroup)
+    {
+        return $this->where(['deleted_at' => null, 'user_level' => 'staff', 'id_usergroup' => $id_usergroup])->countAllResults();
+    }
+
+    //Fungsi untuk menghitung jumlah user aktif dengan user level supervisi berdasarkan usergroup
+    public function countUserSupervisiByUserGroup($id_usergroup)
+    {
+        return $this->where(['deleted_at' => null, 'user_level' => 'supervisi', 'id_usergroup' => $id_usergroup])->countAllResults();
+    }
+
+
+
+
+    //Untuk App Mobile
     function getIdentitas($identitas)
     {
         $builder = $this->table('user');

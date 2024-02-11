@@ -10,9 +10,9 @@
       <div class="col-xl-4">
          <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-               <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-               <h2>Agung Ramadhani</h2>
-               <h3>Web Design</h3>
+               <img src="/assets/file_pengguna/foto_user/<?= $profil_user['foto_profil']; ?>" alt="Profile" height="135" width="120" class="rounded-circle">
+               <h2><?= $profil_user['nama']; ?></h2>
+               <h3><?= $profil_user['user_level'] ?></h3>
             </div>
          </div>
       </div>
@@ -38,20 +38,26 @@
                      <h5 class="card-title">Profile Details</h5>
                      <div class="row">
                         <div class="col-lg-3 col-md-4 label ">Nama</div>
-                        <div class="col-lg-9 col-md-8">Agung Ramadhani</div>
+                        <div class="col-lg-9 col-md-8"><?= $profil_user['nama']; ?></div>
                      </div>
                      <div class="row">
                         <div class="col-lg-3 col-md-4 label">Email</div>
-                        <div class="col-lg-9 col-md-8">k.anderson@example.com</div>
+                        <div class="col-lg-9 col-md-8"><?= $profil_user['email']; ?></div>
                      </div>
                      <div class="row">
                         <div class="col-lg-3 col-md-4 label">Username</div>
-                        <div class="col-lg-9 col-md-8">agunggokil13</div>
+                        <div class="col-lg-9 col-md-8"><?= $profil_user['username']; ?></div>
                      </div>
                      <div class="row">
-                        <div class="col-lg-3 col-md-4 label">User Group</div>
-                        <div class="col-lg-9 col-md-8">Web Design</div>
+                        <div class="col-lg-3 col-md-4 label">Level User</div>
+                        <div class="col-lg-9 col-md-8"><?= $profil_user['user_level']; ?></div>
                      </div>
+                     <?php if ($usergroup_user !== null) : ?>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label">Usergroup</div>
+                           <div class="col-lg-9 col-md-8"><?= $usergroup_user['nama_usergroup']; ?></div>
+                        </div>
+                     <?php endif; ?>
                   </div>
 
                   <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
@@ -59,7 +65,7 @@
                         <div class="row mb-3">
                            <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Foto Profil</label>
                            <div class="col-md-8 col-lg-9">
-                              <img src="assets/img/profile-img.jpg" alt="Profile">
+                              <img src="/assets/img/profile-img.jpg" alt="Profile">
                               <div class="pt-2">
                                  <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
                                  <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
@@ -97,23 +103,33 @@
                   </div>
 
                   <div class="tab-pane fade pt-3" id="profile-change-password">
-                     <form>
+                     <form action="/profile/update_password" method="POST">
+                        <?= csrf_field(); ?>
                         <div class="row mb-3">
                            <label for="currentPassword" class="col-md-4 col-lg-4 col-form-label">Password Saat ini</label>
                            <div class="col-md-8 col-lg-8">
-                              <input name="password" type="password" class="form-control" id="currentPassword">
+                              <input name="currentpassword" type="password" class="form-control <?= (session()->getFlashdata('currentpassword_kosong')) ? 'is-invalid' : ''; ?>" id="currentPassword" autofocus value="<?= old('currentpassword'); ?>">
+                              <div class="invalid-feedback">
+                                 <?= session()->getFlashdata('currentpassword_kosong') ?>
+                              </div>
                            </div>
                         </div>
                         <div class="row mb-3">
                            <label for="newPassword" class="col-md-4 col-lg-4 col-form-label">Password Baru</label>
                            <div class="col-md-8 col-lg-8">
-                              <input name="newpassword" type="password" class="form-control" id="newPassword">
+                              <input name="newpassword" type="password" class="form-control <?= (session()->getFlashdata('newpassword_kosong')) ? 'is-invalid' : ''; ?>" id="newPassword" value="<?= old('newpassword'); ?>">
+                              <div class="invalid-feedback">
+                                 <?= session()->getFlashdata('newpassword_kosong') ?>
+                              </div>
                            </div>
                         </div>
                         <div class="row mb-3">
-                           <label for="renewPassword" class="col-md-4 col-lg-4 col-form-label">Ulangi password baru</label>
+                           <label for="renewPassword" class="col-md-4 col-lg-4 col-form-label">Konfirmasi password baru</label>
                            <div class="col-md-8 col-lg-8">
-                              <input name="renewpassword" type="password" class="form-control" id="renewPassword">
+                              <input name="renewpassword" type="password" class="form-control <?= (session()->getFlashdata('renewpassword_kosong')) ? 'is-invalid' : ''; ?>" id="renewPassword" value="<?= old('renewpassword'); ?>">
+                              <div class="invalid-feedback">
+                                 <?= session()->getFlashdata('renewpassword_kosong') ?>
+                              </div>
                            </div>
                         </div>
                         <div class="text-center">

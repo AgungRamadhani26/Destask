@@ -93,6 +93,8 @@ $routes->delete('/user/delete_user/(:num)', 'User::delete_user/$1');
 //Routes Profile
 //Untuk menampilkan halaman profile
 $routes->get('/profile/lihat_profil', 'Profile::lihat_profile');
+//Untuk mengupdate password
+$routes->post('/profile/update_password', 'Profile::update_password');
 
 
 

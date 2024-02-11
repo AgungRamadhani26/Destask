@@ -4,14 +4,17 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\UserGroupModel;
+use App\Models\UserModel;
 
 class Usergroup extends BaseController
 {
     //Konstruktor agar semua method dapat menggunakan model
     protected $usergroupModel;
+    protected $userModel;
     public function __construct()
     {
         $this->usergroupModel = new UserGroupModel();
+        $this->userModel = new UserModel();
         helper(['swal_helper']);
     }
 
@@ -71,6 +74,9 @@ class Usergroup extends BaseController
     {
         $data = [
             'usergroup' => $this->usergroupModel->getUserGroup($id_usergroup),
+            'user' => $this->userModel->getUserByUserGroup($id_usergroup),
+            'jumlah_user_staff' => $this->userModel->countUserStaffByUserGroup($id_usergroup),
+            'jumlah_user_supervisi' => $this->userModel->countUserSupervisiByUserGroup($id_usergroup),
             'url1' => '/daftar_pengguna',
             'url' => '/usergroup/daftar_usergroup'
         ];

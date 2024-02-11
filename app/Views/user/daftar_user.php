@@ -34,7 +34,9 @@
                         <?php foreach ($user as $ur) : ?>
                            <tr>
                               <td><?= $i++ ?></td>
-                              <td class="centered_gambar"><img src="/assets/file_pengguna/foto_user/<?= $ur['foto_profil']; ?>" alt="" class="gambar"></td>
+                              <td class="centered_gambar">
+                                 <center><img src="/assets/file_pengguna/foto_user/<?= $ur['foto_profil']; ?>" alt="" class="gambar"></center>
+                              </td>
                               <td><?= $ur['username'] ?></td>
                               <td><?= $ur['email'] ?></td>
                               <td><?= $ur['nama'] ?></td>
