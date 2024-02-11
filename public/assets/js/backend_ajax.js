@@ -244,7 +244,7 @@ function previewImg() {
    }
 }
 
-//fungsi untuk mempreview foto profile ketika add user
+//fungsi untuk mempreview foto profile ketika update user
 function previewImg_e() {
    const fotoProfil_e = document.querySelector('#foto_profile_e');
    const imgPreview_e = document.querySelector('.img-preview_e');
@@ -252,5 +252,16 @@ function previewImg_e() {
    fileFotoProfile_e.readAsDataURL(fotoProfil_e.files[0]);
    fileFotoProfile_e.onload = function(e) {
        imgPreview_e.src = e.target.result;
+   }
+}
+
+//fungsi untuk mempreview foto profile ketika update profile
+function previewProfile() {
+   const profileImg = document.querySelector('#profile_img');
+   const imgProfile = document.querySelector('.img-profile');
+   const fileprofileImg = new FileReader();
+   fileprofileImg.readAsDataURL(profileImg.files[0]);
+   fileprofileImg.onload = function(e) {
+      imgProfile.src = e.target.result;
    }
 }

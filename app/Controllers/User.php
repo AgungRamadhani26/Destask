@@ -224,7 +224,7 @@ class User extends BaseController
                 }
                 $this->userModel->save($datauser);
                 Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil mengedit data User');
-                return redirect()->to('user/daftar_user');
+                return redirect()->to('/user/daftar_user');
             }
         } else {
             session()->setFlashdata('error', $validasi->listErrors());

@@ -61,39 +61,47 @@
                   </div>
 
                   <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-                     <form>
+                     <form action="/profile/update_profile" method="POST" enctype="multipart/form-data">
+                        <div class="mb-3" style="color: red; font-size: 13px;">Note: Ukuran maksimal gambar 1 mb</div>
+                        <?= csrf_field(); ?>
+                        <input type="hidden" name="profile_img_lama" value="<?= $profil_user['foto_profil']; ?>">
                         <div class="row mb-3">
-                           <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Foto Profil</label>
+                           <label for="profile_img" class="col-md-4 col-lg-3 col-form-label">Foto Profil</label>
+                           <div class="col-md-6 col-lg-7">
+                              <input class="form-control <?= (session()->getFlashdata('error_profile_img')) ? 'is-invalid' : ''; ?>" type="file" id="profile_img" name="profile_img" onchange="previewProfile()">
+                              <div class="invalid-feedback">
+                                 <?= session()->getFlashdata('error_profile_img') ?>
+                              </div>
+                           </div>
+                           <div class="col-md-2 col-lg-2">
+                              <img src="/assets/file_pengguna/foto_user/<?= $profil_user['foto_profil']; ?>" class="img-thumbnail img-profile" alt="" height="85" width="85">
+                           </div>
+                        </div>
+                        <div class="row mb-3">
+                           <label for="nama_profile" class="col-md-4 col-lg-3 col-form-label">Nama</label>
                            <div class="col-md-8 col-lg-9">
-                              <img src="/assets/img/profile-img.jpg" alt="Profile">
-                              <div class="pt-2">
-                                 <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
-                                 <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
+                              <input name="nama_profile" type="text" class="form-control <?= (session()->getFlashdata('error_nama_profile')) ? 'is-invalid' : ''; ?>" id="nama_profile" value="<?= old('nama_profile') ? old('nama_profile') : $profil_user['nama']; ?>">
+                              <div class="invalid-feedback">
+                                 <?= session()->getFlashdata('error_nama_profile') ?>
                               </div>
                            </div>
                         </div>
                         <div class="row mb-3">
-                           <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Nama</label>
+                           <label for="email_profile" class="col-md-4 col-lg-3 col-form-label">Email</label>
                            <div class="col-md-8 col-lg-9">
-                              <input name="fullName" type="text" class="form-control" id="fullName" value="Agung Ramadhani">
+                              <input name="email_profile" type="email" class="form-control <?= (session()->getFlashdata('error_email_profile')) ? 'is-invalid' : ''; ?>" id="email_profile" value="<?= old('email_profile') ? old('email_profile') : $profil_user['email']; ?>">
+                              <div class="invalid-feedback">
+                                 <?= session()->getFlashdata('error_email_profile') ?>
+                              </div>
                            </div>
                         </div>
                         <div class="row mb-3">
-                           <label for="company" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                           <label for="username_profile" class="col-md-4 col-lg-3 col-form-label">Username</label>
                            <div class="col-md-8 col-lg-9">
-                              <input name="company" type="email" class="form-control" id="company" value="agungramadhani2611@gmail.com">
-                           </div>
-                        </div>
-                        <div class="row mb-3">
-                           <label for="Job" class="col-md-4 col-lg-3 col-form-label">Username</label>
-                           <div class="col-md-8 col-lg-9">
-                              <input name="job" type="text" class="form-control" id="Job" value="agunggokil13">
-                           </div>
-                        </div>
-                        <div class="row mb-3">
-                           <label for="Country" class="col-md-4 col-lg-3 col-form-label">User Group</label>
-                           <div class="col-md-8 col-lg-9">
-                              <input name="country" type="text" class="form-control" id="Country" value="Web Design">
+                              <input name="username_profile" type="text" class="form-control <?= (session()->getFlashdata('error_username_profile')) ? 'is-invalid' : ''; ?>" id="username_profile" value="<?= old('username_profile') ? old('username_profile') : $profil_user['username']; ?>">
+                              <div class="invalid-feedback">
+                                 <?= session()->getFlashdata('error_username_profile') ?>
+                              </div>
                            </div>
                         </div>
                         <div class="text-center">
@@ -115,7 +123,7 @@
                            </div>
                         </div>
                         <div class="row mb-3">
-                           <label for="newPassword" class="col-md-4 col-lg-4 col-form-label">Password Baru</label>
+                           <label for="newPassword" class="col-md-4 col-lg-4 col-form-label">Password baru</label>
                            <div class="col-md-8 col-lg-8">
                               <input name="newpassword" type="password" class="form-control <?= (session()->getFlashdata('newpassword_kosong')) ? 'is-invalid' : ''; ?>" id="newPassword" value="<?= old('newpassword'); ?>">
                               <div class="invalid-feedback">
