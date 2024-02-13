@@ -13,4 +13,13 @@ class HariLiburModel extends Model
     protected $allowedFields    = [
         'tanggal_libur', 'keterangan', 'color'
     ];
+
+    //Fungsi untuk mendapatkan data hari libur
+    public function getHariLibur($id_hari_libur = false)
+    {
+        if ($id_hari_libur == false) {
+            return $this->orderBy('id_hari_libur', 'DESC')->findAll();
+        }
+        return $this->where(['id_hari_libur' => $id_hari_libur])->first();
+    }
 }

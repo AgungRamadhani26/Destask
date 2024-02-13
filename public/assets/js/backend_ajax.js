@@ -126,6 +126,38 @@ function edit_kategori_task($id){
 
 
 
+//                             //
+// PENGELOLAAN DATA HARI LIBUR //
+//                             //
+
+//Proses membersikan form add dan edit hari libur jika mengclose modal
+$('.tombol-tutup-harilibur').on('click', function() {
+   $('.alert').hide();
+   flatpickr("#tanggal", config1).setDate('');
+   $('#keterangan').val('');
+   $('#id_hari_libur_e').val();
+   flatpickr("#tanggal_e", config1).setDate('');
+   $('#keterangan_e').val('');
+});
+
+//Proses edit kategori task
+function edit_hari_libur($id){
+   $.ajax({
+      url: "/hari_libur/edit_hari_libur/" + $id,
+      type: "GET",
+      success: function(hasil){
+         var $obj = $.parseJSON(hasil);
+         if ($obj.id_hari_libur != ''){
+            $('#id_hari_libur_e').val($obj.id_hari_libur);
+            flatpickr("#tanggal_e", config1).setDate($obj.tanggal_libur);
+            $('#keterangan_e').val($obj.keterangan);
+         }
+      }
+   });
+}
+
+
+
 //                            //
 // PENGELOLAAN DATA USERGROUP //
 //                            //

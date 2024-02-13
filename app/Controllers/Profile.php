@@ -84,18 +84,18 @@ class Profile extends BaseController
                     return redirect()->to('/profile/lihat_profil');
                 } else {
                     Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Password baru tidak cocok dengan konfirmasi password baru, periksa form Change Password');
-                    return redirect()->withInput()->back();
+                    return redirect()->withInput()->with('tab', 'ubah-pass')->back();
                 }
             } else {
                 Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Password saat ini salah, periksa form Change Password');
-                return redirect()->withInput()->back();
+                return redirect()->withInput()->with('tab', 'ubah-pass')->back();
             }
         } else {
             session()->setFlashdata('currentpassword_kosong', $validation->getError('currentpassword'));
             session()->setFlashdata('newpassword_kosong', $validation->getError('newpassword'));
             session()->setFlashdata('renewpassword_kosong', $validation->getError('renewpassword'));
             Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Terdapat inputan yang kosong, periksa form Change Password');
-            return redirect()->withInput()->back();
+            return redirect()->withInput()->with('tab', 'ubah-pass')->back();
         }
     }
 
@@ -155,7 +155,7 @@ class Profile extends BaseController
                 && $user_lama['email'] === $email_profile && $user_lama['username'] === $username_profile
             ) {
                 Set_notifikasi_swal_berhasil('info', 'Uppsss :|', 'Tidak ada data yang anda ubah, kembali ke form Edit Profile jika ingin mengubah data');
-                return redirect()->withInput()->back();
+                return redirect()->withInput()->with('tab', 'edit-profil')->back();
             } else {
                 if ($profile_img->getError() == 4) {
                     $namaProfilImage = $profile_img_lama;
@@ -174,17 +174,17 @@ class Profile extends BaseController
                     'nama' => $nama_profile,
                     'foto_profil' => $namaProfilImage
                 ];
+                $this->userModel->save($datauser);
+                Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil mengedit profile');
+                return redirect()->to('/profile/lihat_profil');
             }
-            $this->userModel->save($datauser);
-            Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil mengedit profile');
-            return redirect()->to('/profile/lihat_profil');
         } else {
             session()->setFlashdata('error_profile_img', $validasi->getError('profile_img'));
             session()->setFlashdata('error_nama_profile', $validasi->getError('nama_profile'));
             session()->setFlashdata('error_email_profile', $validasi->getError('email_profile'));
             session()->setFlashdata('error_username_profile', $validasi->getError('username_profile'));
             Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Terdapat inputan yang kurang sesuai, periksa form Edit Profile');
-            return redirect()->withInput()->back();
+            return redirect()->withInput()->with('tab', 'edit-profil')->back();
         }
     }
 }

@@ -33,6 +33,11 @@
                   <i class="bi bi-circle"></i><span>Kategori Task</span>
                </a>
             </li>
+            <li>
+               <a href="/hari_libur/daftar_hari_libur" class="<?= $url == '/hari_libur/daftar_hari_libur' ? 'active' : '' ?>">
+                  <i class="bi bi-circle"></i><span>Hari Libur</span>
+               </a>
+            </li>
          </ul>
       </li>
 

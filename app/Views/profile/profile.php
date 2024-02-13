@@ -26,10 +26,10 @@
                      <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
                   </li>
                   <li class="nav-item ms-5 me-5">
-                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
+                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit" id="edit-profil">Edit Profile</button>
                   </li>
                   <li class="nav-item">
-                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
+                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password" id="ubah-pass">Change Password</button>
                   </li>
                </ul>
 

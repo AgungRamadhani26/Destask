@@ -66,6 +66,15 @@ $routes->post('/kategori_task/update_kategori_task', 'KategoriTask::update_kateg
 //Untuk menghapus kategori task
 $routes->delete('/kategori_task/delete_kategori_task/(:num)', 'KategoriTask::delete_kategori_task/$1');
 
+//Routes Hari Libur
+//Untuk menampilkan halaman daftar hari libur
+$routes->get('/hari_libur/daftar_hari_libur', 'HariLibur::daftar_hari_libur');
+//Untuk menambah hari libur
+$routes->post('/hari_libur/tambah_hari_libur', 'HariLibur::tambah_hari_libur/$1');
+//Untuk mengedit hari libur
+$routes->get('/hari_libur/edit_hari_libur/(:num)', 'HariLibur::edit_hari_libur/$1');
+//Untuk menghapus hari libur
+
 //Routes Usergroup
 //Untuk menampilkan halaman daftar usergroup
 $routes->get('/usergroup/daftar_usergroup', 'Usergroup::daftar_usergroup');
