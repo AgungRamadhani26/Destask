@@ -11,7 +11,7 @@ class HariLiburModel extends Model
     protected $useSoftDeletes   = true;
     protected $useTimestamps    = true;
     protected $allowedFields    = [
-        'tanggal_libur', 'keterangan', 'color'
+        'tanggal_libur', 'keterangan'
     ];
 
     //Fungsi untuk mendapatkan data hari libur

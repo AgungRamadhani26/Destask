@@ -62,6 +62,7 @@
    };
 
    flatpickr("#tanggal", config1);
+   flatpickr("#tanggal_e", config1);
 </script>
 
 <!-- Sweet Alert -->

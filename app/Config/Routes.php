@@ -73,7 +73,9 @@ $routes->get('/hari_libur/daftar_hari_libur', 'HariLibur::daftar_hari_libur');
 $routes->post('/hari_libur/tambah_hari_libur', 'HariLibur::tambah_hari_libur/$1');
 //Untuk mengedit hari libur
 $routes->get('/hari_libur/edit_hari_libur/(:num)', 'HariLibur::edit_hari_libur/$1');
+$routes->post('/hari_libur/update_hari_libur', 'HariLibur::update_hari_libur');
 //Untuk menghapus hari libur
+$routes->delete('/hari_libur/delete_hari_libur/(:num)', 'HariLibur::delete_hari_libur/$1');
 
 //Routes Usergroup
 //Untuk menampilkan halaman daftar usergroup

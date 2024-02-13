@@ -14,21 +14,18 @@ class HariLiburSeeder extends Seeder
             [
                 'tanggal_libur'   => '2024-02-14',
                 'keterangan'      => 'Pemilihan Umum',
-                'color'           => 'red',
                 'created_at'      => Time::now(),
                 'updated_at'      => Time::now()
             ],
             [
                 'tanggal_libur'   => '2024-02-08',
                 'keterangan'      => 'Hari Pahlawan',
-                'color'           => 'red',
                 'created_at'      => Time::now(),
                 'updated_at'      => Time::now()
             ],
             [
                 'tanggal_libur'   => '2024-03-20',
                 'keterangan'      => 'Kenaikan Isa Al-Masih',
-                'color'           => 'red',
                 'created_at'      => Time::now(),
                 'updated_at'      => Time::now()
             ],

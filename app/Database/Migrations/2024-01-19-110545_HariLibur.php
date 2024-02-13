@@ -24,11 +24,6 @@ class HariLibur extends Migration
                 'constraint' => 50,
                 'null'       => true
             ],
-            'color' => [
-                'type'       => 'VARCHAR',
-                'constraint' => 15,
-                'null'       => true
-            ],
             'created_at' => [
                 'type'  => 'DATETIME',
                 'null'  => true,
