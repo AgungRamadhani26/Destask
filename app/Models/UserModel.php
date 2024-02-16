@@ -18,7 +18,7 @@ class UserModel extends Model
     //Fungsi untuk mendapatkan data user
     public function getUser($id_user = false)
     {
-        if ($id_user == false) {
+        if ($id_user === false) {
             return $this->orderBy('id_user', 'DESC')->findAll();
         }
         return $this->where(['id_user' => $id_user])->first();
@@ -48,7 +48,7 @@ class UserModel extends Model
 
 
     //Untuk App Mobile
-    function getIdentitas($identitas)
+    public function getIdentitas($identitas)
     {
         $builder = $this->table('user');
 

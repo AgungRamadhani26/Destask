@@ -7,7 +7,30 @@
 
 <section class="section">
    <div class="row">
-      <div class="col-lg-12">
+      <div class="col-lg-4">
+         <div class="card">
+            <div class="card-body">
+               <h5 class="card-title">Info Penginputan Hari Libur</h5>
+               <!-- Default Accordion -->
+               <div class="accordion" id="accordionExample">
+                  <div class="accordion-item">
+                     <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                           Lihat disini
+                        </button>
+                     </h2>
+                     <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div class="accordion-body bg-info" style="text-align: justify;">
+                           Inputlah tanggal hari libur kecuali tanggal di hari <strong>Sabtu</strong> dan <strong>Minggu</strong>, Penginputan hari libur ini
+                           berguna agar pengguna tidak dapat membuat <strong>Pekerjaan</strong> dan <strong>Task</strong> di hari libur tersebut.
+                        </div>
+                     </div>
+                  </div>
+               </div><!-- End Default Accordion Example -->
+            </div>
+         </div>
+      </div>
+      <div class="col-lg-8">
          <div class="card">
             <div class="card-body">
                <div class="table-responsive">

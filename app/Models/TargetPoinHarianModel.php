@@ -14,4 +14,16 @@ class TargetPoinHarianModel extends Model
         'id_usergroup', 'tahun', 'bulan', 'jumlah_target_poin_harian',
         'jumlah_hari_kerja', 'jumlah_hari_libur', 'jumlah_target_poin_sebulan'
     ];
+
+    //Fungsi untuk mendapatkan data target poin harian
+    public function getTargetPoinHarian($id_target_poin_harian = false)
+    {
+        if ($id_target_poin_harian === false) {
+            return $this->orderBy('tahun', 'DESC')
+                ->orderBy('bulan', 'ASC')
+                ->orderBy('id_usergroup', 'DESC')
+                ->findAll();
+        }
+        return $this->where(['id_target_poin_harian' => $id_target_poin_harian])->first();
+    }
 }

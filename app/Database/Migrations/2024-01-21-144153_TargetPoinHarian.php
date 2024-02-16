@@ -27,7 +27,7 @@ class TargetPoinHarian extends Migration
             ],
             'bulan' => [
                 'type'       => 'VARCHAR',
-                'constraint' => 10,
+                'constraint' => 2,
                 'null'       => true
             ],
             'jumlah_target_poin_harian' => [
