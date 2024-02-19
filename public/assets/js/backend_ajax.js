@@ -158,6 +158,50 @@ function edit_hari_libur($id){
 
 
 
+//                                     //
+// PENGELOLAAN DATA TARGET POIN HARIAN //
+//                                     //
+
+//Proses membersikan form add dan edit target poin harian jika mengclose modal
+$('.tombol-tutup-target-poin-harian').on('click', function() {
+   $('.alert').hide();
+   $('#usergroup_target_poin').val('');
+   $('#tahun_target_poin').val('');
+   $('#bulan_target_poin').val('');
+   $('#target_poin_harian').val('');
+   $('#jumlah_hari_kerja').val('');
+   $('#jumlah_hari_libur').val('');
+   $('#id_target_poin_harian_e').val('');
+   $('#usergroup_target_poin_e').val('');
+   $('#tahun_target_poin_e').val('');
+   $('#bulan_target_poin_e').val('');
+   $('#target_poin_harian_e').val('');
+   $('#jumlah_hari_kerja_e').val('');
+   $('#jumlah_hari_libur_e').val('');
+});
+
+//Proses edit usergroup
+function edit_target_poin_harian($id){
+   $.ajax({
+      url: "/target_poin_harian/edit_target_poin_harian/" + $id,
+      type: "GET",
+      success: function(hasil){
+         var $obj = $.parseJSON(hasil);
+         if ($obj.id_target_poin_harian != ''){
+            $('#id_target_poin_harian_e').val($obj.id_target_poin_harian);
+            $('#usergroup_target_poin_e').val($obj.id_usergroup);
+            $('#tahun_target_poin_e').val($obj.tahun);
+            $('#bulan_target_poin_e').val($obj.bulan);
+            $('#target_poin_harian_e').val($obj.jumlah_target_poin_harian);
+            $('#jumlah_hari_kerja_e').val($obj.jumlah_hari_kerja);
+            $('#jumlah_hari_libur_e').val($obj.jumlah_hari_libur);
+         }
+      }
+   });
+}
+
+
+
 //                            //
 // PENGELOLAAN DATA USERGROUP //
 //                            //

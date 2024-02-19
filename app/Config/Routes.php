@@ -101,8 +101,16 @@ $routes->post('/user/update_user', 'User::update_user');
 //Untuk menghapus user
 $routes->delete('/user/delete_user/(:num)', 'User::delete_user/$1');
 
-//Routes poin harian
+//Routes target poin harian
 $routes->get('/target_poin_harian/daftar_target_poin_harian', 'TargetPoinHarian::daftar_target_poin_harian');
+//Untuk menambah target poin harian
+$routes->post('/target_poin_harian/tambah_target_poin_harian', 'TargetPoinHarian::tambah_target_poin_harian');
+//Untuk mengedit target poin harian
+$routes->get('/target_poin_harian/edit_target_poin_harian/(:num)', 'TargetPoinHarian::edit_target_poin_harian/$1');
+$routes->post('/target_poin_harian/update_target_poin_harian', 'TargetPoinHarian::update_target_poin_harian');
+//Menghapus target poin harian
+$routes->delete('/target_poin_harian/delete_target_poin_harian/(:num)', 'TargetPoinHarian::delete_target_poin_harian/$1');
+
 //Routes Profile
 //Untuk menampilkan halaman profile
 $routes->get('/profile/lihat_profil', 'Profile::lihat_profile');

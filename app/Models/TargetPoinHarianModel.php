@@ -20,10 +20,15 @@ class TargetPoinHarianModel extends Model
     {
         if ($id_target_poin_harian === false) {
             return $this->orderBy('tahun', 'DESC')
-                ->orderBy('bulan', 'ASC')
+                ->orderBy('bulan', 'DESC')
                 ->orderBy('id_usergroup', 'DESC')
                 ->findAll();
         }
         return $this->where(['id_target_poin_harian' => $id_target_poin_harian])->first();
+    }
+
+    public function getTargetPoinHarianByTahunBulanIdusergroup($tahun, $bulan, $id_usergroup)
+    {
+        return $this->where(['tahun' => $tahun, 'bulan' => $bulan, 'id_usergroup' => $id_usergroup])->findAll();
     }
 }

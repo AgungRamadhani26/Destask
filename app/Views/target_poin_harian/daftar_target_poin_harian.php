@@ -84,7 +84,7 @@
             <div class="card-body">
                <div class="table-responsive">
                   <h5 class="card-title">Daftar Poin Harian&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                     <button type="button" class="btn btn-success" title="Klik untuk menambah data poin harian" data-bs-toggle="modal" data-bs-target="#modaltambah_poin_harian">
+                     <button type="button" class="btn btn-success" title="Klik untuk menambah data poin harian" data-bs-toggle="modal" data-bs-target="#modaltambah_target_poin_harian">
                         <i class="ri-add-fill"></i>
                      </button>
                   </h5>
@@ -154,16 +154,26 @@
                               <td><?= $tph['jumlah_hari_kerja'] . ' hari' ?></td>
                               <td><?= $tph['jumlah_hari_libur'] . ' hari' ?></td>
                               <td>
-                                 <div class="btn-group" role="group">
-                                    <div>
-                                       <button type="button" class="btn btn-warning" title="Klik untuk mengedit" data-bs-toggle="modal" data-bs-target="#modaledit_poin_harian" onclick="edit_target_poin_harian(<?php echo $tph['id_target_poin_harian'] ?>)"><i class="ri-edit-2-line"></i></button>
+                                 <?php
+                                 $tahunSaatIni = date('Y');
+                                 $bulanSaatIni = date('n');
+                                 ?>
+                                 <?php if ($tph['tahun'] < $tahunSaatIni) : ?>
+                                    <button class="btn btn-secondary">Periode sudah lewat</button>
+                                 <?php elseif ($tph['tahun'] == $tahunSaatIni && $tph['bulan'] < $bulanSaatIni) : ?>
+                                    <button class="btn btn-secondary">Periode sudah lewat</button>
+                                 <?php else : ?>
+                                    <div class="btn-group" role="group">
+                                       <div>
+                                          <button type="button" class="btn btn-warning" title="Klik untuk mengedit" data-bs-toggle="modal" data-bs-target="#modaledit_target_poin_harian" onclick="edit_target_poin_harian(<?php echo $tph['id_target_poin_harian'] ?>)"><i class="ri-edit-2-line"></i></button>
+                                       </div>
+                                       <form action="/target_poin_harian/delete_target_poin_harian/<?= $tph['id_target_poin_harian'] ?>" method="POST" class="d-inline">
+                                          <?= csrf_field(); ?>
+                                          <input type="hidden" name="_method" value="DELETE">
+                                          <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data target poin harian ?');"><i class="ri-delete-bin-5-line"></i></button>
+                                       </form>
                                     </div>
-                                    <form action="/target_poin_harian/delete_target_poin_harian/<?= $tph['id_target_poin_harian'] ?>" method="POST" class="d-inline">
-                                       <?= csrf_field(); ?>
-                                       <input type="hidden" name="_method" value="DELETE">
-                                       <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data target poin harian ?');"><i class="ri-delete-bin-5-line"></i></button>
-                                    </form>
-                                 </div>
+                                 <?php endif ?>
                               </td>
                            </tr>
                         <?php endforeach; ?>
