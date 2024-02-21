@@ -108,8 +108,10 @@ $routes->post('/target_poin_harian/tambah_target_poin_harian', 'TargetPoinHarian
 //Untuk mengedit target poin harian
 $routes->get('/target_poin_harian/edit_target_poin_harian/(:num)', 'TargetPoinHarian::edit_target_poin_harian/$1');
 $routes->post('/target_poin_harian/update_target_poin_harian', 'TargetPoinHarian::update_target_poin_harian');
-//Menghapus target poin harian
+//Untuk menghapus target poin harian
 $routes->delete('/target_poin_harian/delete_target_poin_harian/(:num)', 'TargetPoinHarian::delete_target_poin_harian/$1');
+//Untuk memfilter data yang ditampilkan
+$routes->get('target_poin_harian/filter_target_poin_harian', 'TargetPoinHarian::filter_target_poin_harian');
 
 //Routes Profile
 //Untuk menampilkan halaman profile

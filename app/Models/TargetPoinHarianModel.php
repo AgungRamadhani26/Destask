@@ -31,4 +31,29 @@ class TargetPoinHarianModel extends Model
     {
         return $this->where(['tahun' => $tahun, 'bulan' => $bulan, 'id_usergroup' => $id_usergroup])->findAll();
     }
+
+    public function getTargetPoinHarianByBulanTahun($bulan, $tahun)
+    {
+        if ($bulan === '' && $tahun === '') {
+            return $this->orderBy('tahun', 'DESC')
+                ->orderBy('bulan', 'DESC')
+                ->orderBy('id_usergroup', 'DESC')
+                ->findAll();
+        } elseif ($bulan === '') {
+            return $this->where(['tahun' => $tahun])->orderBy('tahun', 'DESC')
+                ->orderBy('bulan', 'DESC')
+                ->orderBy('id_usergroup', 'DESC')
+                ->findAll();
+        } elseif ($tahun === '') {
+            return $this->where(['bulan' => $bulan])->orderBy('tahun', 'DESC')
+                ->orderBy('bulan', 'DESC')
+                ->orderBy('id_usergroup', 'DESC')
+                ->findAll();
+        } else {
+            return $this->where(['bulan' => $bulan, 'tahun' => $tahun])->orderBy('tahun', 'DESC')
+                ->orderBy('bulan', 'DESC')
+                ->orderBy('id_usergroup', 'DESC')
+                ->findAll();
+        }
+    }
 }

@@ -29,6 +29,22 @@ class TargetPoinHarian extends BaseController
         return view('target_poin_harian/daftar_target_poin_harian', $data);
     }
 
+    //Fungsi filter_target_poin_harian
+    public function filter_target_poin_harian()
+    {
+        $filter_bulan = $this->request->getGet('filter_bulan');
+        $filter_tahun = $this->request->getGet('filter_tahun');
+        $target_poin_harian = $this->targetpoinharianModel->getTargetPoinHarianByBulanTahun($filter_bulan, $filter_tahun);
+        $data = [
+            'target_poin_harian' => $target_poin_harian,
+            'usergroup' => $this->usergroupModel->getUserGroup(),
+            'url1' => '/target_poin_harian/daftar_target_poin_harian'
+        ];
+        session()->setFlashdata('filter_bulan', $filter_bulan);
+        session()->setFlashdata('filter_tahun', $filter_tahun);
+        return view('target_poin_harian/daftar_target_poin_harian', $data);
+    }
+
     //fungsi tambah_target_poin_harian
     public function tambah_target_poin_harian()
     {

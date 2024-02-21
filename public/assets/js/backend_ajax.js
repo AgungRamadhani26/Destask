@@ -180,7 +180,7 @@ $('.tombol-tutup-target-poin-harian').on('click', function() {
    $('#jumlah_hari_libur_e').val('');
 });
 
-//Proses edit usergroup
+//Proses edit_target_poin_harian
 function edit_target_poin_harian($id){
    $.ajax({
       url: "/target_poin_harian/edit_target_poin_harian/" + $id,
@@ -198,6 +198,15 @@ function edit_target_poin_harian($id){
          }
       }
    });
+}
+
+//Proses reset filter
+function resetFilterTargetPoinHarian() {
+   // Mengatur nilai elemen formulir menjadi kosong
+   document.getElementById('filter_bulan').value = '';
+   document.getElementById('filter_tahun').value = '';
+   // Mengarahkan pengguna kembali ke URL yang diinginkan
+   window.location.href = "/target_poin_harian/daftar_target_poin_harian";
 }
 
 
