@@ -53,105 +53,45 @@
                               <i class="ri-add-fill"></i>
                            </button>
                         </h5>
-                        <table class="table table-bordered datatable">
+                        <table class="table table-striped table-bordered" id="myTable">
                            <thead>
                               <tr>
                                  <th>No</th>
-                                 <th>Grup</th>
+                                 <th>Usergroup</th>
                                  <th>Tahun</th>
                                  <th>Total Bobot Task</th>
                                  <th>Aksi</th>
                               </tr>
                            </thead>
                            <tbody>
-                              <tr>
-                                 <td>1</td>
-                                 <td>Web</td>
-                                 <td>2024</td>
-                                 <td>45</td>
-                                 <td>
-                                    <button type="button" class="btn btn-info" title="Klik untuk melihat detail" data-bs-toggle="modal" data-bs-target="#modaldetail_bobot_kategori_task"><i class="ri-information-line"></i></button>
-                                    <button type="button" class="btn btn-warning" title="Klik untuk mengedit" data-bs-toggle="modal" data-bs-target="#modaledit_bobot_kategori_task"><i class="ri-edit-2-line"></i></button>
-                                    <button type="button" class="btn btn-danger" title="Klik untuk menghapus"><i class="ri-delete-bin-5-line"></i></button>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>2</td>
-                                 <td>Mobile</td>
-                                 <td>2024</td>
-                                 <td>45</td>
-                                 <td>
-                                    <button type="button" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></button>
-                                    <button type="button" class="btn btn-warning" title="Klik untuk mengedit"><i class="ri-edit-2-line"></i></button>
-                                    <button type="button" class="btn btn-danger" title="Klik untuk menghapus"><i class="ri-delete-bin-5-line"></i></button>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>3</td>
-                                 <td>Web Design</td>
-                                 <td>2024</td>
-                                 <td>45</td>
-                                 <td>
-                                    <button type="button" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></button>
-                                    <button type="button" class="btn btn-warning" title="Klik untuk mengedit"><i class="ri-edit-2-line"></i></button>
-                                    <button type="button" class="btn btn-danger" title="Klik untuk menghapus"><i class="ri-delete-bin-5-line"></i></button>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>4</td>
-                                 <td>Web</td>
-                                 <td>2023</td>
-                                 <td>40</td>
-                                 <td>
-                                    <button type="button" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></button>
-                                    <button type="button" class="btn btn-warning" title="Klik untuk mengedit"><i class="ri-edit-2-line"></i></button>
-                                    <button type="button" class="btn btn-danger" title="Klik untuk menghapus"><i class="ri-delete-bin-5-line"></i></button>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>5</td>
-                                 <td>Mobile</td>
-                                 <td>2023</td>
-                                 <td>40</td>
-                                 <td>
-                                    <button type="button" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></button>
-                                    <button type="button" class="btn btn-warning" title="Klik untuk mengedit"><i class="ri-edit-2-line"></i></button>
-                                    <button type="button" class="btn btn-danger" title="Klik untuk menghapus"><i class="ri-delete-bin-5-line"></i></button>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>6</td>
-                                 <td>Web Design</td>
-                                 <td>2023</td>
-                                 <td>40</td>
-                                 <td>
-                                    <button type="button" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></button>
-                                    <button type="button" class="btn btn-warning" title="Klik untuk mengedit"><i class="ri-edit-2-line"></i></button>
-                                    <button type="button" class="btn btn-danger" title="Klik untuk menghapus"><i class="ri-delete-bin-5-line"></i></button>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>7</td>
-                                 <td>Web</td>
-                                 <td>2022</td>
-                                 <td>35</td>
-                                 <td>
-                                    <button type="button" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></button>
-                                    <button type="button" class="btn btn-warning" title="Klik untuk mengedit"><i class="ri-edit-2-line"></i></button>
-                                    <button type="button" class="btn btn-danger" title="Klik untuk menghapus"><i class="ri-delete-bin-5-line"></i></button>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>8</td>
-                                 <td>Mobile</td>
-                                 <td>2022</td>
-                                 <td>35</td>
-                                 <td>
-                                    <button type="button" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></button>
-                                    <button type="button" class="btn btn-warning" title="Klik untuk mengedit"><i class="ri-edit-2-line"></i></button>
-                                    <button type="button" class="btn btn-danger" title="Klik untuk menghapus"><i class="ri-delete-bin-5-line"></i></button>
-                                 </td>
-                              </tr>
+                              <?php $i = 1 ?>
+                              <?php foreach ($bobot_kategori_task as $bkt) : ?>
+                                 <tr>
+                                    <td><?= $i++ ?></td>
+                                    <td>
+                                       <?php foreach ($usergroup as $ug) : ?>
+                                          <?= $bkt['id_usergroup'] == $ug['id_usergroup'] ? $ug['nama_usergroup'] : ''; ?>
+                                       <?php endforeach; ?>
+                                    </td>
+                                    <td><?= $bkt['tahun'] ?></td>
+                                    <td><?= $bkt['total_bobot_poin'] ?></td>
+                                    <td>
+                                       <div class="btn-group" role="group">
+                                          <div>
+                                             <a href="/bobot_kategori_task/detail_bobot_kategori_task/<?= $bkt['tahun'] ?>" type="button" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
+                                          </div>
+                                          <div>
+                                             <button type="button" class="btn btn-warning" title="Klik untuk mengedit" data-bs-toggle="modal" data-bs-target="#modaledit_bobot_kategori_task" onclick="edit_bobot_kategori_task(<?= $bkt['tahun'] ?>, <?= $bkt['id_usergroup'] ?>)"><i class=" ri-edit-2-line"></i></button>
+                                          </div>
+                                          <form action="/bobot_kategori_task/delete_bobot_kategori_task/<?= $bkt['tahun']; ?>" method="POST" class="d-inline">
+                                             <?= csrf_field(); ?>
+                                             <input type="hidden" name="_method" value="DELETE">
+                                             <button type="button" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data bobot Kategori Task ?');"><i class="ri-delete-bin-5-line"></i></button>
+                                          </form>
+                                       </div>
+                                    </td>
+                                 </tr>
+                              <?php endforeach; ?>
                            </tbody>
                         </table>
                      </div>

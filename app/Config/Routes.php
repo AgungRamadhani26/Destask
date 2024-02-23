@@ -102,6 +102,7 @@ $routes->post('/user/update_user', 'User::update_user');
 $routes->delete('/user/delete_user/(:num)', 'User::delete_user/$1');
 
 //Routes target poin harian
+//Untuk menampilkan halaman target poin harian
 $routes->get('/target_poin_harian/daftar_target_poin_harian', 'TargetPoinHarian::daftar_target_poin_harian');
 //Untuk menambah target poin harian
 $routes->post('/target_poin_harian/tambah_target_poin_harian', 'TargetPoinHarian::tambah_target_poin_harian');
@@ -112,6 +113,15 @@ $routes->post('/target_poin_harian/update_target_poin_harian', 'TargetPoinHarian
 $routes->delete('/target_poin_harian/delete_target_poin_harian/(:num)', 'TargetPoinHarian::delete_target_poin_harian/$1');
 //Untuk memfilter data yang ditampilkan
 $routes->get('target_poin_harian/filter_target_poin_harian', 'TargetPoinHarian::filter_target_poin_harian');
+
+//Routes bobot kategori task
+//Untuk menampilkan halaman bobot kategori task
+$routes->get('/bobot_kategori_task/daftar_bobot_kategori_task', 'BobotKategoriTask::daftar_bobot_kategori_task');
+//Untuk menambah bobot kategori task
+$routes->post('/bobot_kategori_task/tambah_bobot_kategori_task', 'BobotKategoriTask::tambah_bobot_kategori_task');
+//Untuk mengedit bobot kategori task
+$routes->get('bobot_kategori_task/edit_bobot_kategori_task/(:num)/(:num)', 'BobotKategoriTask::edit_bobot_kategori_task/$1/$2');
+
 
 //Routes Profile
 //Untuk menampilkan halaman profile

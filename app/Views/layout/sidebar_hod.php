@@ -2,7 +2,7 @@
 <aside id="sidebar" class="sidebar">
    <ul class="sidebar-nav" id="sidebar-nav">
       <li class="nav-item">
-         <a class="nav-link " href="">
+         <a class="nav-link collapsed" href="">
             <i class="bi bi-grid"></i>
             <span>Dashboard</span>
          </a>
@@ -16,7 +16,7 @@
       </li>
 
       <li class="nav-item">
-         <a class="nav-link collapsed" href="">
+         <a class="nav-link <?= $url1 == '/bobot_kategori_task/daftar_bobot_kategori_task' ? '' : 'collapsed' ?>" href="/bobot_kategori_task/daftar_bobot_kategori_task">
             <i class="bi bi-gear"></i>
             <span>Kelola Bobot Task</span>
          </a>

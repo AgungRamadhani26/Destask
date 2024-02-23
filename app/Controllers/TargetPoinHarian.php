@@ -69,7 +69,7 @@ class TargetPoinHarian extends BaseController
                 ]
             ],
             'target_poin_harian' => [
-                'rules' => 'required|numeric|greater_than[1]',
+                'rules' => 'required|numeric|greater_than[0]',
                 'errors' => [
                     'required' => 'Target poin harian harus diisi',
                     'numeric'  => 'Target poin harian hanya dapat berisi angka',
@@ -77,7 +77,7 @@ class TargetPoinHarian extends BaseController
                 ]
             ],
             'jumlah_hari_kerja' => [
-                'rules' => 'required|numeric|greater_than[1]',
+                'rules' => 'required|numeric|greater_than[0]',
                 'errors' => [
                     'required' => 'Jumlah hari kerja harus diisi',
                     'numeric'  => 'Jumlah hari kerja hanya dapat berisi angka',
@@ -85,7 +85,7 @@ class TargetPoinHarian extends BaseController
                 ]
             ],
             'jumlah_hari_libur' => [
-                'rules' => 'required|numeric|greater_than[1]',
+                'rules' => 'required|numeric|greater_than[0]',
                 'errors' => [
                     'required' => 'Jumlah hari libur harus diisi',
                     'numeric'  => 'Jumlah hari libur hanya dapat berisi angka',
@@ -187,7 +187,7 @@ class TargetPoinHarian extends BaseController
                 ]
             ],
             'target_poin_harian_e' => [
-                'rules' => 'required|numeric|greater_than[1]',
+                'rules' => 'required|numeric|greater_than[0]',
                 'errors' => [
                     'required' => 'Target poin harian harus diisi',
                     'numeric'  => 'Target poin harian hanya dapat berisi angka',
@@ -195,7 +195,7 @@ class TargetPoinHarian extends BaseController
                 ]
             ],
             'jumlah_hari_kerja_e' => [
-                'rules' => 'required|numeric|greater_than[1]',
+                'rules' => 'required|numeric|greater_than[0]',
                 'errors' => [
                     'required' => 'Jumlah hari kerja harus diisi',
                     'numeric'  => 'Jumlah hari kerja hanya dapat berisi angka',
@@ -203,7 +203,7 @@ class TargetPoinHarian extends BaseController
                 ]
             ],
             'jumlah_hari_libur_e' => [
-                'rules' => 'required|numeric|greater_than[1]',
+                'rules' => 'required|numeric|greater_than[0]',
                 'errors' => [
                     'required' => 'Jumlah hari libur harus diisi',
                     'numeric'  => 'Jumlah hari libur hanya dapat berisi angka',

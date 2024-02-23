@@ -211,6 +211,33 @@ function resetFilterTargetPoinHarian() {
 
 
 
+//                                      //
+// PENGELOLAAN DATA BOBOT KATEGORI TASK //
+//                                      //
+
+//Proses membersikan form add dan edit bobot kategori task jika mengclose modal
+function resetForm_bobot_kategori_task() {
+   document.getElementById("formBobotKategoritask").reset();
+}
+
+//Proses edit_bobot_kategori_tas
+function edit_bobot_kategori_task($tahun, $id_usergroup){
+   $.ajax({
+      url: "/bobot_kategori_task/edit_bobot_kategori_task/" + $tahun + "/" + $id_usergroup,
+      type: "GET",
+      success: function(hasil){
+         console.log(hasil)
+         // var $obj = $.parseJSON(hasil);
+         // if ($obj.id_usergroup != '' && $obj.tahun != ''){
+         //    $('#id_target_poin_harian_e').val($obj.id_target_poin_harian);
+            
+         // }
+      }
+   });
+}
+
+
+
 //                            //
 // PENGELOLAAN DATA USERGROUP //
 //                            //
