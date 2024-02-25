@@ -76,18 +76,27 @@
                                     <td><?= $bkt['tahun'] ?></td>
                                     <td><?= $bkt['total_bobot_poin'] ?></td>
                                     <td>
+                                       <?php
+                                       $tahunSekarang = date('Y');
+                                       ?>
                                        <div class="btn-group" role="group">
                                           <div>
                                              <a href="/bobot_kategori_task/detail_bobot_kategori_task/<?= $bkt['tahun'] ?>" type="button" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
                                           </div>
-                                          <div>
-                                             <button type="button" class="btn btn-warning" title="Klik untuk mengedit" data-bs-toggle="modal" data-bs-target="#modaledit_bobot_kategori_task" onclick="edit_bobot_kategori_task(<?= $bkt['tahun'] ?>, <?= $bkt['id_usergroup'] ?>)"><i class=" ri-edit-2-line"></i></button>
-                                          </div>
-                                          <form action="/bobot_kategori_task/delete_bobot_kategori_task/<?= $bkt['tahun']; ?>" method="POST" class="d-inline">
-                                             <?= csrf_field(); ?>
-                                             <input type="hidden" name="_method" value="DELETE">
-                                             <button type="button" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data bobot Kategori Task ?');"><i class="ri-delete-bin-5-line"></i></button>
-                                          </form>
+                                          <?php if ($bkt['tahun'] < $tahunSekarang) : ?>
+                                             <div>
+                                                <button class="btn btn-secondary">Periode sudah lewat</button>
+                                             </div>
+                                          <?php else : ?>
+                                             <div>
+                                                <button type="button" class="btn btn-warning" title="Klik untuk mengedit" data-bs-toggle="modal" data-bs-target="#modaledit_bobot_kategori_task" onclick="edit_bobot_kategori_task(<?= $bkt['tahun'] ?>, <?= $bkt['id_usergroup'] ?>)"><i class=" ri-edit-2-line"></i></button>
+                                             </div>
+                                             <form action="/bobot_kategori_task/delete_bobot_kategori_task/<?= $bkt['tahun']; ?>" method="POST" class="d-inline">
+                                                <?= csrf_field(); ?>
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <button type="button" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data bobot Kategori Task ?');"><i class="ri-delete-bin-5-line"></i></button>
+                                             </form>
+                                          <?php endif ?>
                                        </div>
                                     </td>
                                  </tr>

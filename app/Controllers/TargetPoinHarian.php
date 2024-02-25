@@ -258,7 +258,10 @@ class TargetPoinHarian extends BaseController
                     session()->setFlashdata('error', 'Pengeditan gagal, hanya dapat mengedit data dengan tahun ' . $tahun_saat_ini . ' dan tahun yang akan datang serta bulan ' . $bulan_sekarang . ' dan bulan yang akan datang');
                     return redirect()->withInput()->with('modal', 'modaledit_target_poin_harian')->back();
                 } //Cek apakah ada target poin harian dengan tahun bulan dan id usergroup yang sama dengan data yang diedit
-                elseif ($this->targetpoinharianModel->getTargetPoinHarianByTahunBulanIdusergroup($tahun_target_poin, $bulan_target_poin, $usergroup_target_poin) != null) {
+                elseif (
+                    ($this->targetpoinharianModel->getTargetPoinHarianByTahunBulanIdusergroup($tahun_target_poin, $bulan_target_poin, $usergroup_target_poin) != null) && ($existingData['tahun'] != $tahun_target_poin ||
+                        $existingData['bulan'] != $bulan_target_poin || $existingData['id_usergroup'] != $usergroup_target_poin)
+                ) {
                     $usergroup_lama = $this->usergroupModel->getUserGroup($usergroup_target_poin);
                     // Tentukan nama bulan berdasarkan bulan_target_poin yang diberikan
                     $bulan_lama = isset($bulan_nama[$bulan_target_poin]) ? $bulan_nama[$bulan_target_poin] : "Bulan tidak valid";

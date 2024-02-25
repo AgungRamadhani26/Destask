@@ -121,6 +121,7 @@ $routes->get('/bobot_kategori_task/daftar_bobot_kategori_task', 'BobotKategoriTa
 $routes->post('/bobot_kategori_task/tambah_bobot_kategori_task', 'BobotKategoriTask::tambah_bobot_kategori_task');
 //Untuk mengedit bobot kategori task
 $routes->get('bobot_kategori_task/edit_bobot_kategori_task/(:num)/(:num)', 'BobotKategoriTask::edit_bobot_kategori_task/$1/$2');
+$routes->post('/bobot_kategori_task/update_bobot_kategori_task', 'BobotKategoriTask::update_bobot_kategori_task');
 
 
 //Routes Profile

@@ -20,6 +20,7 @@ function edit_status_pekerjaan($id){
       success: function(hasil){
          var $obj = $.parseJSON(hasil);
          if ($obj.id_status_pekerjaan != ''){
+            $('.alert').hide();
             $('#id_status_pekerjaan_e').val($obj.id_status_pekerjaan);
             $('#nama_status_pekerjaan_e').val($obj.nama_status_pekerjaan);
             $('#deskripsi_status_pekerjaan_e').val($obj.deskripsi_status_pekerjaan);
@@ -52,6 +53,7 @@ function edit_kategori_pekerjaan($id){
       success: function(hasil){
          var $obj = $.parseJSON(hasil);
          if ($obj.id_kategori_pekerjaan != ''){
+            $('.alert').hide();
             $('#id_kategori_pekerjaan_e').val($obj.id_kategori_pekerjaan);
             $('#nama_kategori_pekerjaan_e').val($obj.nama_kategori_pekerjaan);
             $('#deskripsi_kategori_pekerjaan_e').val($obj.deskripsi_kategori_pekerjaan);
@@ -84,6 +86,7 @@ function edit_status_task($id){
       success: function(hasil){
          var $obj = $.parseJSON(hasil);
          if ($obj.id_status_task != ''){
+            $('.alert').hide();
             $('#id_status_task_e').val($obj.id_status_task);
             $('#nama_status_task_e').val($obj.nama_status_task);
             $('#deskripsi_status_task_e').val($obj.deskripsi_status_task);
@@ -116,6 +119,7 @@ function edit_kategori_task($id){
       success: function(hasil){
          var $obj = $.parseJSON(hasil);
          if ($obj.id_kategori_task != ''){
+            $('.alert').hide();
             $('#id_kategori_task_e').val($obj.id_kategori_task);
             $('#nama_kategori_task_e').val($obj.nama_kategori_task);
             $('#deskripsi_kategori_task_e').val($obj.deskripsi_kategori_task);
@@ -148,6 +152,7 @@ function edit_hari_libur($id){
       success: function(hasil){
          var $obj = $.parseJSON(hasil);
          if ($obj.id_hari_libur != ''){
+            $('.alert').hide();
             $('#id_hari_libur_e').val($obj.id_hari_libur);
             flatpickr("#tanggal_e", config1).setDate($obj.tanggal_libur);
             $('#keterangan_e').val($obj.keterangan);
@@ -188,6 +193,7 @@ function edit_target_poin_harian($id){
       success: function(hasil){
          var $obj = $.parseJSON(hasil);
          if ($obj.id_target_poin_harian != ''){
+            $('.alert').hide();
             $('#id_target_poin_harian_e').val($obj.id_target_poin_harian);
             $('#usergroup_target_poin_e').val($obj.id_usergroup);
             $('#tahun_target_poin_e').val($obj.tahun);
@@ -217,24 +223,34 @@ function resetFilterTargetPoinHarian() {
 
 //Proses membersikan form add dan edit bobot kategori task jika mengclose modal
 function resetForm_bobot_kategori_task() {
+   $('.alert').hide();
    document.getElementById("formBobotKategoritask").reset();
+   document.getElementById("formBobotKategoritask_e").reset();
 }
 
 //Proses edit_bobot_kategori_tas
-function edit_bobot_kategori_task($tahun, $id_usergroup){
+function edit_bobot_kategori_task(tahun, id_usergroup) {
+   document.getElementById("formBobotKategoritask_e").reset();
    $.ajax({
-      url: "/bobot_kategori_task/edit_bobot_kategori_task/" + $tahun + "/" + $id_usergroup,
-      type: "GET",
-      success: function(hasil){
-         console.log(hasil)
-         // var $obj = $.parseJSON(hasil);
-         // if ($obj.id_usergroup != '' && $obj.tahun != ''){
-         //    $('#id_target_poin_harian_e').val($obj.id_target_poin_harian);
-            
-         // }
-      }
+         url: "/bobot_kategori_task/edit_bobot_kategori_task/" + tahun + "/" + id_usergroup,
+         type: "GET",
+         success: function(response) {
+            var data = JSON.parse(response);
+            if (data) {
+               $('.alert').hide();
+               $('#thn_lama_bkt').val(data[0].tahun);
+               $('#usergroup_lama_bkt').val(data[0].id_usergroup);
+               $('#tahun_bobot_kategori_task_e').val(data[0].tahun);
+               $('#usergroup_bobot_kategori_task_e').val(data[0].id_usergroup);
+               // Isi input untuk setiap kategori dengan bobot yang sesuai
+               data.forEach(function(item) {
+                   $('#bobot_kategoritask_e_' + item.id_kategori_task).val(item.bobot_poin);
+               });
+           } 
+         }
    });
 }
+
 
 
 
@@ -260,6 +276,7 @@ function edit_usergroup($id){
       success: function(hasil){
          var $obj = $.parseJSON(hasil);
          if ($obj.id_usergroup != ''){
+            $('.alert').hide();
             $('#id_usergroup_e').val($obj.id_usergroup);
             $('#nama_usergroup_e').val($obj.nama_usergroup);
             $('#deskripsi_usergroup_e').val($obj.deskripsi_usergroup);
@@ -311,6 +328,7 @@ function edit_user($id){
       success: function(hasil){
          var $obj = $.parseJSON(hasil);
          if ($obj.id_user != ''){
+            $('.alert').hide();
             $('#id_user_e').val($obj.id_user);
             $('#email_e').val($obj.email);
             $('#nama_e').val($obj.nama);
