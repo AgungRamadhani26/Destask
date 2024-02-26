@@ -112,7 +112,7 @@ $routes->post('/target_poin_harian/update_target_poin_harian', 'TargetPoinHarian
 //Untuk menghapus target poin harian
 $routes->delete('/target_poin_harian/delete_target_poin_harian/(:num)', 'TargetPoinHarian::delete_target_poin_harian/$1');
 //Untuk memfilter data yang ditampilkan
-$routes->get('target_poin_harian/filter_target_poin_harian', 'TargetPoinHarian::filter_target_poin_harian');
+$routes->get('/target_poin_harian/filter_target_poin_harian', 'TargetPoinHarian::filter_target_poin_harian');
 
 //Routes bobot kategori task
 //Untuk menampilkan halaman bobot kategori task
@@ -120,8 +120,14 @@ $routes->get('/bobot_kategori_task/daftar_bobot_kategori_task', 'BobotKategoriTa
 //Untuk menambah bobot kategori task
 $routes->post('/bobot_kategori_task/tambah_bobot_kategori_task', 'BobotKategoriTask::tambah_bobot_kategori_task');
 //Untuk mengedit bobot kategori task
-$routes->get('bobot_kategori_task/edit_bobot_kategori_task/(:num)/(:num)', 'BobotKategoriTask::edit_bobot_kategori_task/$1/$2');
+$routes->get('/bobot_kategori_task/edit_bobot_kategori_task/(:num)/(:num)', 'BobotKategoriTask::edit_bobot_kategori_task/$1/$2');
 $routes->post('/bobot_kategori_task/update_bobot_kategori_task', 'BobotKategoriTask::update_bobot_kategori_task');
+//Untuk menghapus bobot kategori task
+$routes->delete('/bobot_kategori_task/delete_bobot_kategori_task/(:num)/(:num)', 'BobotKategoriTask::delete_bobot_kategori_task/$1/$2');
+//Untuk memfilter data yang ditampilkan
+$routes->get('/bobot_kategori_task/filter_bobot_kategori_task', 'BobotKategoriTask::filter_bobot_kategori_task');
+//Untuk melihat detail bobot kategori task
+$routes->get('/bobot_kategori_task/detail_bobot_kategori_task/(:num)/(:num)', 'BobotKategoriTask::detail_bobot_kategori_task/$1/$2');
 
 
 //Routes Profile

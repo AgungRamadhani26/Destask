@@ -28,9 +28,42 @@ class BobotKategoriTask extends BaseController
             'bobot_kategori_task' => $this->bobotkategoritaskModel->getTotalBobotKategoriTaskPerUsergroupPerYear(),
             'usergroup' => $this->usergroupModel->getUserGroup(),
             'kategori_task' => $this->kategoriTaskModel->getKategoriTaskASC(),
-            'url1' => '/bobot_kategori_task/daftar_bobot_kategori_task'
+            'url1' => '/bobot_kategori_task/daftar_bobot_kategori_task',
+            'filter_tahun_bkt' => '',
+            'filter_usergroup_bkt' => ''
         ];
         return view('bobot_kategoritask/daftar_bobot_kategoritask', $data);
+    }
+
+    //Fungsi filter_bobot_kategori_task
+    public function filter_bobot_kategori_task()
+    {
+        $usergroup_bkt = $this->request->getGet('usergroup_bkt');
+        $tahun_bkt = $this->request->getGet('tahun_bkt');
+        $bobot_kategori_task = $this->bobotkategoritaskModel->getTotalBobotKategoriTaskPerUsergroupPerYear_ByTahunUsergroup($usergroup_bkt, $tahun_bkt);
+        $data = [
+            'bobot_kategori_task' => $bobot_kategori_task,
+            'usergroup' => $this->usergroupModel->getUserGroup(),
+            'kategori_task' => $this->kategoriTaskModel->getKategoriTaskASC(),
+            'url1' => '/bobot_kategori_task/daftar_bobot_kategori_task',
+            'filter_usergroup_bkt' => $usergroup_bkt,
+            'filter_tahun_bkt' => $tahun_bkt
+        ];
+        return view('bobot_kategoritask/daftar_bobot_kategoritask', $data);
+    }
+
+    //Fungsi detail_bobot_kategori_task
+    public function detail_bobot_kategori_task($tahun, $id_usergroup)
+    {
+        $data = [
+            'bobot_kategori_task' => $this->bobotkategoritaskModel->getTotalBobotKategoriTaskPerUsergroupPerYear_ByTahunUsergroup($id_usergroup, $tahun),
+            'usergroup' => $this->usergroupModel->getUserGroup(),
+            'kategori_task' => $this->kategoriTaskModel->getKategoriTaskASC(),
+            'kategori_task_dan_poin' => $this->bobotkategoritaskModel->getBobotKategoriTaskByUsergroupTahun($tahun, $id_usergroup),
+            'url1' => '/bobot_kategori_task/daftar_bobot_kategori_task',
+        ];
+        // dd($data);
+        return view('bobot_kategoritask/detail_bobot_kategoritask', $data);
     }
 
     //Fungsi tambah_bobot_kategori_task
@@ -167,7 +200,8 @@ class BobotKategoriTask extends BaseController
                 session()->setFlashdata('error', 'Pengeditan gagal, tahun tidak bisa lebih kecil dari tahun saat ini');
                 return redirect()->withInput()->with('modal', 'modaledit_bobot_kategori_task')->back();
             } elseif (($this->bobotkategoritaskModel->getBobotKategoriTaskByUsergroupTahun($tahun_bobot_kategori_task, $usergroup_bobot_kategori_task) != null) && ($existingDataRow1['tahun'] != $tahun_bobot_kategori_task || $existingDataRow1['id_usergroup'] != $usergroup_bobot_kategori_task)) {
-                session()->setFlashdata('error', 'Pengeditan gagal, bobot kategori task dengan tahun ' . $tahun_bobot_kategori_task . ' dan usergorup ' . $usergroup_bobot_kategori_task . ' sudah ada sebelumnya, silahkan cari data dengan menggunakan filter dan kolom search jika ingin mengeditnya.');
+                $usergroup_lama = $this->usergroupModel->getUserGroup($usergroup_bobot_kategori_task);
+                session()->setFlashdata('error', 'Pengeditan gagal, bobot kategori task dengan tahun ' . $tahun_bobot_kategori_task . ' dan usergorup ' . $usergroup_lama['nama_usergroup'] . ' sudah ada sebelumnya, silahkan cari data dengan menggunakan filter dan kolom search jika ingin mengeditnya.');
                 return redirect()->withInput()->with('modal', 'modaledit_bobot_kategori_task')->back();
             } else {
                 if (sizeof($id_bobot_kategori_task) == sizeof($bobot_kategoritask)) {
@@ -198,11 +232,27 @@ class BobotKategoriTask extends BaseController
                     }
                 }
                 Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil mengedit data bobot kategori task');
-                return redirect()->to('bobot_kategori_task/daftar_bobot_kategori_task');
+                return redirect()->to('/bobot_kategori_task/daftar_bobot_kategori_task');
             }
         } else {
             session()->setFlashdata('error', $validasi->listErrors());
             return redirect()->withInput()->with('modal', 'modaledit_bobot_kategori_task')->back();
         }
+    }
+
+    public function delete_bobot_kategori_task($tahun, $id_usergroup)
+    {   //Untuk mendapatkan elemen pertama saja karena hanya mau ngecek tahun saja
+        $bobot_kategori_task_first = $this->bobotkategoritaskModel->getBobotKategoriTaskByUsergroupTahunFirst($tahun, $id_usergroup);
+        $id_bobot_kategori_task = $this->bobotkategoritaskModel->getAllId_Bobot_Kategori_Task($tahun, $id_usergroup);
+        if ($bobot_kategori_task_first['tahun'] < date('Y')) {
+            Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Data bobot kategori task gagal dihapus, karena tahun sudah lewat');
+            return redirect()->to('/bobot_kategori_task/daftar_bobot_kategori_task');
+        } else {
+            foreach ($id_bobot_kategori_task as $kt => $val) {
+                $this->bobotkategoritaskModel->delete($id_bobot_kategori_task[$kt]);
+            }
+        }
+        Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Data bobot kategori task berhasil dihapus');
+        return redirect()->to('/bobot_kategori_task/daftar_bobot_kategori_task');
     }
 }

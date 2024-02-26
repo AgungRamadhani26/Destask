@@ -24,7 +24,9 @@ class TargetPoinHarian extends BaseController
         $data = [
             'target_poin_harian' => $this->targetpoinharianModel->getTargetPoinHarian(),
             'usergroup' => $this->usergroupModel->getUserGroup(),
-            'url1' => '/target_poin_harian/daftar_target_poin_harian'
+            'url1' => '/target_poin_harian/daftar_target_poin_harian',
+            'filter_bulan' => '',
+            'filter_tahun' => ''
         ];
         return view('target_poin_harian/daftar_target_poin_harian', $data);
     }
@@ -38,10 +40,10 @@ class TargetPoinHarian extends BaseController
         $data = [
             'target_poin_harian' => $target_poin_harian,
             'usergroup' => $this->usergroupModel->getUserGroup(),
-            'url1' => '/target_poin_harian/daftar_target_poin_harian'
+            'url1' => '/target_poin_harian/daftar_target_poin_harian',
+            'filter_bulan' => $filter_bulan,
+            'filter_tahun' => $filter_tahun
         ];
-        session()->setFlashdata('filter_bulan', $filter_bulan);
-        session()->setFlashdata('filter_tahun', $filter_tahun);
         return view('target_poin_harian/daftar_target_poin_harian', $data);
     }
 
@@ -282,7 +284,7 @@ class TargetPoinHarian extends BaseController
                     ];
                     $this->targetpoinharianModel->save($data_target_poin_harian);
                     Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil mengedit data target poin harian');
-                    return redirect()->to('target_poin_harian/daftar_target_poin_harian');
+                    return redirect()->to('/target_poin_harian/daftar_target_poin_harian');
                 }
             }
         } else {

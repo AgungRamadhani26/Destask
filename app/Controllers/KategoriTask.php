@@ -129,7 +129,13 @@ class KategoriTask extends BaseController
     //Fungsi delete_kategori_task
     public function delete_kategori_task($id_kategori_task)
     {
+        // $db = \Config\Database::connect();
+        // $db->query('SET FOREIGN_KEY_CHECKS=0'); // Menonaktifkan pengecekan kunci asing
+
         $this->kategoriTaskModel->delete($id_kategori_task);
+
+        // $db->query('SET FOREIGN_KEY_CHECKS=1'); // Mengaktifkan kembali pengecekan kunci asing
+
         Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Data kategori task berhasil dihapus');
         return redirect()->to('/kategori_task/daftar_kategori_task');
     }

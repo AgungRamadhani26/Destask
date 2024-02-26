@@ -19,18 +19,18 @@
                         <label class="input-group-text" for="">Bulan</label>
                         <select class="form-select" id="filter_bulan" name="filter_bulan">
                            <option value="">Semua Bulan</option>
-                           <option value="1" <?= (session()->getFlashdata('filter_bulan') == "1") ? 'selected' : '' ?>>Januari</option>
-                           <option value="2" <?= (session()->getFlashdata('filter_bulan') == "2") ? 'selected' : '' ?>>Februari</option>
-                           <option value="3" <?= (session()->getFlashdata('filter_bulan') == "3") ? 'selected' : '' ?>>Maret</option>
-                           <option value="4" <?= (session()->getFlashdata('filter_bulan') == "4") ? 'selected' : '' ?>>April</option>
-                           <option value="5" <?= (session()->getFlashdata('filter_bulan') == "5") ? 'selected' : '' ?>>Mei</option>
-                           <option value="6" <?= (session()->getFlashdata('filter_bulan') == "6") ? 'selected' : '' ?>>Juni</option>
-                           <option value="7" <?= (session()->getFlashdata('filter_bulan') == "7") ? 'selected' : '' ?>>Juli</option>
-                           <option value="8" <?= (session()->getFlashdata('filter_bulan') == "8") ? 'selected' : '' ?>>Agustus</option>
-                           <option value="9" <?= (session()->getFlashdata('filter_bulan') == "9") ? 'selected' : '' ?>>September</option>
-                           <option value="10" <?= (session()->getFlashdata('filter_bulan') == "10") ? 'selected' : '' ?>>Oktober</option>
-                           <option value="11" <?= (session()->getFlashdata('filter_bulan') == "11") ? 'selected' : '' ?>>November</option>
-                           <option value="12" <?= (session()->getFlashdata('filter_bulan') == "12") ? 'selected' : '' ?>>Desember</option>
+                           <option value="1" <?= ($filter_bulan == "1") ? 'selected' : '' ?>>Januari</option>
+                           <option value="2" <?= ($filter_bulan == "2") ? 'selected' : '' ?>>Februari</option>
+                           <option value="3" <?= ($filter_bulan == "3") ? 'selected' : '' ?>>Maret</option>
+                           <option value="4" <?= ($filter_bulan == "4") ? 'selected' : '' ?>>April</option>
+                           <option value="5" <?= ($filter_bulan == "5") ? 'selected' : '' ?>>Mei</option>
+                           <option value="6" <?= ($filter_bulan == "6") ? 'selected' : '' ?>>Juni</option>
+                           <option value="7" <?= ($filter_bulan == "7") ? 'selected' : '' ?>>Juli</option>
+                           <option value="8" <?= ($filter_bulan == "8") ? 'selected' : '' ?>>Agustus</option>
+                           <option value="9" <?= ($filter_bulan == "9") ? 'selected' : '' ?>>September</option>
+                           <option value="10" <?= ($filter_bulan == "10") ? 'selected' : '' ?>>Oktober</option>
+                           <option value="11" <?= ($filter_bulan == "11") ? 'selected' : '' ?>>November</option>
+                           <option value="12" <?= ($filter_bulan == "12") ? 'selected' : '' ?>>Desember</option>
                         </select>
                      </div>
                   </div>
@@ -39,11 +39,11 @@
                         <label class="input-group-text" for="">Tahun</label>
                         <select class="form-select" id="filter_tahun" name="filter_tahun">
                            <option value="">Semua Tahun</option>
-                           <option value="2023" <?= (session()->getFlashdata('filter_tahun') == "2023") ? 'selected' : '' ?>>2023</option>
-                           <option value="2024" <?= (session()->getFlashdata('filter_tahun') == "2024") ? 'selected' : '' ?>>2024</option>
-                           <option value="2025" <?= (session()->getFlashdata('filter_tahun') == "2025") ? 'selected' : '' ?>>2025</option>
-                           <option value="2026" <?= (session()->getFlashdata('filter_tahun') == "2026") ? 'selected' : '' ?>>2026</option>
-                           <option value="2027" <?= (session()->getFlashdata('filter_tahun') == "2027") ? 'selected' : '' ?>>2027</option>
+                           <option value="2023" <?= ($filter_tahun == "2023") ? 'selected' : '' ?>>2023</option>
+                           <option value="2024" <?= ($filter_tahun == "2024") ? 'selected' : '' ?>>2024</option>
+                           <option value="2025" <?= ($filter_tahun == "2025") ? 'selected' : '' ?>>2025</option>
+                           <option value="2026" <?= ($filter_tahun == "2026") ? 'selected' : '' ?>>2026</option>
+                           <option value="2027" <?= ($filter_tahun == "2027") ? 'selected' : '' ?>>2027</option>
                         </select>
                      </div>
                   </div>

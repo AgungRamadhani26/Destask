@@ -7,9 +7,9 @@
 
 <section class="section">
    <div class="row">
-      <div class="col-lg-12">
+      <div class="col-lg-4">
          <div class="card">
-            <div class="card_title_firter_poin_harian bg-primary">
+            <div class="card_title_firter_poin_harian bg-info">
                <center>
                   <h4 class="card-title" style="color: white;">
                      Detail Usergroup <?= $usergroup['nama_usergroup'] ?>
@@ -18,39 +18,54 @@
             </div>
             <div class="card-body">
                <div class="row">
-                  <div class="col-lg-4">
+                  <div class="col-lg-12">
+                     <div class="table-responsive">
+                        <table class="table">
+                           <tr>
+                              <td><span class="fw-bold text-success">Supervisi</span></td>
+                              <td>:</td>
+                              <td><?= $jumlah_user_supervisi ?></td>
+                           </tr>
+                           <tr>
+                              <td><span class="fw-bold text-primary">Staff</span></td>
+                              <td>:</td>
+                              <td><?= $jumlah_user_staff ?></td>
+                           </tr>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-lg-12">
                      <div class="card">
-                        <div class="card-header bg-info" style="text-align: center; color:white; font-weight:bold">
-                           Jumlah Anggota
-                        </div>
                         <div class="card-body">
-                           <div class="table-responsive">
-                              <table class="table">
-                                 <tr>
-                                    <td><span class="fw-bold text-success">Supervisi</span></td>
-                                    <td>:</td>
-                                    <td><?= $jumlah_user_supervisi ?></td>
-                                 </tr>
-                                 <tr>
-                                    <td><span class="fw-bold text-primary">Staff</span></td>
-                                    <td>:</td>
-                                    <td><?= $jumlah_user_staff ?></td>
-                                 </tr>
-                              </table>
+                           <h5 class="card-title">Deskripsi Usergroup <?= $usergroup['nama_usergroup'] ?></h5>
+                           <div class="accordion" id="accordionExample">
+                              <div class="accordion-item">
+                                 <h2 class="accordion-header" id="headingTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                       Baca disini
+                                    </button>
+                                 </h2>
+                                 <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body bg-info" style="text-align: justify;">
+                                       <?= $usergroup['deskripsi_usergroup'] ?>
+                                    </div>
+                                 </div>
+                              </div>
                            </div>
                         </div>
                      </div>
                   </div>
-                  <div class="col-lg-8">
-                     <div class="card bg-success">
-                        <div class="card-body mt-3" style="text-align: justify; color:white">
-                           <?= $usergroup['deskripsi_usergroup'] ?>
-                        </div>
-                     </div>
-                  </div>
                </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-lg-8">
+         <div class="card">
+            <div class="card-body mt-4">
                <div class="table-responsive">
-                  <table class="table table-bordered datatable">
+                  <table class="table table-striped table-bordered" id="myTable">
                      <thead>
                         <tr>
                            <th>No</th>

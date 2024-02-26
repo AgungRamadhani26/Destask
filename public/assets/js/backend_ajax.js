@@ -251,6 +251,15 @@ function edit_bobot_kategori_task(tahun, id_usergroup) {
    });
 }
 
+//Proses reset filter
+function resetFilterBobotKategeoriTask() {
+   // Mengatur nilai elemen formulir menjadi kosong
+   document.getElementById('usergroup_bkt').value = '';
+   document.getElementById('tahun_bkt').value = '';
+   // Mengarahkan pengguna kembali ke URL yang diinginkan
+   window.location.href = "/bobot_kategori_task/daftar_bobot_kategori_task";
+}
+
 
 
 

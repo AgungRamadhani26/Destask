@@ -36,6 +36,39 @@ class BobotKategoriTaskModel extends Model
             ->findAll();
     }
 
+    //Fungsi untuk mendapatkan daftar total bobot kategori task per usergroup per tahun berdasarkan tahun dan id usergroup
+    public function getTotalBobotKategoriTaskPerUsergroupPerYear_ByTahunUsergroup($id_usergroup, $tahun)
+    {
+        if ($id_usergroup == '' && $tahun == '') {
+            return $this->select('id_usergroup, tahun, SUM(bobot_poin) AS total_bobot_poin')
+                ->groupBy('id_usergroup, tahun')
+                ->orderBy('tahun', 'DESC')
+                ->orderBy('id_usergroup', 'ASC')
+                ->findAll();
+        } elseif ($id_usergroup == '') {
+            return $this->select('id_usergroup, tahun, SUM(bobot_poin) AS total_bobot_poin')
+                ->where('tahun', $tahun)
+                ->groupBy('id_usergroup, tahun')
+                ->orderBy('tahun', 'DESC')
+                ->orderBy('id_usergroup', 'ASC')
+                ->findAll();
+        } elseif ($tahun == '') {
+            return $this->select('id_usergroup, tahun, SUM(bobot_poin) AS total_bobot_poin')
+                ->where('id_usergroup', $id_usergroup)
+                ->groupBy('id_usergroup, tahun')
+                ->orderBy('tahun', 'DESC')
+                ->orderBy('id_usergroup', 'ASC')
+                ->findAll();
+        } else {
+            return $this->select('id_usergroup, tahun, SUM(bobot_poin) AS total_bobot_poin')
+                ->where('id_usergroup', $id_usergroup)
+                ->where('tahun', $tahun)
+                ->groupBy('id_usergroup, tahun')
+                ->orderBy('tahun', 'DESC')
+                ->orderBy('id_usergroup', 'ASC')
+                ->findAll();
+        }
+    }
 
     //Fungsi untuk mendapatkan bobot kategori task berdasarkan tahun dan usergroup
     public function getBobotKategoriTaskByUsergroupTahun($tahun, $id_usergroup)
