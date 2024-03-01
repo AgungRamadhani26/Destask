@@ -15,10 +15,18 @@ class GantiPasswordController extends ResourceController {
             $userId = $this->request->getVar('id_user');
             $oldPassword = $this->request->getVar('old_password');
             $newPassword = $this->request->getVar('new_password');
-
+            
             // Validate user input
             if (empty($userId) || empty($oldPassword) || empty($newPassword)) {
-            return $this->fail('Invalid input. Please provide user ID, old password, and new password.');
+                $response = [
+                    'status' => 400,
+                    'error' => true,
+                    'messages' => 'Data tidak boleh kosong',
+                    'id_user' => $userId,
+                    'old_password' => $oldPassword,
+                    'new_password' => $newPassword,
+                ];
+                return $this->respond($response, 400);
             }
 
             // Check if the user exists

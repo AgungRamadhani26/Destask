@@ -11,13 +11,13 @@ class KategoriPekerjaanController extends ResourceController {
 
     public function index() {
         $model = new $this->modelName();
-        $data = $model->orderBy('id_kategori_pekerjaan', 'ASC')->findAll();
+        $data = $model->where(['deleted_at' => null])->orderBy('id_kategori_pekerjaan', 'ASC')->findAll();
         return $this->respond($data, 200);
     }
 
     public function show($id = null) {
         $model = new $this->modelName();
-        $data = $model->getWhere(['id_kategori_pekerjaan' => $id])->getResult();
+        $data = $model->getWhere(['id_kategori_pekerjaan' => $id, 'deleted_at' => null])->getResult();
 
         if ($data) {
             return $this->respond($data, 200);

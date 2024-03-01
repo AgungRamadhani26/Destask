@@ -15,7 +15,7 @@ class UserModel extends Model
         'user_level', 'nama', 'status_keaktifan', 'foto_profil'
     ];
 
-    
+    //MOBILE
     function getIdentitas($identitas)
     {
         $builder = $this->table('user');
@@ -30,6 +30,18 @@ class UserModel extends Model
             $data = $builder->where('username', $identitas)->first();
         }
 
+        if ($data != null) {
+            return $data;
+        } else {
+            return null;
+        }
+    }
+    
+    //MOBILE
+    function getUserById($id)
+    {
+        $builder = $this->table('user');
+        $data = $builder->where('id_user', $id)->first();
         if ($data != null) {
             return $data;
         } else {

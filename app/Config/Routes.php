@@ -6,17 +6,12 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 
-$routes->setDefaultNamespace('App\Controllers');
-$routes->get('/', 'Home::index');
-$routes->post('register', 'Register::index');
-$routes->post('login', 'Login::index');
-
-/**
- * API Routes
- */
+/* --------------------------------------------------------------------------*/
+/*********************** * API Routes ****************************************/
+/* --------------------------------------------------------------------------*/
 //login
-$routes->post('authAPI', 'API\AuthController::login');
-$routes->get('user', 'API\AuthController::user');
+$routes->post('authlogin', 'API\AuthController::login');
+$routes->get('authcekuser', 'API\AuthController::user');
 
 $routes->group('api', ['filter' => 'jwtfilter', 'namespace' => 'App\Controllers\API'], function ($routes) {
     //user
@@ -25,23 +20,27 @@ $routes->group('api', ['filter' => 'jwtfilter', 'namespace' => 'App\Controllers\
     $routes->post('user', 'UserController::create');
     $routes->put('user/(:num)', 'UserController::update/$1');
     $routes->delete('user/(:num)', 'UserController::delete/$1');
+    $routes->post('user/fotoprofil', 'FotoProfilController::create');
     
     //ganti password
-    $routes->post('gantipassword', 'GantiPasswordController::index');
+    $routes->put('gantipassword', 'GantiPasswordController::index');
     
     //pekerjaan
     $routes->get('pekerjaan', 'PekerjaanController::index');
     $routes->get('pekerjaan/(:num)', 'PekerjaanController::show/$1');
-    $routes->get('pekerjaanuser/(:num)', 'PekerjaanController::showPekerjaan/$1');
+    $routes->get('pekerjaanbyuser/(:num)', 'PekerjaanController::showPekerjaan/$1');
+    $routes->put('pekerjaan/(:num)', 'PekerjaanController::update/$1'); //edit pekerjaan
 
     //task
     $routes->get('task', 'TaskController::index');
     $routes->get('task/(:num)', 'TaskController::show/$1');
-    $routes->get('taskbypekerjaan/(:num)', 'TaskController::showTaskByPekerjaan/$1');
-    $routes->get('taskbyuser/(:num)', 'TaskController::showTaskByUser/$1');
+    $routes->get('taskbypekerjaan/(:num)', 'TaskController::showTaskByPekerjaan/$1'); //data task berdasarkan pekerjaan
+    $routes->get('taskbyuser/(:num)', 'TaskController::showTaskByUser/$1'); //data task berdasarkan user
+    $routes->get('task/verifikasi/(:num)', 'TaskController::showTaskVerifikasi/$1'); //data task yang perlu diverifikasi
+    $routes->put('task/verifikasi/(:num)', 'TaskController::updateverifikasi/$1'); //data task yang perlu diverifikasi
     $routes->post('task', 'TaskController::create');
-    $routes->put('task/(:num)', 'TaskController::update/$1');
-    $routes->put('task/submit/(:num)', 'TaskController::submit/$1');
+    $routes->put('task/(:num)', 'TaskController::update/$1'); //edit task
+    $routes->post('task/submit', 'TaskController::submit'); //submit bukti selesai task
     $routes->delete('task/(:num)', 'TaskController::delete/$1');
 
     //bobot kategori task
@@ -67,7 +66,7 @@ $routes->group('api', ['filter' => 'jwtfilter', 'namespace' => 'App\Controllers\
     //notifikasi
     $routes->get('notifikasi', 'NotifikasiController::index');
     $routes->get('notifikasi/(:num)', 'NotifikasiController::show/$1');
-    $routes->get('notifikasitouser/(:num)', 'NotifikasiController::showNotifikasiToUser/$1');
+    $routes->get('notifikasi/user/(:num)', 'NotifikasiController::showNotifikasiToUser/$1');
     $routes->put('notifikasi/(:num)', 'NotifikasiController::update/$1');
 
     //personil
@@ -86,8 +85,16 @@ $routes->group('api', ['filter' => 'jwtfilter', 'namespace' => 'App\Controllers\
     //target poin harian
     $routes->get('targetpoinharian', 'TargetPoinHarianController::index');
     $routes->get('targetpoinharian/(:num)', 'TargetPoinHarianController::show/$1');
+    $routes->get('targetpoinharianbyuser/(:num)', 'TargetPoinHarianController::targetpoinharianbyuser/$1');
+
+    //rekap point
+    $routes->get('rekappoint/(:num)', 'RekapPointController::rekappoint/$1');
 
 });
+/* --------------------------------------------------------------------------*/
+/*********************** * END API Routes ************************************/
+/* --------------------------------------------------------------------------*/
+
 
 //Routes autentikasi
 //Untuk menampilkan halaman login

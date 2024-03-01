@@ -11,13 +11,13 @@ class NotifikasiController extends ResourceController {
 
     public function index() {
         $model = new $this->modelName();
-        $data = $model->orderBy('id_notifikasi', 'ASC')->findAll();
+        $data = $model->where(['deleted_at' => null])->orderBy('id_notifikasi', 'ASC')->findAll();
         return $this->respond($data, 200);
     }
 
     public function show($id = null) {
         $model = new $this->modelName();
-        $data = $model->getWhere(['id_notifikasi' => $id])->getResult();
+        $data = $model->getWhere(['id_notifikasi' => $id, 'deleted_at' => null])->getResult();
 
         if ($data) {
             return $this->respond($data, 200);
@@ -33,7 +33,7 @@ class NotifikasiController extends ResourceController {
 
     public function showNotifikasiToUser($id = null) {
         $model = new $this->modelName();
-        $data = $model->where('id_user', $id)->orderBy('id_notifikasi', 'DESC')->get()->getResult();
+        $data = $model->where(['id_user' => $id, 'deleted_at' => null])->orderBy('id_notifikasi', 'DESC')->findAll();
 
         if ($data) {
             return $this->respond($data, 200);

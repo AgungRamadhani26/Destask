@@ -13,4 +13,17 @@ class KategoriTaskModel extends Model
     protected $allowedFields    = [
         'nama_kategori_task', 'deskripsi_kategori_task'
     ];
+
+    //MOBILE
+    //get kategori task by id
+    function getKategoriTaskById($idkategori)
+    {
+        $builder = $this->table('kategori_task');
+        $data = $builder->where('id_kategori_task', $idkategori)->first();
+        if ($data != null) {
+            return $data;
+        } else {
+            return null;
+        }
+    }
 }

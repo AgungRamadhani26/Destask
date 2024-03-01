@@ -11,13 +11,13 @@ class BobotKategoriTaskController extends ResourceController {
 
     public function index() {
         $model = new $this->modelName();
-        $data = $model->orderBy('id_bobot_kategori_task', 'ASC')->findAll();
+        $data = $model->where(['deleted_at' => null])->orderBy('id_bobot_kategori_task', 'ASC')->findAll();
         return $this->respond($data, 200);
     }
 
     public function show($id = null) {
         $model = new $this->modelName();
-        $data = $model->getWhere(['id_bobot_kategori_task' => $id])->getResult();
+        $data = $model->getWhere(['id_bobot_kategori_task' => $id, 'deleted_at' => null])->getResult();
 
         if ($data) {
             return $this->respond($data, 200);
