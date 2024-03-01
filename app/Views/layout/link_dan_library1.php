@@ -63,6 +63,7 @@
 
    flatpickr("#tanggal", config1);
    flatpickr("#tanggal_e", config1);
+   flatpickr("#target_waktu_selesai", config1);
 </script>
 
 <!-- Sweet Alert -->

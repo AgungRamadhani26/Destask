@@ -25,11 +25,6 @@ class Pekerjaan extends Migration
                 'constraint'     => 11,
                 'unsigned'       => true,
             ],
-            'id_personil' => [
-                'type'           => 'INT',
-                'constraint'     => 11,
-                'unsigned'       => true,
-            ],
             'nama_pekerjaan' => [
                 'type'       => 'VARCHAR',
                 'constraint' => 50,
@@ -49,6 +44,7 @@ class Pekerjaan extends Migration
                 'type'           => 'INT',
                 'constraint'     => 11,
                 'unsigned'       => true,
+                'null'  => true
             ],
             'deskripsi_pekerjaan' => [
                 'type'       => 'TEXT',
@@ -62,6 +58,7 @@ class Pekerjaan extends Migration
                 'type'           => 'INT',
                 'constraint'     => 3,
                 'unsigned'       => true,
+                'null'  => true
             ],
             'waktu_selesai' => [
                 'type'       => 'DATE',
@@ -83,7 +80,6 @@ class Pekerjaan extends Migration
         $this->forge->addKey('id_pekerjaan', true);
         $this->forge->addForeignKey('id_status_pekerjaan', 'status_pekerjaan', 'id_status_pekerjaan');
         $this->forge->addForeignKey('id_kategori_pekerjaan', 'kategori_pekerjaan', 'id_kategori_pekerjaan');
-        $this->forge->addForeignKey('id_personil', 'personil', 'id_personil');
         $this->forge->createTable('pekerjaan');
     }
 

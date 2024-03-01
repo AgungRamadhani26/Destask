@@ -84,7 +84,7 @@
                 <div class="body_card">
                     <div class="row">
                         <div class="col-2 ms-5">
-                            <button type="button" class="btn btn-primary"><i class="bi bi-journal-plus"></i> Pekerjaan Baru</button>
+                            <a href="/pekerjaan/add_pekerjaan" class="btn btn-primary"><i class="bi bi-journal-plus"></i> Pekerjaan Baru</a>
                         </div>
                         <div class="col-2">
                             <button type="button" class="btn btn-success"><i class="bi bi-database-add"></i> Import Pekerjaan</button>

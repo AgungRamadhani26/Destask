@@ -18,8 +18,7 @@
             <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
                <img src="/assets/img/logo_desnet.png" alt="logo desnet">
                <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
-                  Selamat Datang<br />
-                  <span style="color: hsl(218, 81%, 75%)">di DesTask</span>
+                  Destask
                </h1>
                <p class="mb-4 opacity-70" style="color: hsl(218, 81%, 85%)">
                   Aplikasi monitoring pengerjaan task, dan perencanaan target pekerjaan Departemen Aplikasi PT Des Teknologi Informasi (Desnet).

@@ -34,21 +34,25 @@ class TargetPoinHarian extends Migration
                 'type'           => 'INT',
                 'constraint'     => 11,
                 'unsigned'       => true,
+                'null'  => true
             ],
             'jumlah_hari_kerja' => [
                 'type'           => 'INT',
                 'constraint'     => 11,
                 'unsigned'       => true,
+                'null'  => true
             ],
             'jumlah_hari_libur' => [
                 'type'           => 'INT',
                 'constraint'     => 11,
                 'unsigned'       => true,
+                'null'  => true
             ],
             'jumlah_target_poin_sebulan' => [
                 'type'           => 'INT',
                 'constraint'     => 11,
                 'unsigned'       => true,
+                'null'  => true
             ],
             'created_at' => [
                 'type'  => 'DATETIME',

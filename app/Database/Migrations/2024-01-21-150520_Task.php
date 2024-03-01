@@ -51,11 +51,13 @@ class Task extends Migration
                 'type'           => 'INT',
                 'constraint'     => 1,
                 'unsigned'       => true,
+                'null'  => true
             ],
             'persentase_selesai' => [
                 'type'           => 'INT',
                 'constraint'     => 3,
                 'unsigned'       => true,
+                'null'  => true
             ],
             'deskripsi_task' => [
                 'type'       => 'TEXT',
