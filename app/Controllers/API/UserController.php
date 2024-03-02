@@ -3,7 +3,7 @@ namespace App\Controllers\API;
 use CodeIgniter\RESTful\ResourceController;
 
 class UserController extends ResourceController{
-    protected $modelName = 'App\Models\UserModel';
+    protected $modelName = 'App\Models\API\UserModel';
     protected $format = 'json';
     protected $validation;
 
@@ -14,13 +14,13 @@ class UserController extends ResourceController{
 
     public function index(){
         $model = new $this->modelName();
-        $data = $model->orderBy('id_user', 'ASC')->findAll();
+        $data = $model->where(['deleted_at' => null])->orderBy('id_user', 'ASC')->findAll();
         return $this->respond($data, 200);
     }
 
     public function show($id = null){
         $model = new $this->modelName();
-        $data = $model->getWhere(['id_user' => $id])->getResult();
+        $data = $model->getWhere(['id_user' => $id, 'deleted_at' => null])->getResult();
 
         if($data){
             return $this->respond($data, 200);
@@ -50,14 +50,15 @@ class UserController extends ResourceController{
         $username = $this->request->getVar('username');
         $email = $this->request->getVar('email');
         $nama = $this->request->getVar('nama');
-
+    
         //validasi
         $validation = $this->validate([
+            'id_user' => 'required',
             'username' => 'required',
             'email' => 'required',
             'nama' => 'required'
         ]);
-        
+    
         if($id_user != null && $model->find($id_user) == null){
             $response = [
                 'status' => 404,
@@ -76,11 +77,7 @@ class UserController extends ResourceController{
             $data = [
                 'username' => $username,
                 'email' => $email,
-                'user_role' => 'staff',
-                'user_level' => 'staff',
-                'nama' => $nama,
-                'status_keaktifan' => 'aktif',
-                'foto_profil' => 'logo.png'
+                'nama' => $nama
             ];
             $update = $model->update($id, $data);
             if($update){
@@ -89,7 +86,7 @@ class UserController extends ResourceController{
                     'error' => null,
                     'data' => $data,
                     'messages' => 'Data berhasil diubah'
-
+    
                 ];
                 return $this->respond($response, 200);
             } else {
@@ -101,7 +98,8 @@ class UserController extends ResourceController{
                 return $this->respond($response, 400);
             }
         }
-    }
+    }    
+
 
     function delete($id = null){
         $model = new $this->modelName();

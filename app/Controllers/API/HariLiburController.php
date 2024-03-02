@@ -6,18 +6,18 @@ use CodeIgniter\API\ResponseTrait;
 class HariLiburController extends ResourceController {
     use ResponseTrait;
 
-    protected $modelName = 'App\Models\HariLiburModel';
+    protected $modelName = 'App\Models\API\HariLiburModel';
     protected $format    = 'json';
 
     public function index() {
         $model = new $this->modelName();
-        $data = $model->orderBy('id_hari_libur', 'ASC')->findAll();
+        $data = $model->where(['deleted_at' => null])->orderBy('id_hari_libur', 'ASC')->findAll();
         return $this->respond($data, 200);
     }
 
     public function show($id = null) {
         $model = new $this->modelName();
-        $data = $model->getWhere(['id_hari_libur' => $id])->getResult();
+        $data = $model->where(['id_hari_libur' => $id, 'deleted_at' => null])->getResult();
 
         if ($data) {
             return $this->respond($data, 200);

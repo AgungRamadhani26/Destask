@@ -6,18 +6,18 @@ use CodeIgniter\API\ResponseTrait;
 class KategoriTaskController extends ResourceController {
     use ResponseTrait;
 
-    protected $modelName = 'App\Models\KategoriTaskModel';
+    protected $modelName = 'App\Models\API\KategoriTaskModel';
     protected $format    = 'json';
 
     public function index() {
         $model = new $this->modelName();
-        $data = $model->orderBy('id_kategori_task', 'ASC')->findAll();
+        $data = $model->where(['deleted_at' => null])->orderBy('id_kategori_task', 'ASC')->findAll();
         return $this->respond($data, 200);
     }
 
     public function show($id = null) {
         $model = new $this->modelName();
-        $data = $model->getWhere(['id_kategori_task' => $id])->getResult();
+        $data = $model->getWhere(['id_kategori_task' => $id, 'deleted_at' => null])->getResult();
 
         if ($data) {
             return $this->respond($data, 200);

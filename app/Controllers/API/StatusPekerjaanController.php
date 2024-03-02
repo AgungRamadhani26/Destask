@@ -6,18 +6,18 @@ use CodeIgniter\API\ResponseTrait;
 class StatusPekerjaanController extends ResourceController {
     use ResponseTrait;
 
-    protected $modelName = 'App\Models\StatusPekerjaanModel';
+    protected $modelName = 'App\Models\API\StatusPekerjaanModel';
     protected $format    = 'json';
 
     public function index() {
         $model = new $this->modelName();
-        $data = $model->orderBy('id_status_pekerjaan', 'ASC')->findAll();
+        $data = $model->where(['deleted_at' => null])->orderBy('id_status_pekerjaan', 'ASC')->findAll();
         return $this->respond($data, 200);
     }
 
     public function show($id = null) {
         $model = new $this->modelName();
-        $data = $model->getWhere(['id_status_pekerjaan' => $id])->getResult();
+        $data = $model->getWhere(['id_status_pekerjaan' => $id, 'deleted_at' => null])->getResult();
 
         if ($data) {
             return $this->respond($data, 200);

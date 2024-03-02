@@ -3,18 +3,18 @@ namespace App\Controllers\API;
 use CodeIgniter\RESTful\ResourceController;
 
 class PersonilController extends ResourceController {
-    protected $modelName = 'App\Models\PersonilModel';
+    protected $modelName = 'App\Models\API\PersonilModel';
     protected $format    = 'json';
 
     public function index() {
         $model = new $this->modelName();
-        $data = $model->orderBy('id_personil', 'ASC')->findAll();
+        $data = $model->where(['deleted_at' => null])->orderBy('id_personil', 'ASC')->findAll();
         return $this->respond($data, 200);
     }
 
     public function show($id = null) {
         $model = new $this->modelName();
-        $data = $model->getWhere(['id_personil' => $id])->getResult();
+        $data = $model->getWhere(['id_personil' => $id, 'deleted_at' => null])->getResult();
 
         if ($data) {
             return $this->respond($data, 200);

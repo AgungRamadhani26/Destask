@@ -9,7 +9,7 @@ class AuthController extends ResourceController
 {
   use ResponseTrait;
 
-  protected $modelName = 'App\Models\UserModel';
+  protected $modelName = 'App\Models\API\UserModel';
   protected $format    = 'json';
 
   // constructor
@@ -52,6 +52,16 @@ class AuthController extends ResourceController
       'foto_profil' => $data['foto_profil'],
     ];
 
+    // Check password md 5
+    if (md5($password) != $data['password']) {
+      $response = [
+        'status' => 401,
+        'error' => true,
+        'messages' => 'Password Salah!'
+      ];
+      return $this->respond($response, 401);
+    }
+
     // if (password_verify($password, $data['password']) == false) {
     //   $response = [
     //     'status' => 401,
@@ -66,7 +76,7 @@ class AuthController extends ResourceController
     $response = [
       'message' => 'Autentikasi / login berhasil',
       'data' => $alldata,
-      'token' => createJWT($identitas)
+      'token' => createJWT($identitas),
     ];
 
     return $this->respond($response, 200);
