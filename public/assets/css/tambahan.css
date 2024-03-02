@@ -69,6 +69,13 @@
   gap: 5px; /* Jarak antara tombol */
 }
 
+.card-personil {
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+}
+
 
 
 

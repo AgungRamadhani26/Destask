@@ -64,6 +64,201 @@ function edit_kategori_pekerjaan($id){
 
 
 
+//                            //
+// PENGELOLAAN DATA PEKERJAAN //
+//                            //
+function tambahKolomFEMobile() {
+   var kolom = document.querySelectorAll('.frontend-mobile');
+   var maxKolom = 5;
+   // Cari kolom yang belum ditampilkan
+   for (var i = 0; i < kolom.length; i++) {
+      if (kolom[i].style.display === 'none') {
+         kolom[i].style.display = 'block';
+         return; // Hentikan setelah menampilkan satu kolom
+      }
+   }
+   // Jika sudah mencapai batas maksimal, tampilkan pesan peringatan
+   if (kolom.length >= maxKolom) {
+      alert('Maksimal kolom Frontend Mobile yang ditampilkan adalah 5.');
+   }
+}
+
+function hapusKolomFEMobile() {
+   var kolom = document.querySelectorAll('.frontend-mobile');
+   var kolomYangDitampilkan = [];
+   for (var i = 0; i < kolom.length; i++) {
+      if (kolom[i].style.display !== 'none') {
+         kolomYangDitampilkan.push(kolom[i]);
+      }
+   }
+   // Sembunyikan kolom terakhir yang ditampilkan
+   var lastIndex = kolomYangDitampilkan.length - 1;
+   if (lastIndex > 0) {
+      // Menghapus nilai dari kolom yang disembunyikan
+      var inputFields = kolomYangDitampilkan[lastIndex].querySelectorAll('select');
+      inputFields.forEach(function(input) {
+         input.value = '';
+      });
+      kolomYangDitampilkan[lastIndex].style.display = 'none';
+   } else {
+      alert('Minimal kolom Frontend Mobile yang ditampilkan adalah 1.')
+   }
+}
+
+function tambahKolomBEMobile() {
+   var kolom = document.querySelectorAll('.backend-mobile');
+   var maxKolom = 5;
+   // Cari kolom yang belum ditampilkan
+   for (var i = 0; i < kolom.length; i++) {
+      if (kolom[i].style.display === 'none') {
+         kolom[i].style.display = 'block';
+         return; // Hentikan setelah menampilkan satu kolom
+      }
+   }
+   // Jika sudah mencapai batas maksimal, tampilkan pesan peringatan
+   if (kolom.length >= maxKolom) {
+      alert('Maksimal kolom Backend Mobile yang ditampilkan adalah 5.');
+   }
+}
+
+function hapusKolomBEMobile() {
+   var kolom = document.querySelectorAll('.backend-mobile');
+   var kolomYangDitampilkan = [];
+   for (var i = 0; i < kolom.length; i++) {
+      if (kolom[i].style.display !== 'none') {
+         kolomYangDitampilkan.push(kolom[i]);
+      }
+   }
+   // Sembunyikan kolom terakhir yang ditampilkan
+   var lastIndex = kolomYangDitampilkan.length - 1;
+   if (lastIndex > 0) {
+      // Menghapus nilai dari kolom yang disembunyikan
+      var inputFields = kolomYangDitampilkan[lastIndex].querySelectorAll('select');
+      inputFields.forEach(function(input) {
+         input.value = '';
+      });
+      kolomYangDitampilkan[lastIndex].style.display = 'none';
+   } else {
+      alert('Minimal kolom Backend Mobile yang ditampilkan adalah 1.')
+   }
+}
+
+function tambahKolomFEWeb() {
+   var kolom = document.querySelectorAll('.frontend-web');
+   var maxKolom = 5;
+   // Cari kolom yang belum ditampilkan
+   for (var i = 0; i < kolom.length; i++) {
+      if (kolom[i].style.display === 'none') {
+         kolom[i].style.display = 'block';
+         return; // Hentikan setelah menampilkan satu kolom
+      }
+   }
+   // Jika sudah mencapai batas maksimal, tampilkan pesan peringatan
+   if (kolom.length >= maxKolom) {
+      alert('Maksimal kolom Frontend Web yang ditampilkan adalah 5.');
+   }
+}
+
+function hapusKolomFEWeb() {
+   var kolom = document.querySelectorAll('.frontend-web');
+   var kolomYangDitampilkan = [];
+   for (var i = 0; i < kolom.length; i++) {
+      if (kolom[i].style.display !== 'none') {
+         kolomYangDitampilkan.push(kolom[i]);
+      }
+   }
+   // Sembunyikan kolom terakhir yang ditampilkan
+   var lastIndex = kolomYangDitampilkan.length - 1;
+   if (lastIndex > 0) {
+      // Menghapus nilai dari kolom yang disembunyikan
+      var inputFields = kolomYangDitampilkan[lastIndex].querySelectorAll('select');
+      inputFields.forEach(function(input) {
+         input.value = '';
+      });
+      kolomYangDitampilkan[lastIndex].style.display = 'none';
+   } else {
+      alert('Minimal kolom Frontend Web yang ditampilkan adalah 1.')
+   }
+}
+
+function tambahKolomBEWeb() {
+   var kolom = document.querySelectorAll('.backend-web');
+   var maxKolom = 5;
+   // Cari kolom yang belum ditampilkan
+   for (var i = 0; i < kolom.length; i++) {
+      if (kolom[i].style.display === 'none') {
+         kolom[i].style.display = 'block';
+         return; // Hentikan setelah menampilkan satu kolom
+      }
+   }
+   // Jika sudah mencapai batas maksimal, tampilkan pesan peringatan
+   if (kolom.length >= maxKolom) {
+      alert('Maksimal kolom Backend Web yang ditampilkan adalah 5.');
+   }
+}
+
+function hapusKolomBEWeb() {
+   var kolom = document.querySelectorAll('.backend-web');
+   var kolomYangDitampilkan = [];
+   for (var i = 0; i < kolom.length; i++) {
+      if (kolom[i].style.display !== 'none') {
+         kolomYangDitampilkan.push(kolom[i]);
+      }
+   }
+   // Sembunyikan kolom terakhir yang ditampilkan
+   var lastIndex = kolomYangDitampilkan.length - 1;
+   if (lastIndex > 0) {
+      // Menghapus nilai dari kolom yang disembunyikan
+      var inputFields = kolomYangDitampilkan[lastIndex].querySelectorAll('select');
+      inputFields.forEach(function(input) {
+         input.value = '';
+      });
+      kolomYangDitampilkan[lastIndex].style.display = 'none';
+   } else {
+      alert('Minimal kolom Backend Web yang ditampilkan adalah 1.')
+   }
+}
+
+function tambahKolomDesainer() {
+   var kolom = document.querySelectorAll('.desainer');
+   var maxKolom = 5;
+   // Cari kolom yang belum ditampilkan
+   for (var i = 0; i < kolom.length; i++) {
+      if (kolom[i].style.display === 'none') {
+         kolom[i].style.display = 'block';
+         return; // Hentikan setelah menampilkan satu kolom
+      }
+   }
+   // Jika sudah mencapai batas maksimal, tampilkan pesan peringatan
+   if (kolom.length >= maxKolom) {
+      alert('Maksimal kolom Desainer yang ditampilkan adalah 5.');
+   }
+}
+
+function hapusKolomDesainer() {
+   var kolom = document.querySelectorAll('.desainer');
+   var kolomYangDitampilkan = [];
+   for (var i = 0; i < kolom.length; i++) {
+      if (kolom[i].style.display !== 'none') {
+         kolomYangDitampilkan.push(kolom[i]);
+      }
+   }
+   // Sembunyikan kolom terakhir yang ditampilkan
+   var lastIndex = kolomYangDitampilkan.length - 1;
+   if (lastIndex > 0) {
+      // Menghapus nilai dari kolom yang disembunyikan
+      var inputFields = kolomYangDitampilkan[lastIndex].querySelectorAll('select');
+      inputFields.forEach(function(input) {
+         input.value = '';
+      });
+      kolomYangDitampilkan[lastIndex].style.display = 'none';
+   } else {
+      alert('Minimal kolom Desainer yang ditampilkan adalah 1.')
+   }
+}
+
+
+
 //                              //
 // PENGELOLAAN DATA STATUS TASK //
 //                              //

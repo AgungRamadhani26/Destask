@@ -8,7 +8,6 @@
                <button type="button" class="btn-close tombol-tutup-user" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-               <div class="mb-3 ms-3" style="color: red; font-size: 13px;">Note: password dan username dari user baru akan sama dengan email secara default</div>
                <!--Kalau error-->
                <?php if ($errors = session()->getFlashdata('error')) : ?>
                   <?php if (is_object($errors)) : ?>
@@ -73,6 +72,7 @@
                </div>
             </div>
             <div class="modal-footer">
+               <p>Keterangan : <span style="color: red; font-size: 13px;">password dan username dari user baru akan sama dengan email secara default</span></p>
                <button type="button" class="btn btn-secondary tombol-tutup-user" data-bs-dismiss="modal">Tutup</button>
                <button type="submit" class="btn btn-primary">Simpan</button>
             </div>

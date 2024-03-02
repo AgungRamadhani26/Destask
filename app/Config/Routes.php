@@ -23,6 +23,9 @@ $routes->get('/logout', 'Autentikasi::logout');
 $routes->get('/dashboard', 'Dashboard::lihat_dashboard');
 
 //Routes pekerjaan
+//Untuk menampilkan halaman daftar pekerjaan
+$routes->get('/pekerjaan/daftar_pekerjaan', 'Pekerjaan::daftar_pekerjaan');
+//Untuk menampilkan form tambah pekerjaan
 $routes->get('/pekerjaan/add_pekerjaan', 'Pekerjaan::add_pekerjaan');
 
 //Routes Status Pekerjaan

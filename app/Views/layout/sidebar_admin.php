@@ -42,7 +42,7 @@
       </li>
 
       <li class="nav-item">
-         <a class="nav-link collapsed" href="">
+         <a class="nav-link <?= $url1 == '/pekerjaan/daftar_pekerjaan' ? '' : 'collapsed' ?>" href="/pekerjaan/daftar_pekerjaan">
             <i class="bi bi-journal-text"></i>
             <span>Daftar Pekerjaan</span>
          </a>
