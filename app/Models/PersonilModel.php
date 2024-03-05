@@ -11,31 +11,21 @@ class PersonilModel extends Model
     protected $useSoftDeletes   = true;
     protected $useTimestamps    = true;
     protected $allowedFields    = [
-        'id_user_pm', 'desainer1', 'desainer2', 'be_web1', 'be_web2', 'be_web3',
-        'be_mobile1', 'be_mobile2', 'be_mobile3', 'fe_web1', 'fe_mobile1'
+        'id_pekerjaan', 'id_user', 'role_personil'
     ];
 
+    //Fungsi untuk mendapatkan data personil
+    public function getPersonil($id_personil = false)
+    {
+        if ($id_personil === false) {
+            return $this->orderBy('id_personil', 'DESC')->findAll();
+        }
+        return $this->where(['id_personil' => $id_personil])->first();
+    }
 
-    public function getIdPersonilByIdUser($iduser)
-{
-    $result = $this->select('id_personil')
-        ->orWhere('id_user_pm', $iduser)
-        ->orWhere('desainer1', $iduser)
-        ->orWhere('desainer2', $iduser)
-        ->orWhere('be_web1', $iduser)
-        ->orWhere('be_web2', $iduser)
-        ->orWhere('be_web3', $iduser)
-        ->orWhere('be_mobile1', $iduser)
-        ->orWhere('be_mobile2', $iduser)
-        ->orWhere('be_mobile3', $iduser)
-        ->orWhere('fe_web1', $iduser)
-        ->orWhere('fe_mobile1', $iduser)
-        ->get()
-        ->getResultArray();
-
-    // Extracting the values of 'id_personil' from the result array
-    $idPersonilArray = array_column($result, 'id_personil');
-    return $idPersonilArray;
-}
-
+    //Fungsi untuk mendapatkan data personil berdasarkan id_pekerjaan
+    public function getPersonilByIdPekerjaan($id_pekerjaan)
+    {
+        return $this->where(['id_pekerjaan' => $id_pekerjaan])->findAll();
+    }
 }

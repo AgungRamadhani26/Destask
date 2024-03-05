@@ -27,7 +27,7 @@ class Pekerjaan extends Migration
             ],
             'nama_pekerjaan' => [
                 'type'       => 'VARCHAR',
-                'constraint' => 50,
+                'constraint' => 100,
                 'null'       => true
             ],
             'pelanggan' => [

@@ -21,19 +21,19 @@
                   <?php foreach ($bobot_kategori_task as $bk) : ?>
                      <div class="col-sm-4">
                         <label for="Tahun" style="font-weight: 600;">Tahun</label>
-                        <input type="text" class="form-control" value="<?= $bk['tahun'] < date('Y') ? $bk['tahun'] . ' (Sudah lewat periode)' : $bk['tahun'] ?>" disabled>
+                        <div class="form-control"><?= $bk['tahun'] < date('Y') ? $bk['tahun'] . ' (Sudah lewat periode)' : $bk['tahun'] ?></div>
                      </div>
                      <div class="col-sm-4">
                         <label for="usergroup" style="font-weight: 600;">User Group</label>
                         <?php foreach ($usergroup as $ug) : ?>
                            <?php if ($bk['id_usergroup'] == $ug['id_usergroup']) : ?>
-                              <input type="text" class="form-control" value="<?= $ug['nama_usergroup'] ?>" disabled>
+                              <div class="form-control"><?= $ug['nama_usergroup'] ?></div>
                            <?php endif; ?>
                         <?php endforeach; ?>
                      </div>
                      <div class="col-sm-4">
                         <label for="usergroup" style="font-weight: 600;">Total Bobot Task</label>
-                        <input type="text" class="form-control" value="<?= $bk['total_bobot_poin'] . ' poin' ?>" disabled>
+                        <div class="form-control"><?= $bk['total_bobot_poin'] . ' poin' ?></div>
                      </div>
                   <?php endforeach; ?>
                </div>
@@ -59,7 +59,7 @@
                   <div class="col-sm-6">
                      <label for="usergroup" style="font-weight: 600;">Bobot</label>
                      <?php foreach ($kategori_task_dan_poin as $kt) : ?>
-                        <input type="text" class="form-control mb-2" value="<?= $kt['bobot_poin'] . ' poin' ?>" disabled>
+                        <div class="form-control mb-2"><?= $kt['bobot_poin'] . ' poin' ?></div>
                      <?php endforeach; ?>
                   </div>
                </div>
