@@ -108,6 +108,64 @@
             </div>
         </div>
     </div>
+
+    <div class="container mb-3">
+        <div class="kanban-container">
+            <div class="kanban-column" id="todoColumn">
+                <h4>To Do</h4>
+                <div class="kanban-droppable" id="todo" ondrop="drop(event, 'todoColumn')" ondragover="allowDrop(event)">
+                    <div class="kanban-card" id="card1" draggable="true" ondragstart="drag(event)">
+                        Task 1
+                    </div>
+                    <!-- Tambahkan task lainnya di sini -->
+                    <div class="kanban-card" id="card10" draggable="true" ondragstart="drag(event)">
+                        Task 10
+                    </div>
+                </div>
+            </div>
+
+            <div class="kanban-column" id="inProgressColumn">
+                <h4>In Progress</h4>
+                <div class="kanban-droppable" id="inProgress" ondrop="drop(event, 'inProgressColumn')" ondragover="allowDrop(event)">
+                    <!-- Tambahkan task lainnya di sini -->
+                </div>
+            </div>
+
+            <div class="kanban-column" id="doneColumn">
+                <h4>Done</h4>
+                <div class="kanban-droppable" id="done" ondrop="drop(event, 'doneColumn')" ondragover="allowDrop(event)">
+                    <!-- Tambahkan task lainnya di sini -->
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
+
+<script>
+    function allowDrop(event) {
+        event.preventDefault();
+    }
+
+    function drag(event) {
+        event.dataTransfer.setData("text", event.target.id);
+    }
+
+    function drop(event, targetColumnId) {
+        event.preventDefault();
+        var data = event.dataTransfer.getData("text");
+        var draggedElement = document.getElementById(data);
+        var newElement = document.createElement("div");
+
+        newElement.innerHTML = draggedElement.innerHTML;
+        newElement.className = "kanban-card";
+        newElement.draggable = true;
+        newElement.id = "card" + new Date().getTime();
+        newElement.addEventListener("dragstart", drag);
+
+        var targetColumn = document.getElementById(targetColumnId);
+        targetColumn.appendChild(newElement);
+        draggedElement.parentNode.removeChild(draggedElement);
+    }
+</script>
 
 <?= $this->endSection(); ?>

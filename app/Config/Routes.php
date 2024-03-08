@@ -27,6 +27,8 @@ $routes->get('/dashboard', 'Dashboard::lihat_dashboard');
 $routes->get('/pekerjaan/daftar_pekerjaan', 'Pekerjaan::daftar_pekerjaan');
 //Untuk menampilkan form tambah pekerjaan
 $routes->get('/pekerjaan/add_pekerjaan', 'Pekerjaan::add_pekerjaan');
+//Untuk menambah pekerjaan
+$routes->post('/pekerjaan/tambah_pekerjaan', 'Pekerjaan::tambah_pekerjaan');
 //Untuk melihat detail pekerjaan
 $routes->get('/pekerjaan/detail_pekerjaan/(:num)', 'Pekerjaan::detail_pekerjaan/$1');
 
