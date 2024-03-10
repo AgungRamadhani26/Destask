@@ -81,27 +81,34 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="body_card">
-                    <div class="row">
-                        <div class="col-2 ms-5">
+                <div class="body_card mb-2 mt-2 ms-2 me-2">
+                    <div class="align-items-center">
+                        <div class="btn-group" role="group">
                             <a href="/pekerjaan/add_pekerjaan" class="btn btn-primary"><i class="bi bi-journal-plus"></i> Pekerjaan Baru</a>
-                        </div>
-                        <div class="col-2">
                             <button type="button" class="btn btn-success"><i class="bi bi-database-add"></i> Import Pekerjaan</button>
+                            <a href="/pekerjaan/daftar_pekerjaan" class="btn btn-info"><i class="bi bi-question-diamond"></i> Detail Pekerjaan</a>
+                            <button type="button" class="btn btn-warning"><i class="bi bi-download"></i> Download Pekerjaan</button>
                         </div>
-                        <div class="col-2">
-                            <button type="button" class="btn btn-info"><i class="bi bi-question-diamond"></i> Detail Pekerjaan</button>
-                        </div>
-                        <div class="col-2 me-5">
-                            <button type="button" class="btn btn-warning"><i class=" bi bi-download"></i> Download Pekerjaan</button>
-                        </div>
-                        <div class="col-2 ms-5">
-                            <select name="" id="">
-                                <option value="opsi1">100</option>
-                                <option value="opsi2">500</option>
-                                <option value="opsi3">1000</option>
-                                <option value="opsi3">Semua</option>
-                            </select>
+                        <div class="row mt-2">
+                            <div class="col-3">
+                                <select class="form-select" aria-label="Default select example">
+                                    <option value="">10</option>
+                                    <option value="">25</option>
+                                    <option value="">50</option>
+                                    <option value="">Semua</option>
+                                </select>
+                            </div>
+                            <div class="col-9">
+                                <div class="input-group">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="search-addon">
+                                            <i class="bi bi-search"></i>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control form-control-sm" id="searchInput" placeholder="Search...">
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -109,63 +116,259 @@
         </div>
     </div>
 
-    <div class="container mb-3">
-        <div class="kanban-container">
-            <div class="kanban-column" id="todoColumn">
-                <h4>To Do</h4>
-                <div class="kanban-droppable" id="todo" ondrop="drop(event, 'todoColumn')" ondragover="allowDrop(event)">
-                    <div class="kanban-card" id="card1" draggable="true" ondragstart="drag(event)">
-                        Task 1
+
+    <div class="row mb-5 ms-1">
+        <div class="col-12">
+            <div class="row mb-3">
+                <div class="col-4 kanban-column">
+                    <div class="kanban-column-header">
+                        <h5 style="font-weight: bold;">Pending</h5>
                     </div>
-                    <!-- Tambahkan task lainnya di sini -->
-                    <div class="kanban-card" id="card10" draggable="true" ondragstart="drag(event)">
-                        Task 10
+                    <div class="kanban-droppable" id="todo">
+                        <?php foreach ($pekerjaan_pending as $pp) : ?>
+                            <div class="kanban-card">
+                                <a href="" class="badge bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
+                                <a href="" class="badge bg-primary" title="Lihat daftar task dan verifikasi task"><i class="bi bi-clipboard-data"></i></a>
+                                <a href="" class="badge bg-warning" title="Klik untuk mengedit"><i class="bi bi-pencil"></i></a>
+                                <a href="" class="badge bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?');"><i class="ri-delete-bin-5-line"></i></a>
+                                <br>
+                                <br>
+                                <?= $pp['nama_pekerjaan'] ?>
+                                <br>
+                                <span class="badge bg-success"><?= $pp['jenis_layanan'] ?></span>
+                                <br>
+                                <br>
+                                <i class="bi bi-person-fill">
+                                    <?php
+                                    foreach ($personil as $per) {
+                                        if ($pp['id_pekerjaan'] == $per['id_pekerjaan'] && $per['role_personil'] == 'project_manager') {
+                                            foreach ($user as $usr) {
+                                                if ($per['id_user'] == $usr['id_user']) {
+                                                    echo $usr['nama'];
+                                                    break; // Keluar dari loop setelah menemukan nilai yang cocok
+                                                }
+                                            }
+                                        }
+                                    }
+                                    ?>
+                                </i>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <div class="col-4 kanban-column">
+                    <div class="kanban-column-header">
+                        <h5 style="font-weight: bold;">Cancle</h5>
+                    </div>
+                    <div class="kanban-droppable" id="todo">
+                        <?php foreach ($pekerjaan_cancle as $pc) : ?>
+                            <div class="kanban-card">
+                                <a href="" class="badge bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
+                                <a href="" class="badge bg-primary" title="Lihat daftar task dan verifikasi task"><i class="bi bi-clipboard-data"></i></a>
+                                <a href="" class="badge bg-warning" title="Klik untuk mengedit"><i class="bi bi-pencil"></i></a>
+                                <a href="" class="badge bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?');"><i class="ri-delete-bin-5-line"></i></a>
+                                <br>
+                                <br>
+                                <?= $pc['nama_pekerjaan'] ?>
+                                <br>
+                                <span class="badge bg-success"><?= $pc['jenis_layanan'] ?></span>
+                                <br>
+                                <br>
+                                <i class="bi bi-person-fill">
+                                    <?php
+                                    foreach ($personil as $per) {
+                                        if ($pc['id_pekerjaan'] == $per['id_pekerjaan'] && $per['role_personil'] == 'project_manager') {
+                                            foreach ($user as $usr) {
+                                                if ($per['id_user'] == $usr['id_user']) {
+                                                    echo $usr['nama'];
+                                                    break; // Keluar dari loop setelah menemukan nilai yang cocok
+                                                }
+                                            }
+                                        }
+                                    }
+                                    ?>
+                                </i>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <div class="col-4 kanban-column">
+                    <div class="kanban-column-header">
+                        <h5 style="font-weight: bold;">Bast</h5>
+                    </div>
+                    <div class="kanban-droppable" id="todo">
+                        <?php foreach ($pekerjaan_bast as $pb) : ?>
+                            <div class="kanban-card">
+                                <a href="" class="badge bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
+                                <a href="" class="badge bg-primary" title="Lihat daftar task dan verifikasi task"><i class="bi bi-clipboard-data"></i></a>
+                                <a href="" class="badge bg-warning" title="Klik untuk mengedit"><i class="bi bi-pencil"></i></a>
+                                <a href="" class="badge bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?');"><i class="ri-delete-bin-5-line"></i></a>
+                                <br>
+                                <br>
+                                <?= $pb['nama_pekerjaan'] ?>
+                                <br>
+                                <span class="badge bg-success"><?= $pb['jenis_layanan'] ?></span>
+                                <br>
+                                <br>
+                                <i class="bi bi-person-fill">
+                                    <?php
+                                    foreach ($personil as $per) {
+                                        if ($pb['id_pekerjaan'] == $per['id_pekerjaan'] && $per['role_personil'] == 'project_manager') {
+                                            foreach ($user as $usr) {
+                                                if ($per['id_user'] == $usr['id_user']) {
+                                                    echo $usr['nama'];
+                                                    break; // Keluar dari loop setelah menemukan nilai yang cocok
+                                                }
+                                            }
+                                        }
+                                    }
+                                    ?>
+                                </i>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>
-
-            <div class="kanban-column" id="inProgressColumn">
-                <h4>In Progress</h4>
-                <div class="kanban-droppable" id="inProgress" ondrop="drop(event, 'inProgressColumn')" ondragover="allowDrop(event)">
-                    <!-- Tambahkan task lainnya di sini -->
+            <!-- Penambahan baris baru -->
+            <div class="row">
+                <div class="col-4 kanban-column">
+                    <div class="kanban-column-header">
+                        <h5 style="font-weight: bold;">Support</h5>
+                    </div>
+                    <div class="kanban-droppable" id="todo">
+                        <?php foreach ($pekerjaan_support as $psp) : ?>
+                            <div class="kanban-card">
+                                <a href="" class="badge bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
+                                <a href="" class="badge bg-primary" title="Lihat daftar task dan verifikasi task"><i class="bi bi-clipboard-data"></i></a>
+                                <a href="" class="badge bg-warning" title="Klik untuk mengedit"><i class="bi bi-pencil"></i></a>
+                                <a href="" class="badge bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?');"><i class="ri-delete-bin-5-line"></i></a>
+                                <br>
+                                <br>
+                                <?= $psp['nama_pekerjaan'] ?>
+                                <br>
+                                <span class="badge bg-success"><?= $psp['jenis_layanan'] ?></span>
+                                <br>
+                                <br>
+                                <i class="bi bi-person-fill">
+                                    <?php
+                                    foreach ($personil as $per) {
+                                        if ($psp['id_pekerjaan'] == $per['id_pekerjaan'] && $per['role_personil'] == 'project_manager') {
+                                            foreach ($user as $usr) {
+                                                if ($per['id_user'] == $usr['id_user']) {
+                                                    echo $usr['nama'];
+                                                    break; // Keluar dari loop setelah menemukan nilai yang cocok
+                                                }
+                                            }
+                                        }
+                                    }
+                                    ?>
+                                </i>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
-            </div>
-
-            <div class="kanban-column" id="doneColumn">
-                <h4>Done</h4>
-                <div class="kanban-droppable" id="done" ondrop="drop(event, 'doneColumn')" ondragover="allowDrop(event)">
-                    <!-- Tambahkan task lainnya di sini -->
+                <div class="col-4 kanban-column">
+                    <div class="kanban-column-header">
+                        <h5 style="font-weight: bold;">On Progres</h5>
+                    </div>
+                    <div class="kanban-droppable" id="todo">
+                        <?php foreach ($pekerjaan_onprogres as $po) : ?>
+                            <div class="kanban-card">
+                                <a href="" class="badge bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
+                                <a href="" class="badge bg-primary" title="Lihat daftar task dan verifikasi task"><i class="bi bi-clipboard-data"></i></a>
+                                <a href="" class="badge bg-warning" title="Klik untuk mengedit"><i class="bi bi-pencil"></i></a>
+                                <a href="" class="badge bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?');"><i class="ri-delete-bin-5-line"></i></a>
+                                <br>
+                                <br>
+                                <?= $po['nama_pekerjaan'] ?>
+                                <br>
+                                <span class="badge bg-success"><?= $po['jenis_layanan'] ?></span>
+                                <br>
+                                <br>
+                                <i class="bi bi-person-fill">
+                                    <?php
+                                    foreach ($personil as $per) {
+                                        if ($po['id_pekerjaan'] == $per['id_pekerjaan'] && $per['role_personil'] == 'project_manager') {
+                                            foreach ($user as $usr) {
+                                                if ($per['id_user'] == $usr['id_user']) {
+                                                    echo $usr['nama'];
+                                                    break; // Keluar dari loop setelah menemukan nilai yang cocok
+                                                }
+                                            }
+                                        }
+                                    }
+                                    ?>
+                                </i>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <div class="col-4 kanban-column">
+                    <div class="kanban-column-header">
+                        <h5 style="font-weight: bold;">Selesai</h5>
+                    </div>
+                    <div class="kanban-droppable" id="todo">
+                        <?php foreach ($pekerjaan_selesai as $ps) : ?>
+                            <div class="kanban-card">
+                                <a href="" class="badge bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
+                                <a href="" class="badge bg-primary" title="Lihat daftar task dan verifikasi task"><i class="bi bi-clipboard-data"></i></a>
+                                <a href="" class="badge bg-warning" title="Klik untuk mengedit"><i class="bi bi-pencil"></i></a>
+                                <a href="" class="badge bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?');"><i class="ri-delete-bin-5-line"></i></a>
+                                <br>
+                                <br>
+                                <?= $ps['nama_pekerjaan'] ?>
+                                <br>
+                                <span class="badge bg-success"><?= $ps['jenis_layanan'] ?></span>
+                                <br>
+                                <br>
+                                <i class="bi bi-person-fill">
+                                    <?php
+                                    foreach ($personil as $per) {
+                                        if ($ps['id_pekerjaan'] == $per['id_pekerjaan'] && $per['role_personil'] == 'project_manager') {
+                                            foreach ($user as $usr) {
+                                                if ($per['id_user'] == $usr['id_user']) {
+                                                    echo $usr['nama'];
+                                                    break; // Keluar dari loop setelah menemukan nilai yang cocok
+                                                }
+                                            }
+                                        }
+                                    }
+                                    ?>
+                                </i>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
+<!-- Js untuk cari masing masing pekerjaan -->
 <script>
-    function allowDrop(event) {
-        event.preventDefault();
-    }
+    document.addEventListener("DOMContentLoaded", function() {
+        // Ambil input pencarian
+        var searchInput = document.getElementById('searchInput');
 
-    function drag(event) {
-        event.dataTransfer.setData("text", event.target.id);
-    }
+        // Tambahkan event listener untuk input pencarian
+        searchInput.addEventListener('input', function() {
+            var searchTerm = searchInput.value.toLowerCase();
+            var kanbanCards = document.querySelectorAll('.kanban-card');
 
-    function drop(event, targetColumnId) {
-        event.preventDefault();
-        var data = event.dataTransfer.getData("text");
-        var draggedElement = document.getElementById(data);
-        var newElement = document.createElement("div");
+            // Iterasi melalui setiap kanban card
+            kanbanCards.forEach(function(card) {
+                var cardText = card.textContent.toLowerCase();
 
-        newElement.innerHTML = draggedElement.innerHTML;
-        newElement.className = "kanban-card";
-        newElement.draggable = true;
-        newElement.id = "card" + new Date().getTime();
-        newElement.addEventListener("dragstart", drag);
-
-        var targetColumn = document.getElementById(targetColumnId);
-        targetColumn.appendChild(newElement);
-        draggedElement.parentNode.removeChild(draggedElement);
-    }
+                // Jika teks pada kartu cocok dengan pencarian, tampilkan
+                if (cardText.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    // Jika tidak cocok, sembunyikan
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
 </script>
 
 <?= $this->endSection(); ?>

@@ -39,10 +39,40 @@ class Pekerjaan extends BaseController
             'pekerjaan' => $this->pekerjaanModel->getPekerjaan(),
             'personil' => $this->personilModel->getPersonil(),
             'user' => $this->userModel->getUser(),
+            'user_staff_supervisi' => $this->userModel->getUserExceptHodAdminDireksi(),
             'kategori_pekerjaan' => $this->kategoriPekerjaanModel->getKategoriPekerjaan(),
             'status_pekerjaan' => $this->statusPekerjaanModel->getStatusPekerjaan(),
             'url1' => '/pekerjaan/daftar_pekerjaan',
-            'url' => '/pekerjaan/daftar_pekerjaan'
+            'url' => '/pekerjaan/daftar_pekerjaan',
+            'filter_pekerjaan_pm' => '',
+            'filter_pekerjaan_jenislayanan' => '',
+            'filter_pekerjaan_kategori_pekerjaan' => '',
+            'filter_pekerjaan_status_pekerjaan' => ''
+        ];
+        return view('pekerjaan/daftar_pekerjaan', $data);
+    }
+
+    //Fungsi filter_pekerjaan
+    public function filter_pekerjaan()
+    {
+        $filter_pekerjaan_pm = $this->request->getGet('filter_pekerjaan_pm');
+        $filter_pekerjaan_jenislayanan = $this->request->getGet('filter_pekerjaan_jenislayanan');
+        $filter_pekerjaan_kategori_pekerjaan = $this->request->getGet('filter_pekerjaan_kategori_pekerjaan');
+        $filter_pekerjaan_status_pekerjaan = $this->request->getGet('filter_pekerjaan_status_pekerjaan');
+        $pekerjaan_filtered = $this->pekerjaanModel->getFilteredPekerjaan($filter_pekerjaan_kategori_pekerjaan, $filter_pekerjaan_status_pekerjaan, $filter_pekerjaan_jenislayanan, $filter_pekerjaan_pm);
+        $data = [
+            'pekerjaan' => $pekerjaan_filtered,
+            'personil' => $this->personilModel->getPersonil(),
+            'user' => $this->userModel->getUser(),
+            'user_staff_supervisi' => $this->userModel->getUserExceptHodAdminDireksi(),
+            'kategori_pekerjaan' => $this->kategoriPekerjaanModel->getKategoriPekerjaan(),
+            'status_pekerjaan' => $this->statusPekerjaanModel->getStatusPekerjaan(),
+            'url1' => '/pekerjaan/daftar_pekerjaan',
+            'url' => '/pekerjaan/daftar_pekerjaan',
+            'filter_pekerjaan_pm' => $filter_pekerjaan_pm,
+            'filter_pekerjaan_jenislayanan' => $filter_pekerjaan_jenislayanan,
+            'filter_pekerjaan_kategori_pekerjaan' => $filter_pekerjaan_kategori_pekerjaan,
+            'filter_pekerjaan_status_pekerjaan' => $filter_pekerjaan_status_pekerjaan
         ];
         return view('pekerjaan/daftar_pekerjaan', $data);
     }

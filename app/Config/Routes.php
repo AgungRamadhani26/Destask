@@ -31,6 +31,8 @@ $routes->get('/pekerjaan/add_pekerjaan', 'Pekerjaan::add_pekerjaan');
 $routes->post('/pekerjaan/tambah_pekerjaan', 'Pekerjaan::tambah_pekerjaan');
 //Untuk melihat detail pekerjaan
 $routes->get('/pekerjaan/detail_pekerjaan/(:num)', 'Pekerjaan::detail_pekerjaan/$1');
+//Untuk memfilter data yang ditampilkan
+$routes->get('/pekerjaan/filter_pekerjaan', 'Pekerjaan::filter_pekerjaan');
 
 //Routes Status Pekerjaan
 //Untuk menampilkan halaman daftar status pekerjaan

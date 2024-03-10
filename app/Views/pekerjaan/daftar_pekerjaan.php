@@ -12,21 +12,29 @@
             <h4 class="card-title" style="color: white;">Fiter Pekerjaan</h4>
          </div>
          <div class="card-body">
-            <form action="" method="GET" id="filter_target_poin_harian">
+            <form action="/pekerjaan/filter_pekerjaan" method="GET" id=filter_daftar_pekerjaan>
                <div class="row">
                   <div class="col-md-6 mb-4">
                      <div class="input-group">
                         <label class="input-group-text" for="">Project Manager</label>
-                        <select class="form-select" id="filter_bulan" name="filter_bulan">
+                        <select class="form-select" id="filter_pekerjaan_pm" name="filter_pekerjaan_pm">
                            <option value="">Semua Project Manager</option>
+                           <?php foreach ($user_staff_supervisi as $uss) : ?>
+                              <option value="<?= $uss['id_user'] ?>" <?= ($uss['id_user'] == $filter_pekerjaan_pm) ? 'selected' : '' ?>><?= $uss['nama'] ?></option>
+                           <?php endforeach; ?>
                         </select>
                      </div>
                   </div>
                   <div class="col-md-6 mb-4">
                      <div class="input-group">
                         <label class="input-group-text" for="">Jenis Layanan</label>
-                        <select class="form-select" id="filter_tahun" name="filter_tahun">
+                        <select class="form-select" id="filter_pekerjaan_jenislayanan" name="filter_pekerjaan_jenislayanan">
                            <option value="">Semua Jenis Layanan</option>
+                           <option value="desain" <?= ($filter_pekerjaan_jenislayanan == 'desain') ? 'selected' : ''; ?>>Desain</option>
+                           <option value="produk" <?= ($filter_pekerjaan_jenislayanan == 'produk') ? 'selected' : ''; ?>>Produk</option>
+                           <option value="aplikasi internal" <?= ($filter_pekerjaan_jenislayanan == 'aplikasi internal') ? 'selected' : ''; ?>>Aplikasi Internal</option>
+                           <option value="boutique" <?= ($filter_pekerjaan_jenislayanan == 'boutique') ? 'selected' : ''; ?>>Boutique</option>
+                           <option value="sisamson" <?= ($filter_pekerjaan_jenislayanan == 'sisamson') ? 'selected' : ''; ?>>Sisamson</option>
                         </select>
                      </div>
                   </div>
@@ -34,17 +42,23 @@
                <div class="row">
                   <div class="col-md-6 mb-4">
                      <div class="input-group">
-                        <label class="input-group-text" for="">Kategeori Pekerjaan</label>
-                        <select class="form-select" id="filter_bulan" name="filter_bulan">
+                        <label class="input-group-text" for="">Kategori Pekerjaan</label>
+                        <select class="form-select" id="filter_pekerjaan_kategori_pekerjaan" name="filter_pekerjaan_kategori_pekerjaan">
                            <option value="">Semua Kategori Pekerjaan</option>
+                           <?php foreach ($kategori_pekerjaan as $kp) : ?>
+                              <option value="<?= $kp['id_kategori_pekerjaan'] ?>" <?= ($kp['id_kategori_pekerjaan'] == $filter_pekerjaan_kategori_pekerjaan) ? 'selected' : '' ?>><?= $kp['nama_kategori_pekerjaan'] ?></option>
+                           <?php endforeach; ?>
                         </select>
                      </div>
                   </div>
                   <div class="col-md-6 mb-4">
                      <div class="input-group">
                         <label class="input-group-text" for="">Status Pekerjaan</label>
-                        <select class="form-select" id="filter_tahun" name="filter_tahun">
+                        <select class="form-select" id="filter_pekerjaan_status_pekerjaan" name="filter_pekerjaan_status_pekerjaan">
                            <option value="">Semua Status Pekerjaan</option>
+                           <?php foreach ($status_pekerjaan as $sp) : ?>
+                              <option value="<?= $sp['id_status_pekerjaan'] ?>" <?= ($sp['id_status_pekerjaan'] == $filter_pekerjaan_status_pekerjaan) ? 'selected' : '' ?>><?= $sp['nama_status_pekerjaan'] ?></option>
+                           <?php endforeach; ?>
                         </select>
                      </div>
                   </div>
@@ -56,7 +70,7 @@
                      </button>
                   </div>
                   <div class="col-md-6 mb-1 d-flex justify-content-center align-items-center">
-                     <button type="button" class="btn btn-secondary" onclick="resetFilterTargetPoinHarian()">
+                     <button type="button" class="btn btn-secondary" onclick="resetFilterPekerjaan()">
                         <i class="bx bx-reset"></i> Reset
                      </button>
                   </div>
@@ -78,6 +92,8 @@
                      <thead>
                         <tr>
                            <th>No</th>
+                           <th>Aksi</th>
+                           <th>Persentase Selesai</th>
                            <th>Nama Pekerjaan</th>
                            <th>Pelanggan</th>
                            <th>Project Manager</th>
@@ -86,8 +102,6 @@
                            <th>Kategori Pekerjaan</th>
                            <th>Status Pekerjaan</th>
                            <th>Target Waktu Selesai</th>
-                           <th>Persentase Selesai</th>
-                           <th>Aksi</th>
                         </tr>
                      </thead>
                      <tbody>
@@ -95,6 +109,18 @@
                         <?php foreach ($pekerjaan as $p) : ?>
                            <tr>
                               <td><?= $i++ ?></td>
+                              <td>
+                                 <div class="btn-group" role="group">
+                                    <div>
+                                       <a href="/pekerjaan/detail_pekerjaan/<?= $p['id_pekerjaan'] ?>" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
+                                    </div>
+                                 </div>
+                              </td>
+                              <td>
+                                 <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="<?= $p['persentase_selesai'] ?>" aria-valuemin="0" aria-valuemax="100" style="height: 20px">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated overflow-visible text-dark" style="background-color: #73ff85; width: <?= $p['persentase_selesai'] ?>%"><b><?= $p['persentase_selesai'] ?>%</b></div>
+                                 </div>
+                              </td>
                               <td><?= $p['nama_pekerjaan'] ?></td>
                               <td><?= $p['pelanggan'] ?></td>
                               <td>
@@ -124,26 +150,6 @@
                                  <?php endforeach; ?>
                               </td>
                               <td><?= $p['target_waktu_selesai'] ?></td>
-                              <td>
-                                 <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="<?= $p['persentase_selesai'] ?>" aria-valuemin="0" aria-valuemax="100" style="height: 20px">
-                                    <div class="progress-bar progress-bar-striped progress-bar-animated overflow-visible text-dark" style="background-color: #73ff85; width: <?= $p['persentase_selesai'] ?>%"><b><?= $p['persentase_selesai'] ?>%</b></div>
-                                 </div>
-                              </td>
-                              <td>
-                                 <div class="btn-group" role="group">
-                                    <div>
-                                       <a href="/pekerjaan/detail_pekerjaan/<?= $p['id_pekerjaan'] ?>" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
-                                    </div>
-                                    <div>
-                                       <a href="" class="btn btn-warning" title="Klik untuk mengedit"><i class="ri-edit-2-line"></i></a>
-                                    </div>
-                                    <form action="" method="POST" class="d-inline">
-                                       <?= csrf_field(); ?>
-                                       <input type="hidden" name="_method" value="DELETE">
-                                       <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?');"><i class="ri-delete-bin-5-line"></i></button>
-                                    </form>
-                                 </div>
-                              </td>
                            </tr>
                         <?php endforeach; ?>
                      </tbody>

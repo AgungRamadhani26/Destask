@@ -257,6 +257,16 @@ function hapusKolomDesainer() {
    }
 }
 
+//Proses reset filter
+function resetFilterPekerjaan() {
+   // Mengatur nilai elemen formulir menjadi kosong
+   document.getElementById('filter_pekerjaan_pm').value = '';
+   document.getElementById('filter_pekerjaan_jenislayanan').value = '';
+   document.getElementById('filter_pekerjaan_kategori_pekerjaan').value = '';
+   document.getElementById('filter_pekerjaan_status_pekerjaan').value = '';
+   // Mengarahkan pengguna kembali ke URL yang diinginkan
+   window.location.href = "/pekerjaan/daftar_pekerjaan";
+}
 
 
 //                              //
