@@ -29,6 +29,18 @@ class HariLiburSeeder extends Seeder
                 'created_at'      => Time::now(),
                 'updated_at'      => Time::now()
             ],
+            [
+                'tanggal_libur'   => '2024-04-03',
+                'keterangan'      => 'Maulid Nabi Muhammad SAW',
+                'created_at'      => Time::now(),
+                'updated_at'      => Time::now()
+            ],
+            [
+                'tanggal_libur'   => '2024-04-25',
+                'keterangan'      => 'Kemerdekaan Republik Indonesia',
+                'created_at'      => Time::now(),
+                'updated_at'      => Time::now()
+            ],
         ];
         $this->db->table('hari_libur')->insertBatch($data);
     }

@@ -22,6 +22,7 @@
                            <th>No</th>
                            <th>Kategori Task</th>
                            <th>Deskripsi</th>
+                           <th>Color</th>
                            <th>Aksi</th>
                         </tr>
                      </thead>
@@ -32,6 +33,7 @@
                               <td><?= $i++ ?></td>
                               <td><?= $kt['nama_kategori_task'] ?></td>
                               <td><?= $kt['deskripsi_kategori_task'] ?></td>
+                              <td style="background-color: <?= $kt['color'] ?>; color:white"><?= $kt['color'] ?></td>
                               <td>
                                  <div class="btn-group" role="group">
                                     <div>

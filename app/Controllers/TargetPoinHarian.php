@@ -79,19 +79,21 @@ class TargetPoinHarian extends BaseController
                 ]
             ],
             'jumlah_hari_kerja' => [
-                'rules' => 'required|numeric|greater_than[0]',
+                'rules' => 'required|numeric|greater_than[0]|less_than[31]',
                 'errors' => [
                     'required' => 'Jumlah hari kerja harus diisi',
                     'numeric'  => 'Jumlah hari kerja hanya dapat berisi angka',
-                    'greater_than' => 'Jumlah hari kerja tidak dapat berisi 0 ataupun angka negatif'
+                    'greater_than' => 'Jumlah hari kerja tidak dapat berisi angka negatif',
+                    'less_than' => 'Jumlah hari kerja tidak dapat melebihi 30'
                 ]
             ],
             'jumlah_hari_libur' => [
-                'rules' => 'required|numeric|greater_than[0]',
+                'rules' => 'required|numeric|greater_than[0]|less_than[31]',
                 'errors' => [
                     'required' => 'Jumlah hari libur harus diisi',
                     'numeric'  => 'Jumlah hari libur hanya dapat berisi angka',
-                    'greater_than' => 'Jumlah hari libur tidak dapat berisi 0 ataupun angka negatif'
+                    'greater_than' => 'Jumlah hari libur tidak dapat berisi 0 ataupun angka negatif',
+                    'less_than' => 'Jumlah hari libur tidak dapat melebihi 30'
                 ]
             ]
 
@@ -197,19 +199,21 @@ class TargetPoinHarian extends BaseController
                 ]
             ],
             'jumlah_hari_kerja_e' => [
-                'rules' => 'required|numeric|greater_than[0]',
+                'rules' => 'required|numeric|greater_than[0]|less_than[31]',
                 'errors' => [
                     'required' => 'Jumlah hari kerja harus diisi',
                     'numeric'  => 'Jumlah hari kerja hanya dapat berisi angka',
-                    'greater_than' => 'Jumlah hari kerja tidak dapat berisi 0 ataupun angka negatif'
+                    'greater_than' => 'Jumlah hari kerja tidak dapat berisi angka negatif',
+                    'less_than' => 'Jumlah hari kerja tidak dapat melebihi 30'
                 ]
             ],
             'jumlah_hari_libur_e' => [
-                'rules' => 'required|numeric|greater_than[0]',
+                'rules' => 'required|numeric|greater_than[0]|less_than[31]',
                 'errors' => [
                     'required' => 'Jumlah hari libur harus diisi',
                     'numeric'  => 'Jumlah hari libur hanya dapat berisi angka',
-                    'greater_than' => 'Jumlah hari libur tidak dapat berisi 0 ataupun angka negatif'
+                    'greater_than' => 'Jumlah hari libur tidak dapat berisi 0 ataupun angka negatif',
+                    'less_than' => 'Jumlah hari libur tidak dapat melebihi 30'
                 ]
             ]
 

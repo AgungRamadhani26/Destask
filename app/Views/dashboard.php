@@ -19,7 +19,7 @@
                                 </div>
                                 <div class="ps-3 pt-2 pb-2">
                                     <h5 class="judul_card">Level User</h5>
-                                    <span class="text-danger small fw-bold">HOD</span>
+                                    <span class="text-danger small fw-bold"><?= session()->get('user_level'); ?></span>
                                 </div>
                             </div>
                         </div>
@@ -129,7 +129,8 @@
                             <div class="kanban-card">
                                 <a href="" class="badge bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
                                 <a href="" class="badge bg-primary" title="Lihat daftar task dan verifikasi task"><i class="bi bi-clipboard-data"></i></a>
-                                <a href="" class="badge bg-warning" title="Klik untuk mengedit"><i class="bi bi-pencil"></i></a>
+                                <a href="/pekerjaan/edit_pekerjaan/<?= $pp['id_pekerjaan'] ?>" class="badge bg-warning" title="Klik untuk mengedit data pekerjaan"><i class="bi bi-pencil"></i></a>
+                                <a href="/pekerjaan/edit_personil_pekerjaan/<?= $pp['id_pekerjaan'] ?>" class="badge bg-warning bg-opacity-75" title="Klik untuk mengedit data personil"><i class="bi bi-person-fill-gear"></i></a>
                                 <a href="" class="badge bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?');"><i class="ri-delete-bin-5-line"></i></a>
                                 <br>
                                 <br>
@@ -165,7 +166,8 @@
                             <div class="kanban-card">
                                 <a href="" class="badge bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
                                 <a href="" class="badge bg-primary" title="Lihat daftar task dan verifikasi task"><i class="bi bi-clipboard-data"></i></a>
-                                <a href="" class="badge bg-warning" title="Klik untuk mengedit"><i class="bi bi-pencil"></i></a>
+                                <a href="/pekerjaan/edit_pekerjaan/<?= $pc['id_pekerjaan'] ?>" class="badge bg-warning" title="Klik untuk mengedit data pekerjaan"><i class="bi bi-pencil"></i></a>
+                                <a href="" class="badge bg-warning bg-opacity-75" title="Klik untuk mengedit data personil"><i class="bi bi-person-fill-gear"></i></a>
                                 <a href="" class="badge bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?');"><i class="ri-delete-bin-5-line"></i></a>
                                 <br>
                                 <br>
@@ -201,7 +203,8 @@
                             <div class="kanban-card">
                                 <a href="" class="badge bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
                                 <a href="" class="badge bg-primary" title="Lihat daftar task dan verifikasi task"><i class="bi bi-clipboard-data"></i></a>
-                                <a href="" class="badge bg-warning" title="Klik untuk mengedit"><i class="bi bi-pencil"></i></a>
+                                <a href="/pekerjaan/edit_pekerjaan/<?= $pb['id_pekerjaan'] ?>" class="badge bg-warning" title="Klik untuk mengedit data pekerjaan"><i class="bi bi-pencil"></i></a>
+                                <a href="" class="badge bg-warning bg-opacity-75" title="Klik untuk mengedit data personil"><i class="bi bi-person-fill-gear"></i></a>
                                 <a href="" class="badge bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?');"><i class="ri-delete-bin-5-line"></i></a>
                                 <br>
                                 <br>
@@ -240,7 +243,8 @@
                             <div class="kanban-card">
                                 <a href="" class="badge bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
                                 <a href="" class="badge bg-primary" title="Lihat daftar task dan verifikasi task"><i class="bi bi-clipboard-data"></i></a>
-                                <a href="" class="badge bg-warning" title="Klik untuk mengedit"><i class="bi bi-pencil"></i></a>
+                                <a href="/pekerjaan/edit_pekerjaan/<?= $psp['id_pekerjaan'] ?>" class="badge bg-warning" title="Klik untuk mengedit data pekerjaan"><i class="bi bi-pencil"></i></a>
+                                <a href="" class="badge bg-warning bg-opacity-75" title="Klik untuk mengedit data personil"><i class="bi bi-person-fill-gear"></i></a>
                                 <a href="" class="badge bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?');"><i class="ri-delete-bin-5-line"></i></a>
                                 <br>
                                 <br>
@@ -276,7 +280,8 @@
                             <div class="kanban-card">
                                 <a href="" class="badge bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
                                 <a href="" class="badge bg-primary" title="Lihat daftar task dan verifikasi task"><i class="bi bi-clipboard-data"></i></a>
-                                <a href="" class="badge bg-warning" title="Klik untuk mengedit"><i class="bi bi-pencil"></i></a>
+                                <a href="/pekerjaan/edit_pekerjaan/<?= $po['id_pekerjaan'] ?>" class="badge bg-warning" title="Klik untuk mengedit data pekerjaan"><i class="bi bi-pencil"></i></a>
+                                <a href="" class="badge bg-warning bg-opacity-75" title="Klik untuk mengedit data personil"><i class="bi bi-person-fill-gear"></i></a>
                                 <a href="" class="badge bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?');"><i class="ri-delete-bin-5-line"></i></a>
                                 <br>
                                 <br>
@@ -312,7 +317,8 @@
                             <div class="kanban-card">
                                 <a href="" class="badge bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
                                 <a href="" class="badge bg-primary" title="Lihat daftar task dan verifikasi task"><i class="bi bi-clipboard-data"></i></a>
-                                <a href="" class="badge bg-warning" title="Klik untuk mengedit"><i class="bi bi-pencil"></i></a>
+                                <a href="/pekerjaan/edit_pekerjaan/<?= $ps['id_pekerjaan'] ?>" class="badge bg-warning" title="Klik untuk mengedit data pekerjaan"><i class="bi bi-pencil"></i></a>
+                                <a href="" class="badge bg-warning bg-opacity-75" title="Klik untuk mengedit data personil"><i class="bi bi-person-fill-gear"></i></a>
                                 <a href="" class="badge bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?');"><i class="ri-delete-bin-5-line"></i></a>
                                 <br>
                                 <br>

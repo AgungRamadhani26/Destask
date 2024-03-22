@@ -31,13 +31,28 @@ class Dashboard extends BaseController
 
     public function lihat_dashboard()
     {
+        if ((session()->get('user_level') == 'supervisi') || (session()->get('user_level') == 'staff')) {
+            $pekerjaan_onprogres = $this->pekerjaanModel->getPekerjaanByUserIdIdStatusPekerjaan(session()->get('id_user'), 1);
+            $pekerjaan_selesai = $this->pekerjaanModel->getPekerjaanByUserIdIdStatusPekerjaan(session()->get('id_user'), 2);
+            $pekerjaan_pending = $this->pekerjaanModel->getPekerjaanByUserIdIdStatusPekerjaan(session()->get('id_user'), 3);
+            $pekerjaan_cancle = $this->pekerjaanModel->getPekerjaanByUserIdIdStatusPekerjaan(session()->get('id_user'), 4);
+            $pekerjaan_support = $this->pekerjaanModel->getPekerjaanByUserIdIdStatusPekerjaan(session()->get('id_user'), 5);
+            $pekerjaan_bast = $this->pekerjaanModel->getPekerjaanByUserIdIdStatusPekerjaan(session()->get('id_user'), 6);
+        } else {
+            $pekerjaan_onprogres = $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(1);
+            $pekerjaan_selesai = $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(2);
+            $pekerjaan_pending = $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(3);
+            $pekerjaan_cancle = $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(4);
+            $pekerjaan_support = $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(5);
+            $pekerjaan_bast = $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(6);
+        }
         $data = [
-            'pekerjaan_onprogres' => $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(1),
-            'pekerjaan_selesai' => $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(2),
-            'pekerjaan_pending' => $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(3),
-            'pekerjaan_cancle' => $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(4),
-            'pekerjaan_support' => $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(5),
-            'pekerjaan_bast' => $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(6),
+            'pekerjaan_onprogres' => $pekerjaan_onprogres,
+            'pekerjaan_selesai' => $pekerjaan_selesai,
+            'pekerjaan_pending' => $pekerjaan_pending,
+            'pekerjaan_cancle' => $pekerjaan_cancle,
+            'pekerjaan_support' => $pekerjaan_support,
+            'pekerjaan_bast' => $pekerjaan_bast,
             'personil' => $this->personilModel->getPersonil(),
             'user' => $this->userModel->getUser(),
             'url1' => '/dashboard',

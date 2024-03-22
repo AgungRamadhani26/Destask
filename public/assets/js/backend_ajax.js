@@ -10,6 +10,7 @@ $('.tombol-tutup-statuspekerjaan').on('click', function() {
    $('#id_status_pekerjaan_e').val('');
    $('#nama_status_pekerjaan_e').val('');
    $('#deskripsi_status_pekerjaan_e').val('');
+   $('#color_status_pekerjaan_e').val('');
 });
 
 //Proses edit status pekerjaan
@@ -24,6 +25,7 @@ function edit_status_pekerjaan($id){
             $('#id_status_pekerjaan_e').val($obj.id_status_pekerjaan);
             $('#nama_status_pekerjaan_e').val($obj.nama_status_pekerjaan);
             $('#deskripsi_status_pekerjaan_e').val($obj.deskripsi_status_pekerjaan);
+            $('#color_status_pekerjaan_e').val($obj.color);
          }
       }
    });
@@ -43,6 +45,7 @@ $('.tombol-tutup-kategoripekerjaan').on('click', function() {
    $('#id_kategori_pekerjaan_e').val('');
    $('#nama_kategori_pekerjaan_e').val('');
    $('#deskripsi_kategori_pekerjaan_e').val('');
+   $('#color_kategori_pekerjaan_e').val('');
 });
 
 //Proses edit kategori pekerjaan
@@ -57,6 +60,7 @@ function edit_kategori_pekerjaan($id){
             $('#id_kategori_pekerjaan_e').val($obj.id_kategori_pekerjaan);
             $('#nama_kategori_pekerjaan_e').val($obj.nama_kategori_pekerjaan);
             $('#deskripsi_kategori_pekerjaan_e').val($obj.deskripsi_kategori_pekerjaan);
+            $('#color_kategori_pekerjaan_e').val($obj.color);
          }
       }
    });
@@ -67,195 +71,6 @@ function edit_kategori_pekerjaan($id){
 //                            //
 // PENGELOLAAN DATA PEKERJAAN //
 //                            //
-function tambahKolomFEMobile() {
-   var kolom = document.querySelectorAll('.frontend-mobile');
-   var maxKolom = 5;
-   // Cari kolom yang belum ditampilkan
-   for (var i = 0; i < kolom.length; i++) {
-      if (kolom[i].style.display === 'none') {
-         kolom[i].style.display = 'block';
-         return; // Hentikan setelah menampilkan satu kolom
-      }
-   }
-   // Jika sudah mencapai batas maksimal, tampilkan pesan peringatan
-   if (kolom.length >= maxKolom) {
-      alert('Maksimal kolom Frontend Mobile yang ditampilkan adalah 5.');
-   }
-}
-
-function hapusKolomFEMobile() {
-   var kolom = document.querySelectorAll('.frontend-mobile');
-   var kolomYangDitampilkan = [];
-   for (var i = 0; i < kolom.length; i++) {
-      if (kolom[i].style.display !== 'none') {
-         kolomYangDitampilkan.push(kolom[i]);
-      }
-   }
-   // Sembunyikan kolom terakhir yang ditampilkan
-   var lastIndex = kolomYangDitampilkan.length - 1;
-   if (lastIndex > 0) {
-      // Menghapus nilai dari kolom yang disembunyikan
-      var inputFields = kolomYangDitampilkan[lastIndex].querySelectorAll('select');
-      inputFields.forEach(function(input) {
-         input.value = '';
-      });
-      kolomYangDitampilkan[lastIndex].style.display = 'none';
-   } else {
-      alert('Minimal kolom Frontend Mobile yang ditampilkan adalah 1.')
-   }
-}
-
-function tambahKolomBEMobile() {
-   var kolom = document.querySelectorAll('.backend-mobile');
-   var maxKolom = 5;
-   // Cari kolom yang belum ditampilkan
-   for (var i = 0; i < kolom.length; i++) {
-      if (kolom[i].style.display === 'none') {
-         kolom[i].style.display = 'block';
-         return; // Hentikan setelah menampilkan satu kolom
-      }
-   }
-   // Jika sudah mencapai batas maksimal, tampilkan pesan peringatan
-   if (kolom.length >= maxKolom) {
-      alert('Maksimal kolom Backend Mobile yang ditampilkan adalah 5.');
-   }
-}
-
-function hapusKolomBEMobile() {
-   var kolom = document.querySelectorAll('.backend-mobile');
-   var kolomYangDitampilkan = [];
-   for (var i = 0; i < kolom.length; i++) {
-      if (kolom[i].style.display !== 'none') {
-         kolomYangDitampilkan.push(kolom[i]);
-      }
-   }
-   // Sembunyikan kolom terakhir yang ditampilkan
-   var lastIndex = kolomYangDitampilkan.length - 1;
-   if (lastIndex > 0) {
-      // Menghapus nilai dari kolom yang disembunyikan
-      var inputFields = kolomYangDitampilkan[lastIndex].querySelectorAll('select');
-      inputFields.forEach(function(input) {
-         input.value = '';
-      });
-      kolomYangDitampilkan[lastIndex].style.display = 'none';
-   } else {
-      alert('Minimal kolom Backend Mobile yang ditampilkan adalah 1.')
-   }
-}
-
-function tambahKolomFEWeb() {
-   var kolom = document.querySelectorAll('.frontend-web');
-   var maxKolom = 5;
-   // Cari kolom yang belum ditampilkan
-   for (var i = 0; i < kolom.length; i++) {
-      if (kolom[i].style.display === 'none') {
-         kolom[i].style.display = 'block';
-         return; // Hentikan setelah menampilkan satu kolom
-      }
-   }
-   // Jika sudah mencapai batas maksimal, tampilkan pesan peringatan
-   if (kolom.length >= maxKolom) {
-      alert('Maksimal kolom Frontend Web yang ditampilkan adalah 5.');
-   }
-}
-
-function hapusKolomFEWeb() {
-   var kolom = document.querySelectorAll('.frontend-web');
-   var kolomYangDitampilkan = [];
-   for (var i = 0; i < kolom.length; i++) {
-      if (kolom[i].style.display !== 'none') {
-         kolomYangDitampilkan.push(kolom[i]);
-      }
-   }
-   // Sembunyikan kolom terakhir yang ditampilkan
-   var lastIndex = kolomYangDitampilkan.length - 1;
-   if (lastIndex > 0) {
-      // Menghapus nilai dari kolom yang disembunyikan
-      var inputFields = kolomYangDitampilkan[lastIndex].querySelectorAll('select');
-      inputFields.forEach(function(input) {
-         input.value = '';
-      });
-      kolomYangDitampilkan[lastIndex].style.display = 'none';
-   } else {
-      alert('Minimal kolom Frontend Web yang ditampilkan adalah 1.')
-   }
-}
-
-function tambahKolomBEWeb() {
-   var kolom = document.querySelectorAll('.backend-web');
-   var maxKolom = 5;
-   // Cari kolom yang belum ditampilkan
-   for (var i = 0; i < kolom.length; i++) {
-      if (kolom[i].style.display === 'none') {
-         kolom[i].style.display = 'block';
-         return; // Hentikan setelah menampilkan satu kolom
-      }
-   }
-   // Jika sudah mencapai batas maksimal, tampilkan pesan peringatan
-   if (kolom.length >= maxKolom) {
-      alert('Maksimal kolom Backend Web yang ditampilkan adalah 5.');
-   }
-}
-
-function hapusKolomBEWeb() {
-   var kolom = document.querySelectorAll('.backend-web');
-   var kolomYangDitampilkan = [];
-   for (var i = 0; i < kolom.length; i++) {
-      if (kolom[i].style.display !== 'none') {
-         kolomYangDitampilkan.push(kolom[i]);
-      }
-   }
-   // Sembunyikan kolom terakhir yang ditampilkan
-   var lastIndex = kolomYangDitampilkan.length - 1;
-   if (lastIndex > 0) {
-      // Menghapus nilai dari kolom yang disembunyikan
-      var inputFields = kolomYangDitampilkan[lastIndex].querySelectorAll('select');
-      inputFields.forEach(function(input) {
-         input.value = '';
-      });
-      kolomYangDitampilkan[lastIndex].style.display = 'none';
-   } else {
-      alert('Minimal kolom Backend Web yang ditampilkan adalah 1.')
-   }
-}
-
-function tambahKolomDesainer() {
-   var kolom = document.querySelectorAll('.desainer');
-   var maxKolom = 5;
-   // Cari kolom yang belum ditampilkan
-   for (var i = 0; i < kolom.length; i++) {
-      if (kolom[i].style.display === 'none') {
-         kolom[i].style.display = 'block';
-         return; // Hentikan setelah menampilkan satu kolom
-      }
-   }
-   // Jika sudah mencapai batas maksimal, tampilkan pesan peringatan
-   if (kolom.length >= maxKolom) {
-      alert('Maksimal kolom Desainer yang ditampilkan adalah 5.');
-   }
-}
-
-function hapusKolomDesainer() {
-   var kolom = document.querySelectorAll('.desainer');
-   var kolomYangDitampilkan = [];
-   for (var i = 0; i < kolom.length; i++) {
-      if (kolom[i].style.display !== 'none') {
-         kolomYangDitampilkan.push(kolom[i]);
-      }
-   }
-   // Sembunyikan kolom terakhir yang ditampilkan
-   var lastIndex = kolomYangDitampilkan.length - 1;
-   if (lastIndex > 0) {
-      // Menghapus nilai dari kolom yang disembunyikan
-      var inputFields = kolomYangDitampilkan[lastIndex].querySelectorAll('select');
-      inputFields.forEach(function(input) {
-         input.value = '';
-      });
-      kolomYangDitampilkan[lastIndex].style.display = 'none';
-   } else {
-      alert('Minimal kolom Desainer yang ditampilkan adalah 1.')
-   }
-}
 
 //Proses reset filter
 function resetFilterPekerjaan() {
@@ -281,6 +96,7 @@ $('.tombol-tutup-statustask').on('click', function() {
    $('#id_status_task_e').val('');
    $('#nama_status_task_e').val('');
    $('#deskripsi_status_task_e').val('');
+   $('#color_status_task_e').val('');
 });
 
 //Proses edit status task
@@ -295,6 +111,7 @@ function edit_status_task($id){
             $('#id_status_task_e').val($obj.id_status_task);
             $('#nama_status_task_e').val($obj.nama_status_task);
             $('#deskripsi_status_task_e').val($obj.deskripsi_status_task);
+            $('#color_status_task_e').val($obj.color);
          }
       }
    });
@@ -314,6 +131,8 @@ $('.tombol-tutup-kategoritask').on('click', function() {
    $('#id_kategori_task_e').val('');
    $('#nama_kategori_task_e').val('');
    $('#deskripsi_kategori_task_e').val('');
+   $('#color_kategori_task_e').val('');
+   $('#color_kategori_task').val('');
 });
 
 //Proses edit kategori task
@@ -328,6 +147,7 @@ function edit_kategori_task($id){
             $('#id_kategori_task_e').val($obj.id_kategori_task);
             $('#nama_kategori_task_e').val($obj.nama_kategori_task);
             $('#deskripsi_kategori_task_e').val($obj.deskripsi_kategori_task);
+            $('#color_kategori_task_e').val($obj.color);
          }
       }
    });

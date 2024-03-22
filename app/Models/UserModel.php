@@ -12,7 +12,7 @@ class UserModel extends Model
     protected $useTimestamps    = true;
     protected $allowedFields    = [
         'id_usergroup', 'username', 'email', 'password',
-        'user_level', 'nama', 'foto_profil'
+        'user_level', 'nama', 'foto_profil', 'reset_password_token'
     ];
 
     //Fungsi untuk mendapatkan data user

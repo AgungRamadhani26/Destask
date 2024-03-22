@@ -11,7 +11,7 @@ class KategoriTaskModel extends Model
     protected $useSoftDeletes   = true;
     protected $useTimestamps    = true;
     protected $allowedFields    = [
-        'nama_kategori_task', 'deskripsi_kategori_task'
+        'nama_kategori_task', 'deskripsi_kategori_task', 'color'
     ];
 
     //Fungsi untuk mendapatkan data kategori task

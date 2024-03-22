@@ -23,9 +23,15 @@ class PersonilModel extends Model
         return $this->where(['id_personil' => $id_personil])->first();
     }
 
-    //Fungsi untuk mendapatkan data personil berdasarkan id_pekerjaan
+    //Fungsi untuk mendapatkan data personil berdasarkan id_pekerjaan (untuk detail)
     public function getPersonilByIdPekerjaan($id_pekerjaan)
     {
         return $this->where(['id_pekerjaan' => $id_pekerjaan])->findAll();
+    }
+
+    //Fungsi unutk mendapatkan data personil berdasarkan id_pekerjaan dan role_personil (untuk_edit)
+    public function getPersonilByIdPekerjaanRolePersonil($id_pekerjaan, $role_personil)
+    {
+        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'role_personil' => $role_personil])->findAll();
     }
 }

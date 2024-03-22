@@ -48,7 +48,7 @@
                                     </button>
                                  </h2>
                                  <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body bg-info" style="text-align: justify;">
+                                    <div class="accordion-body bg-info" style="text-align:left;">
                                        <?= $usergroup['deskripsi_usergroup'] ?>
                                     </div>
                                  </div>

@@ -30,44 +30,44 @@ class Usergroup extends BaseController
     }
 
     //fungsi tambah_usergroup
-    public function tambah_usergroup()
-    {
-        $validasi = \Config\Services::validation();
-        $aturan = [
-            'nama_usergroup' => [
-                'rules' => 'required|alpha_space|is_unique[usergroup.nama_usergroup]',
-                'errors' => [
-                    'required' => 'Nama usergroup harus diisi',
-                    'alpha_space' => 'Nama usergroup hanya dapat berisi huruf',
-                    'is_unique' => 'Usergroup sudah terdaftar, coba isi yang lain'
-                ]
-            ],
-            'deskripsi_usergroup' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Deskripsi usergroup harus diisi'
-                ]
-            ]
-        ];
-        $validasi->setRules($aturan);
-        //Jika inputan valid
-        if ($validasi->withRequest($this->request)->run()) {
-            //Mengambil data dari ajax
-            $nama_usergroup = preg_replace('/\s+/', ' ', trim(strval($this->request->getPost('nama_usergroup'))));
-            $deskripsi_usergroup = preg_replace('/\s+/', ' ', trim(strval($this->request->getPost('deskripsi_usergroup'))));
-            //Proses memasukkan data ke database
-            $data_usergroup = [
-                'nama_usergroup' => $nama_usergroup,
-                'deskripsi_usergroup' => $deskripsi_usergroup
-            ];
-            $this->usergroupModel->save($data_usergroup);
-            Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil menambah data Usergroup');
-            return redirect()->to('usergroup/daftar_usergroup');
-        } else {
-            session()->setFlashdata('error', $validasi->listErrors());
-            return redirect()->withInput()->with('modal', 'modaltambah_usergroup')->back();
-        }
-    }
+    // public function tambah_usergroup()
+    // {
+    //     $validasi = \Config\Services::validation();
+    //     $aturan = [
+    //         'nama_usergroup' => [
+    //             'rules' => 'required|alpha_space|is_unique[usergroup.nama_usergroup]',
+    //             'errors' => [
+    //                 'required' => 'Nama usergroup harus diisi',
+    //                 'alpha_space' => 'Nama usergroup hanya dapat berisi huruf',
+    //                 'is_unique' => 'Usergroup sudah terdaftar, coba isi yang lain'
+    //             ]
+    //         ],
+    //         'deskripsi_usergroup' => [
+    //             'rules' => 'required',
+    //             'errors' => [
+    //                 'required' => 'Deskripsi usergroup harus diisi'
+    //             ]
+    //         ]
+    //     ];
+    //     $validasi->setRules($aturan);
+    //     //Jika inputan valid
+    //     if ($validasi->withRequest($this->request)->run()) {
+    //         //Mengambil data dari ajax
+    //         $nama_usergroup = preg_replace('/\s+/', ' ', trim(strval($this->request->getPost('nama_usergroup'))));
+    //         $deskripsi_usergroup = preg_replace('/\s+/', ' ', trim(strval($this->request->getPost('deskripsi_usergroup'))));
+    //         //Proses memasukkan data ke database
+    //         $data_usergroup = [
+    //             'nama_usergroup' => $nama_usergroup,
+    //             'deskripsi_usergroup' => $deskripsi_usergroup
+    //         ];
+    //         $this->usergroupModel->save($data_usergroup);
+    //         Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil menambah data Usergroup');
+    //         return redirect()->to('usergroup/daftar_usergroup');
+    //     } else {
+    //         session()->setFlashdata('error', $validasi->listErrors());
+    //         return redirect()->withInput()->with('modal', 'modaltambah_usergroup')->back();
+    //     }
+    // }
 
     //Fungsi detail_usergroup
     public function detail_usergroup($id_usergroup)
@@ -145,10 +145,10 @@ class Usergroup extends BaseController
     }
 
     //Fungsi delete_usergroup
-    public function delete_usergroup($id_usergroup)
-    {
-        $this->usergroupModel->delete($id_usergroup);
-        Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Data usergroup berhasil dihapus');
-        return redirect()->to('/usergroup/daftar_usergroup');
-    }
+    // public function delete_usergroup($id_usergroup)
+    // {
+    //     $this->usergroupModel->delete($id_usergroup);
+    //     Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Data usergroup berhasil dihapus');
+    //     return redirect()->to('/usergroup/daftar_usergroup');
+    // }
 }

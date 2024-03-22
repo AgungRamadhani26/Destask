@@ -27,44 +27,44 @@ class KategoriPekerjaan extends BaseController
     }
 
     //fungsi tambah_kategori_pekerjaan
-    public function tambah_kategori_pekerjaan()
-    {
-        $validasi = \Config\Services::validation();
-        $aturan = [
-            'nama_kategori_pekerjaan' => [
-                'rules' => 'required|alpha_space|is_unique[kategori_pekerjaan.nama_kategori_pekerjaan]',
-                'errors' => [
-                    'required' => 'Nama kategori pekerjaan harus diisi',
-                    'alpha_space' => 'Nama kategori pekerjaan hanya dapat berisi huruf',
-                    'is_unique' => 'Kategori pekerjaan sudah terdaftar, coba isi yang lain'
-                ]
-            ],
-            'deskripsi_kategori_pekerjaan' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Deskripsi kategori pekerjaan harus diisi'
-                ]
-            ]
-        ];
-        $validasi->setRules($aturan);
-        //Jika inputan valid
-        if ($validasi->withRequest($this->request)->run()) {
-            //Mengambil data dari ajax
-            $nama_kategori_pekerjaan = preg_replace('/\s+/', ' ', trim(strval($this->request->getPost('nama_kategori_pekerjaan'))));
-            $deskripsi_kategori_pekerjaan = preg_replace('/\s+/', ' ', trim(strval($this->request->getPost('deskripsi_kategori_pekerjaan'))));
-            //Proses memasukkan data ke database
-            $data_kategori_pekerjaan = [
-                'nama_kategori_pekerjaan' => $nama_kategori_pekerjaan,
-                'deskripsi_kategori_pekerjaan' => $deskripsi_kategori_pekerjaan
-            ];
-            $this->kategoriPekerjaanModel->save($data_kategori_pekerjaan);
-            Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil menambah data Kategori Pekerjaan');
-            return redirect()->to('kategori_pekerjaan/daftar_kategori_pekerjaan');
-        } else {
-            session()->setFlashdata('error', $validasi->listErrors());
-            return redirect()->withInput()->with('modal', 'modaltambah_kategoripekerjaan')->back();
-        }
-    }
+    // public function tambah_kategori_pekerjaan()
+    // {
+    //     $validasi = \Config\Services::validation();
+    //     $aturan = [
+    //         'nama_kategori_pekerjaan' => [
+    //             'rules' => 'required|alpha_space|is_unique[kategori_pekerjaan.nama_kategori_pekerjaan]',
+    //             'errors' => [
+    //                 'required' => 'Nama kategori pekerjaan harus diisi',
+    //                 'alpha_space' => 'Nama kategori pekerjaan hanya dapat berisi huruf',
+    //                 'is_unique' => 'Kategori pekerjaan sudah terdaftar, coba isi yang lain'
+    //             ]
+    //         ],
+    //         'deskripsi_kategori_pekerjaan' => [
+    //             'rules' => 'required',
+    //             'errors' => [
+    //                 'required' => 'Deskripsi kategori pekerjaan harus diisi'
+    //             ]
+    //         ]
+    //     ];
+    //     $validasi->setRules($aturan);
+    //     //Jika inputan valid
+    //     if ($validasi->withRequest($this->request)->run()) {
+    //         //Mengambil data dari ajax
+    //         $nama_kategori_pekerjaan = preg_replace('/\s+/', ' ', trim(strval($this->request->getPost('nama_kategori_pekerjaan'))));
+    //         $deskripsi_kategori_pekerjaan = preg_replace('/\s+/', ' ', trim(strval($this->request->getPost('deskripsi_kategori_pekerjaan'))));
+    //         //Proses memasukkan data ke database
+    //         $data_kategori_pekerjaan = [
+    //             'nama_kategori_pekerjaan' => $nama_kategori_pekerjaan,
+    //             'deskripsi_kategori_pekerjaan' => $deskripsi_kategori_pekerjaan
+    //         ];
+    //         $this->kategoriPekerjaanModel->save($data_kategori_pekerjaan);
+    //         Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil menambah data Kategori Pekerjaan');
+    //         return redirect()->to('kategori_pekerjaan/daftar_kategori_pekerjaan');
+    //     } else {
+    //         session()->setFlashdata('error', $validasi->listErrors());
+    //         return redirect()->withInput()->with('modal', 'modaltambah_kategoripekerjaan')->back();
+    //     }
+    // }
 
     //Fungsi edit_kategori_pekerjaan
     public function edit_kategori_pekerjaan($id_kategori_pekerjaan)
@@ -95,6 +95,12 @@ class KategoriPekerjaan extends BaseController
                 'errors' => [
                     'required' => 'Deskripsi kategori pekerjaan harus diisi'
                 ]
+            ],
+            'color_kategori_pekerjaan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Color kategori pekerjaan harus dipilih'
+                ]
             ]
         ];
         $validasi->setRules($aturan);
@@ -104,9 +110,10 @@ class KategoriPekerjaan extends BaseController
             $id_kategori_pekerjaan = $this->request->getPost('id_kategori_pekerjaan_e');
             $nama_kategori_pekerjaan = preg_replace('/\s+/', ' ', trim(strval($this->request->getPost('nama_kategori_pekerjaan_e'))));
             $deskripsi_kategori_pekerjaan = preg_replace('/\s+/', ' ', trim(strval($this->request->getPost('deskripsi_kategori_pekerjaan_e'))));
+            $color_kategori_pekerjaan = $this->request->getPost('color_kategori_pekerjaan_e');
             // Memeriksa apakah data baru sama dengan data yang sudah ada
             $existingData = $this->kategoriPekerjaanModel->find($id_kategori_pekerjaan);
-            if ($existingData['nama_kategori_pekerjaan'] === $nama_kategori_pekerjaan && $existingData['deskripsi_kategori_pekerjaan'] === $deskripsi_kategori_pekerjaan) {
+            if ($existingData['nama_kategori_pekerjaan'] === $nama_kategori_pekerjaan && $existingData['deskripsi_kategori_pekerjaan'] === $deskripsi_kategori_pekerjaan && $existingData['color'] === $color_kategori_pekerjaan) {
                 session()->setFlashdata('info', 'Data kategori pekerjaan tidak ada yang anda ubah');
                 return redirect()->withInput()->with('modal', 'modaledit_kategoripekerjaan')->back();
             } else {
@@ -114,7 +121,8 @@ class KategoriPekerjaan extends BaseController
                 $data_kategori_pekerjaan = [
                     'id_kategori_pekerjaan' => $id_kategori_pekerjaan,
                     'nama_kategori_pekerjaan' => $nama_kategori_pekerjaan,
-                    'deskripsi_kategori_pekerjaan' => $deskripsi_kategori_pekerjaan
+                    'deskripsi_kategori_pekerjaan' => $deskripsi_kategori_pekerjaan,
+                    'color' => $color_kategori_pekerjaan
                 ];
                 $this->kategoriPekerjaanModel->save($data_kategori_pekerjaan);
                 Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil mengedit data Kategori Pekerjaan');
@@ -127,10 +135,10 @@ class KategoriPekerjaan extends BaseController
     }
 
     //Fungsi delete_kategori_pekerjaan
-    public function delete_kategori_pekerjaan($id_kategori_pekerjaan)
-    {
-        $this->kategoriPekerjaanModel->delete($id_kategori_pekerjaan);
-        Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Data kategori pekerjaan berhasil dihapus');
-        return redirect()->to('/kategori_pekerjaan/daftar_kategori_pekerjaan');
-    }
+    // public function delete_kategori_pekerjaan($id_kategori_pekerjaan)
+    // {
+    //     $this->kategoriPekerjaanModel->delete($id_kategori_pekerjaan);
+    //     Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Data kategori pekerjaan berhasil dihapus');
+    //     return redirect()->to('/kategori_pekerjaan/daftar_kategori_pekerjaan');
+    // }
 }

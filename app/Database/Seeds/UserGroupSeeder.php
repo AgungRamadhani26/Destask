@@ -12,8 +12,8 @@ class UserGroupSeeder extends Seeder
     {
         $data = [
             [
-                'nama_usergroup'      => 'Web Design',
-                'deskripsi_usergroup' => 'Web Design bertanggung jawab untuk merancang antarmuka pengguna yang menarik dan fungsional, memastikan pengalaman online yang optimal bagi pengguna.',
+                'nama_usergroup'      => 'Design',
+                'deskripsi_usergroup' => 'Divisi Design bertanggung jawab untuk merancang antarmuka pengguna yang menarik dan fungsional, memastikan pengalaman online yang optimal bagi pengguna.',
                 'created_at'          => Time::now(),
                 'updated_at'          => Time::now()
             ],
@@ -26,6 +26,24 @@ class UserGroupSeeder extends Seeder
             [
                 'nama_usergroup'      => 'Mobile',
                 'deskripsi_usergroup' => 'Divisi Mobile menciptakan aplikasi inovatif dengan antarmuka responsif. Tim fokus pada kebutuhan pengguna dan selalu mengikuti perkembangan teknologi mobile. Tujuannya: memberikan pengalaman pengguna terbaik.',
+                'created_at'          => Time::now(),
+                'updated_at'          => Time::now()
+            ],
+            [
+                'nama_usergroup'      => 'Tester',
+                'deskripsi_usergroup' => 'Divisi Tester bertanggung jawab untuk melakukan pengujian perangkat lunak secara menyeluruh sebelum dirilis ke pengguna akhir. Tugas utama divisi ini adalah memverifikasi kepatuhan perangkat lunak terhadap spesifikasi yang telah ditetapkan, menemukan dan melaporkan bug atau masalah fungsional, serta memastikan bahwa perangkat lunak berfungsi sesuai dengan harapan.',
+                'created_at'          => Time::now(),
+                'updated_at'          => Time::now()
+            ],
+            [
+                'nama_usergroup'      => 'Admin',
+                'deskripsi_usergroup' => 'Divisi Admin bertanggung jawab untuk mengelola dan menjaga infrastruktur serta sumber daya yang digunakan dalam organisasi. Tugas-tugas divisi ini meliputi administrasi server, manajemen database, manajemen jaringan, manajemen perangkat keras dan perangkat lunak, serta pemeliharaan keamanan sistem.',
+                'created_at'          => Time::now(),
+                'updated_at'          => Time::now()
+            ],
+            [
+                'nama_usergroup'      => 'Helpdesk',
+                'deskripsi_usergroup' => 'Divisi Helpdesk bertanggung jawab untuk memberikan dukungan teknis dan bantuan kepada pengguna akhir yang mengalami masalah atau kesulitan saat menggunakan produk atau layanan perusahaan. Tugas utama divisi ini adalah merespons pertanyaan, permintaan bantuan, dan pelaporan masalah dari pengguna, serta memberikan solusi atau bantuan teknis yang diperlukan.',
                 'created_at'          => Time::now(),
                 'updated_at'          => Time::now()
             ]

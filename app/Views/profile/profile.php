@@ -80,7 +80,7 @@
                         <div class="row mb-3">
                            <label for="nama_profile" class="col-md-4 col-lg-3 col-form-label">Nama</label>
                            <div class="col-md-8 col-lg-9">
-                              <input name="nama_profile" type="text" class="form-control <?= (session()->getFlashdata('error_nama_profile')) ? 'is-invalid' : ''; ?>" id="nama_profile" value="<?= old('nama_profile') ? old('nama_profile') : $profil_user['nama']; ?>">
+                              <input name="nama_profile" type="text" class="form-control <?= (session()->getFlashdata('error_nama_profile')) ? 'is-invalid' : ''; ?>" id="nama_profile" value="<?= old('nama_profile') ?? $profil_user['nama'] ?? ''; ?>">
                               <div class="invalid-feedback">
                                  <?= session()->getFlashdata('error_nama_profile') ?>
                               </div>
@@ -89,7 +89,7 @@
                         <div class="row mb-3">
                            <label for="email_profile" class="col-md-4 col-lg-3 col-form-label">Email</label>
                            <div class="col-md-8 col-lg-9">
-                              <input name="email_profile" type="email" class="form-control <?= (session()->getFlashdata('error_email_profile')) ? 'is-invalid' : ''; ?>" id="email_profile" value="<?= old('email_profile') ? old('email_profile') : $profil_user['email']; ?>">
+                              <input name="email_profile" type="email" class="form-control <?= (session()->getFlashdata('error_email_profile')) ? 'is-invalid' : ''; ?>" id="email_profile" value="<?= old('email_profile') ?? $profil_user['email'] ?? ''; ?>">
                               <div class="invalid-feedback">
                                  <?= session()->getFlashdata('error_email_profile') ?>
                               </div>
@@ -98,7 +98,7 @@
                         <div class="row mb-3">
                            <label for="username_profile" class="col-md-4 col-lg-3 col-form-label">Username</label>
                            <div class="col-md-8 col-lg-9">
-                              <input name="username_profile" type="text" class="form-control <?= (session()->getFlashdata('error_username_profile')) ? 'is-invalid' : ''; ?>" id="username_profile" value="<?= old('username_profile') ? old('username_profile') : $profil_user['username']; ?>">
+                              <input name="username_profile" type="text" class="form-control <?= (session()->getFlashdata('error_username_profile')) ? 'is-invalid' : ''; ?>" id="username_profile" value="<?= old('username_profile') ?? $profil_user['username'] ?? ''; ?>">
                               <div class="invalid-feedback">
                                  <?= session()->getFlashdata('error_username_profile') ?>
                               </div>

@@ -44,6 +44,12 @@
                      <textarea class="form-control" rows="3" name="deskripsi_kategori_task_e" id="deskripsi_kategori_task_e"><?= old('deskripsi_kategori_task_e'); ?></textarea>
                   </div>
                </div>
+               <div class="row mb-3">
+                  <label for="color_kategori_task_e" style="font-weight: 600;">Color</label>
+                  <div class="col-sm-4">
+                     <input type="color" class="form-control" name="color_kategori_task_e" id="color_kategori_task_e" value="<?= old('color_kategori_task_e'); ?>" style="height: 70px;">
+                  </div>
+               </div>
             </div>
             <div class="modal-footer">
                <button type="button" class="btn btn-secondary tombol-tutup-kategoritask" data-bs-dismiss="modal">Tutup</button>

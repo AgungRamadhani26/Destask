@@ -51,6 +51,11 @@ class User extends Migration
                 'constraint' => 100,
                 'null'       => true
             ],
+            'reset_password_token' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 255,
+                'null'       => true
+            ],
             'created_at' => [
                 'type'  => 'DATETIME',
                 'null'  => true,

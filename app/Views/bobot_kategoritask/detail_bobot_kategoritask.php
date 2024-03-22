@@ -51,7 +51,7 @@
                      <?php foreach ($kategori_task_dan_poin as $kt) : ?>
                         <?php foreach ($kategori_task as $k) : ?>
                            <?php if ($kt['id_kategori_task'] == $k['id_kategori_task']) : ?>
-                              <input type="text" class="form-control mb-2" value="<?= $k['nama_kategori_task'] ?>" disabled>
+                              <input type="text" class="form-control mb-2" value="<?= $k['nama_kategori_task'] ?>" disabled style="background-color: <?= $k['color']; ?>;color:white">
                            <?php endif; ?>
                         <?php endforeach; ?>
                      <?php endforeach; ?>

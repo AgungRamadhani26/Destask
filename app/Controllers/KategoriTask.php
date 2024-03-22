@@ -44,6 +44,12 @@ class KategoriTask extends BaseController
                 'errors' => [
                     'required' => 'Deskripsi kategori task harus diisi'
                 ]
+            ],
+            'color_kategori_task' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Color kategori task harus dipilih'
+                ]
             ]
         ];
         $validasi->setRules($aturan);
@@ -52,10 +58,12 @@ class KategoriTask extends BaseController
             //Mengambil data dari ajax
             $nama_kategori_task = preg_replace('/\s+/', ' ', trim(strval($this->request->getPost('nama_kategori_task'))));
             $deskripsi_kategori_task = preg_replace('/\s+/', ' ', trim(strval($this->request->getPost('deskripsi_kategori_task'))));
+            $color_kategori_task = $this->request->getPost('color_kategori_task');
             //Proses memasukkan data ke database
             $data_kategori_task = [
                 'nama_kategori_task' => $nama_kategori_task,
-                'deskripsi_kategori_task' => $deskripsi_kategori_task
+                'deskripsi_kategori_task' => $deskripsi_kategori_task,
+                'color' => $color_kategori_task
             ];
             $this->kategoriTaskModel->save($data_kategori_task);
             Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil menambah data Kategori Task');
@@ -95,6 +103,12 @@ class KategoriTask extends BaseController
                 'errors' => [
                     'required' => 'Deskripsi kategori task harus diisi'
                 ]
+            ],
+            'color_kategori_task_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Color kategori task harus dipilih'
+                ]
             ]
         ];
         $validasi->setRules($aturan);
@@ -104,9 +118,10 @@ class KategoriTask extends BaseController
             $id_kategori_task = $this->request->getPost('id_kategori_task_e');
             $nama_kategori_task = preg_replace('/\s+/', ' ', trim(strval($this->request->getPost('nama_kategori_task_e'))));
             $deskripsi_kategori_task = preg_replace('/\s+/', ' ', trim(strval($this->request->getPost('deskripsi_kategori_task_e'))));
+            $color_kategori_task = $this->request->getPost('color_kategori_task_e');
             // Memeriksa apakah data baru sama dengan data yang sudah ada
             $existingData = $this->kategoriTaskModel->find($id_kategori_task);
-            if ($existingData['nama_kategori_task'] === $nama_kategori_task && $existingData['deskripsi_kategori_task'] === $deskripsi_kategori_task) {
+            if ($existingData['nama_kategori_task'] === $nama_kategori_task && $existingData['deskripsi_kategori_task'] === $deskripsi_kategori_task && $existingData['color'] === $color_kategori_task) {
                 session()->setFlashdata('info', 'Data kategori task tidak ada yang anda ubah');
                 return redirect()->withInput()->with('modal', 'modaledit_kategoritask')->back();
             } else {
@@ -114,7 +129,8 @@ class KategoriTask extends BaseController
                 $data_kategori_task = [
                     'id_kategori_task' => $id_kategori_task,
                     'nama_kategori_task' => $nama_kategori_task,
-                    'deskripsi_kategori_task' => $deskripsi_kategori_task
+                    'deskripsi_kategori_task' => $deskripsi_kategori_task,
+                    'color' => $color_kategori_task
                 ];
                 $this->kategoriTaskModel->save($data_kategori_task);
                 Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil mengedit data Kategori Task');

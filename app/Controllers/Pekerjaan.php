@@ -35,8 +35,13 @@ class Pekerjaan extends BaseController
     //Fungsi daftar_pekerjaan
     public function daftar_pekerjaan()
     {
+        if ((session()->get('user_level') == 'supervisi') || (session()->get('user_level') == 'staff')) {
+            $pekerjaan = $this->pekerjaanModel->getPekerjaanByUserId(session()->get('id_user'));
+        } else {
+            $pekerjaan = $this->pekerjaanModel->getPekerjaan();
+        }
         $data = [
-            'pekerjaan' => $this->pekerjaanModel->getPekerjaan(),
+            'pekerjaan' => $pekerjaan,
             'personil' => $this->personilModel->getPersonil(),
             'user' => $this->userModel->getUser(),
             'user_staff_supervisi' => $this->userModel->getUserExceptHodAdminDireksi(),
@@ -59,7 +64,11 @@ class Pekerjaan extends BaseController
         $filter_pekerjaan_jenislayanan = $this->request->getGet('filter_pekerjaan_jenislayanan');
         $filter_pekerjaan_kategori_pekerjaan = $this->request->getGet('filter_pekerjaan_kategori_pekerjaan');
         $filter_pekerjaan_status_pekerjaan = $this->request->getGet('filter_pekerjaan_status_pekerjaan');
-        $pekerjaan_filtered = $this->pekerjaanModel->getFilteredPekerjaan($filter_pekerjaan_kategori_pekerjaan, $filter_pekerjaan_status_pekerjaan, $filter_pekerjaan_jenislayanan, $filter_pekerjaan_pm);
+        if ((session()->get('user_level') == 'supervisi') || (session()->get('user_level') == 'staff')) {
+            $pekerjaan_filtered = $this->pekerjaanModel->getFilteredPekerjaanforSupervisiStaff($filter_pekerjaan_kategori_pekerjaan, $filter_pekerjaan_status_pekerjaan, $filter_pekerjaan_jenislayanan, $filter_pekerjaan_pm, session()->get('id_user'));
+        } else {
+            $pekerjaan_filtered = $this->pekerjaanModel->getFilteredPekerjaan($filter_pekerjaan_kategori_pekerjaan, $filter_pekerjaan_status_pekerjaan, $filter_pekerjaan_jenislayanan, $filter_pekerjaan_pm);
+        }
         $data = [
             'pekerjaan' => $pekerjaan_filtered,
             'personil' => $this->personilModel->getPersonil(),
@@ -312,7 +321,7 @@ class Pekerjaan extends BaseController
                 $this->personilModel->insertBatch($data_frontend_mobile);
             }
             Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil menambah data Pekerjaan');
-            return redirect()->to('/pekerjaan/daftar_pekerjaan');
+            return redirect()->to('/dashboard');
         } else {
             session()->setFlashdata('err_nama_pekerjaan', $validasi->getError('nama_pekerjaan'));
             session()->setFlashdata('err_pelanggan', $validasi->getError('pelanggan'));
@@ -324,7 +333,138 @@ class Pekerjaan extends BaseController
             session()->setFlashdata('err_deskripsi_pekerjaan', $validasi->getError('deskripsi_pekerjaan'));
             session()->setFlashdata('err_persentase_selesai', $validasi->getError('persentase_selesai'));
             session()->setFlashdata('err_project_manager', $validasi->getError('project_manager'));
+            Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Terdapat inputan yang kurang sesuai, periksa form tambah pekerjaan');
             return redirect()->to('/pekerjaan/add_pekerjaan')->withInput();
+        }
+    }
+
+    //Fungsi Untuk Mengedit Pekerjaan
+    public function edit_pekerjaan($id_pekerjaan)
+    {
+        $data = [
+            'status_pekerjaan' => $this->statusPekerjaanModel->getStatusPekerjaan(),
+            'kategori_pekerjaan' => $this->kategoriPekerjaanModel->getKategoriPekerjaan(),
+            'hari_libur' => $this->hariliburModel->getHariLibur(),
+            'url1' => '/dashboard',
+            'url' => '/dashboard',
+            'pekerjaan' => $this->pekerjaanModel->getPekerjaan($id_pekerjaan),
+        ];
+        return view('pekerjaan/edit_pekerjaan', $data);
+    }
+    public function update_pekerjaaan()
+    {
+        $validasi = \Config\Services::validation();
+        $pekerjaan_lama = $this->pekerjaanModel->getPekerjaan($this->request->getPost('id_pekerjaan_e'));
+        $aturan = [
+            'nama_pekerjaan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nama pekerjaan harus diisi',
+                ]
+            ],
+            'pelanggan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Pelanggan harus diisi',
+                ]
+            ],
+            'nominal_harga_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nominal harga harus diisi',
+                ]
+            ],
+            'jenis_layanan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Jenis layanan harus dipilih',
+                ]
+            ],
+            'status_pekerjaan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Status pekerjaan harus dipilih',
+                ]
+            ],
+            'kategori_pekerjaan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Kategori pekerjaan harus dipilih',
+                ]
+            ],
+            'target_waktu_selesai_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Target waktu selesai harus diisi',
+                ]
+            ],
+            'deskripsi_pekerjaan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Deskripsi pekerjaan harus diisi',
+                ]
+            ],
+            'persentase_selesai_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Persentase Selesai harus diisi',
+                ]
+            ]
+        ];
+        $validasi->setRules($aturan);
+        //Jika inputan valid
+        if ($validasi->withRequest($this->request)->run()) {
+            //Mengambil data untuk tabel pekerjaan
+            $id_pekerjaan = $this->request->getPost('id_pekerjaan_e');
+            $nama_pekerjaan = preg_replace('/\s+/', ' ', trim(strval($this->request->getPost('nama_pekerjaan_e'))));
+            $pelanggan = preg_replace('/\s+/', ' ', trim(strval($this->request->getPost('pelanggan_e'))));
+            //Menghapus tanda titik dari inputan karena make autonumeric
+            $nominal_harga = str_replace(['Rp ', '.'], '', $this->request->getPost('nominal_harga_e'));
+            $jenis_layanan = $this->request->getPost('jenis_layanan_e');
+            $status_pekerjaan = $this->request->getPost('status_pekerjaan_e');
+            $kategori_pekerjaan = $this->request->getPost('kategori_pekerjaan_e');
+            $target_waktu_selesai = $this->request->getPost('target_waktu_selesai_e');
+            $deskripsi_pekerjaan = preg_replace('/\s+/', ' ', trim(strval($this->request->getPost('deskripsi_pekerjaan_e'))));
+            $persentase_selesai = str_replace(' %', '', $this->request->getPost('persentase_selesai_e'));
+            // Memeriksa apakah data baru sama dengan data yang sudah ada
+            if (
+                $pekerjaan_lama['nama_pekerjaan'] === $nama_pekerjaan && $pekerjaan_lama['pelanggan'] === $pelanggan && $pekerjaan_lama['nominal_harga'] === $nominal_harga
+                && $pekerjaan_lama['jenis_layanan'] === $jenis_layanan && $pekerjaan_lama['id_status_pekerjaan'] === $status_pekerjaan && $pekerjaan_lama['id_kategori_pekerjaan']
+                === $kategori_pekerjaan && $pekerjaan_lama['target_waktu_selesai'] === $target_waktu_selesai && $pekerjaan_lama['deskripsi_pekerjaan'] === $deskripsi_pekerjaan
+                && $pekerjaan_lama['persentase_selesai'] === $persentase_selesai
+            ) {
+                Set_notifikasi_swal_berhasil('info', 'Uppsss :|', 'Tidak ada data yang anda ubah, kembali ke form edit data pekerjaan jika ingin mengubah data');
+                return redirect()->withInput()->back();
+            } else {
+                //Proses memasukkan data ke database
+                $data_pekerjaan = [
+                    'id_pekerjaan' => $id_pekerjaan,
+                    'id_status_pekerjaan' => $status_pekerjaan,
+                    'id_kategori_pekerjaan' => $kategori_pekerjaan,
+                    'nama_pekerjaan' => $nama_pekerjaan,
+                    'pelanggan' => $pelanggan,
+                    'jenis_layanan' => $jenis_layanan,
+                    'nominal_harga' => $nominal_harga,
+                    'deskripsi_pekerjaan' => $deskripsi_pekerjaan,
+                    'target_waktu_selesai' => $target_waktu_selesai,
+                    'persentase_selesai' => $persentase_selesai
+                ];
+                $this->pekerjaanModel->save($data_pekerjaan);
+                Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil mengedit data Pekerjaan');
+                return redirect()->to('/dashboard');
+            }
+        } else {
+            session()->setFlashdata('err_nama_pekerjaan_e', $validasi->getError('nama_pekerjaan_e'));
+            session()->setFlashdata('err_pelanggan_e', $validasi->getError('pelanggan_e'));
+            session()->setFlashdata('err_nominal_harga_e', $validasi->getError('nominal_harga_e'));
+            session()->setFlashdata('err_jenis_layanan_e', $validasi->getError('jenis_layanan_e'));
+            session()->setFlashdata('err_status_pekerjaan_e', $validasi->getError('status_pekerjaan_e'));
+            session()->setFlashdata('err_kategori_pekerjaan_e', $validasi->getError('kategori_pekerjaan_e'));
+            session()->setFlashdata('err_target_waktu_selesai_e', $validasi->getError('target_waktu_selesai_e'));
+            session()->setFlashdata('err_deskripsi_pekerjaan_e', $validasi->getError('deskripsi_pekerjaan_e'));
+            session()->setFlashdata('err_persentase_selesai_e', $validasi->getError('persentase_selesai_e'));
+            Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Terdapat inputan yang kurang sesuai, periksa form edit data pekerjaan');
+            return redirect()->withInput()->back();
         }
     }
 }

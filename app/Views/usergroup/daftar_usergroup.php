@@ -12,15 +12,16 @@
             <div class="card-body">
                <div class="table-responsive">
                   <h5 class="card-title">Daftar Usergroup&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                     <button type="button" class="btn btn-success" title="Klik untuk menambah data usergroup" data-bs-toggle="modal" data-bs-target="#modaltambah_usergroup">
+                     <!-- <button type="button" class="btn btn-success" title="Klik untuk menambah data usergroup" data-bs-toggle="modal" data-bs-target="#modaltambah_usergroup">
                         <i class="ri-add-fill"></i>
-                     </button>
+                     </button> -->
                   </h5>
                   <table class="table table-striped table-bordered" id="myTable">
                      <thead>
                         <tr>
                            <th>No</th>
                            <th>Nama Usergroup</th>
+                           <th>Deskripsi</th>
                            <th>Aksi</th>
                         </tr>
                      </thead>
@@ -30,6 +31,7 @@
                            <tr>
                               <td><?= $i++ ?></td>
                               <td><?= $u['nama_usergroup'] ?></td>
+                              <td><?= $u['deskripsi_usergroup'] ?></td>
                               <td>
                                  <div class="btn-group" role="group">
                                     <div>
@@ -38,11 +40,11 @@
                                     <div>
                                        <button type="button" class="btn btn-warning" title="Klik untuk mengedit" data-bs-toggle="modal" data-bs-target="#modaledit_usergroup" onclick="edit_usergroup(<?php echo $u['id_usergroup'] ?>)"><i class="ri-edit-2-line"></i></button>
                                     </div>
-                                    <form action="/usergroup/delete_usergroup/<?= $u['id_usergroup']; ?>" method="POST" class="d-inline">
+                                    <!-- <form action="/usergroup/delete_usergroup/<?= $u['id_usergroup'] ?>" method="POST" class="d-inline">
                                        <?= csrf_field(); ?>
                                        <input type="hidden" name="_method" value="DELETE">
                                        <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data Usergroup ?');"><i class="ri-delete-bin-5-line"></i></button>
-                                    </form>
+                                    </form> -->
                                  </div>
                               </td>
                            </tr>

@@ -24,6 +24,11 @@ class KategoriPekerjaan extends Migration
                 'type'       => 'TEXT',
                 'null'  => true,
             ],
+            'color' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 11,
+                'null'       => true
+            ],
             'created_at' => [
                 'type'  => 'DATETIME',
                 'null'  => true,
