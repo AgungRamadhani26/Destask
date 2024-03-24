@@ -27,7 +27,7 @@ class Personil extends Migration
             ],
             'role_personil' => [
                 'type'       => 'ENUM',
-                'constraint' => ['project_manager', 'desainer', 'backend_web', 'frontend_web', 'backend_mobile', 'frontend_mobile'],
+                'constraint' => ['project_manager', 'desainer', 'backend_web', 'frontend_web', 'backend_mobile', 'frontend_mobile', 'tester', 'admin', 'helpdesk'],
                 'null'       => true
             ],
             'created_at' => [

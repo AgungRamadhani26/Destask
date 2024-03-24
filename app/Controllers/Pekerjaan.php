@@ -105,13 +105,15 @@ class Pekerjaan extends BaseController
     public function add_pekerjaan()
     {
         $data = [
-            'status_pekerjaan' => $this->statusPekerjaanModel->getStatusPekerjaan(),
             'kategori_pekerjaan' => $this->kategoriPekerjaanModel->getKategoriPekerjaan(),
             'hari_libur' => $this->hariliburModel->getHariLibur(),
             'user' => $this->userModel->getUserExceptHodAdminDireksi(),
             'user_desainer' => $this->userModel->getUserByUserGroup(1),
             'user_web' => $this->userModel->getUserByUserGroup(2),
             'user_mobile' => $this->userModel->getUserByUserGroup(3),
+            'user_tester' => $this->userModel->getUserByUserGroup(4),
+            'user_admin' => $this->userModel->getUserByUserGroup(5),
+            'user_helpdesk' => $this->userModel->getUserByUserGroup(6),
             'url1' => '/dashboard',
             'url' => '/dashboard',
         ];
@@ -133,6 +135,34 @@ class Pekerjaan extends BaseController
                     'required' => 'Pelanggan harus diisi',
                 ]
             ],
+            'jenis_pelanggan' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Jenis pelanggan harus dipilih',
+                ]
+            ],
+            'nama_pic' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nama PIC harus diisi',
+                ]
+            ],
+            'email_pic' => [
+                'rules' => 'required|valid_email',
+                'errors' => [
+                    'required' => 'Email PIC harus diisi',
+                    'valid_email' => 'Format email PIC kurang tepat',
+                ]
+            ],
+            'nowa_pic' => [
+                'rules' => 'required|numeric|max_length[13]|min_length[10]',
+                'errors' => [
+                    'required' => 'No Wa PIC harus diisi',
+                    'numeric' => 'No Wa PIC harus berupa angka dan tidak boleh mengandung spasi',
+                    'max_length' => 'No Wa PIC maksimal 13 digit',
+                    'min_length' => 'No Wa PIC minimal 10 digit'
+                ]
+            ],
             'nominal_harga' => [
                 'rules' => 'required',
                 'errors' => [
@@ -143,12 +173,6 @@ class Pekerjaan extends BaseController
                 'rules' => 'required',
                 'errors' => [
                     'required' => 'Jenis layanan harus dipilih',
-                ]
-            ],
-            'status_pekerjaan' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Status pekerjaan harus dipilih',
                 ]
             ],
             'kategori_pekerjaan' => [
@@ -169,12 +193,6 @@ class Pekerjaan extends BaseController
                     'required' => 'Deskripsi pekerjaan harus diisi',
                 ]
             ],
-            'persentase_selesai' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Persentase Selesai harus diisi',
-                ]
-            ],
             'project_manager' => [
                 'rules' => 'required',
                 'errors' => [
@@ -188,25 +206,32 @@ class Pekerjaan extends BaseController
             //Mengambil data untuk tabel pekerjaan
             $nama_pekerjaan = preg_replace('/\s+/', ' ', trim(strval($this->request->getPost('nama_pekerjaan'))));
             $pelanggan = preg_replace('/\s+/', ' ', trim(strval($this->request->getPost('pelanggan'))));
-            //Menghapus tanda titik dari inputan karena make autonumeric
+            $jenis_pelanggan = $this->request->getPost('jenis_pelanggan');
+            $nama_pic = preg_replace('/\s+/', ' ', trim(strval($this->request->getPost('nama_pic'))));
+            $email_pic = $this->request->getPost('email_pic');
+            $nowa_pic = $this->request->getPost('nowa_pic');
+            //Menghapus tanda titik dari inputan karena make inputmask
             $nominal_harga = str_replace(['Rp ', '.'], '', $this->request->getPost('nominal_harga'));
             $jenis_layanan = $this->request->getPost('jenis_layanan');
-            $status_pekerjaan = $this->request->getPost('status_pekerjaan');
             $kategori_pekerjaan = $this->request->getPost('kategori_pekerjaan');
             $target_waktu_selesai = $this->request->getPost('target_waktu_selesai');
             $deskripsi_pekerjaan = preg_replace('/\s+/', ' ', trim(strval($this->request->getPost('deskripsi_pekerjaan'))));
-            $persentase_selesai = str_replace(' %', '', $this->request->getPost('persentase_selesai'));
             //Menyimpan data pekerjaan
             $data_pekerjaan = [
-                'id_status_pekerjaan' => $status_pekerjaan,
+                'id_status_pekerjaan' => 1,
                 'id_kategori_pekerjaan' => $kategori_pekerjaan,
                 'nama_pekerjaan' => $nama_pekerjaan,
                 'pelanggan' => $pelanggan,
+                'jenis_pelanggan' => $jenis_pelanggan,
+                'nama_pic' => $nama_pic,
+                'email_pic' => $email_pic,
+                'nowa_pic' => $nowa_pic,
                 'jenis_layanan' => $jenis_layanan,
                 'nominal_harga' => $nominal_harga,
                 'deskripsi_pekerjaan' => $deskripsi_pekerjaan,
                 'target_waktu_selesai' => $target_waktu_selesai,
-                'persentase_selesai' => $persentase_selesai
+                'persentase_selesai' => 0,
+                'waktu_selesai' => null
             ];
             $this->pekerjaanModel->save($data_pekerjaan);
             // Dapatkan ID pekerjaan yang baru saja dimasukkan ke database
@@ -320,18 +345,80 @@ class Pekerjaan extends BaseController
             if ($frontend_mobileFound) {
                 $this->personilModel->insertBatch($data_frontend_mobile);
             }
+            //Memasukkan data tester ke tabel personil
+            $data_tester = [];
+            $tester_columns = ['tester_1', 'tester_2', 'tester_3', 'tester_4', 'tester_5'];
+            $testerFound = false;
+            foreach ($tester_columns as $tc) {
+                $tester = $this->request->getPost($tc);
+                if (!empty($tester)) {
+                    $data_tester[] = [
+                        'id_pekerjaan' => $id_pekerjaan,
+                        'id_user' => $tester,
+                        'role_personil' => 'tester',
+                        'created_at' => Time::now(),
+                        'updated_at' => Time::now()
+                    ];
+                    $testerFound = true;
+                }
+            }
+            if ($testerFound) {
+                $this->personilModel->insertBatch($data_tester);
+            }
+            //Memasukkan data admin ke tabel personil
+            $data_admin = [];
+            $admin_columns = ['admin_1', 'admin_2', 'admin_3', 'admin_4', 'admin_5'];
+            $adminFound = false;
+            foreach ($admin_columns as $ac) {
+                $admin = $this->request->getPost($ac);
+                if (!empty($admin)) {
+                    $data_admin[] = [
+                        'id_pekerjaan' => $id_pekerjaan,
+                        'id_user' => $admin,
+                        'role_personil' => 'admin',
+                        'created_at' => Time::now(),
+                        'updated_at' => Time::now()
+                    ];
+                    $adminFound = true;
+                }
+            }
+            if ($adminFound) {
+                $this->personilModel->insertBatch($data_admin);
+            }
+            //Memasukkan data helpdesk ke tabel personil
+            $data_helpdesk = [];
+            $helpdesk_columns = ['helpdesk_1', 'helpdesk_2', 'helpdesk_3', 'helpdesk_4', 'helpdesk_5'];
+            $helpdeskFound = false;
+            foreach ($helpdesk_columns as $hc) {
+                $helpdesk = $this->request->getPost($hc);
+                if (!empty($helpdesk)) {
+                    $data_helpdesk[] = [
+                        'id_pekerjaan' => $id_pekerjaan,
+                        'id_user' => $helpdesk,
+                        'role_personil' => 'helpdesk',
+                        'created_at' => Time::now(),
+                        'updated_at' => Time::now()
+                    ];
+                    $helpdeskFound = true;
+                }
+            }
+            if ($helpdeskFound) {
+                $this->personilModel->insertBatch($data_helpdesk);
+            }
             Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil menambah data Pekerjaan');
             return redirect()->to('/dashboard');
         } else {
             session()->setFlashdata('err_nama_pekerjaan', $validasi->getError('nama_pekerjaan'));
             session()->setFlashdata('err_pelanggan', $validasi->getError('pelanggan'));
+            session()->setFlashdata('err_jenis_pelanggan', $validasi->getError('jenis_pelanggan'));
+            session()->setFlashdata('err_nama_pic', $validasi->getError('nama_pic'));
+            session()->setFlashdata('err_email_pic', $validasi->getError('email_pic'));
+            session()->setFlashdata('err_nowa_pic', $validasi->getError('nowa_pic'));
             session()->setFlashdata('err_nominal_harga', $validasi->getError('nominal_harga'));
             session()->setFlashdata('err_jenis_layanan', $validasi->getError('jenis_layanan'));
-            session()->setFlashdata('err_status_pekerjaan', $validasi->getError('status_pekerjaan'));
             session()->setFlashdata('err_kategori_pekerjaan', $validasi->getError('kategori_pekerjaan'));
             session()->setFlashdata('err_target_waktu_selesai', $validasi->getError('target_waktu_selesai'));
             session()->setFlashdata('err_deskripsi_pekerjaan', $validasi->getError('deskripsi_pekerjaan'));
-            session()->setFlashdata('err_persentase_selesai', $validasi->getError('persentase_selesai'));
             session()->setFlashdata('err_project_manager', $validasi->getError('project_manager'));
             Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Terdapat inputan yang kurang sesuai, periksa form tambah pekerjaan');
             return redirect()->to('/pekerjaan/add_pekerjaan')->withInput();
@@ -403,12 +490,6 @@ class Pekerjaan extends BaseController
                 'errors' => [
                     'required' => 'Deskripsi pekerjaan harus diisi',
                 ]
-            ],
-            'persentase_selesai_e' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Persentase Selesai harus diisi',
-                ]
             ]
         ];
         $validasi->setRules($aturan);
@@ -425,13 +506,11 @@ class Pekerjaan extends BaseController
             $kategori_pekerjaan = $this->request->getPost('kategori_pekerjaan_e');
             $target_waktu_selesai = $this->request->getPost('target_waktu_selesai_e');
             $deskripsi_pekerjaan = preg_replace('/\s+/', ' ', trim(strval($this->request->getPost('deskripsi_pekerjaan_e'))));
-            $persentase_selesai = str_replace(' %', '', $this->request->getPost('persentase_selesai_e'));
             // Memeriksa apakah data baru sama dengan data yang sudah ada
             if (
                 $pekerjaan_lama['nama_pekerjaan'] === $nama_pekerjaan && $pekerjaan_lama['pelanggan'] === $pelanggan && $pekerjaan_lama['nominal_harga'] === $nominal_harga
                 && $pekerjaan_lama['jenis_layanan'] === $jenis_layanan && $pekerjaan_lama['id_status_pekerjaan'] === $status_pekerjaan && $pekerjaan_lama['id_kategori_pekerjaan']
                 === $kategori_pekerjaan && $pekerjaan_lama['target_waktu_selesai'] === $target_waktu_selesai && $pekerjaan_lama['deskripsi_pekerjaan'] === $deskripsi_pekerjaan
-                && $pekerjaan_lama['persentase_selesai'] === $persentase_selesai
             ) {
                 Set_notifikasi_swal_berhasil('info', 'Uppsss :|', 'Tidak ada data yang anda ubah, kembali ke form edit data pekerjaan jika ingin mengubah data');
                 return redirect()->withInput()->back();
@@ -447,7 +526,6 @@ class Pekerjaan extends BaseController
                     'nominal_harga' => $nominal_harga,
                     'deskripsi_pekerjaan' => $deskripsi_pekerjaan,
                     'target_waktu_selesai' => $target_waktu_selesai,
-                    'persentase_selesai' => $persentase_selesai
                 ];
                 $this->pekerjaanModel->save($data_pekerjaan);
                 Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil mengedit data Pekerjaan');
@@ -462,7 +540,6 @@ class Pekerjaan extends BaseController
             session()->setFlashdata('err_kategori_pekerjaan_e', $validasi->getError('kategori_pekerjaan_e'));
             session()->setFlashdata('err_target_waktu_selesai_e', $validasi->getError('target_waktu_selesai_e'));
             session()->setFlashdata('err_deskripsi_pekerjaan_e', $validasi->getError('deskripsi_pekerjaan_e'));
-            session()->setFlashdata('err_persentase_selesai_e', $validasi->getError('persentase_selesai_e'));
             Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Terdapat inputan yang kurang sesuai, periksa form edit data pekerjaan');
             return redirect()->withInput()->back();
         }

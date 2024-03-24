@@ -81,26 +81,28 @@
   flex: 1;
   background-color: #ffffff;
   border: 1px solid #dee2e6;
-  border-radius: 5px;
+  border-radius: 0 0 5px 5px; /* Radius sudut hanya di bagian bawah */
   padding-left: 15px;
   padding-bottom: 15px;
+  padding-top:15px;
   padding-right: 15px;
-  margin-right: 20px;
+  
   overflow-y: auto;
   max-height: 600px;
 }
 
 .kanban-column-header {
-  border-bottom: 1px solid #dee2e6;
-  position: sticky;
-  top: 0;
-  left: 0;
+  flex: 1;
   background-color: #ffffff;
-  border-bottom: 1px solid #dee2e6;
-  padding-bottom: 10px;
-  padding-top: 15px; /* Atur padding top sesuai keinginan */
-  margin-bottom: 20px;
-  z-index: 99;
+  color: white;
+  border: 1px solid #dee2e6;
+  border-radius: 5px 5px 0 0; /* Radius sudut hanya di bagian atas */
+  padding-left: 15px;
+  padding-bottom: 15px;
+  padding-top:15px;
+  padding-right: 15px;
+  overflow-y: auto;
+  max-height: 600px;
 }
 
 .kanban-card {

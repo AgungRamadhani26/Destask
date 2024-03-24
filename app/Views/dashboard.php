@@ -108,7 +108,6 @@
                                     <input type="text" class="form-control form-control-sm" id="searchInput" placeholder="Search...">
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -116,235 +115,258 @@
         </div>
     </div>
 
-
-    <div class="row mb-5 ms-1">
+    <div class="row mb-5">
         <div class="col-12">
-            <div class="row mb-3">
-                <div class="col-4 kanban-column">
-                    <div class="kanban-column-header">
-                        <h5 style="font-weight: bold;">Pending</h5>
+            <div class="row mb-4">
+                <div class="col-4">
+                    <div class="kanban-column-header" style="background-color: <?= $status_pekerjaan_presales['color'] ?>;">
+                        <h5 style="font-weight: bold;">Presales</h5>
                     </div>
-                    <div class="kanban-droppable" id="todo">
-                        <?php foreach ($pekerjaan_pending as $pp) : ?>
-                            <div class="kanban-card">
-                                <a href="" class="badge bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
-                                <a href="" class="badge bg-primary" title="Lihat daftar task dan verifikasi task"><i class="bi bi-clipboard-data"></i></a>
-                                <a href="/pekerjaan/edit_pekerjaan/<?= $pp['id_pekerjaan'] ?>" class="badge bg-warning" title="Klik untuk mengedit data pekerjaan"><i class="bi bi-pencil"></i></a>
-                                <a href="/pekerjaan/edit_personil_pekerjaan/<?= $pp['id_pekerjaan'] ?>" class="badge bg-warning bg-opacity-75" title="Klik untuk mengedit data personil"><i class="bi bi-person-fill-gear"></i></a>
-                                <a href="" class="badge bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?');"><i class="ri-delete-bin-5-line"></i></a>
-                                <br>
-                                <br>
-                                <?= $pp['nama_pekerjaan'] ?>
-                                <br>
-                                <span class="badge bg-success"><?= $pp['jenis_layanan'] ?></span>
-                                <br>
-                                <br>
-                                <i class="bi bi-person-fill">
-                                    <?php
-                                    foreach ($personil as $per) {
-                                        if ($pp['id_pekerjaan'] == $per['id_pekerjaan'] && $per['role_personil'] == 'project_manager') {
-                                            foreach ($user as $usr) {
-                                                if ($per['id_user'] == $usr['id_user']) {
-                                                    echo $usr['nama'];
-                                                    break; // Keluar dari loop setelah menemukan nilai yang cocok
+                    <div class="kanban-column">
+                        <div class="kanban-droppable" id="todo">
+                            <?php foreach ($pekerjaan_presales as $pp) : ?>
+                                <div class="kanban-card">
+                                    <a href="" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
+                                    <a href="" class="badge btn bg-primary" title="Lihat daftar task dan verifikasi task"><i class="bi bi-clipboard-data"></i></a>
+                                    <a href="/pekerjaan/edit_pekerjaan/<?= $pp['id_pekerjaan'] ?>" class="badge btn bg-warning" title="Klik untuk mengedit data pekerjaan"><i class="bi bi-pencil"></i></a>
+                                    <a href="/pekerjaan/edit_personil_pekerjaan/<?= $pp['id_pekerjaan'] ?>" class="badge btn bg-warning bg-opacity-75" title="Klik untuk mengedit data personil"><i class="bi bi-person-fill-gear"></i></a>
+                                    <a href="" class="badge btn bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?');"><i class="ri-delete-bin-5-line"></i></a>
+                                    <a href="" class="badge btn bg-warning" title="Klik untuk mengubah status pekerjaan ini"><i class="bi bi-pencil-square"></i></a>
+                                    <br>
+                                    <br>
+                                    <?= $pp['nama_pekerjaan'] ?>
+                                    <br>
+                                    <span class="badge bg-primary"><?= $pp['jenis_layanan'] ?></span>
+                                    <br>
+                                    <br>
+                                    <i class="bi bi-person-fill">
+                                        <?php
+                                        foreach ($personil as $per) {
+                                            if ($pp['id_pekerjaan'] == $per['id_pekerjaan'] && $per['role_personil'] == 'project_manager') {
+                                                foreach ($user as $usr) {
+                                                    if ($per['id_user'] == $usr['id_user']) {
+                                                        echo $usr['nama'] . ' (PM)';
+                                                        break; // Keluar dari loop setelah menemukan nilai yang cocok
+                                                    }
                                                 }
                                             }
                                         }
+                                        ?>
+                                    </i>
+                                    <br>
+                                    <i class="bi bi-person-fill"> <?= $pp['nama_pic'] . ' (PIC)' ?></i>
+                                    <?php
+                                    $nomor_telepon1 = $pp['nowa_pic']; // nomor telepon dengan awalan 0
+                                    if (substr($nomor_telepon1, 0, 1) == '0') {
+                                        $nomor_telepon = '+62' . substr($nomor_telepon1, 1);
                                     }
                                     ?>
-                                </i>
-                            </div>
-                        <?php endforeach; ?>
+                                    <a href="https://wa.me/<?= $nomor_telepon ?>" target="_blank" class="badge btn bg-success" title="Hubungi PIC"><i class="bi bi-telephone"></i></a>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
                     </div>
                 </div>
-                <div class="col-4 kanban-column">
-                    <div class="kanban-column-header">
-                        <h5 style="font-weight: bold;">Cancle</h5>
+                <div class="col-4">
+                    <div class="kanban-column-header" style="background-color: <?= $status_pekerjaan_onprogres['color'] ?>;">
+                        <h5 style="font-weight: bold;">On Progres</h5>
                     </div>
-                    <div class="kanban-droppable" id="todo">
-                        <?php foreach ($pekerjaan_cancle as $pc) : ?>
-                            <div class="kanban-card">
-                                <a href="" class="badge bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
-                                <a href="" class="badge bg-primary" title="Lihat daftar task dan verifikasi task"><i class="bi bi-clipboard-data"></i></a>
-                                <a href="/pekerjaan/edit_pekerjaan/<?= $pc['id_pekerjaan'] ?>" class="badge bg-warning" title="Klik untuk mengedit data pekerjaan"><i class="bi bi-pencil"></i></a>
-                                <a href="" class="badge bg-warning bg-opacity-75" title="Klik untuk mengedit data personil"><i class="bi bi-person-fill-gear"></i></a>
-                                <a href="" class="badge bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?');"><i class="ri-delete-bin-5-line"></i></a>
-                                <br>
-                                <br>
-                                <?= $pc['nama_pekerjaan'] ?>
-                                <br>
-                                <span class="badge bg-success"><?= $pc['jenis_layanan'] ?></span>
-                                <br>
-                                <br>
-                                <i class="bi bi-person-fill">
-                                    <?php
-                                    foreach ($personil as $per) {
-                                        if ($pc['id_pekerjaan'] == $per['id_pekerjaan'] && $per['role_personil'] == 'project_manager') {
-                                            foreach ($user as $usr) {
-                                                if ($per['id_user'] == $usr['id_user']) {
-                                                    echo $usr['nama'];
-                                                    break; // Keluar dari loop setelah menemukan nilai yang cocok
+                    <div class="kanban-column">
+                        <div class="kanban-droppable" id="todo">
+                            <?php foreach ($pekerjaan_onprogres as $po) : ?>
+                                <div class="kanban-card">
+                                    <a href="" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
+                                    <a href="" class="badge btn bg-primary" title="Lihat daftar task dan verifikasi task"><i class="bi bi-clipboard-data"></i></a>
+                                    <a href="/pekerjaan/edit_pekerjaan/<?= $po['id_pekerjaan'] ?>" class="badge btn bg-warning" title="Klik untuk mengedit data pekerjaan"><i class="bi bi-pencil"></i></a>
+                                    <a href="" class="badge btn bg-warning bg-opacity-75" title="Klik untuk mengedit data personil"><i class="bi bi-person-fill-gear"></i></a>
+                                    <a href="" class="badge btn bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?');"><i class="ri-delete-bin-5-line"></i></a>
+                                    <a href="" class="badge btn bg-warning" title="Klik untuk mengubah status pekerjaan ini"><i class="bi bi-pencil-square"></i></a>
+                                    <br>
+                                    <br>
+                                    <?= $po['nama_pekerjaan'] ?>
+                                    <br>
+                                    <span class="badge bg-primary"><?= $po['jenis_layanan'] ?></span>
+                                    <br>
+                                    <br>
+                                    <i class="bi bi-person-fill">
+                                        <?php
+                                        foreach ($personil as $per) {
+                                            if ($po['id_pekerjaan'] == $per['id_pekerjaan'] && $per['role_personil'] == 'project_manager') {
+                                                foreach ($user as $usr) {
+                                                    if ($per['id_user'] == $usr['id_user']) {
+                                                        echo $usr['nama'] . ' (PM)';
+                                                        break; // Keluar dari loop setelah menemukan nilai yang cocok
+                                                    }
                                                 }
                                             }
                                         }
+                                        ?>
+                                    </i>
+                                    <br>
+                                    <i class="bi bi-person-fill"> <?= $po['nama_pic'] . ' (PIC)' ?></i>
+                                    <?php
+                                    $nomor_telepon2 = $po['nowa_pic']; // nomor telepon dengan awalan 0
+                                    if (substr($nomor_telepon2, 0, 1) == '0') {
+                                        $nomor_teleponpo = '+62' . substr($nomor_telepon2, 1);
                                     }
                                     ?>
-                                </i>
-                            </div>
-                        <?php endforeach; ?>
+                                    <a href="https://wa.me/<?= $nomor_teleponpo ?>" target="_blank" class="badge btn bg-success" title="Hubungi PIC"><i class="bi bi-telephone"></i></a>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
                     </div>
                 </div>
-                <div class="col-4 kanban-column">
-                    <div class="kanban-column-header">
+                <div class="col-4">
+                    <div class="kanban-column-header" style="background-color: <?= $status_pekerjaan_bast['color'] ?>;">
                         <h5 style="font-weight: bold;">Bast</h5>
                     </div>
-                    <div class="kanban-droppable" id="todo">
-                        <?php foreach ($pekerjaan_bast as $pb) : ?>
-                            <div class="kanban-card">
-                                <a href="" class="badge bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
-                                <a href="" class="badge bg-primary" title="Lihat daftar task dan verifikasi task"><i class="bi bi-clipboard-data"></i></a>
-                                <a href="/pekerjaan/edit_pekerjaan/<?= $pb['id_pekerjaan'] ?>" class="badge bg-warning" title="Klik untuk mengedit data pekerjaan"><i class="bi bi-pencil"></i></a>
-                                <a href="" class="badge bg-warning bg-opacity-75" title="Klik untuk mengedit data personil"><i class="bi bi-person-fill-gear"></i></a>
-                                <a href="" class="badge bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?');"><i class="ri-delete-bin-5-line"></i></a>
-                                <br>
-                                <br>
-                                <?= $pb['nama_pekerjaan'] ?>
-                                <br>
-                                <span class="badge bg-success"><?= $pb['jenis_layanan'] ?></span>
-                                <br>
-                                <br>
-                                <i class="bi bi-person-fill">
-                                    <?php
-                                    foreach ($personil as $per) {
-                                        if ($pb['id_pekerjaan'] == $per['id_pekerjaan'] && $per['role_personil'] == 'project_manager') {
-                                            foreach ($user as $usr) {
-                                                if ($per['id_user'] == $usr['id_user']) {
-                                                    echo $usr['nama'];
-                                                    break; // Keluar dari loop setelah menemukan nilai yang cocok
+                    <div class="kanban-column">
+                        <div class="kanban-droppable" id="todo">
+                            <?php foreach ($pekerjaan_bast as $pb) : ?>
+                                <div class="kanban-card">
+                                    <a href="" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
+                                    <a href="" class="badge btn bg-primary" title="Lihat daftar task dan verifikasi task"><i class="bi bi-clipboard-data"></i></a>
+                                    <a href="/pekerjaan/edit_pekerjaan/<?= $pb['id_pekerjaan'] ?>" class="badge btn bg-warning" title="Klik untuk mengedit data pekerjaan"><i class="bi bi-pencil"></i></a>
+                                    <a href="" class="badge btn bg-warning bg-opacity-75" title="Klik untuk mengedit data personil"><i class="bi bi-person-fill-gear"></i></a>
+                                    <a href="" class="badge btn bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?');"><i class="ri-delete-bin-5-line"></i></a>
+                                    <a href="" class="badge btn bg-warning" title="Klik untuk mengubah status pekerjaan ini"><i class="bi bi-pencil-square"></i></a>
+                                    <br>
+                                    <br>
+                                    <?= $pb['nama_pekerjaan'] ?>
+                                    <br>
+                                    <span class="badge bg-primary"><?= $pb['jenis_layanan'] ?></span>
+                                    <br>
+                                    <br>
+                                    <i class="bi bi-person-fill">
+                                        <?php
+                                        foreach ($personil as $per) {
+                                            if ($pb['id_pekerjaan'] == $per['id_pekerjaan'] && $per['role_personil'] == 'project_manager') {
+                                                foreach ($user as $usr) {
+                                                    if ($per['id_user'] == $usr['id_user']) {
+                                                        echo $usr['nama'] . ' (PM)';
+                                                        break; // Keluar dari loop setelah menemukan nilai yang cocok
+                                                    }
                                                 }
                                             }
                                         }
+                                        ?>
+                                    </i>
+                                    <br>
+                                    <i class="bi bi-person-fill"> <?= $pb['nama_pic'] . ' (PIC)' ?></i>
+                                    <?php
+                                    $nomor_telepon3 = $pb['nowa_pic']; // nomor telepon dengan awalan 0
+                                    if (substr($nomor_telepon3, 0, 1) == '0') {
+                                        $nomor_teleponpb = '+62' . substr($nomor_telepon3, 1);
                                     }
                                     ?>
-                                </i>
-                            </div>
-                        <?php endforeach; ?>
+                                    <a href="https://wa.me/<?= $nomor_teleponpb ?>" target="_blank" class="badge btn bg-success" title="Hubungi PIC"><i class="bi bi-telephone"></i></a>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
                     </div>
                 </div>
             </div>
             <!-- Penambahan baris baru -->
             <div class="row">
-                <div class="col-4 kanban-column">
-                    <div class="kanban-column-header">
+                <div class="col-4">
+                    <div class="kanban-column-header" style="background-color: <?= $status_pekerjaan_support['color'] ?>;">
                         <h5 style="font-weight: bold;">Support</h5>
                     </div>
-                    <div class="kanban-droppable" id="todo">
-                        <?php foreach ($pekerjaan_support as $psp) : ?>
-                            <div class="kanban-card">
-                                <a href="" class="badge bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
-                                <a href="" class="badge bg-primary" title="Lihat daftar task dan verifikasi task"><i class="bi bi-clipboard-data"></i></a>
-                                <a href="/pekerjaan/edit_pekerjaan/<?= $psp['id_pekerjaan'] ?>" class="badge bg-warning" title="Klik untuk mengedit data pekerjaan"><i class="bi bi-pencil"></i></a>
-                                <a href="" class="badge bg-warning bg-opacity-75" title="Klik untuk mengedit data personil"><i class="bi bi-person-fill-gear"></i></a>
-                                <a href="" class="badge bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?');"><i class="ri-delete-bin-5-line"></i></a>
-                                <br>
-                                <br>
-                                <?= $psp['nama_pekerjaan'] ?>
-                                <br>
-                                <span class="badge bg-success"><?= $psp['jenis_layanan'] ?></span>
-                                <br>
-                                <br>
-                                <i class="bi bi-person-fill">
-                                    <?php
-                                    foreach ($personil as $per) {
-                                        if ($psp['id_pekerjaan'] == $per['id_pekerjaan'] && $per['role_personil'] == 'project_manager') {
-                                            foreach ($user as $usr) {
-                                                if ($per['id_user'] == $usr['id_user']) {
-                                                    echo $usr['nama'];
-                                                    break; // Keluar dari loop setelah menemukan nilai yang cocok
+                    <div class="kanban-column">
+                        <div class="kanban-droppable" id="todo">
+                            <?php foreach ($pekerjaan_support as $psp) : ?>
+                                <div class="kanban-card">
+                                    <a href="" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
+                                    <a href="" class="badge btn bg-primary" title="Lihat daftar task dan verifikasi task"><i class="bi bi-clipboard-data"></i></a>
+                                    <a href="/pekerjaan/edit_pekerjaan/<?= $psp['id_pekerjaan'] ?>" class="badge btn bg-warning" title="Klik untuk mengedit data pekerjaan"><i class="bi bi-pencil"></i></a>
+                                    <a href="" class="badge btn bg-warning bg-opacity-75" title="Klik untuk mengedit data personil"><i class="bi bi-person-fill-gear"></i></a>
+                                    <a href="" class="badge btn bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?');"><i class="ri-delete-bin-5-line"></i></a>
+                                    <a href="" class="badge btn bg-warning" title="Klik untuk mengubah status pekerjaan ini"><i class="bi bi-pencil-square"></i></a>
+                                    <br>
+                                    <br>
+                                    <?= $psp['nama_pekerjaan'] ?>
+                                    <br>
+                                    <span class="badge bg-primary"><?= $psp['jenis_layanan'] ?></span>
+                                    <br>
+                                    <br>
+                                    <i class="bi bi-person-fill">
+                                        <?php
+                                        foreach ($personil as $per) {
+                                            if ($psp['id_pekerjaan'] == $per['id_pekerjaan'] && $per['role_personil'] == 'project_manager') {
+                                                foreach ($user as $usr) {
+                                                    if ($per['id_user'] == $usr['id_user']) {
+                                                        echo $usr['nama'] . ' (PM)';
+                                                        break; // Keluar dari loop setelah menemukan nilai yang cocok
+                                                    }
                                                 }
                                             }
                                         }
+                                        ?>
+                                    </i>
+                                    <br>
+                                    <i class="bi bi-person-fill"> <?= $psp['nama_pic'] . ' (PIC)' ?></i>
+                                    <?php
+                                    $nomor_telepon4 = $psp['nowa_pic']; // nomor telepon dengan awalan 0
+                                    if (substr($nomor_telepon4, 0, 1) == '0') {
+                                        $nomor_teleponpsp = '+62' . substr($nomor_telepon4, 1);
                                     }
                                     ?>
-                                </i>
-                            </div>
-                        <?php endforeach; ?>
+                                    <a href="https://wa.me/<?= $nomor_teleponpsp ?>" target="_blank" class="badge btn bg-success" title="Hubungi PIC"><i class="bi bi-telephone"></i></a>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
                     </div>
                 </div>
-                <div class="col-4 kanban-column">
-                    <div class="kanban-column-header">
-                        <h5 style="font-weight: bold;">On Progres</h5>
+                <div class="col-4">
+                    <div class="kanban-column-header" style="background-color: <?= $status_pekerjaan_cancle['color'] ?>;">
+                        <h5 style="font-weight: bold;">Cancle</h5>
                     </div>
-                    <div class="kanban-droppable" id="todo">
-                        <?php foreach ($pekerjaan_onprogres as $po) : ?>
-                            <div class="kanban-card">
-                                <a href="" class="badge bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
-                                <a href="" class="badge bg-primary" title="Lihat daftar task dan verifikasi task"><i class="bi bi-clipboard-data"></i></a>
-                                <a href="/pekerjaan/edit_pekerjaan/<?= $po['id_pekerjaan'] ?>" class="badge bg-warning" title="Klik untuk mengedit data pekerjaan"><i class="bi bi-pencil"></i></a>
-                                <a href="" class="badge bg-warning bg-opacity-75" title="Klik untuk mengedit data personil"><i class="bi bi-person-fill-gear"></i></a>
-                                <a href="" class="badge bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?');"><i class="ri-delete-bin-5-line"></i></a>
-                                <br>
-                                <br>
-                                <?= $po['nama_pekerjaan'] ?>
-                                <br>
-                                <span class="badge bg-success"><?= $po['jenis_layanan'] ?></span>
-                                <br>
-                                <br>
-                                <i class="bi bi-person-fill">
-                                    <?php
-                                    foreach ($personil as $per) {
-                                        if ($po['id_pekerjaan'] == $per['id_pekerjaan'] && $per['role_personil'] == 'project_manager') {
-                                            foreach ($user as $usr) {
-                                                if ($per['id_user'] == $usr['id_user']) {
-                                                    echo $usr['nama'];
-                                                    break; // Keluar dari loop setelah menemukan nilai yang cocok
+                    <div class="kanban-column">
+                        <div class="kanban-droppable" id="todo">
+                            <?php foreach ($pekerjaan_cancle as $pc) : ?>
+                                <div class="kanban-card">
+                                    <a href="" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
+                                    <a href="" class="badge btn bg-primary" title="Lihat daftar task dan verifikasi task"><i class="bi bi-clipboard-data"></i></a>
+                                    <a href="/pekerjaan/edit_pekerjaan/<?= $pc['id_pekerjaan'] ?>" class="badge btn bg-warning" title="Klik untuk mengedit data pekerjaan"><i class="bi bi-pencil"></i></a>
+                                    <a href="" class="badge btn bg-warning bg-opacity-75" title="Klik untuk mengedit data personil"><i class="bi bi-person-fill-gear"></i></a>
+                                    <a href="" class="badge btn bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?');"><i class="ri-delete-bin-5-line"></i></a>
+                                    <a href="" class="badge btn bg-warning" title="Klik untuk mengubah status pekerjaan ini"><i class="bi bi-pencil-square"></i></a>
+                                    <br>
+                                    <br>
+                                    <?= $pc['nama_pekerjaan'] ?>
+                                    <br>
+                                    <span class="badge bg-primary"><?= $pc['jenis_layanan'] ?></span>
+                                    <br>
+                                    <br>
+                                    <i class="bi bi-person-fill">
+                                        <?php
+                                        foreach ($personil as $per) {
+                                            if ($pc['id_pekerjaan'] == $per['id_pekerjaan'] && $per['role_personil'] == 'project_manager') {
+                                                foreach ($user as $usr) {
+                                                    if ($per['id_user'] == $usr['id_user']) {
+                                                        echo $usr['nama'] . ' (PM)';
+                                                        break; // Keluar dari loop setelah menemukan nilai yang cocok
+                                                    }
                                                 }
                                             }
                                         }
-                                    }
-                                    ?>
-                                </i>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-                <div class="col-4 kanban-column">
-                    <div class="kanban-column-header">
-                        <h5 style="font-weight: bold;">Selesai</h5>
-                    </div>
-                    <div class="kanban-droppable" id="todo">
-                        <?php foreach ($pekerjaan_selesai as $ps) : ?>
-                            <div class="kanban-card">
-                                <a href="" class="badge bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
-                                <a href="" class="badge bg-primary" title="Lihat daftar task dan verifikasi task"><i class="bi bi-clipboard-data"></i></a>
-                                <a href="/pekerjaan/edit_pekerjaan/<?= $ps['id_pekerjaan'] ?>" class="badge bg-warning" title="Klik untuk mengedit data pekerjaan"><i class="bi bi-pencil"></i></a>
-                                <a href="" class="badge bg-warning bg-opacity-75" title="Klik untuk mengedit data personil"><i class="bi bi-person-fill-gear"></i></a>
-                                <a href="" class="badge bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?');"><i class="ri-delete-bin-5-line"></i></a>
-                                <br>
-                                <br>
-                                <?= $ps['nama_pekerjaan'] ?>
-                                <br>
-                                <span class="badge bg-success"><?= $ps['jenis_layanan'] ?></span>
-                                <br>
-                                <br>
-                                <i class="bi bi-person-fill">
+                                        ?>
+                                    </i>
+                                    <br>
+                                    <i class="bi bi-person-fill"> <?= $pc['nama_pic'] . ' (PIC)' ?></i>
                                     <?php
-                                    foreach ($personil as $per) {
-                                        if ($ps['id_pekerjaan'] == $per['id_pekerjaan'] && $per['role_personil'] == 'project_manager') {
-                                            foreach ($user as $usr) {
-                                                if ($per['id_user'] == $usr['id_user']) {
-                                                    echo $usr['nama'];
-                                                    break; // Keluar dari loop setelah menemukan nilai yang cocok
-                                                }
-                                            }
-                                        }
+                                    $nomor_telepon5 = $pc['nowa_pic']; // nomor telepon dengan awalan 0
+                                    if (substr($nomor_telepon5, 0, 1) == '0') {
+                                        $nomor_teleponpc = '+62' . substr($nomor_telepon5, 1);
                                     }
                                     ?>
-                                </i>
-                            </div>
-                        <?php endforeach; ?>
+                                    <a href="https://wa.me/<?= $nomor_teleponpc ?>" target="_blank" class="badge btn bg-success" title="Hubungi PIC"><i class="bi bi-telephone"></i></a>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
                     </div>
                 </div>
+                <div class="col-4"></div>
             </div>
         </div>
     </div>
