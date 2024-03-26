@@ -455,6 +455,34 @@ class Pekerjaan extends BaseController
                     'required' => 'Pelanggan harus diisi',
                 ]
             ],
+            'jenis_pelanggan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Jenis pelanggan harus dipilih',
+                ]
+            ],
+            'nama_pic_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nama PIC harus diisi',
+                ]
+            ],
+            'email_pic_e' => [
+                'rules' => 'required|valid_email',
+                'errors' => [
+                    'required' => 'Email PIC harus diisi',
+                    'valid_email' => 'Format email PIC kurang tepat',
+                ]
+            ],
+            'nowa_pic_e' => [
+                'rules' => 'required|numeric|max_length[13]|min_length[10]',
+                'errors' => [
+                    'required' => 'No Wa PIC harus diisi',
+                    'numeric' => 'No Wa PIC harus berupa angka dan tidak boleh mengandung spasi',
+                    'max_length' => 'No Wa PIC maksimal 13 digit',
+                    'min_length' => 'No Wa PIC minimal 10 digit'
+                ]
+            ],
             'nominal_harga_e' => [
                 'rules' => 'required',
                 'errors' => [
@@ -499,7 +527,11 @@ class Pekerjaan extends BaseController
             $id_pekerjaan = $this->request->getPost('id_pekerjaan_e');
             $nama_pekerjaan = preg_replace('/\s+/', ' ', trim(strval($this->request->getPost('nama_pekerjaan_e'))));
             $pelanggan = preg_replace('/\s+/', ' ', trim(strval($this->request->getPost('pelanggan_e'))));
-            //Menghapus tanda titik dari inputan karena make autonumeric
+            $jenis_pelanggan = $this->request->getPost('jenis_pelanggan_e');
+            $nama_pic = preg_replace('/\s+/', ' ', trim(strval($this->request->getPost('nama_pic_e'))));
+            $email_pic = $this->request->getPost('email_pic_e');
+            $nowa_pic = $this->request->getPost('nowa_pic_e');
+            //Menghapus tanda titik dari inputan karena make inputmask
             $nominal_harga = str_replace(['Rp ', '.'], '', $this->request->getPost('nominal_harga_e'));
             $jenis_layanan = $this->request->getPost('jenis_layanan_e');
             $status_pekerjaan = $this->request->getPost('status_pekerjaan_e');
@@ -508,24 +540,36 @@ class Pekerjaan extends BaseController
             $deskripsi_pekerjaan = preg_replace('/\s+/', ' ', trim(strval($this->request->getPost('deskripsi_pekerjaan_e'))));
             // Memeriksa apakah data baru sama dengan data yang sudah ada
             if (
-                $pekerjaan_lama['nama_pekerjaan'] === $nama_pekerjaan && $pekerjaan_lama['pelanggan'] === $pelanggan && $pekerjaan_lama['nominal_harga'] === $nominal_harga
-                && $pekerjaan_lama['jenis_layanan'] === $jenis_layanan && $pekerjaan_lama['id_status_pekerjaan'] === $status_pekerjaan && $pekerjaan_lama['id_kategori_pekerjaan']
-                === $kategori_pekerjaan && $pekerjaan_lama['target_waktu_selesai'] === $target_waktu_selesai && $pekerjaan_lama['deskripsi_pekerjaan'] === $deskripsi_pekerjaan
+                $pekerjaan_lama['nama_pekerjaan'] === $nama_pekerjaan && $pekerjaan_lama['pelanggan'] === $pelanggan && $pekerjaan_lama['jenis_pelanggan'] ===
+                $jenis_pelanggan && $pekerjaan_lama['nama_pic'] === $nama_pic && $pekerjaan_lama['email_pic'] === $email_pic && $pekerjaan_lama['nowa_pic']
+                === $nowa_pic && $pekerjaan_lama['nominal_harga'] === $nominal_harga && $pekerjaan_lama['jenis_layanan'] === $jenis_layanan &&
+                $pekerjaan_lama['id_status_pekerjaan'] === $status_pekerjaan && $pekerjaan_lama['id_kategori_pekerjaan'] === $kategori_pekerjaan
+                && $pekerjaan_lama['target_waktu_selesai'] === $target_waktu_selesai && $pekerjaan_lama['deskripsi_pekerjaan'] === $deskripsi_pekerjaan
             ) {
                 Set_notifikasi_swal_berhasil('info', 'Uppsss :|', 'Tidak ada data yang anda ubah, kembali ke form edit data pekerjaan jika ingin mengubah data');
                 return redirect()->withInput()->back();
             } else {
                 //Proses memasukkan data ke database
+                if ($status_pekerjaan === '3') {
+                    $waktu_selesai = date('Y-m-d');
+                } else {
+                    $waktu_selesai = null;
+                }
                 $data_pekerjaan = [
                     'id_pekerjaan' => $id_pekerjaan,
                     'id_status_pekerjaan' => $status_pekerjaan,
                     'id_kategori_pekerjaan' => $kategori_pekerjaan,
                     'nama_pekerjaan' => $nama_pekerjaan,
                     'pelanggan' => $pelanggan,
+                    'jenis_pelanggan' => $jenis_pelanggan,
+                    'nama_pic' => $nama_pic,
+                    'email_pic' => $email_pic,
+                    'nowa_pic' => $nowa_pic,
                     'jenis_layanan' => $jenis_layanan,
                     'nominal_harga' => $nominal_harga,
                     'deskripsi_pekerjaan' => $deskripsi_pekerjaan,
                     'target_waktu_selesai' => $target_waktu_selesai,
+                    'waktu_selesai' => $waktu_selesai
                 ];
                 $this->pekerjaanModel->save($data_pekerjaan);
                 Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil mengedit data Pekerjaan');
@@ -534,6 +578,10 @@ class Pekerjaan extends BaseController
         } else {
             session()->setFlashdata('err_nama_pekerjaan_e', $validasi->getError('nama_pekerjaan_e'));
             session()->setFlashdata('err_pelanggan_e', $validasi->getError('pelanggan_e'));
+            session()->setFlashdata('err_jenis_pelanggan_e', $validasi->getError('jenis_pelanggan_e'));
+            session()->setFlashdata('err_nama_pic_e', $validasi->getError('nama_pic_e'));
+            session()->setFlashdata('err_email_pic_e', $validasi->getError('email_pic_e'));
+            session()->setFlashdata('err_nowa_pic_e', $validasi->getError('nowa_pic_e'));
             session()->setFlashdata('err_nominal_harga_e', $validasi->getError('nominal_harga_e'));
             session()->setFlashdata('err_jenis_layanan_e', $validasi->getError('jenis_layanan_e'));
             session()->setFlashdata('err_status_pekerjaan_e', $validasi->getError('status_pekerjaan_e'));
@@ -542,6 +590,56 @@ class Pekerjaan extends BaseController
             session()->setFlashdata('err_deskripsi_pekerjaan_e', $validasi->getError('deskripsi_pekerjaan_e'));
             Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Terdapat inputan yang kurang sesuai, periksa form edit data pekerjaan');
             return redirect()->withInput()->back();
+        }
+    }
+
+    //Untuk mengedit status dari pekerjaan
+    public function editpekerjaan_status_pekerjaan($id_pekerjaan)
+    {
+        return json_encode($this->pekerjaanModel->find($id_pekerjaan));
+    }
+    public function updatepekerjaan_status_pekerjaan()
+    {
+        $validasi = \Config\Services::validation();
+        $aturan = [
+            'pekerjaan_status_pekerjaan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Status Pekerjaan harus dipilih',
+                ]
+            ]
+        ];
+        $validasi->setRules($aturan);
+        //Jika inputan valid
+        if ($validasi->withRequest($this->request)->run()) {
+            //Mengambil data dari ajax
+            $id_pekerjaan = $this->request->getPost('id_pekerjaan_e');
+            $nama_pekerjaan = $this->request->getPost('nama_pekerjaan_e');
+            $pekerjaan_status_pekerjaan = $this->request->getPost('pekerjaan_status_pekerjaan_e');
+            // Memeriksa apakah data baru sama dengan data yang sudah ada
+            $existingData = $this->pekerjaanModel->find($id_pekerjaan);
+            if ($existingData['id_status_pekerjaan'] === $pekerjaan_status_pekerjaan) {
+                session()->setFlashdata('info', 'Anda tidak merubah status dari pekerjaan ' . '<b>' . $nama_pekerjaan . '</b>');
+                return redirect()->withInput()->with('modal', 'modal_editpekerjaan_status_pekerjaan')->back();
+            } else {
+                // Proses memasukkan data ke database
+                if ($pekerjaan_status_pekerjaan === '3') {
+                    $waktu_selesai = date('Y-m-d');
+                } else {
+                    $waktu_selesai = null;
+                }
+                $data_pekerjaan = [
+                    'id_pekerjaan' => $id_pekerjaan,
+                    'id_status_pekerjaan' => $pekerjaan_status_pekerjaan,
+                    'waktu_selesai' => $waktu_selesai
+                ];
+                $this->pekerjaanModel->save($data_pekerjaan);
+                Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil mengubah status dari pekerjaan ' . $nama_pekerjaan);
+                return redirect()->to('/dashboard');
+            }
+        } else {
+            session()->setFlashdata('error', $validasi->listErrors());
+            return redirect()->withInput()->with('modal', 'modal_editpekerjaan_status_pekerjaan')->back();
         }
     }
 }

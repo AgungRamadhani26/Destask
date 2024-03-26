@@ -50,6 +50,7 @@ class Dashboard extends BaseController
             'pekerjaan_bast' => $pekerjaan_bast,
             'pekerjaan_support' => $pekerjaan_support,
             'pekerjaan_cancle' => $pekerjaan_cancle,
+            'status_pekerjaan' => $this->statusPekerjaanModel->getStatusPekerjaan(),
             'status_pekerjaan_presales' => $this->statusPekerjaanModel->getStatusPekerjaan(1),
             'status_pekerjaan_onprogres' => $this->statusPekerjaanModel->getStatusPekerjaan(2),
             'status_pekerjaan_bast' => $this->statusPekerjaanModel->getStatusPekerjaan(3),

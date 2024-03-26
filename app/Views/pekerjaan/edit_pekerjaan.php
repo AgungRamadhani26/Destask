@@ -30,7 +30,41 @@
                            <?= session()->getFlashdata('err_pelanggan_e') ?>
                         </div>
                      </div>
-
+                     <div class="col-md-4 mb-3">
+                        <label for="jenis_pelanggan_e" class="form-label" style="font-weight: 600;">Jenis Pelanggan<span style="color: red;">*</span></label>
+                        <select class="form-control <?= (session()->getFlashdata('err_jenis_pelanggan_e')) ? 'is-invalid' : ''; ?>" name="jenis_pelanggan_e" id="jenis_pelanggan_e">
+                           <option value="">-- Pilih Jenis Pelanggan --</option>
+                           <?php
+                           $selectedJenisPelanggan = old('jenis_pelanggan_e') ?? $pekerjaan['jenis_pelanggan'] ?? '';
+                           ?>
+                           <option value="swasta" <?= ($selectedJenisPelanggan == 'swasta') ? 'selected' : '' ?>>Swasta</option>
+                           <option value="negeri" <?= ($selectedJenisPelanggan == 'negeri') ? 'selected' : '' ?>>Negeri</option>
+                        </select>
+                        <div class="invalid-feedback">
+                           <?= session()->getFlashdata('err_jenis_pelanggan_e') ?>
+                        </div>
+                     </div>
+                     <div class=" col-md-4 mb-3">
+                        <label for="nama_pic_e" class="form-label" style="font-weight: 600;">Nama PIC<span style="color: red;">*</span></label>
+                        <input type="text" class="form-control <?= (session()->getFlashdata('err_nama_pic_e')) ? 'is-invalid' : ''; ?>" name="nama_pic_e" id="nama_pic_e" value="<?= old('nama_pic_e') ?? $pekerjaan['nama_pic'] ?? '' ?>">
+                        <div class="invalid-feedback">
+                           <?= session()->getFlashdata('err_nama_pic_e') ?>
+                        </div>
+                     </div>
+                     <div class=" col-md-4 mb-3">
+                        <label for="email_pic_e" class="form-label" style="font-weight: 600;">Email PIC<span style="color: red;">*</span></label>
+                        <input type="text" class="form-control <?= (session()->getFlashdata('err_email_pic_e')) ? 'is-invalid' : ''; ?>" name="email_pic_e" id="email_pic_e" value="<?= old('email_pic_e') ?? $pekerjaan['email_pic'] ?? '' ?>">
+                        <div class="invalid-feedback">
+                           <?= session()->getFlashdata('err_email_pic_e') ?>
+                        </div>
+                     </div>
+                     <div class=" col-md-4 mb-3">
+                        <label for="nowa_pic_e" class="form-label" style="font-weight: 600;">Nomor Wa PIC<span style="color: red;">*</span></label>
+                        <input type="text" class="form-control <?= (session()->getFlashdata('err_nowa_pic_e')) ? 'is-invalid' : ''; ?>" name="nowa_pic_e" id="nowa_pic_e" value="<?= old('nowa_pic_e') ?? $pekerjaan['nowa_pic'] ?? '' ?>">
+                        <div class="invalid-feedback">
+                           <?= session()->getFlashdata('err_nowa_pic_e') ?>
+                        </div>
+                     </div>
                      <div class="col-md-4 mb-3">
                         <label for="nominal_harga_e" class="form-label" style="font-weight: 600;">Nominal Harga (Rp)<span style="color: red;">*</span></label>
                         <input type="text" class="form-control <?= (session()->getFlashdata('err_nominal_harga_e')) ? 'is-invalid' : ''; ?>" name="nominal_harga_e" id="nominal_harga_e" value="<?= old('nominal_harga_e') ?? $pekerjaan['nominal_harga'] ?? '' ?>">
@@ -101,13 +135,6 @@
                         <textarea class="form-control <?= (session()->getFlashdata('err_deskripsi_pekerjaan_e')) ? 'is-invalid' : ''; ?>" rows="2" name="deskripsi_pekerjaan_e" id="deskripsi_pekerjaan_e"><?= old('deskripsi_pekerjaan_e') ?? $pekerjaan['deskripsi_pekerjaan'] ?? '' ?></textarea>
                         <div class="invalid-feedback">
                            <?= session()->getFlashdata('err_deskripsi_pekerjaan_e') ?>
-                        </div>
-                     </div>
-                     <div class="col-md-4 mb-4">
-                        <label for="persentase_selesai_e" class="form-label" style="font-weight: 600;">Persentase Selesai (%)<span style="color: red;">*</span></label>
-                        <input type="text" class="form-control <?= (session()->getFlashdata('err_persentase_selesai_e')) ? 'is-invalid' : ''; ?>" name="persentase_selesai_e" id="persentase_selesai_e" value="<?= old('persentase_selesai_e') ?? $pekerjaan['persentase_selesai'] ?? '' ?>">
-                        <div class="invalid-feedback">
-                           <?= session()->getFlashdata('err_persentase_selesai_e') ?>
                         </div>
                      </div>
                   </div>

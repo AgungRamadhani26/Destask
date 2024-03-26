@@ -39,10 +39,17 @@ class Personil extends BaseController
             'personil_fe_web' => $this->personilModel->getPersonilByIdPekerjaanRolePersonil($id_pekerjaan, 'frontend_web'),
             'personil_be_mobile' => $this->personilModel->getPersonilByIdPekerjaanRolePersonil($id_pekerjaan, 'backend_mobile'),
             'personil_fe_mobile' => $this->personilModel->getPersonilByIdPekerjaanRolePersonil($id_pekerjaan, 'frontend_mobile'),
+            'personil_tester' => $this->personilModel->getPersonilByIdPekerjaanRolePersonil($id_pekerjaan, 'tester'),
+            'personil_admin' => $this->personilModel->getPersonilByIdPekerjaanRolePersonil($id_pekerjaan, 'admin'),
+            'personil_helpdesk' => $this->personilModel->getPersonilByIdPekerjaanRolePersonil($id_pekerjaan, 'helpdesk'),
+            'pekerjaan' => $this->pekerjaanModel->getPekerjaan($id_pekerjaan),
             'user' => $this->userModel->getUserExceptHodAdminDireksi(),
             'user_desainer' => $this->userModel->getUserByUserGroup(1),
             'user_web' => $this->userModel->getUserByUserGroup(2),
             'user_mobile' => $this->userModel->getUserByUserGroup(3),
+            'user_tester' => $this->userModel->getUserByUserGroup(4),
+            'user_admin' => $this->userModel->getUserByUserGroup(5),
+            'user_helpdesk' => $this->userModel->getUserByUserGroup(6),
             'url1' => '/dashboard',
             'url' => '/dashboard'
         ];

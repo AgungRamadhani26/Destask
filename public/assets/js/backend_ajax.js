@@ -83,6 +83,32 @@ function resetFilterPekerjaan() {
    window.location.href = "/pekerjaan/daftar_pekerjaan";
 }
 
+//Proses membersikan form edit pekerjaan status pekerjaan
+$('.tombol-tutup-pekerjaan-status-pekerjaan').on('click', function() {
+   $('.alert').hide();
+   $('#pekerjaan_status_pekerjaan_e').val('');
+   $('#id_pekerjaan_e').val('');
+   $('#nama_pekerjaan_e').val('');
+});
+
+//Proses editpekerjaan_status_pekerjaan
+function editpekerjaan_status_pekerjaan($id){
+   $.ajax({
+      url: "/pekerjaan/editpekerjaan_status_pekerjaan/" + $id,
+      type: "GET",
+      success: function(hasil){
+         var $obj = $.parseJSON(hasil);
+         if ($obj.id_pekerjaan != ''){
+            $('.alert').hide();
+            $('#id_pekerjaan_e').val($obj.id_pekerjaan);
+            $('#nama_pekerjaan_e').val($obj.nama_pekerjaan);
+            $('#pekerjaan_status_pekerjaan_e').val($obj.id_status_pekerjaan);
+         }
+      }
+   });
+}
+
+
 
 //                              //
 // PENGELOLAAN DATA STATUS TASK //

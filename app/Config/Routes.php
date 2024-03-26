@@ -37,6 +37,9 @@ $routes->post('/pekerjaan/update_pekerjaan', 'Pekerjaan::update_pekerjaaan');
 $routes->get('/pekerjaan/edit_personil_pekerjaan/(:num)', 'Personil::edit_personil_pekerjaan/$1');
 //Untuk memfilter data yang ditampilkan
 $routes->get('/pekerjaan/filter_pekerjaan', 'Pekerjaan::filter_pekerjaan');
+//Untuk mengedit status pekerjaan dari sebuah pekerjaan
+$routes->get('/pekerjaan/editpekerjaan_status_pekerjaan/(:num)', 'Pekerjaan::editpekerjaan_status_pekerjaan/$1');
+$routes->post('/pekerjaan/updatepekerjaan_status_pekerjaan', 'Pekerjaan::updatepekerjaan_status_pekerjaan');
 
 //Routes Status Pekerjaan
 //Untuk menampilkan halaman daftar status pekerjaan
