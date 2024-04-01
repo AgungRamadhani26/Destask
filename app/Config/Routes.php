@@ -40,6 +40,31 @@ $routes->get('/pekerjaan/filter_pekerjaan', 'Pekerjaan::filter_pekerjaan');
 //Untuk mengedit status pekerjaan dari sebuah pekerjaan
 $routes->get('/pekerjaan/editpekerjaan_status_pekerjaan/(:num)', 'Pekerjaan::editpekerjaan_status_pekerjaan/$1');
 $routes->post('/pekerjaan/updatepekerjaan_status_pekerjaan', 'Pekerjaan::updatepekerjaan_status_pekerjaan');
+//Untuk menghapus personil
+$routes->delete('/pekerjaan/delete_pekerjaan/(:num)', 'Pekerjaan::delete_pekerjaan/$1');
+
+//Routes Personil
+//Untuk edit personil pm
+$routes->get('/personil/edit_personil/(:num)', 'Personil::edit_personil/$1');
+$routes->post('/personil/update_personil', 'Personil::update_personil');
+//Untuk tambah personil desainer
+$routes->post('/personil/tambah_personil_desainer', 'Personil::tambah_personil_desainer');
+//Untuk tambah personil be web
+$routes->post('/personil/tambah_personil_be_web', 'Personil::tambah_personil_be_web');
+//Untuk tambah personil fe web
+$routes->post('/personil/tambah_personil_fe_web', 'Personil::tambah_personil_fe_web');
+//Untuk tambah personil be mobile
+$routes->post('/personil/tambah_personil_be_mobile', 'Personil::tambah_personil_be_mobile');
+//Untuk tambah personil fe mobile
+$routes->post('/personil/tambah_personil_fe_mobile', 'Personil::tambah_personil_fe_mobile');
+//Untuk tambah personil tester
+$routes->post('/personil/tambah_personil_tester', 'Personil::tambah_personil_tester');
+//Untuk tambah personil admin
+$routes->post('/personil/tambah_personil_admin', 'Personil::tambah_personil_admin');
+//Untuk tambah personil helpdesk
+$routes->post('/personil/tambah_personil_helpdesk', 'Personil::tambah_personil_helpdesk');
+//Untuk menghapus personil
+$routes->delete('/personil/delete_personil/(:num)/(:num)', 'Personil::delete_personil/$1/$2');
 
 //Routes Status Pekerjaan
 //Untuk menampilkan halaman daftar status pekerjaan

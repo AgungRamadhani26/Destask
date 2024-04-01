@@ -642,4 +642,20 @@ class Pekerjaan extends BaseController
             return redirect()->withInput()->with('modal', 'modal_editpekerjaan_status_pekerjaan')->back();
         }
     }
+
+    public function delete_pekerjaan($id_pekerjaan)
+    {
+        // Dapatkan semua personil terkait dengan pekerjaan yang akan dihapus
+        $personilTerkait = $this->personilModel->getPersonilByIdPekerjaan($id_pekerjaan);
+        // Hapus setiap entri personil yang terkait dengan pekerjaan yang akan dihapus
+        foreach ($personilTerkait as $personil) {
+            $this->personilModel->delete($personil['id_personil']);
+        }
+        // Hapus pekerjaan
+        $this->pekerjaanModel->delete($id_pekerjaan);
+        // Berikan notifikasi bahwa pekerjaan berhasil dihapus
+        Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Data pekerjaan berhasil dihapus');
+        // Redirect ke dashboard
+        return redirect()->to('/dashboard');
+    }
 }

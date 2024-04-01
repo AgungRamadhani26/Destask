@@ -17,7 +17,7 @@ class PekerjaanModel extends Model
         'target_waktu_selesai', 'persentase_selesai', 'waktu_selesai'
     ];
 
-    //Fungsi untuk mendapatkan data pekerjaan
+    //Fungsi untuk mendapatkan data pekerjaan (lebih ke admin, hod, direksi)
     public function getPekerjaan($id_pekerjaan = false)
     {
         if ($id_pekerjaan === false) {
@@ -26,14 +26,7 @@ class PekerjaanModel extends Model
         return $this->where(['id_pekerjaan' => $id_pekerjaan])->first();
     }
 
-    //Fungsi untuk mendapatkan data pekerjaan berdasarkan status pekerjaan
-    public function getPekerjaanByIdStatusPekerjaan($id_status_pekerjaan)
-    {
-        return $this->where(['id_status_pekerjaan' => $id_status_pekerjaan])
-            ->orderBy('id_pekerjaan', 'DESC')->findAll();
-    }
-
-    // Fungsi untuk mendapatkan data pekerjaan berdasarkan id_user dari tabel personil
+    // Fungsi untuk mendapatkan data pekerjaan berdasarkan id_user dari tabel personil (utk supervisi dan staff)
     public function getPekerjaanByUserId($id_user)
     {
         return $this->distinct()
@@ -41,11 +34,21 @@ class PekerjaanModel extends Model
             ->join('personil', 'pekerjaan.id_pekerjaan = personil.id_pekerjaan')
             ->join('user', 'personil.id_user = user.id_user')
             ->where('personil.id_user', $id_user)
+            ->where('pekerjaan.deleted_at IS NULL') //perubahan
+            ->where('personil.deleted_at IS NULL') //perubahan
+            ->where('user.deleted_at IS NULL') //perubahan
             ->orderBy('pekerjaan.id_pekerjaan', 'DESC') // Mengurutkan hasil berdasarkan id_pekerjaan dalam urutan menurun
             ->findAll();
     }
 
-    //Fungsi untuk mendapatkan data pekerjaan berdasarkan id_user dan id_status_pekerjaan
+    //Fungsi untuk mendapatkan data pekerjaan berdasarkan status pekerjaan (lebih ke dashboard admin, hod, direksi)
+    public function getPekerjaanByIdStatusPekerjaan($id_status_pekerjaan)
+    {
+        return $this->where(['id_status_pekerjaan' => $id_status_pekerjaan])
+            ->orderBy('id_pekerjaan', 'DESC')->findAll();
+    }
+
+    //Fungsi untuk mendapatkan data pekerjaan berdasarkan id_user dan id_status_pekerjaan (untuk dashboard staff dan supervisi)
     public function getPekerjaanByUserIdIdStatusPekerjaan($id_user, $id_status_pekerjaan)
     {
         return $this->distinct()
@@ -54,12 +57,14 @@ class PekerjaanModel extends Model
             ->join('user', 'personil.id_user = user.id_user')
             ->where('personil.id_user', $id_user)
             ->where('pekerjaan.id_status_pekerjaan', $id_status_pekerjaan)
+            ->where('pekerjaan.deleted_at IS NULL') //perubahan
+            ->where('personil.deleted_at IS NULL') //perubahan
+            ->where('user.deleted_at IS NULL') //perubahan
             ->orderBy('pekerjaan.id_pekerjaan', 'DESC')
             ->findAll();
     }
 
-
-    //Fungsi untuk mendapatkan data pekerjaan berdasarkan filter
+    //Fungsi untuk mendapatkan data pekerjaan berdasarkan filter (lebih ke admin, hod, direksi)
     public function getFilteredPekerjaan($id_kategori_pekerjaan, $id_status_pekerjaan, $jenis_layanan, $id_user_pm)
     {
         $query = $this->select('pekerjaan.*')
@@ -83,7 +88,7 @@ class PekerjaanModel extends Model
         return $query->get()->getResultArray();
     }
 
-    // Fungsi untuk mendapatkan data pekerjaan berdasarkan filter
+    // Fungsi untuk mendapatkan data pekerjaan berdasarkan filter (utk supervisi dan staff)
     public function getFilteredPekerjaanforSupervisiStaff($id_kategori_pekerjaan, $id_status_pekerjaan, $jenis_layanan, $id_user_pm, $id_user)
     {
         $query = $this->distinct()
@@ -110,12 +115,18 @@ class PekerjaanModel extends Model
                     ->whereIn('p.id_pekerjaan', function ($subQuery) use ($id_user) {
                         $subQuery->select('id_pekerjaan')
                             ->from('personil')
-                            ->whereIn('role_personil', ['project_manager', 'desainer', 'backend_mobile', 'frontend_mobile', 'backend_web', 'frontend_web'])
-                            ->where(['id_user' => $id_user]);
+                            ->whereIn('role_personil', ['project_manager', 'desainer', 'backend_mobile', 'frontend_mobile', 'backend_web', 'frontend_web', 'tester', 'admin', 'helpdesk'])
+                            ->where(['id_user' => $id_user])
+                            ->where('pekerjaan.deleted_at IS NULL') //perubahan
+                            ->where('personil.deleted_at IS NULL') //perubahan
+                            ->where('user.deleted_at IS NULL'); //perubahan
                     });
             })->orderBy('pekerjaan.id_pekerjaan', 'DESC');
         } else {
             $query->where('personil.id_user', $id_user)
+                ->where('pekerjaan.deleted_at IS NULL') //perubahan
+                ->where('personil.deleted_at IS NULL') //perubahan
+                ->where('user.deleted_at IS NULL') //perubahan
                 ->orderBy('pekerjaan.id_pekerjaan', 'DESC');
         }
         return $query->findAll();

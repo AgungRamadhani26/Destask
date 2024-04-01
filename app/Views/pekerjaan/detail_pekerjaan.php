@@ -96,26 +96,20 @@
                               <div class="col-md-12 mt-3">
                                  <label for="project_manager" class="form-label" style="font-weight: 600;">Project Manager</label>
                                  <ol class="list-group list-group-numbered">
-                                    <li class="list-group-item d-flex justify-content-between align-items-start">
-                                       <div class="ms-2 me-auto">
-                                          <div class="fw-bold">
-                                             <?php
-                                             foreach ($personil as $per) {
-                                                if ($per['role_personil'] == 'project_manager') {
-                                                   foreach ($user as $usr) {
-                                                      if ($per['id_user'] == $usr['id_user']) {
-                                                         echo $usr['nama'];
-                                                         $email_pm = $usr['email'];
-                                                         break; // Keluar dari loop setelah menemukan nilai yang cocok
-                                                      }
-                                                   }
-                                                }
-                                             }
-                                             ?>
-                                          </div>
-                                          <?= $email_pm ?>
-                                       </div>
-                                    </li>
+                                    <?php foreach ($personil as $per) : ?>
+                                       <?php if ($per['role_personil'] == 'project_manager') : ?>
+                                          <?php foreach ($user as $usr) : ?>
+                                             <?php if ($per['id_user'] == $usr['id_user']) : ?>
+                                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                                   <div class="ms-2 me-auto">
+                                                      <div class="fw-bold"><?= $usr['nama']; ?></div>
+                                                      <?= $usr['email']; ?>
+                                                   </div>
+                                                </li>
+                                             <?php endif; ?>
+                                          <?php endforeach; ?>
+                                       <?php endif; ?>
+                                    <?php endforeach; ?>
                                  </ol>
                               </div>
                            </div>
@@ -250,7 +244,7 @@
                         <div class="card">
                            <div class="card-body">
                               <div class="col-md-12 mt-3">
-                                 <label for="frontend_mobile_1" class="form-label" style="font-weight: 600;">Daftar Admin</label>
+                                 <label for="frontend_mobile_1" class="form-label" style="font-weight: 600;">Daftar Tester</label>
                                  <ol class="list-group list-group-numbered">
                                     <?php foreach ($personil as $per) : ?>
                                        <?php if ($per['role_personil'] == 'tester') : ?>
@@ -300,7 +294,7 @@
                         <div class="card">
                            <div class="card-body">
                               <div class="col-md-12 mt-3">
-                                 <label for="frontend_mobile_1" class="form-label" style="font-weight: 600;">Daftar Admin</label>
+                                 <label for="frontend_mobile_1" class="form-label" style="font-weight: 600;">Daftar Helpdesk</label>
                                  <ol class="list-group list-group-numbered">
                                     <?php foreach ($personil as $per) : ?>
                                        <?php if ($per['role_personil'] == 'helpdesk') : ?>

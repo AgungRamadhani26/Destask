@@ -108,7 +108,36 @@ function editpekerjaan_status_pekerjaan($id){
    });
 }
 
+//Proses membersikan form personil
+$('.tombol-tutup-personil').on('click', function() {
+   $('.alert').hide();
+   $('#id_user_pm_e').val('');
+   $('#id_personil_pm_e').val('');
+   $('#id_user_personil_desainer').val('');
+   $('#id_user_personil_be_web').val('');
+   $('#id_user_personil_fe_web').val('');
+   $('#id_user_personil_be_mobile').val('');
+   $('#id_user_personil_fe_mobile').val('');
+   $('#id_user_personil_tester').val('');
+   $('#id_user_personil_admin').val('');
+   $('#id_user_personil_helpdesk').val('');
+});
 
+//Proses edit_personil_pm
+function edit_personil_pm($id){
+   $.ajax({
+      url: "/personil/edit_personil/" + $id,
+      type: "GET",
+      success: function(hasil){
+         var $obj = $.parseJSON(hasil);
+         if ($obj.id_personil != ''){
+            $('.alert').hide();
+            $('#id_personil_pm_e').val($obj.id_personil);
+            $('#id_user_pm_e').val($obj.id_user);
+         }
+      }
+   });
+}
 
 //                              //
 // PENGELOLAAN DATA STATUS TASK //
