@@ -21,6 +21,16 @@ $routes->get('/logout', 'Autentikasi::logout');
 
 //Routes dashboard
 $routes->get('/dashboard', 'Dashboard::lihat_dashboard');
+//Untuk menampilkan halaman lupa password
+$routes->get('/lupa_password', 'Profile::lupa_password');
+//Untuk melakukan cek email
+$routes->post('/lupa_password/cek_email', 'Profile::cek_email');
+//Untuk menampilkan halaman reset password
+$routes->get('/lupa_password/reset_password/(:any)', 'Profile::reset_password/$1');
+//Untuk melakukan reset password
+$routes->post('/lupa_password/save_reset_password/(:num)', 'Profile::save_reset_password/$1');
+//Untuk menampilkan hasil reset password berhasil atau tidak
+$routes->get('/lupa_password/result_reset_password', 'Profile::result_reset_password');
 
 //Routes pekerjaan
 //Untuk menampilkan halaman daftar pekerjaan

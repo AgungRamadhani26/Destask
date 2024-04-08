@@ -1,39 +1,116 @@
-.background-radial-gradient {
-   background-color: hsl(218, 41%, 15%);
-   background-image: radial-gradient(650px circle at 0% 0%,
-   hsl(219, 61%, 59%) 15%,
-   hsl(218, 45%, 52%) 35%,
-   hsl(219, 41%, 36%) 75%,
-   hsl(218, 49%, 32%) 80%,
-   transparent 100%),
-   radial-gradient(1250px circle at 100% 100%,
-   hsl(218, 65%, 61%) 15%,
-   hsl(218, 41%, 50%) 35%,
-   hsl(219, 44%, 35%) 75%,
-   hsl(218, 40%, 28%) 80%,
-   transparent 100%);
+.background-image {
+   position: relative;
+   min-height: 100vh;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   overflow: hidden; /* Memastikan lapisan warna biru tidak tumpah keluar dari area gambar */
+   /* Menambahkan efek lapisan warna biru */
+   background-image: linear-gradient(rgba(43, 0, 255, 0.5), rgba(17, 0, 255, 0.5));
+}
+/* Menyesuaikan ukuran lapisan warna biru dengan gambar */
+.background-image::before {
+   content: '';
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-color: rgba(0, 72, 255, 0.5); /* Warna biru dengan transparansi */
+   z-index: 1; /* Pastikan lapisan warna biru berada di atas gambar */
+}
+/* Menetapkan gambar latar belakang */
+.background-image::after {
+   content: '';
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-image: url('/assets/img/internet-desnet.png');
+   background-size: cover;
+   background-repeat: no-repeat;
+   background-position: center;
+   z-index: 0; /* Pastikan gambar berada di bawah lapisan warna biru */
 }
 
-#radius-shape-1 {
-   height: 220px;
-   width: 220px;
-   top: -60px;
-   left: -130px;
-   background: radial-gradient(rgb(0, 9, 107), #5a73fe);
-   overflow: hidden;
+.background-image-lupapass {
+   position: relative;
+   min-height: 100vh;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   overflow: hidden; /* Memastikan lapisan warna biru tidak tumpah keluar dari area gambar */
+   /* Menambahkan efek lapisan warna biru */
+   background-image: linear-gradient(rgba(43, 0, 255, 0.5), rgba(17, 0, 255, 0.5));
+}
+/* Menyesuaikan ukuran lapisan warna biru dengan gambar */
+.background-image-lupapass::before {
+   content: '';
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-color: rgba(0, 72, 255, 0.5); /* Warna biru dengan transparansi */
+   z-index: 1; /* Pastikan lapisan warna biru berada di atas gambar */
+}
+/* Menetapkan gambar latar belakang */
+.background-image-lupapass::after {
+   content: '';
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-image: url('/assets/img/front-desain.png');
+   background-size: cover;
+   background-repeat: no-repeat;
+   background-position: center;
+   z-index: 0; /* Pastikan gambar berada di bawah lapisan warna biru */
 }
 
-#radius-shape-2 {
-   border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
-   bottom: -60px;
-   right: -110px;
-   width: 300px;
-   height: 300px;
-   background: radial-gradient(#10006b, #1f97ff);
-   overflow: hidden;
+.background-image-resetpass {
+   position: relative;
+   min-height: 100vh;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   overflow: hidden; /* Memastikan lapisan warna biru tidak tumpah keluar dari area gambar */
+   /* Menambahkan efek lapisan warna biru */
+   background-image: linear-gradient(rgba(43, 0, 255, 0.5), rgba(17, 0, 255, 0.5));
+}
+/* Menyesuaikan ukuran lapisan warna biru dengan gambar */
+.background-image-resetpass::before {
+   content: '';
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-color: rgba(0, 72, 255, 0.5); /* Warna biru dengan transparansi */
+   z-index: 1; /* Pastikan lapisan warna biru berada di atas gambar */
+}
+/* Menetapkan gambar latar belakang */
+.background-image-resetpass::after {
+   content: '';
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-image: url('/assets/img/data-center.png');
+   background-size: cover;
+   background-repeat: no-repeat;
+   background-position: center;
+   z-index: 0; /* Pastikan gambar berada di bawah lapisan warna biru */
 }
 
 .bg-glass {
    background-color: #f6f9ff;
    backdrop-filter: saturate(200%) blur(25px);
+}
+
+.form-login{
+   z-index: 10;
 }

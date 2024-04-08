@@ -187,4 +187,126 @@ class Profile extends BaseController
             return redirect()->withInput()->with('tab', 'edit-profil')->back();
         }
     }
+
+    public function lupa_password()
+    {
+        return view('/profile/lupa_password');
+    }
+
+    public function cek_email()
+    {
+        $validasi = \Config\Services::validation();
+        $aturan = [
+            'email_lupa_password' => [
+                'rules' => 'required|valid_email',
+                'errors' => [
+                    'required' => 'Email harus diisi',
+                    'valid_email' => 'Format email salah',
+                ]
+            ]
+        ];
+        $validasi->setRules($aturan);
+        if (!$validasi->withRequest($this->request)->run()) {
+            session()->setFlashdata('err_email_lupa_password', $validasi->getError('email_lupa_password'));
+            return redirect()->to('/lupa_password')->withInput();
+        } else {
+            $email = $this->request->getPost('email_lupa_password');
+            $user = $this->userModel->where(['email' => $email])->first();
+            if (is_null($user)) {
+                session()->setFlashdata('err_email_lupa_password', 'Email tidak terdaftar');
+                return redirect()->to('/lupa_password')->withInput();
+            } else {
+                // Buat token reset agar email hanya berlaku 1 kali pakai
+                $token = bin2hex(random_bytes(32));
+                // Simpan token di database
+                $datauser = [
+                    'id_user' => $user['id_user'],
+                    'reset_password_token' => $token
+                ];
+                $this->userModel->save($datauser);
+                $email_send = service('email');
+                $email_send->setTo($email);
+                $email_send->setFrom('agungramadhani2409@gmail.com', 'DESTASK');
+                $email_send->setSubject('Reset Password');
+                $email_send->setMessage(' Klik link ini untuk reset password anda : <a href="http://localhost:8080/lupa_password/reset_password/' . md5($token) . '">Reset Password</a>
+                <br><b>Noted:</b> Jika anda tidak merasa melakukan reset password, abaikan email ini !.');
+                if ($email_send->send()) {
+                    session()->setFlashdata('berhasil_kirim_email', 'Email berhasil dikirim, silahkan cek email anda. jika anda tidak menemukannya coba cek di spam');
+                    return redirect()->to('/lupa_password');
+                } else {
+                    // $data = $email_send->printDebugger(['headers']);
+                    // print_r($data);
+                    session()->setFlashdata('gagal_kirim_email', 'Email gagal dikirim, mohon cek internet anda, atau coba beberapa saat lagi');
+                    return redirect()->to('/lupa_password');
+                }
+            }
+        }
+    }
+
+    public function reset_password($md5_reset_password_token)
+    {
+        $user = $this->userModel->where(['md5(reset_password_token)' => $md5_reset_password_token])->first();
+        if ($user != null || $user != '') {
+            $datauser = [
+                'user' => $user,
+            ];
+            return view('/profile/reset_password', $datauser);
+        } else {
+            session()->setFlashdata('hasil_reset_gagal', 'Maaf token anda sudah kadaluarsa, baca instruksi diatas jika anda ingin mereset password.');
+            return redirect()->to('/lupa_password/result_reset_password');
+        }
+    }
+
+    public function save_reset_password($id_user)
+    {
+        $validasi = \Config\Services::validation();
+        $aturan = [
+            'passwordbaru_reset_password' => [
+                'rules' => 'required|min_length[6]',
+                'errors' => [
+                    'required' => 'Password baru harus diisi',
+                    'min_length' => 'Password baru tidak boleh kurang dari 6 karakter'
+                ]
+            ],
+            'konfirmasi_passwordbaru_reset_password' => [
+                'rules' => 'required|min_length[6]',
+                'errors' => [
+                    'required' => 'Anda belum mengkonfirmasi password baru',
+                    'min_length' => 'Password baru tidak boleh kurang dari 6 karakter'
+                ]
+            ]
+        ];
+        $validasi->setRules($aturan);
+        $password_Baru = $this->request->getPost('passwordbaru_reset_password');
+        $Konfir_passwordBaru = $this->request->getPost('konfirmasi_passwordbaru_reset_password');
+        $user = $this->userModel->where(['id_user' => $id_user])->first();
+        if ($validasi->withRequest($this->request)->run()) {
+            if ($password_Baru == $Konfir_passwordBaru) {
+                $datauser = [
+                    'id_user' => $user['id_user'],
+                    'password' => md5(strval($password_Baru)),
+                    'reset_password_token' => null
+                ];
+                $this->userModel->save($datauser);
+                session()->setFlashdata('hasil_reset_berhasil', 'Password dari akun ' . $user['email'] . ' berhasil direset, silahkan login kembali.');
+                return redirect()->to('/lupa_password/result_reset_password');
+            } else {
+                session()->setFlashdata('err_pass_Konf', 'Password baru tidak cocok dengan konfirmasi password baru');
+                return redirect()->to('/lupa_password/reset_password/' . md5($user['reset_password_token']))->withInput();
+            }
+        } else {
+            session()->setFlashdata('err_passwordbaru_reset_password', $validasi->getError('passwordbaru_reset_password'));
+            session()->setFlashdata('err_konfirmasi_passwordbaru_reset_password', $validasi->getError('konfirmasi_passwordbaru_reset_password'));
+            return redirect()->to('/lupa_password/reset_password/' . md5($user['reset_password_token']))->withInput();
+        }
+    }
+
+    public function result_reset_password()
+    {
+        // $user = $this->userModel->where(['md5(reset_password_token)' => $md5_reset_password_token])->first();
+        // $datauser = [
+        //     'user' => $user,
+        // ];
+        return view('/profile/result_reset_password');
+    }
 }

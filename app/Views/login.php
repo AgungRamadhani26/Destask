@@ -6,13 +6,14 @@
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
    <link rel="stylesheet" href="/assets/css/style_login.css">
+   <link href="/assets/img/icon_destask.png" rel="icon">
    <!--Js untuk google recapcha-->
    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
    <title>DesTask</title>
 </head>
 
 <body>
-   <section class="background-radial-gradient overflow-hidden">
+   <section class="background-image">
       <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
          <div class="row gx-lg-5 align-items-center mb-5">
             <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
@@ -25,10 +26,7 @@
                </p>
             </div>
 
-            <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
-               <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
-               <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
-
+            <div class="col-lg-6 mb-5 mb-lg-0 position-relative form-login">
                <div class="card bg-glass">
                   <div class="card-body px-4 py-5 px-md-5">
                      <center>
@@ -68,7 +66,7 @@
                            </div>
                         </div>
                         <div class="text-center">
-                           <a href="">Lupa Password?</a>
+                           <p class="small mb-0">Lupa Password? <a href="/lupa_password">Klik disini</a></p>
                         </div>
                      </form>
                   </div>
