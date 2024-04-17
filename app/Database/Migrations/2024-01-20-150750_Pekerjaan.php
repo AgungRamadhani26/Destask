@@ -35,6 +35,26 @@ class Pekerjaan extends Migration
                 'constraint' => 50,
                 'null'       => true
             ],
+            'jenis_pelanggan' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 50,
+                'null'       => true
+            ],
+            'nama_pic' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 50,
+                'null'       => true
+            ],
+            'email_pic' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 50,
+                'null'       => true
+            ],
+            'nowa_pic' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 50,
+                'null'       => true
+            ],
             'jenis_layanan' => [
                 'type'       => 'VARCHAR',
                 'constraint' => 50,

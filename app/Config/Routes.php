@@ -21,6 +21,16 @@ $routes->get('/logout', 'Autentikasi::logout');
 
 //Routes dashboard
 $routes->get('/dashboard', 'Dashboard::lihat_dashboard');
+//Untuk menampilkan halaman lupa password
+$routes->get('/lupa_password', 'Profile::lupa_password');
+//Untuk melakukan cek email
+$routes->post('/lupa_password/cek_email', 'Profile::cek_email');
+//Untuk menampilkan halaman reset password
+$routes->get('/lupa_password/reset_password/(:any)', 'Profile::reset_password/$1');
+//Untuk melakukan reset password
+$routes->post('/lupa_password/save_reset_password/(:num)', 'Profile::save_reset_password/$1');
+//Untuk menampilkan hasil reset password berhasil atau tidak
+$routes->get('/lupa_password/result_reset_password', 'Profile::result_reset_password');
 
 //Routes pekerjaan
 //Untuk menampilkan halaman daftar pekerjaan
@@ -31,41 +41,73 @@ $routes->get('/pekerjaan/add_pekerjaan', 'Pekerjaan::add_pekerjaan');
 $routes->post('/pekerjaan/tambah_pekerjaan', 'Pekerjaan::tambah_pekerjaan');
 //Untuk melihat detail pekerjaan
 $routes->get('/pekerjaan/detail_pekerjaan/(:num)', 'Pekerjaan::detail_pekerjaan/$1');
+//Untuk menampilkan form edit pekerjaan
+$routes->get('/pekerjaan/edit_pekerjaan/(:num)', 'Pekerjaan::edit_pekerjaan/$1');
+$routes->post('/pekerjaan/update_pekerjaan', 'Pekerjaan::update_pekerjaaan');
+$routes->get('/pekerjaan/edit_personil_pekerjaan/(:num)', 'Personil::edit_personil_pekerjaan/$1');
 //Untuk memfilter data yang ditampilkan
 $routes->get('/pekerjaan/filter_pekerjaan', 'Pekerjaan::filter_pekerjaan');
+//Untuk mengedit status pekerjaan dari sebuah pekerjaan
+$routes->get('/pekerjaan/editpekerjaan_status_pekerjaan/(:num)', 'Pekerjaan::editpekerjaan_status_pekerjaan/$1');
+$routes->post('/pekerjaan/updatepekerjaan_status_pekerjaan', 'Pekerjaan::updatepekerjaan_status_pekerjaan');
+//Untuk menghapus personil
+$routes->delete('/pekerjaan/delete_pekerjaan/(:num)', 'Pekerjaan::delete_pekerjaan/$1');
+
+//Routes Personil
+//Untuk edit personil pm
+$routes->get('/personil/edit_personil/(:num)', 'Personil::edit_personil/$1');
+$routes->post('/personil/update_personil', 'Personil::update_personil');
+//Untuk tambah personil desainer
+$routes->post('/personil/tambah_personil_desainer', 'Personil::tambah_personil_desainer');
+//Untuk tambah personil be web
+$routes->post('/personil/tambah_personil_be_web', 'Personil::tambah_personil_be_web');
+//Untuk tambah personil fe web
+$routes->post('/personil/tambah_personil_fe_web', 'Personil::tambah_personil_fe_web');
+//Untuk tambah personil be mobile
+$routes->post('/personil/tambah_personil_be_mobile', 'Personil::tambah_personil_be_mobile');
+//Untuk tambah personil fe mobile
+$routes->post('/personil/tambah_personil_fe_mobile', 'Personil::tambah_personil_fe_mobile');
+//Untuk tambah personil tester
+$routes->post('/personil/tambah_personil_tester', 'Personil::tambah_personil_tester');
+//Untuk tambah personil admin
+$routes->post('/personil/tambah_personil_admin', 'Personil::tambah_personil_admin');
+//Untuk tambah personil helpdesk
+$routes->post('/personil/tambah_personil_helpdesk', 'Personil::tambah_personil_helpdesk');
+//Untuk menghapus personil
+$routes->delete('/personil/delete_personil/(:num)/(:num)', 'Personil::delete_personil/$1/$2');
 
 //Routes Status Pekerjaan
 //Untuk menampilkan halaman daftar status pekerjaan
 $routes->get('/status_pekerjaan/daftar_status_pekerjaan', 'StatusPekerjaan::daftar_status_pekerjaan');
 //Untuk menambah status pekerjaan
-$routes->post('/status_pekerjaan/tambah_status_pekerjaan', 'StatusPekerjaan::tambah_status_pekerjaan');
+// $routes->post('/status_pekerjaan/tambah_status_pekerjaan', 'StatusPekerjaan::tambah_status_pekerjaan');
 //Untuk mengedit status pekerjaan
 $routes->get('/status_pekerjaan/edit_status_pekerjaan/(:num)', 'StatusPekerjaan::edit_status_pekerjaan/$1');
 $routes->post('/status_pekerjaan/update_status_pekerjaan', 'StatusPekerjaan::update_status_pekerjaan');
 //Untuk menghapus status pekerjaan
-$routes->delete('/status_pekerjaan/delete_status_pekerjaan/(:num)', 'StatusPekerjaan::delete_status_pekerjaan/$1');
+// $routes->delete('/status_pekerjaan/delete_status_pekerjaan/(:num)', 'StatusPekerjaan::delete_status_pekerjaan/$1');
 
 //Routes Kategori Pekerjaan
 //Untuk menampilkan halaman daftar kategori pekerjaan
 $routes->get('/kategori_pekerjaan/daftar_kategori_pekerjaan', 'KategoriPekerjaan::daftar_kategori_pekerjaan');
 //Untuk menambah kategori pekerjaan
-$routes->post('/kategori_pekerjaan/tambah_kategori_pekerjaan', 'KategoriPekerjaan::tambah_kategori_pekerjaan');
+// $routes->post('/kategori_pekerjaan/tambah_kategori_pekerjaan', 'KategoriPekerjaan::tambah_kategori_pekerjaan');
 //Untuk mengedit kategori pekerjaan
 $routes->get('/kategori_pekerjaan/edit_kategori_pekerjaan/(:num)', 'KategoriPekerjaan::edit_kategori_pekerjaan/$1');
 $routes->post('/kategori_pekerjaan/update_kategori_pekerjaan', 'KategoriPekerjaan::update_kategori_pekerjaan');
 //Untuk menghapus kategori pekerjaan
-$routes->delete('/kategori_pekerjaan/delete_kategori_pekerjaan/(:num)', 'KategoriPekerjaan::delete_kategori_pekerjaan/$1');
+// $routes->delete('/kategori_pekerjaan/delete_kategori_pekerjaan/(:num)', 'KategoriPekerjaan::delete_kategori_pekerjaan/$1');
 
 //Routes Status Task
 //Untuk menampilkan halaman daftar status task
 $routes->get('/status_task/daftar_status_task', 'StatusTask::daftar_status_task');
 //Untuk menambah status task
-$routes->post('/status_task/tambah_status_task', 'StatusTask::tambah_status_task');
+// $routes->post('/status_task/tambah_status_task', 'StatusTask::tambah_status_task');
 //Untuk mengedit status task
 $routes->get('/status_task/edit_status_task/(:num)', 'StatusTask::edit_status_task/$1');
 $routes->post('/status_task/update_status_task', 'StatusTask::update_status_task');
 //Untuk menghapus status task
-$routes->delete('/status_task/delete_status_task/(:num)', 'StatusTask::delete_status_task/$1');
+// $routes->delete('/status_task/delete_status_task/(:num)', 'StatusTask::delete_status_task/$1');
 
 //Routes Kategori Task
 //Untuk menampilkan halaman daftar kategori task
@@ -93,12 +135,12 @@ $routes->delete('/hari_libur/delete_hari_libur/(:num)', 'HariLibur::delete_hari_
 //Untuk menampilkan halaman daftar usergroup
 $routes->get('/usergroup/daftar_usergroup', 'Usergroup::daftar_usergroup');
 //Untuk menambah usergroup
-$routes->post('/usergroup/tambah_usergroup', 'Usergroup::tambah_usergroup');
+// $routes->post('/usergroup/tambah_usergroup', 'Usergroup::tambah_usergroup');
 //Untuk mengedit usergroup
 $routes->get('/usergroup/edit_usergroup/(:num)', 'Usergroup::edit_usergroup/$1');
 $routes->post('/usergroup/update_usergroup', 'Usergroup::update_usergroup');
 //Untuk menghapus usergroup
-$routes->delete('/usergroup/delete_usergroup/(:num)', 'Usergroup::delete_usergroup/$1');
+// $routes->delete('/usergroup/delete_usergroup/(:num)', 'Usergroup::delete_usergroup/$1');
 //Untuk melihat detail usergroup
 $routes->get('/usergroup/detail_usergroup/(:num)', 'Usergroup::detail_usergroup/$1');
 

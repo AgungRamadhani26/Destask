@@ -49,7 +49,7 @@
                   <div class="col-sm-6">
                      <label for="kategori_task_bobot_kategori_task" style="font-weight: 600;">Kategori</label>
                      <?php foreach ($kategori_task as $kt) : ?>
-                        <input type="text" style="background-color:gainsboro" class="form-control mb-2" name="kategori_task_bobot_kategori_task[<?= $kt['id_kategori_task'] ?>]" id="kategori_task_bobot_kategori_task_<?= $kt['id_kategori_task'] ?>" value="<?= $kt['nama_kategori_task'] ?>" readonly>
+                        <input type="text" style="background-color:<?= $kt['color']; ?>;color:white" class="form-control mb-2" name="kategori_task_bobot_kategori_task[<?= $kt['id_kategori_task'] ?>]" id="kategori_task_bobot_kategori_task_<?= $kt['id_kategori_task'] ?>" value="<?= $kt['nama_kategori_task'] ?>" readonly>
                         <input type="hidden" name="kategoriid[<?= $kt['id_kategori_task'] ?>]" id="kategoriid_<?= $kt['id_kategori_task'] ?>" value="<?= $kt['id_kategori_task'] ?>">
                      <?php endforeach; ?>
                   </div>

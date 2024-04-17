@@ -33,7 +33,33 @@
    });
 
    $(document).ready(function() {
+      $('#nominal_harga_e').inputmask("numeric", {
+         radixPoint: ',',
+         groupSeparator: '.',
+         digits: 0,
+         autoGroup: true,
+         prefix: 'Rp ', // Menambahkan prefix "Rp "
+         rightAlign: false, // Memastikan input diarahkan ke kiri
+         min: 0, // Nilai minimum adalah 0
+         allowMinus: false, // Tidak mengizinkan input negatif
+         placeholder: ''
+      });
+   });
+
+   $(document).ready(function() {
       $('#persentase_selesai').inputmask("numeric", {
+         suffix: ' %', // Sufikskan dengan simbol persen
+         allowMinus: false, // Tidak mengizinkan tanda minus
+         rightAlign: false, // Memastikan input diarahkan ke kiri
+         min: 0, // Nilai minimum adalah 0
+         max: 100, // Nilai maksimum adalah 100
+         placeholder: '',
+         digits: 0 // Hanya menerima nilai bulat
+      });
+   });
+
+   $(document).ready(function() {
+      $('#persentase_selesai_e').inputmask("numeric", {
          suffix: ' %', // Sufikskan dengan simbol persen
          allowMinus: false, // Tidak mengizinkan tanda minus
          rightAlign: false, // Memastikan input diarahkan ke kiri

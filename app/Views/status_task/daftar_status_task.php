@@ -12,9 +12,9 @@
             <div class="card-body">
                <div class="table-responsive">
                   <h5 class="card-title">Daftar Status Task&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                     <button type="button" class="btn btn-success" title="Klik untuk menambah data status task" data-bs-toggle="modal" data-bs-target="#modaltambah_statustask">
+                     <!-- <button type="button" class="btn btn-success" title="Klik untuk menambah data status task" data-bs-toggle="modal" data-bs-target="#modaltambah_statustask">
                         <i class="ri-add-fill"></i>
-                     </button>
+                     </button> -->
                   </h5>
                   <table class="table table-striped table-bordered" id="myTable">
                      <thead>
@@ -22,6 +22,7 @@
                            <th>No</th>
                            <th>Status Task</th>
                            <th>Deskripsi</th>
+                           <th>Color</th>
                            <th>Aksi</th>
                         </tr>
                      </thead>
@@ -32,16 +33,17 @@
                               <td><?= $i++ ?></td>
                               <td><?= $st['nama_status_task'] ?></td>
                               <td><?= $st['deskripsi_status_task'] ?></td>
+                              <td style="background-color: <?= $st['color'] ?>; color:white"><?= $st['color'] ?></td>
                               <td>
                                  <div class="btn-group" role="group">
                                     <div>
                                        <button type="button" class="btn btn-warning" title="Klik untuk mengedit" data-bs-toggle="modal" data-bs-target="#modaledit_statustask" onclick="edit_status_task(<?php echo $st['id_status_task'] ?>)"><i class="ri-edit-2-line"></i></button>
                                     </div>
-                                    <form action="/status_task/delete_status_task/<?= $st['id_status_task']; ?>" method="POST" class="d-inline">
+                                    <!-- <form action="/status_task/delete_status_task/<?= $st['id_status_task']; ?>" method="POST" class="d-inline">
                                        <?= csrf_field(); ?>
                                        <input type="hidden" name="_method" value="DELETE">
                                        <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data Status Task ?');"><i class="ri-delete-bin-5-line"></i></button>
-                                    </form>
+                                    </form> -->
                                  </div>
                               </td>
                            </tr>

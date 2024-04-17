@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\PersonilModel;
 use App\Models\UserGroupModel;
 use App\Models\UserModel;
 
@@ -11,10 +12,12 @@ class User extends BaseController
     //Konstruktor agar semua method dapat menggunakan model
     protected $userModel;
     protected $usergroupModel;
+    protected $personilModel;
     public function __construct()
     {
         $this->userModel = new UserModel();
         $this->usergroupModel = new UserGroupModel();
+        $this->personilModel = new PersonilModel();
         helper(['swal_helper']);
     }
 

@@ -11,14 +11,14 @@ class KategoriPekerjaanModel extends Model
     protected $useSoftDeletes   = true;
     protected $useTimestamps    = true;
     protected $allowedFields    = [
-        'nama_kategori_pekerjaan', 'deskripsi_kategori_pekerjaan'
+        'nama_kategori_pekerjaan', 'deskripsi_kategori_pekerjaan', 'color'
     ];
 
     //Fungsi untuk mendapatkan data kategori pekerjaan
     public function getKategoriPekerjaan($id_kategori_pekerjaan = false)
     {
-        if ($id_kategori_pekerjaan == false) {
-            return $this->orderBy('id_kategori_pekerjaan', 'DESC')->findAll();
+        if ($id_kategori_pekerjaan === false) {
+            return $this->orderBy('id_kategori_pekerjaan')->findAll();
         }
         return $this->where(['id_kategori_pekerjaan' => $id_kategori_pekerjaan])->first();
     }
