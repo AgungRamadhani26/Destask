@@ -4,19 +4,19 @@ use CodeIgniter\RESTful\ResourceController;
 use DateTime;
 
 class TaskController extends ResourceController{
-    protected $modelName = 'App\Models\API\TaskModel';
-    protected $modelUser = 'App\Models\API\UserModel';
-    protected $modelUserGroup = 'App\Models\API\UserGroupModel';
-    protected $modelPekerjaan = 'App\Models\API\PekerjaanModel';
-    protected $modelStatus = 'App\Models\API\StatusTaskModel';
-    protected $modelKategori = 'App\Models\API\KategoriTaskModel';
-    protected $modelBobot = 'App\Models\API\BobotKategoriTaskModel';
+    protected $modelName = 'App\Models\TaskModel';
+    protected $modelUser = 'App\Models\UserModel';
+    protected $modelUserGroup = 'App\Models\UserGroupModel';
+    protected $modelPekerjaan = 'App\Models\PekerjaanModel';
+    protected $modelStatus = 'App\Models\StatusTaskModel';
+    protected $modelKategori = 'App\Models\KategoriTaskModel';
+    protected $modelBobot = 'App\Models\BobotKategoriTaskModel';
     protected $format = 'json';
 
     //mengambil semua data task
     public function index(){
         $model = new $this->modelName();
-        $data = $model->where(['deleted_at' => null])->orderBy('id_task', 'ASC')->findAll();
+        $data = $model->where(['deleted_at' => null])->orderBy('id_task', 'DESC')->findAll();
         return $this->respond($data, 200);
     }
     //mengambil data task berdasarkan id task
@@ -340,8 +340,8 @@ class TaskController extends ResourceController{
             $taskItem['data_tambahan'] = [
                 'nama_user' => $userData['nama'],
                 'nama_pekerjaan' => $pekerjaanData['nama_pekerjaan'],
-                'status_task' => $statusData['nama_status_task'],
-                'kategori_task' => $kategoriData['nama_kategori_task']
+                'nama_status_task' => $statusData['nama_status_task'],
+                'nama_kategori_task' => $kategoriData['nama_kategori_task']
             ];
 
             $result[] = $taskItem;
@@ -388,7 +388,7 @@ class TaskController extends ResourceController{
         $modelUser = new $this->modelUser();
     
         // Dapatkan id user group dari user yang sedang login
-        $user = $modelUser->find($iduser);
+        $user = $modelUser->getUserById($iduser);
         $idUserGroup = $user['id_usergroup'];
     
         // Dapatkan semua user yang memiliki id user group yang sama dan bukan user yang sedang login
@@ -411,9 +411,8 @@ class TaskController extends ResourceController{
                 'id_user' => $user['id_user'],
                 'status_verifikasi' => 1,
                 'persentase_selesai' => '100',
-                'bukti_selesai IS NOT' => null
             ])->findAll();
-        }
+        
     
         $result = [];
 
@@ -421,7 +420,6 @@ class TaskController extends ResourceController{
         $pekerjaanModel = new $this->modelPekerjaan();
         $statusModel = new $this->modelStatus();
         $kategoriModel = new $this->modelKategori();
-
         foreach ($data as $taskItem) {
             // Fetch user data based on id_user
             $userData = $modelUser->getUserById($taskItem['id_user']);
@@ -442,6 +440,7 @@ class TaskController extends ResourceController{
 
         // Mengirimkan data pekerjaan yang telah di-update sebagai response JSON
         return $this->response->setJSON($result);
+    }
     }
     
     

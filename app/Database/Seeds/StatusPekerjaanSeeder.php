@@ -12,26 +12,20 @@ class StatusPekerjaanSeeder extends Seeder
     {
         $data = [
             [
-                'nama_status_pekerjaan'      => 'On Progres',
+                'nama_status_pekerjaan'      => 'Presales',
                 'deskripsi_status_pekerjaan' => 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis',
                 'created_at'          => Time::now(),
                 'updated_at'          => Time::now()
             ],
             [
-                'nama_status_pekerjaan'      => 'Selesai',
+                'nama_status_pekerjaan'      => 'On Progress',
                 'deskripsi_status_pekerjaan' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum laborum',
                 'created_at'          => Time::now(),
                 'updated_at'          => Time::now()
             ],
             [
-                'nama_status_pekerjaan'      => 'Pending',
+                'nama_status_pekerjaan'      => 'Bast',
                 'deskripsi_status_pekerjaan' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere ipsam',
-                'created_at'          => Time::now(),
-                'updated_at'          => Time::now()
-            ],
-            [
-                'nama_status_pekerjaan'      => 'Cancle',
-                'deskripsi_status_pekerjaan' => 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Autem veritatis',
                 'created_at'          => Time::now(),
                 'updated_at'          => Time::now()
             ],
@@ -42,7 +36,7 @@ class StatusPekerjaanSeeder extends Seeder
                 'updated_at'          => Time::now()
             ],
             [
-                'nama_status_pekerjaan'      => 'Bast',
+                'nama_status_pekerjaan'      => 'Cancel',
                 'deskripsi_status_pekerjaan' => 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Autem veritatis',
                 'created_at'          => Time::now(),
                 'updated_at'          => Time::now()

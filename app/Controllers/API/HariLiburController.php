@@ -6,7 +6,7 @@ use CodeIgniter\API\ResponseTrait;
 class HariLiburController extends ResourceController {
     use ResponseTrait;
 
-    protected $modelName = 'App\Models\API\HariLiburModel';
+    protected $modelName = 'App\Models\HariLiburModel';
     protected $format    = 'json';
 
     public function index() {

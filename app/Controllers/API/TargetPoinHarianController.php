@@ -6,8 +6,8 @@ use CodeIgniter\API\ResponseTrait;
 class TargetPoinHarianController extends ResourceController {
     use ResponseTrait;
 
-    protected $modelName = 'App\Models\API\TargetPoinHarianModel';
-    protected $modelUser = 'App\Models\API\UserModel';
+    protected $modelName = 'App\Models\TargetPoinHarianModel';
+    protected $modelUser = 'App\Models\UserModel';
     protected $format    = 'json';
 
     public function index() {

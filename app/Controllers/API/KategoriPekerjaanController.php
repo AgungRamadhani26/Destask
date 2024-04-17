@@ -6,7 +6,7 @@ use CodeIgniter\API\ResponseTrait;
 class KategoriPekerjaanController extends ResourceController {
     use ResponseTrait;
 
-    protected $modelName = 'App\Models\API\KategoriPekerjaanModel';
+    protected $modelName = 'App\Models\KategoriPekerjaanModel';
     protected $format    = 'json';
 
     public function index() {

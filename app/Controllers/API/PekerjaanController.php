@@ -6,11 +6,13 @@ use CodeIgniter\API\ResponseTrait;
 class PekerjaanController extends ResourceController {
     use ResponseTrait;
 
-    protected $modelName = 'App\Models\API\PekerjaanModel';
-    protected $modelPersonil = 'App\Models\API\PersonilModel';
-    protected $modelUser = 'App\Models\API\UserModel';
-    protected $modelStatus = 'App\Models\API\StatusPekerjaanModel';
-    protected $modelKategori = 'App\Models\API\KategoriPekerjaanModel';
+    protected $modelName = 'App\Models\PekerjaanModel';
+    protected $modelPersonil = 'App\Models\PersonilModel';
+    protected $modelUser = 'App\Models\UserModel';
+    protected $modelStatus = 'App\Models\StatusPekerjaanModel';
+    protected $modelKategori = 'App\Models\KategoriPekerjaanModel';
+    protected $modelTask = 'App\Models\TaskModel';
+
     protected $format    = 'json';
 
     public function index() {
@@ -22,129 +24,173 @@ class PekerjaanController extends ResourceController {
     public function show($id = null) {
         $model = new $this->modelName();
         $pekerjaan = $model->where(['id_pekerjaan' => $id, 'deleted_at' => null])->findAll();
-        $personilModel = new $this->modelPersonil();
-        $userModel = new $this->modelUser();
-        $statusModel = new $this->modelStatus();
-        $kategoriModel = new $this->modelKategori();
-        
         $result = [];
-        foreach ($pekerjaan as $pekerjaanItem) {
-            $personilInfo = $personilModel->find($pekerjaanItem['id_personil']);
-            // Check if id_user_pm exists
-            if ($personilInfo && isset($personilInfo['id_user_pm'])) {
-                // Fetch user data based on id_user_pm
-                $id_user_pm = $userModel->getUserById($personilInfo['id_user_pm']);
-                $desainer1 = $userModel->getUserById($personilInfo['desainer1']);
-                $desainer2 = $userModel->getUserById($personilInfo['desainer2']);
-                $be_web1 = $userModel->getUserById($personilInfo['be_web1']);
-                $be_web2 = $userModel->getUserById($personilInfo['be_web2']);
-                $be_web3 = $userModel->getUserById($personilInfo['be_web3']);
-                $be_mobile1 = $userModel->getUserById($personilInfo['be_mobile1']);
-                $be_mobile2 = $userModel->getUserById($personilInfo['be_mobile2']);
-                $be_mobile3 = $userModel->getUserById($personilInfo['be_mobile3']);
-                $fe_web1 = $userModel->getUserById($personilInfo['fe_web1']);
-                $fe_mobile1 = $userModel->getUserById($personilInfo['fe_mobile1']);
+        if ($pekerjaan) {
+            $idPekerjaan = array_column($pekerjaan, 'id_pekerjaan');
+            $data = $model->whereIn('id_pekerjaan', $idPekerjaan)->findAll();
+            //data tambahan
+            $statusModel = new $this->modelStatus();
+            $kategoriModel = new $this->modelKategori();
+            $personilModel = new $this->modelPersonil();
+            $userModel = new $this->modelUser();
+            foreach ($data as $pekerjaanItem) {
+                $status = $statusModel->find($pekerjaanItem['id_status_pekerjaan']);
+                $kategori = $kategoriModel->find($pekerjaanItem['id_kategori_pekerjaan']);
+                $personil = $personilModel->where(['id_pekerjaan' => $pekerjaanItem['id_pekerjaan']])->findAll();
+                $data_tambahan = [
+                    'nama_status_pekerjaan' => $status['nama_status_pekerjaan'],
+                    'nama_kategori_pekerjaan' => $kategori['nama_kategori_pekerjaan']
+                ];
+                $pm = [];
+                $desainer = [];
+                $backend_web = [];
+                $backend_mobile = [];
+                $frontend_web = [];
+                $frontend_mobile = [];
+                foreach ($personil as $personilItem) {
+                    $user = $userModel->find($personilItem['id_user']);
+                    if ($personilItem['role_personil'] === 'project_manager') {
+                        $pm[] = $user;
+                    } elseif ($personilItem['role_personil'] === 'desainer') {
+                        $desainer[] = $user;
+                    } elseif ($personilItem['role_personil'] === 'backend_web') {
+                        $backend_web[] = $user;
+                    } elseif ($personilItem['role_personil'] === 'backend_mobile') {
+                        $backend_mobile[] = $user;
+                    } elseif ($personilItem['role_personil'] === 'frontend_web') {
+                        $frontend_web[] = $user;
+                    } elseif ($personilItem['role_personil'] === 'frontend_mobile') {
+                        $frontend_mobile[] = $user;
+                    }
+                }
                 
-
-                // Replace id_user_pm with user name
-                $personilInfo['id_user_pm'] = $id_user_pm['nama'];
-                $personilInfo['desainer1'] = $desainer1['nama'];
-                $personilInfo['desainer2'] = $desainer2['nama'];
-                $personilInfo['be_web1'] = $be_web1['nama'];
-                $personilInfo['be_web2'] = $be_web2['nama'];
-                $personilInfo['be_web3'] = $be_web3['nama'];
-                $personilInfo['be_mobile1'] = $be_mobile1['nama'];
-                $personilInfo['be_mobile2'] = $be_mobile2['nama'];
-                $personilInfo['be_mobile3'] = $be_mobile3['nama'];
-                $personilInfo['fe_web1'] = $fe_web1['nama'];
-                $personilInfo['fe_mobile1'] = $fe_mobile1['nama'];
+                $data_tambahan['pm'] = array_map(function($item) {
+                    return ['id_user' => $item['id_user'], 'nama' => $item['nama']];
+                }, $pm);
+                
+                $data_tambahan['desainer'] = array_map(function($item) {
+                    return ['id_user' => $item['id_user'], 'nama' => $item['nama']];
+                }, $desainer);
+                
+                $data_tambahan['backend_web'] = array_map(function($item) {
+                    return ['id_user' => $item['id_user'], 'nama' => $item['nama']];
+                }, $backend_web);
+                $data_tambahan['backend_mobile'] = array_map(function($item) {
+                    return ['id_user' => $item['id_user'], 'nama' => $item['nama']];
+                }, $backend_web);
+                $data_tambahan['frontend_web'] = array_map(function($item) {
+                    return ['id_user' => $item['id_user'], 'nama' => $item['nama']];
+                }, $frontend_web);
+                $data_tambahan['frontend_mobile'] = array_map(function($item) {
+                    return ['id_user' => $item['id_user'], 'nama' => $item['nama']];
+                }, $frontend_web);
+                
+                $pekerjaanItem['data_tambahan'] = $data_tambahan;
+                array_push($result, $pekerjaanItem);
             }
-            //add status
-            $statusInfo = $statusModel->find($pekerjaanItem['id_status_pekerjaan']);
-
-            //add kategori
-            $kategoriInfo = $kategoriModel->find($pekerjaanItem['id_kategori_pekerjaan']);
-
-            // Menambahkan data lengkap personil ke dalam array pekerjaan
-            $pekerjaanItem['data_tambahan'] = [
-                'status_pekerjaan' => $statusInfo['nama_status_pekerjaan'],
-                'kategori_pekerjaan' => $kategoriInfo['nama_kategori_pekerjaan'],
-                'id_user_pm' => $id_user_pm['id_user'],
-                'nama_pm' => $personilInfo['id_user_pm'],
-                'desainer1' => $desainer1['id_user'],
-                'nama_desainer1' => $personilInfo['desainer1'],
-                'desainer2' => $desainer2['id_user'],
-                'nama_desainer2' => $personilInfo['desainer2'],
-                'be_web1' => $be_web1['id_user'],
-                'nama_be_web1' => $personilInfo['be_web1'],
-                'be_web2' => $be_web2['id_user'],
-                'nama_be_web2' => $personilInfo['be_web2'],
-                'be_web3' => $be_web3['id_user'],
-                'nama_be_web3' => $personilInfo['be_web3'],
-                'be_mobile1' => $be_mobile1['id_user'],
-                'nama_be_mobile1' => $personilInfo['be_mobile1'],
-                'be_mobile2' => $be_mobile2['id_user'],
-                'nama_be_mobile2' => $personilInfo['be_mobile2'],
-                'be_mobile3' => $be_mobile3['id_user'],
-                'nama_be_mobile3' => $personilInfo['be_mobile3'],
-                'fe_web1' => $fe_web1['id_user'],
-                'nama_fe_web1' => $personilInfo['fe_web1'],
-                'fe_mobile1' => $fe_mobile1['id_user'],
-                'nama_fe_mobile1' => $personilInfo['fe_mobile1'],
-                'nama_status' => $statusInfo['nama_status_pekerjaan'],
-                'nama_kategori' => $kategoriInfo['nama_kategori_pekerjaan']
-            ];
-            // Menambahkan pekerjaan yang telah di-update ke dalam hasil akhir
-            $result[] = $pekerjaanItem;
+            return $this->response->setJSON($result);
+        } else {
+            return $this->failNotFound('Data tidak ditemukan');
         }
-
-        // Mengirimkan data pekerjaan yang telah di-update sebagai response JSON
-        return $this->response->setJSON($result);
     }
+    
 
     public function showPekerjaan($iduser)
     {
         // Membuat instance dari model PekerjaanModel dan PersonilModel
         $pekerjaanModel = new $this->modelName();
         $personilModel = new $this->modelPersonil();
-        $userModel = new $this->modelUser(); // Assuming you have a UserModel
-
-        // Mendapatkan id personil yang terkait dengan id user
-        $idPersonil = $personilModel->getIdPersonilByIdUser($iduser);
-        if (!$idPersonil) {
-            return $this->failNotFound('Personil tidak ditemukan');
-        }
-
-        // Mendapatkan pekerjaan berdasarkan id personil
-        $pekerjaan = $pekerjaanModel->WhereIn('id_personil', $idPersonil)->where('deleted_at', null)->orderBy('id_pekerjaan', 'ASC')->findAll();
-        // Menggabungkan data pekerjaan dan personil
+        $userModel = new $this->modelUser();
+        $statusModel = new $this->modelStatus();
+        $kategoriModel = new $this->modelKategori();
+        $taskModel = new $this->modelTask();
         $result = [];
-        foreach ($pekerjaan as $pekerjaanItem) {
-            $personilInfo = $personilModel->find($pekerjaanItem['id_personil']);
-            // Check if id_user_pm exists
-            if ($personilInfo && isset($personilInfo['id_user_pm'])) {
-                // Fetch user data based on id_user_pm
-                $id_user_pm = $userModel->getUserById($personilInfo['id_user_pm']);
+
+        //jika id user = role personil maka id pekerjaan dimasukan ke pekerjaan
+        $pekerjaan = $personilModel->where('id_user', $iduser)->findAll();
+        if ($pekerjaan) {
+            $idPekerjaan = array_column($pekerjaan, 'id_pekerjaan');
+            $data = $pekerjaanModel->whereIn('id_pekerjaan', $idPekerjaan)->findAll();
+            //data tambahan
+
+            foreach ($data as $pekerjaanItem) {
+                $status = $statusModel->find($pekerjaanItem['id_status_pekerjaan']);
+                $kategori = $kategoriModel->find($pekerjaanItem['id_kategori_pekerjaan']);
+                $personil = $personilModel->where(['id_pekerjaan' => $pekerjaanItem['id_pekerjaan']])->findAll();
+                $data_tambahan = [
+                    'nama_status_pekerjaan' => $status['nama_status_pekerjaan'],
+                    'nama_kategori_pekerjaan' => $kategori['nama_kategori_pekerjaan']
+                ];
+                $pm = [];
+                $desainer = [];
+                $backend_web = [];
+                $backend_mobile = [];
+                $frontend_web = [];
+                $frontend_mobile = [];
+                foreach ($personil as $personilItem) {
+                    $user = $userModel->find($personilItem['id_user']);
+                    if ($personilItem['role_personil'] === 'project_manager') {
+                        $pm[] = $user;
+                    } elseif ($personilItem['role_personil'] === 'desainer') {
+                        $desainer[] = $user;
+                    } elseif ($personilItem['role_personil'] === 'backend_web') {
+                        $backend_web[] = $user;
+                    } elseif ($personilItem['role_personil'] === 'backend_mobile') {
+                        $backend_mobile[] = $user;
+                    } elseif ($personilItem['role_personil'] === 'frontend_web') {
+                        $frontend_web[] = $user;
+                    } elseif ($personilItem['role_personil'] === 'frontend_mobile') {
+                        $frontend_mobile[] = $user;
+                    }
+                }
                 
+                $data_tambahan['pm'] = array_map(function($item) {
+                    return ['id_user' => $item['id_user'], 'nama' => $item['nama']];
+                }, $pm);
+                
+                $data_tambahan['desainer'] = array_map(function($item) {
+                    return ['id_user' => $item['id_user'], 'nama' => $item['nama']];
+                }, $desainer);
+                
+                $data_tambahan['backend_web'] = array_map(function($item) {
+                    return ['id_user' => $item['id_user'], 'nama' => $item['nama']];
+                }, $backend_web);
+                $data_tambahan['backend_mobile'] = array_map(function($item) {
+                    return ['id_user' => $item['id_user'], 'nama' => $item['nama']];
+                }, $backend_web);
+                $data_tambahan['frontend_web'] = array_map(function($item) {
+                    return ['id_user' => $item['id_user'], 'nama' => $item['nama']];
+                }, $frontend_web);
+                $data_tambahan['frontend_mobile'] = array_map(function($item) {
+                    return ['id_user' => $item['id_user'], 'nama' => $item['nama']];
+                }, $frontend_web);
 
-                // Replace id_user_pm with user name
-                $personilInfo['id_user_pm'] = $id_user_pm['nama'];
+                // Menghitung jumlah task untuk pekerjaan ini
+                // Menghitung jumlah task selesai untuk pekerjaan ini
+                #id task = 2 = selesai
+                // Menghitung jumlah task selesai untuk pekerjaan ini
+                $jumlah_task_selesai = $taskModel->where(['id_pekerjaan' => $pekerjaanItem['id_pekerjaan'], 'id_status_task' => '2'])->countAllResults();
+
+                // Menghitung jumlah task total untuk pekerjaan ini
+                $jumlah_task_total = $taskModel->where('id_pekerjaan', $pekerjaanItem['id_pekerjaan'])->countAllResults();
+
+                // Menghitung persentase task yang selesai
+                $persentase_selesai = ($jumlah_task_total > 0) ? ($jumlah_task_selesai / $jumlah_task_total) * 100 : 0;
+
+                $data_tambahan['persentase_task_selesai'] = $persentase_selesai;
+
+
+
+                $pekerjaanItem['data_tambahan'] = $data_tambahan;
+                array_push($result, $pekerjaanItem);
             }
-
-            // Menambahkan data lengkap personil ke dalam array pekerjaan
-            $pekerjaanItem['data_tambahan'] = [
-                'id_user_pm' => $id_user_pm['id_user'],
-                'nama_pm' => $personilInfo['id_user_pm']
-            ];
-
-
-            // Menambahkan pekerjaan yang telah di-update ke dalam hasil akhir
-            $result[] = $pekerjaanItem;
+            return $this->response->setJSON($result);
+        } else {
+            return $this->failNotFound('Data tidak ditemukan');
         }
-
-        // Mengirimkan data pekerjaan yang telah di-update sebagai response JSON
-        return $this->response->setJSON($result);
     }
+
+
 
     public function update($id = null){
         $model = new $this->modelName();

@@ -7,7 +7,7 @@ use CodeIgniter\API\ResponseTrait;
 
 class GantiPasswordController extends ResourceController {
     use ResponseTrait;
-    protected $modelName = 'App\Models\API\UserModel';
+    protected $modelName = 'App\Models\UserModel';
     protected $format    = 'json';
 
     public function index() {

@@ -9,7 +9,7 @@ use CodeIgniter\API\ResponseTrait;
 class FotoProfilController extends ResourceController
 {
   use ResponseTrait;
-  protected $model = 'App\Models\API\UserModel';
+  protected $model = 'App\Models\UserModel';
   protected $validation;
 
   public function create()

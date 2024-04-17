@@ -6,7 +6,7 @@ use CodeIgniter\API\ResponseTrait;
 class NotifikasiController extends ResourceController {
     use ResponseTrait;
 
-    protected $modelName = 'App\Models\API\NotifikasiModel';
+    protected $modelName = 'App\Models\NotifikasiModel';
     protected $format    = 'json';
 
     public function index() {

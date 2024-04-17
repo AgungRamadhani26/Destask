@@ -6,7 +6,7 @@ use CodeIgniter\API\ResponseTrait;
 class KategoriTaskController extends ResourceController {
     use ResponseTrait;
 
-    protected $modelName = 'App\Models\API\KategoriTaskModel';
+    protected $modelName = 'App\Models\KategoriTaskModel';
     protected $format    = 'json';
 
     public function index() {

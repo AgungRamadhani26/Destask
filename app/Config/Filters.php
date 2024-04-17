@@ -41,7 +41,11 @@ class Filters extends BaseConfig
     public array $globals = [
         'before' => [
             // 'honeypot',
-            'csrf' => ['except' => 'api/*']
+            'csrf' => ['except' => [
+                'api/*',
+                'authlogin',
+                'cekuser'
+            ],]
             // 'invalidchars',
         ],
         'after' => [
@@ -74,20 +78,10 @@ class Filters extends BaseConfig
     public array $filters = [
         'before' => [
             'jwtfilter' => [
-                'api/user',
-                'api/pekerjaan',
-                'api/task',
-                'api/bobotKategoritask',
-                'api/harilibur',
-                'api/kategoripekerjaan',
-                'api/kategoritask',
-                'api/kinerja',
-                'api/notifikasi',
-                'api/personil',
-                'api/statuspekerjaan',
-                'api/statustask',
-                'api/targetpoinharian'
-            ],
+                'api/*',
+                'authlogin',
+                'cekuser'
+        ],
             'cors' => [
                 'api/*'
             ]

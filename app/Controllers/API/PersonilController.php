@@ -3,7 +3,7 @@ namespace App\Controllers\API;
 use CodeIgniter\RESTful\ResourceController;
 
 class PersonilController extends ResourceController {
-    protected $modelName = 'App\Models\API\PersonilModel';
+    protected $modelName = 'App\Models\PersonilModel';
     protected $format    = 'json';
 
     public function index() {

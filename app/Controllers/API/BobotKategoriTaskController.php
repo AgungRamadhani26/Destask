@@ -6,7 +6,7 @@ use CodeIgniter\API\ResponseTrait;
 class BobotKategoriTaskController extends ResourceController {
     use ResponseTrait;
 
-    protected $modelName = 'App\Models\API\BobotKategoriTaskModel';
+    protected $modelName = 'App\Models\BobotKategoriTaskModel';
     protected $format    = 'json';
 
     public function index() {

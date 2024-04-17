@@ -9,7 +9,7 @@ class AuthController extends ResourceController
 {
   use ResponseTrait;
 
-  protected $modelName = 'App\Models\API\UserModel';
+  protected $modelName = 'App\Models\UserModel';
   protected $format    = 'json';
 
   // constructor
@@ -45,10 +45,8 @@ class AuthController extends ResourceController
       'username' => $data['username'],
       'email' => $data['email'],
       'password' => $data['password'],
-      'user_role' => $data['user_role'],
       'user_level' => $data['user_level'],
       'nama' => $data['nama'],
-      'status_keaktifan' => $data['status_keaktifan'],
       'foto_profil' => $data['foto_profil'],
     ];
 

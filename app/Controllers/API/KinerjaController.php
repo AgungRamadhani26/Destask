@@ -6,7 +6,7 @@ use CodeIgniter\API\ResponseTrait;
 class KinerjaController extends ResourceController {
     use ResponseTrait;
 
-    protected $modelName = 'App\Models\API\KinerjaModel';
+    protected $modelName = 'App\Models\KinerjaModel';
     protected $format    = 'json';
 
     public function index() {

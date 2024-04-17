@@ -6,7 +6,7 @@ use CodeIgniter\API\ResponseTrait;
 class StatusTaskController extends ResourceController {
     use ResponseTrait;
 
-    protected $modelName = 'App\Models\API\StatusTaskModel';
+    protected $modelName = 'App\Models\StatusTaskModel';
     protected $format    = 'json';
 
     public function index() {

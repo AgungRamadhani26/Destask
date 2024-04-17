@@ -3,7 +3,7 @@ namespace App\Controllers\API;
 use CodeIgniter\RESTful\ResourceController;
 
 class UserController extends ResourceController{
-    protected $modelName = 'App\Models\API\UserModel';
+    protected $modelName = 'App\Models\UserModel';
     protected $format = 'json';
     protected $validation;
 
