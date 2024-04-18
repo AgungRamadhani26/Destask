@@ -12,7 +12,6 @@ class PersonilSeeder extends Seeder
     {
         $data = [
             [
-                'id_personil' => 1,
                 'id_user' => 1,
                 'id_pekerjaan' => 1,
                 'id_user' => 4,

@@ -18,14 +18,12 @@ class UserGroupSeeder extends Seeder
                 'updated_at'          => Time::now()
             ],
             [
-                'id_usergroup'        => 2,
                 'nama_usergroup'      => 'Web',
                 'deskripsi_usergroup' => 'Divisi Pengembangan Web bertanggung jawab merancang dan memelihara infrastruktur teknis situs web. Mereka mengimplementasikan desain menggunakan bahasa pemrograman terkini, bekerja sama dengan divisi desain, dan memastikan keamanan serta kinerja situs optimal.',
                 'created_at'          => Time::now(),
                 'updated_at'          => Time::now()
             ],
             [
-                'id_usergroup'        => 3,
                 'nama_usergroup'      => 'Mobile',
                 'deskripsi_usergroup' => 'Divisi Mobile menciptakan aplikasi inovatif dengan antarmuka responsif. Tim fokus pada kebutuhan pengguna dan selalu mengikuti perkembangan teknologi mobile. Tujuannya: memberikan pengalaman pengguna terbaik.',
                 'created_at'          => Time::now(),
