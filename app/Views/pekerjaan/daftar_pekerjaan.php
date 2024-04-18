@@ -97,8 +97,6 @@
                            <th>Nama Pekerjaan</th>
                            <th>Pelanggan</th>
                            <th>Project Manager</th>
-                           <th>Jenis Layanan</th>
-                           <th>Nominal Harga</th>
                            <th>Kategori Pekerjaan</th>
                            <th>Status Pekerjaan</th>
                            <th>Target Waktu Selesai</th>
@@ -137,19 +135,24 @@
                                  }
                                  ?>
                               </td>
-                              <td><?= $p['jenis_layanan'] ?></td>
-                              <td><?= idr($p['nominal_harga']) ?></td>
                               <td>
                                  <?php foreach ($kategori_pekerjaan as $kp) : ?>
-                                    <?= $p['id_kategori_pekerjaan'] == $kp['id_kategori_pekerjaan'] ? $kp['nama_kategori_pekerjaan'] : ''; ?>
+                                    <?php if ($p['id_kategori_pekerjaan'] == $kp['id_kategori_pekerjaan']) : ?>
+                                       <span style="background-color: <?= $kp['color'] ?>;" class="badge rounded-pill"><?= $kp['nama_kategori_pekerjaan'] ?></span>
+                                    <?php endif; ?>
                                  <?php endforeach; ?>
                               </td>
                               <td>
                                  <?php foreach ($status_pekerjaan as $sp) : ?>
-                                    <?= $p['id_status_pekerjaan'] == $sp['id_status_pekerjaan'] ? $sp['nama_status_pekerjaan'] : ''; ?>
+                                    <?php if ($p['id_status_pekerjaan'] == $sp['id_status_pekerjaan']) : ?>
+                                       <span style="background-color: <?= $sp['color'] ?>;" class="badge rounded-pill"><?= $sp['nama_status_pekerjaan'] ?></span>
+                                    <?php endif; ?>
                                  <?php endforeach; ?>
                               </td>
-                              <td><?= $p['target_waktu_selesai'] ?></td>
+                              <td>
+                                 <?php $target_waktu_selesai1 = date('d-m-Y', strtotime($p['target_waktu_selesai'])) ?>
+                                 <?= $target_waktu_selesai1 ?>
+                              </td>
                            </tr>
                         <?php endforeach; ?>
                      </tbody>

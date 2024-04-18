@@ -35,7 +35,7 @@
                                 </div>
                                 <div class="ps-3 pt-2 pb-2">
                                     <h5 class="judul_card">Total Pekerjaan</h5>
-                                    <span class="text-danger small fw-bold">25</span>
+                                    <span class="text-danger small fw-bold"><?= $jumlah_pekerjaan ?></span>
                                 </div>
                             </div>
                         </div>
@@ -84,8 +84,9 @@
                 <div class="body_card mb-2 mt-2 ms-2 me-2">
                     <div class="align-items-center">
                         <div class="btn-group" role="group">
-                            <a href="/pekerjaan/add_pekerjaan" class="btn btn-primary"><i class="bi bi-journal-plus"></i> Pekerjaan Baru</a>
-                            <button type="button" class="btn btn-success"><i class="bi bi-database-add"></i> Import Pekerjaan</button>
+                            <?php if (session()->get('user_level') == "hod" || session()->get('user_level') == "admin") : ?>
+                                <a href="/pekerjaan/add_pekerjaan" class="btn btn-primary"><i class="bi bi-journal-plus"></i> Pekerjaan Baru</a>
+                            <?php endif ?>
                             <a href="/pekerjaan/daftar_pekerjaan" class="btn btn-info"><i class="bi bi-question-diamond"></i> Detail Pekerjaan</a>
                             <button type="button" class="btn btn-warning"><i class="bi bi-download"></i> Download Pekerjaan</button>
                         </div>
@@ -120,22 +121,26 @@
             <div class="row mb-4">
                 <div class="col-4">
                     <div class="kanban-column-header" style="background-color: <?= $status_pekerjaan_presales['color'] ?>;">
-                        <h5 style="font-weight: bold;">Presales</h5>
+                        <h5 style="font-weight: bold;">Presales <span class="badge bg-white text-primary"><?= $jumlah_pekerjaan_presales ?></span></h5>
                     </div>
                     <div class="kanban-column">
                         <div class="kanban-droppable" id="todo">
                             <?php foreach ($pekerjaan_presales as $pp) : ?>
                                 <div class="kanban-card">
-                                    <a href="" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
-                                    <a href="" class="badge btn bg-primary" title="Lihat daftar task dan verifikasi task"><i class="bi bi-clipboard-data"></i></a>
-                                    <a href="/pekerjaan/edit_pekerjaan/<?= $pp['id_pekerjaan'] ?>" class="badge btn bg-warning" title="Klik untuk mengedit data pekerjaan"><i class="bi bi-pencil"></i></a>
-                                    <a href="/pekerjaan/edit_personil_pekerjaan/<?= $pp['id_pekerjaan'] ?>" class="badge btn bg-warning bg-opacity-75" title="Klik untuk mengedit data personil"><i class="bi bi-person-fill-gear"></i></a>
-                                    <form action="/pekerjaan/delete_pekerjaan/<?= $pp['id_pekerjaan'] ?>" method="POST" class="d-inline">
-                                        <?= csrf_field(); ?>
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <button type="submit" class="badge btn bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?, jika iya maka data personil terkait pekerjaan juga akan terhapus.');"><i class="ri-delete-bin-5-line"></i></button>
-                                    </form>
-                                    <button type="button" class="badge btn bg-warning" title="Klik untuk mengubah status pekerjaan ini" data-bs-toggle="modal" data-bs-target="#modal_editpekerjaan_status_pekerjaan" onclick="editpekerjaan_status_pekerjaan(<?php echo $pp['id_pekerjaan'] ?>)"><i class="bi bi-pencil-square"></i></button>
+                                    <?php if (session()->get('user_level') == "staff" || session()->get('user_level') == "supervisi") : ?>
+                                        <a href="" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
+                                    <?php endif ?>
+                                    <a href="/task/daftar_task/<?= $pp['id_pekerjaan'] ?>" class="badge btn bg-primary" title="Lihat daftar task atau verifikasi task"><i class="bi bi-clipboard-data"></i></a>
+                                    <?php if (session()->get('user_level') == "hod" || session()->get('user_level') == "admin") : ?>
+                                        <a href="/pekerjaan/edit_pekerjaan/<?= $pp['id_pekerjaan'] ?>" class="badge btn bg-warning" title="Klik untuk mengedit data pekerjaan"><i class="bi bi-pencil"></i></a>
+                                        <a href="/pekerjaan/edit_personil_pekerjaan/<?= $pp['id_pekerjaan'] ?>" class="badge btn bg-warning bg-opacity-75" title="Klik untuk mengedit data personil"><i class="bi bi-person-fill-gear"></i></a>
+                                        <form action="/pekerjaan/delete_pekerjaan/<?= $pp['id_pekerjaan'] ?>" method="POST" class="d-inline">
+                                            <?= csrf_field(); ?>
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <button type="submit" class="badge btn bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?, jika iya maka data personil terkait pekerjaan juga akan terhapus.');"><i class="ri-delete-bin-5-line"></i></button>
+                                        </form>
+                                        <button type="button" class="badge btn bg-warning" title="Klik untuk mengubah status pekerjaan ini" data-bs-toggle="modal" data-bs-target="#modal_editpekerjaan_status_pekerjaan" onclick="editpekerjaan_status_pekerjaan(<?php echo $pp['id_pekerjaan'] ?>)"><i class="bi bi-pencil-square"></i></button>
+                                    <?php endif ?>
                                     <br>
                                     <br>
                                     <?= $pp['nama_pekerjaan'] ?>
@@ -165,7 +170,9 @@
                                         $nomor_telepon = '+62' . substr($nomor_telepon1, 1);
                                     }
                                     ?>
-                                    <a href="https://wa.me/<?= $nomor_telepon ?>" target="_blank" class="badge btn bg-success" title="Hubungi PIC"><i class="bi bi-telephone"></i></a>
+                                    <?php if (session()->get('user_level') == "hod" || session()->get('user_level') == "admin") : ?>
+                                        <a href="https://wa.me/<?= $nomor_telepon ?>" target="_blank" class="badge btn bg-success" title="Hubungi PIC"><i class="bi bi-telephone"></i></a>
+                                    <?php endif ?>
                                 </div>
                             <?php endforeach; ?>
                         </div>
@@ -173,22 +180,26 @@
                 </div>
                 <div class="col-4">
                     <div class="kanban-column-header" style="background-color: <?= $status_pekerjaan_onprogres['color'] ?>;">
-                        <h5 style="font-weight: bold;">On Progres</h5>
+                        <h5 style="font-weight: bold;">On Progres <span class="badge bg-white text-primary"><?= $jumlah_pekerjaan_onprogres ?></span></h5>
                     </div>
                     <div class="kanban-column">
                         <div class="kanban-droppable" id="todo">
                             <?php foreach ($pekerjaan_onprogres as $po) : ?>
                                 <div class="kanban-card">
-                                    <a href="" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
-                                    <a href="" class="badge btn bg-primary" title="Lihat daftar task dan verifikasi task"><i class="bi bi-clipboard-data"></i></a>
-                                    <a href="/pekerjaan/edit_pekerjaan/<?= $po['id_pekerjaan'] ?>" class="badge btn bg-warning" title="Klik untuk mengedit data pekerjaan"><i class="bi bi-pencil"></i></a>
-                                    <a href="/pekerjaan/edit_personil_pekerjaan/<?= $po['id_pekerjaan'] ?>" class="badge btn bg-warning bg-opacity-75" title="Klik untuk mengedit data personil"><i class="bi bi-person-fill-gear"></i></a>
-                                    <form action="/pekerjaan/delete_pekerjaan/<?= $po['id_pekerjaan'] ?>" method="POST" class="d-inline">
-                                        <?= csrf_field(); ?>
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <button type="submit" class="badge btn bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?, jika iya maka data personil terkait pekerjaan juga akan terhapus.');"><i class="ri-delete-bin-5-line"></i></button>
-                                    </form>
-                                    <button type="button" class="badge btn bg-warning" title="Klik untuk mengubah status pekerjaan ini" data-bs-toggle="modal" data-bs-target="#modal_editpekerjaan_status_pekerjaan" onclick="editpekerjaan_status_pekerjaan(<?php echo $po['id_pekerjaan'] ?>)"><i class="bi bi-pencil-square"></i></button>
+                                    <?php if (session()->get('user_level') == "staff" || session()->get('user_level') == "supervisi") : ?>
+                                        <a href="" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
+                                    <?php endif ?>
+                                    <a href="/task/daftar_task/<?= $po['id_pekerjaan'] ?>" class="badge btn bg-primary" title="Lihat daftar task atau verifikasi task"><i class="bi bi-clipboard-data"></i></a>
+                                    <?php if (session()->get('user_level') == "hod" || session()->get('user_level') == "admin") : ?>
+                                        <a href="/pekerjaan/edit_pekerjaan/<?= $po['id_pekerjaan'] ?>" class="badge btn bg-warning" title="Klik untuk mengedit data pekerjaan"><i class="bi bi-pencil"></i></a>
+                                        <a href="/pekerjaan/edit_personil_pekerjaan/<?= $po['id_pekerjaan'] ?>" class="badge btn bg-warning bg-opacity-75" title="Klik untuk mengedit data personil"><i class="bi bi-person-fill-gear"></i></a>
+                                        <form action="/pekerjaan/delete_pekerjaan/<?= $po['id_pekerjaan'] ?>" method="POST" class="d-inline">
+                                            <?= csrf_field(); ?>
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <button type="submit" class="badge btn bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?, jika iya maka data personil terkait pekerjaan juga akan terhapus.');"><i class="ri-delete-bin-5-line"></i></button>
+                                        </form>
+                                        <button type="button" class="badge btn bg-warning" title="Klik untuk mengubah status pekerjaan ini" data-bs-toggle="modal" data-bs-target="#modal_editpekerjaan_status_pekerjaan" onclick="editpekerjaan_status_pekerjaan(<?php echo $po['id_pekerjaan'] ?>)"><i class="bi bi-pencil-square"></i></button>
+                                    <?php endif ?>
                                     <br>
                                     <br>
                                     <?= $po['nama_pekerjaan'] ?>
@@ -218,7 +229,9 @@
                                         $nomor_teleponpo = '+62' . substr($nomor_telepon2, 1);
                                     }
                                     ?>
-                                    <a href="https://wa.me/<?= $nomor_teleponpo ?>" target="_blank" class="badge btn bg-success" title="Hubungi PIC"><i class="bi bi-telephone"></i></a>
+                                    <?php if (session()->get('user_level') == "hod" || session()->get('user_level') == "admin") : ?>
+                                        <a href="https://wa.me/<?= $nomor_teleponpo ?>" target="_blank" class="badge btn bg-success" title="Hubungi PIC"><i class="bi bi-telephone"></i></a>
+                                    <?php endif ?>
                                 </div>
                             <?php endforeach; ?>
                         </div>
@@ -226,22 +239,26 @@
                 </div>
                 <div class="col-4">
                     <div class="kanban-column-header" style="background-color: <?= $status_pekerjaan_bast['color'] ?>;">
-                        <h5 style="font-weight: bold;">Bast</h5>
+                        <h5 style="font-weight: bold;">Bast <span class="badge bg-white text-primary"><?= $jumlah_pekerjaan_bast ?></span></h5>
                     </div>
                     <div class="kanban-column">
                         <div class="kanban-droppable" id="todo">
                             <?php foreach ($pekerjaan_bast as $pb) : ?>
                                 <div class="kanban-card">
-                                    <a href="" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
-                                    <a href="" class="badge btn bg-primary" title="Lihat daftar task dan verifikasi task"><i class="bi bi-clipboard-data"></i></a>
-                                    <a href="/pekerjaan/edit_pekerjaan/<?= $pb['id_pekerjaan'] ?>" class="badge btn bg-warning" title="Klik untuk mengedit data pekerjaan"><i class="bi bi-pencil"></i></a>
-                                    <a href="/pekerjaan/edit_personil_pekerjaan/<?= $pb['id_pekerjaan'] ?>" class="badge btn bg-warning bg-opacity-75" title="Klik untuk mengedit data personil"><i class="bi bi-person-fill-gear"></i></a>
-                                    <form action="/pekerjaan/delete_pekerjaan/<?= $pb['id_pekerjaan'] ?>" method="POST" class="d-inline">
-                                        <?= csrf_field(); ?>
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <button type="submit" class="badge btn bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?, jika iya maka data personil terkait pekerjaan juga akan terhapus.');"><i class="ri-delete-bin-5-line"></i></button>
-                                    </form>
-                                    <button type="button" class="badge btn bg-warning" title="Klik untuk mengubah status pekerjaan ini" data-bs-toggle="modal" data-bs-target="#modal_editpekerjaan_status_pekerjaan" onclick="editpekerjaan_status_pekerjaan(<?php echo $pb['id_pekerjaan'] ?>)"><i class="bi bi-pencil-square"></i></button>
+                                    <?php if (session()->get('user_level') == "staff" || session()->get('user_level') == "supervisi") : ?>
+                                        <a href="" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
+                                    <?php endif ?>
+                                    <a href="/task/daftar_task/<?= $pb['id_pekerjaan'] ?>" class="badge btn bg-primary" title="Lihat daftar task atau verifikasi task"><i class="bi bi-clipboard-data"></i></a>
+                                    <?php if (session()->get('user_level') == "hod" || session()->get('user_level') == "admin") : ?>
+                                        <a href="/pekerjaan/edit_pekerjaan/<?= $pb['id_pekerjaan'] ?>" class="badge btn bg-warning" title="Klik untuk mengedit data pekerjaan"><i class="bi bi-pencil"></i></a>
+                                        <a href="/pekerjaan/edit_personil_pekerjaan/<?= $pb['id_pekerjaan'] ?>" class="badge btn bg-warning bg-opacity-75" title="Klik untuk mengedit data personil"><i class="bi bi-person-fill-gear"></i></a>
+                                        <form action="/pekerjaan/delete_pekerjaan/<?= $pb['id_pekerjaan'] ?>" method="POST" class="d-inline">
+                                            <?= csrf_field(); ?>
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <button type="submit" class="badge btn bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?, jika iya maka data personil terkait pekerjaan juga akan terhapus.');"><i class="ri-delete-bin-5-line"></i></button>
+                                        </form>
+                                        <button type="button" class="badge btn bg-warning" title="Klik untuk mengubah status pekerjaan ini" data-bs-toggle="modal" data-bs-target="#modal_editpekerjaan_status_pekerjaan" onclick="editpekerjaan_status_pekerjaan(<?php echo $pb['id_pekerjaan'] ?>)"><i class="bi bi-pencil-square"></i></button>
+                                    <?php endif ?>
                                     <br>
                                     <br>
                                     <?= $pb['nama_pekerjaan'] ?>
@@ -271,7 +288,9 @@
                                         $nomor_teleponpb = '+62' . substr($nomor_telepon3, 1);
                                     }
                                     ?>
-                                    <a href="https://wa.me/<?= $nomor_teleponpb ?>" target="_blank" class="badge btn bg-success" title="Hubungi PIC"><i class="bi bi-telephone"></i></a>
+                                    <?php if (session()->get('user_level') == "hod" || session()->get('user_level') == "admin") : ?>
+                                        <a href="https://wa.me/<?= $nomor_teleponpb ?>" target="_blank" class="badge btn bg-success" title="Hubungi PIC"><i class="bi bi-telephone"></i></a>
+                                    <?php endif ?>
                                 </div>
                             <?php endforeach; ?>
                         </div>
@@ -282,22 +301,26 @@
             <div class="row">
                 <div class="col-4">
                     <div class="kanban-column-header" style="background-color: <?= $status_pekerjaan_support['color'] ?>;">
-                        <h5 style="font-weight: bold;">Support</h5>
+                        <h5 style="font-weight: bold;">Support <span class="badge bg-white text-primary"><?= $jumlah_pekerjaan_support ?></span></h5>
                     </div>
                     <div class="kanban-column">
                         <div class="kanban-droppable" id="todo">
                             <?php foreach ($pekerjaan_support as $psp) : ?>
                                 <div class="kanban-card">
-                                    <a href="" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
-                                    <a href="" class="badge btn bg-primary" title="Lihat daftar task dan verifikasi task"><i class="bi bi-clipboard-data"></i></a>
-                                    <a href="/pekerjaan/edit_pekerjaan/<?= $psp['id_pekerjaan'] ?>" class="badge btn bg-warning" title="Klik untuk mengedit data pekerjaan"><i class="bi bi-pencil"></i></a>
-                                    <a href="/pekerjaan/edit_personil_pekerjaan/<?= $psp['id_pekerjaan'] ?>" class="badge btn bg-warning bg-opacity-75" title="Klik untuk mengedit data personil"><i class="bi bi-person-fill-gear"></i></a>
-                                    <form action="/pekerjaan/delete_pekerjaan/<?= $psp['id_pekerjaan'] ?>" method="POST" class="d-inline">
-                                        <?= csrf_field(); ?>
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <button type="submit" class="badge btn bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?, jika iya maka data personil terkait pekerjaan juga akan terhapus.');"><i class="ri-delete-bin-5-line"></i></button>
-                                    </form>
-                                    <button type="button" class="badge btn bg-warning" title="Klik untuk mengubah status pekerjaan ini" data-bs-toggle="modal" data-bs-target="#modal_editpekerjaan_status_pekerjaan" onclick="editpekerjaan_status_pekerjaan(<?php echo $psp['id_pekerjaan'] ?>)"><i class="bi bi-pencil-square"></i></button>
+                                    <?php if (session()->get('user_level') == "staff" || session()->get('user_level') == "supervisi") : ?>
+                                        <a href="" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
+                                    <?php endif ?>
+                                    <a href="/task/daftar_task/<?= $psp['id_pekerjaan'] ?>" class="badge btn bg-primary" title="Lihat daftar task atau verifikasi task"><i class="bi bi-clipboard-data"></i></a>
+                                    <?php if (session()->get('user_level') == "hod" || session()->get('user_level') == "admin") : ?>
+                                        <a href="/pekerjaan/edit_pekerjaan/<?= $psp['id_pekerjaan'] ?>" class="badge btn bg-warning" title="Klik untuk mengedit data pekerjaan"><i class="bi bi-pencil"></i></a>
+                                        <a href="/pekerjaan/edit_personil_pekerjaan/<?= $psp['id_pekerjaan'] ?>" class="badge btn bg-warning bg-opacity-75" title="Klik untuk mengedit data personil"><i class="bi bi-person-fill-gear"></i></a>
+                                        <form action="/pekerjaan/delete_pekerjaan/<?= $psp['id_pekerjaan'] ?>" method="POST" class="d-inline">
+                                            <?= csrf_field(); ?>
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <button type="submit" class="badge btn bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?, jika iya maka data personil terkait pekerjaan juga akan terhapus.');"><i class="ri-delete-bin-5-line"></i></button>
+                                        </form>
+                                        <button type="button" class="badge btn bg-warning" title="Klik untuk mengubah status pekerjaan ini" data-bs-toggle="modal" data-bs-target="#modal_editpekerjaan_status_pekerjaan" onclick="editpekerjaan_status_pekerjaan(<?php echo $psp['id_pekerjaan'] ?>)"><i class="bi bi-pencil-square"></i></button>
+                                    <?php endif ?>
                                     <br>
                                     <br>
                                     <?= $psp['nama_pekerjaan'] ?>
@@ -327,7 +350,9 @@
                                         $nomor_teleponpsp = '+62' . substr($nomor_telepon4, 1);
                                     }
                                     ?>
-                                    <a href="https://wa.me/<?= $nomor_teleponpsp ?>" target="_blank" class="badge btn bg-success" title="Hubungi PIC"><i class="bi bi-telephone"></i></a>
+                                    <?php if (session()->get('user_level') == "hod" || session()->get('user_level') == "admin") : ?>
+                                        <a href="https://wa.me/<?= $nomor_teleponpsp ?>" target="_blank" class="badge btn bg-success" title="Hubungi PIC"><i class="bi bi-telephone"></i></a>
+                                    <?php endif ?>
                                 </div>
                             <?php endforeach; ?>
                         </div>
@@ -335,22 +360,26 @@
                 </div>
                 <div class="col-4">
                     <div class="kanban-column-header" style="background-color: <?= $status_pekerjaan_cancle['color'] ?>;">
-                        <h5 style="font-weight: bold;">Cancle</h5>
+                        <h5 style="font-weight: bold;">Cancle <span class="badge bg-white text-primary"><?= $jumlah_pekerjaan_cancle ?></span></h5>
                     </div>
                     <div class="kanban-column">
                         <div class="kanban-droppable" id="todo">
                             <?php foreach ($pekerjaan_cancle as $pc) : ?>
                                 <div class="kanban-card">
-                                    <a href="" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
-                                    <a href="" class="badge btn bg-primary" title="Lihat daftar task dan verifikasi task"><i class="bi bi-clipboard-data"></i></a>
-                                    <a href="/pekerjaan/edit_pekerjaan/<?= $pc['id_pekerjaan'] ?>" class="badge btn bg-warning" title="Klik untuk mengedit data pekerjaan"><i class="bi bi-pencil"></i></a>
-                                    <a href="/pekerjaan/edit_personil_pekerjaan/<?= $pc['id_pekerjaan'] ?>" class="badge btn bg-warning bg-opacity-75" title="Klik untuk mengedit data personil"><i class="bi bi-person-fill-gear"></i></a>
-                                    <form action="/pekerjaan/delete_pekerjaan/<?= $pc['id_pekerjaan'] ?>" method="POST" class="d-inline">
-                                        <?= csrf_field(); ?>
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <button type="submit" class="badge btn bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?, jika iya maka data personil terkait pekerjaan juga akan terhapus.');"><i class="ri-delete-bin-5-line"></i></button>
-                                    </form>
-                                    <button type="button" class="badge btn bg-warning" title="Klik untuk mengubah status pekerjaan ini" data-bs-toggle="modal" data-bs-target="#modal_editpekerjaan_status_pekerjaan" onclick="editpekerjaan_status_pekerjaan(<?php echo $pc['id_pekerjaan'] ?>)"><i class="bi bi-pencil-square"></i></button>
+                                    <?php if (session()->get('user_level') == "staff" || session()->get('user_level') == "supervisi") : ?>
+                                        <a href="" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
+                                    <?php endif ?>
+                                    <a href="/task/daftar_task/<?= $pc['id_pekerjaan'] ?>" class="badge btn bg-primary" title="Lihat daftar task atau verifikasi task"><i class="bi bi-clipboard-data"></i></a>
+                                    <?php if (session()->get('user_level') == "hod" || session()->get('user_level') == "admin") : ?>
+                                        <a href="/pekerjaan/edit_pekerjaan/<?= $pc['id_pekerjaan'] ?>" class="badge btn bg-warning" title="Klik untuk mengedit data pekerjaan"><i class="bi bi-pencil"></i></a>
+                                        <a href="/pekerjaan/edit_personil_pekerjaan/<?= $pc['id_pekerjaan'] ?>" class="badge btn bg-warning bg-opacity-75" title="Klik untuk mengedit data personil"><i class="bi bi-person-fill-gear"></i></a>
+                                        <form action="/pekerjaan/delete_pekerjaan/<?= $pc['id_pekerjaan'] ?>" method="POST" class="d-inline">
+                                            <?= csrf_field(); ?>
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <button type="submit" class="badge btn bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?, jika iya maka data personil terkait pekerjaan juga akan terhapus.');"><i class="ri-delete-bin-5-line"></i></button>
+                                        </form>
+                                        <button type="button" class="badge btn bg-warning" title="Klik untuk mengubah status pekerjaan ini" data-bs-toggle="modal" data-bs-target="#modal_editpekerjaan_status_pekerjaan" onclick="editpekerjaan_status_pekerjaan(<?php echo $pc['id_pekerjaan'] ?>)"><i class="bi bi-pencil-square"></i></button>
+                                    <?php endif ?>
                                     <br>
                                     <br>
                                     <?= $pc['nama_pekerjaan'] ?>
@@ -380,7 +409,9 @@
                                         $nomor_teleponpc = '+62' . substr($nomor_telepon5, 1);
                                     }
                                     ?>
-                                    <a href="https://wa.me/<?= $nomor_teleponpc ?>" target="_blank" class="badge btn bg-success" title="Hubungi PIC"><i class="bi bi-telephone"></i></a>
+                                    <?php if (session()->get('user_level') == "hod" || session()->get('user_level') == "admin") : ?>
+                                        <a href="https://wa.me/<?= $nomor_teleponpc ?>" target="_blank" class="badge btn bg-success" title="Hubungi PIC"><i class="bi bi-telephone"></i></a>
+                                    <?php endif ?>
                                 </div>
                             <?php endforeach; ?>
                         </div>

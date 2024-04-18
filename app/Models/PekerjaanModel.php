@@ -77,7 +77,6 @@ class PekerjaanModel extends Model
         if ($id_status_pekerjaan !== '') {
             $query->where('pekerjaan.id_status_pekerjaan', $id_status_pekerjaan);
         }
-
         if ($jenis_layanan !== '') {
             $query->where('pekerjaan.jenis_layanan', $jenis_layanan);
         }
@@ -130,5 +129,32 @@ class PekerjaanModel extends Model
                 ->orderBy('pekerjaan.id_pekerjaan', 'DESC');
         }
         return $query->findAll();
+    }
+
+    //Fungsi untuk menghitung jumlah pekerjaan
+    public function countPekerjaan()
+    {
+        return $this->where(['deleted_at' => null])->countAllResults();
+    }
+
+    //Fungsi untuk menghitung jumlah pekerjaan berdasarkan id user
+    public function countPekerjaanByUserId($id_user)
+    {
+        $pekerjaan = $this->getPekerjaanByUserId($id_user);
+        return count($pekerjaan);
+    }
+
+    //Fungsi untuk menghitung jumlah pekerjaan berdasarkan id user dan status pekerjaan untuk staff dan supervisi
+    public function countPekerjaanSupervisiStaff_ByUserIdStatusPekerjaan($id_user, $status_pekerjaan)
+    {
+        $pekerjaan = $this->getFilteredPekerjaanforSupervisiStaff('', $status_pekerjaan, '', '', $id_user);
+        return count($pekerjaan);
+    }
+
+    //Fungsi untuk menghitung jumlah pekerjaan berdasarkan status pekerjaan untuk hod, admin, dan direksi
+    public function countPekerjaanHodAdminDireksi_ByStatusPekerjaan($status_pekerjaan)
+    {
+        $pekerjaan = $this->getFilteredPekerjaan('', $status_pekerjaan, '', '');
+        return count($pekerjaan);
     }
 }

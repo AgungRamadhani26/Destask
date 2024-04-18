@@ -122,6 +122,47 @@
 }
 
 
+.legend {
+  display: flex;
+  flex-wrap: wrap; /* Menambahkan flex-wrap untuk menjaga item tetap sebaris */
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-right: 20px; /* Mengatur jarak antar item */
+  margin-bottom: 10px; /* Mengatur jarak antar baris */
+}
+
+.bullet {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.green {
+  background-color: green;
+}
+
+.orange {
+  background-color: orange;
+}
+
+.greenyellow{
+  background-color: greenyellow;
+}
+
+.blue {
+  background-color: blue;
+}
+
+.red {
+  background-color: rgb(212, 2, 2);
+}
+
+
+
 
 
 

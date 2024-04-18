@@ -50,8 +50,12 @@ $routes->get('/pekerjaan/filter_pekerjaan', 'Pekerjaan::filter_pekerjaan');
 //Untuk mengedit status pekerjaan dari sebuah pekerjaan
 $routes->get('/pekerjaan/editpekerjaan_status_pekerjaan/(:num)', 'Pekerjaan::editpekerjaan_status_pekerjaan/$1');
 $routes->post('/pekerjaan/updatepekerjaan_status_pekerjaan', 'Pekerjaan::updatepekerjaan_status_pekerjaan');
-//Untuk menghapus personil
+//Untuk menghapus pekerjaan
 $routes->delete('/pekerjaan/delete_pekerjaan/(:num)', 'Pekerjaan::delete_pekerjaan/$1');
+
+//Rotes Task
+//Untuk menampilkan halaman daftar task
+$routes->get('/task/daftar_task/(:num)', 'Task::daftar_task/$1');
 
 //Routes Personil
 //Untuk edit personil pm

@@ -77,6 +77,33 @@
    });
 </script>
 
+<script>
+   $(document).ready(function() {
+      $('#myTableSudahVerifikasi').DataTable();
+   });
+   $(document).ready(function() {
+      $('#myTableBelumSubmit_DatelineHariIni').DataTable();
+   });
+   $(document).ready(function() {
+      $('#myTableBelumSubmit_DatelinePlan').DataTable();
+   });
+   $(document).ready(function() {
+      $('#myTableBelumSubmit_DatelineOverdue').DataTable();
+   });
+   $(document).ready(function() {
+      $('#myTableDitolak_DatelineHariIni').DataTable();
+   });
+   $(document).ready(function() {
+      $('#myTableDitolak_DatelinePlan').DataTable();
+   });
+   $(document).ready(function() {
+      $('#myTableDitolak_DatelineOverdue').DataTable();
+   });
+   $(document).ready(function() {
+      $('#myTableMenungguVerifikasi').DataTable();
+   });
+</script>
+
 <!--FlatPickr-->
 <script>
    config1 = {
