@@ -12,6 +12,7 @@ class TargetPoinHarianSeeder extends Seeder
     {
         $data = [
             [
+                'id_target_poin_harian'      => 1,
                 'id_usergroup'               => 1,
                 'tahun'                      => '2023',
                 'bulan'                      => '2',
@@ -23,6 +24,7 @@ class TargetPoinHarianSeeder extends Seeder
                 'updated_at'                 => Time::now()
             ],
             [
+                'id_target_poin_harian'      => 2,
                 'id_usergroup'               => 1,
                 'tahun'                      => '2024',
                 'bulan'                      => '2',
@@ -34,6 +36,7 @@ class TargetPoinHarianSeeder extends Seeder
                 'updated_at'                 => Time::now()
             ],
             [
+                'id_target_poin_harian'      => 3,
                 'id_usergroup'               => 1,
                 'tahun'                      => '2024',
                 'bulan'                      => '4',
@@ -45,6 +48,7 @@ class TargetPoinHarianSeeder extends Seeder
                 'updated_at'                 => Time::now()
             ],
             [
+                'id_target_poin_harian'      => 4,
                 'id_usergroup'               => 2,
                 'tahun'                      => '2024',
                 'bulan'                      => '2',
@@ -56,6 +60,7 @@ class TargetPoinHarianSeeder extends Seeder
                 'updated_at'                 => Time::now()
             ],
             [
+                'id_target_poin_harian'      => 5,
                 'id_usergroup'               => 2,
                 'tahun'                      => '2024',
                 'bulan'                      => '4',
@@ -67,6 +72,7 @@ class TargetPoinHarianSeeder extends Seeder
                 'updated_at'                 => Time::now()
             ],
             [
+                'id_target_poin_harian'      => 6,
                 'id_usergroup'               => 3,
                 'tahun'                      => '2024',
                 'bulan'                      => '3',
@@ -78,6 +84,7 @@ class TargetPoinHarianSeeder extends Seeder
                 'updated_at'                 => Time::now()
             ],
             [
+                'id_target_poin_harian'      => 7,
                 'id_usergroup'               => 3,
                 'tahun'                      => '2024',
                 'bulan'                      => '4',
@@ -89,6 +96,7 @@ class TargetPoinHarianSeeder extends Seeder
                 'updated_at'                 => Time::now()
             ],
             [
+                'id_target_poin_harian'      => 8,
                 'id_usergroup'               => 4,
                 'tahun'                      => '2024',
                 'bulan'                      => '3',
@@ -100,6 +108,7 @@ class TargetPoinHarianSeeder extends Seeder
                 'updated_at'                 => Time::now()
             ],
             [
+                'id_target_poin_harian'      => 9,
                 'id_usergroup'               => 4,
                 'tahun'                      => '2024',
                 'bulan'                      => '4',
@@ -111,6 +120,7 @@ class TargetPoinHarianSeeder extends Seeder
                 'updated_at'                 => Time::now()
             ],
             [
+                'id_target_poin_harian'      => 10,
                 'id_usergroup'               => 5,
                 'tahun'                      => '2024',
                 'bulan'                      => '2',
@@ -122,6 +132,7 @@ class TargetPoinHarianSeeder extends Seeder
                 'updated_at'                 => Time::now()
             ],
             [
+                'id_target_poin_harian'      => 11,
                 'id_usergroup'               => 5,
                 'tahun'                      => '2024',
                 'bulan'                      => '4',
@@ -133,6 +144,7 @@ class TargetPoinHarianSeeder extends Seeder
                 'updated_at'                 => Time::now()
             ],
             [
+                'id_target_poin_harian'      => 12,
                 'id_usergroup'               => 6,
                 'tahun'                      => '2024',
                 'bulan'                      => '1',
@@ -144,6 +156,7 @@ class TargetPoinHarianSeeder extends Seeder
                 'updated_at'                 => Time::now()
             ],
             [
+                'id_target_poin_harian'      => 13,
                 'id_usergroup'               => 6,
                 'tahun'                      => '2024',
                 'bulan'                      => '4',

@@ -19,5 +19,6 @@ class CallSeeder extends Seeder
         $this->call('UserSeeder');
         $this->call('PekerjaanSeeder');
         $this->call('PersonilSeeder');
+        $this->call('TaskSeeder');
     }
 }

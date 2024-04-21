@@ -12,6 +12,7 @@ class PekerjaanSeeder extends Seeder
     {
         $data = [
             [
+                'id_pekerjaan' => 1,
                 'id_status_pekerjaan' => 3,
                 'id_kategori_pekerjaan' => 2,
                 'nama_pekerjaan' => 'Aplikasi Pembukuan PT Jaya Sukses',
@@ -30,6 +31,7 @@ class PekerjaanSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_pekerjaan' => 2,
                 'id_status_pekerjaan' => 2,
                 'id_kategori_pekerjaan' => 2,
                 'nama_pekerjaan' => 'Aplikasi Absensi SMAN 1 Bandar',
@@ -41,14 +43,15 @@ class PekerjaanSeeder extends Seeder
                 'jenis_layanan' => 'produk',
                 'nominal_harga' => 30000000,
                 'deskripsi_pekerjaan' => 'Aplikasi Absensin SMAN 1 Bandar terdiri atas aplikasi web sebagai monitoring admin yang dapat menggenerate qr-absen, selanjutnya aplikasi berbasis android yang digunakan siswa dan pegawai untuk melakukan scan untuk absensi',
-                'target_waktu_selesai' => '2024-06-14',
+                'target_waktu_selesai' => '2024-8-14',
                 'persentase_selesai' => 45,
                 'waktu_selesai' => null,
                 'created_at'          => Time::now(),
                 'updated_at'          => Time::now()
             ],
             [
-                'id_status_pekerjaan' => 1,
+                'id_pekerjaan' => 3,
+                'id_status_pekerjaan' => 4,
                 'id_kategori_pekerjaan' => 3,
                 'nama_pekerjaan' => 'Web Profile Dinkes Kota Semarang',
                 'pelanggan' => 'Dinas Kesehatan Kota Semarang',
@@ -59,13 +62,14 @@ class PekerjaanSeeder extends Seeder
                 'jenis_layanan' => 'produk',
                 'nominal_harga' => 10000000,
                 'deskripsi_pekerjaan' => 'Web Profile Dinas Kesehatan Kota Semarang menyediakan informasi publik dan publikasi aktifitas yang ada dalam lingkup kerja dinas kesehatan kota Semarang.',
-                'target_waktu_selesai' => '2024-05-24',
+                'target_waktu_selesai' => '2024-09-03',
                 'persentase_selesai' => 0,
                 'waktu_selesai' => null,
                 'created_at'       => Time::now(),
                 'updated_at'       => Time::now()
             ],
             [
+                'id_pekerjaan' => 4,
                 'id_status_pekerjaan' => 2,
                 'id_kategori_pekerjaan' => 1,
                 'nama_pekerjaan' => 'Website Recruitement Pegawai PT Agung Jaya Mineral',
@@ -77,14 +81,15 @@ class PekerjaanSeeder extends Seeder
                 'jenis_layanan' => 'produk',
                 'nominal_harga' => 112000000,
                 'deskripsi_pekerjaan' => 'Website Recruitement Pegawai diharapkan dapat digunakan dalam melakukan recruitment pegawai baru, selain itu website ini digunakan sebagai wadah ujian dalam melakukan rekrutment.',
-                'target_waktu_selesai' => '2023-07-31',
+                'target_waktu_selesai' => '2023-09-27',
                 'persentase_selesai' => 72,
                 'waktu_selesai' => null,
                 'created_at'       => Time::now(),
                 'updated_at'       => Time::now()
             ],
             [
-                'id_status_pekerjaan' => 4,
+                'id_pekerjaan' => 5,
+                'id_status_pekerjaan' => 1,
                 'id_kategori_pekerjaan' => 1,
                 'nama_pekerjaan' => 'Sistem Informasi Monitoring Kompetensi Guru',
                 'pelanggan' => 'Dinas Pendidikan Kota Semarang',
@@ -102,6 +107,7 @@ class PekerjaanSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_pekerjaan' => 6,
                 'id_status_pekerjaan' => 5,
                 'id_kategori_pekerjaan' => 2,
                 'nama_pekerjaan' => 'Sistem Informasi Aset Kantor PT Kunia Lestari',

@@ -12,29 +12,8 @@ class UserSeeder extends Seeder
     {
         $data = [
             [
-                'id_usergroup'     => 1,
-                'username'         => 'rijal',
-                'email'            => 'rijal@gmail.com',
-                'password'         => md5('123456'),
-                'user_level'       => 'staff',
-                'nama'             => 'Rijal',
-                'foto_profil'      => 'user.png',
-                'created_at'       => Time::now(),
-                'updated_at'       => Time::now()
-            ],
-            [
-                'id_usergroup'     => 1,
-                'username'         => 'kurniawan',
-                'email'            => 'kurniawan@gmail.com',
-                'password'         => md5('123456'),
-                'user_level'       => 'supervisi',
-                'nama'             => 'kurniawan',
-                'foto_profil'      => 'user.png',
-                'created_at'       => Time::now(),
-                'updated_at'       => Time::now()
-            ],
-            [
-                'id_usergroup'     => 1,
+                'id_user'          => 1,
+                'id_usergroup'     => null,
                 'username'         => 'agung2611',
                 'email'            => 'agungramadhani2611@gmail.com',
                 'password'         => md5('123456'),
@@ -45,6 +24,7 @@ class UserSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 2,
                 'id_usergroup'     => null,
                 'username'         => 'ninda666',
                 'email'            => 'ninda@gmail.com',
@@ -56,6 +36,7 @@ class UserSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 3,
                 'id_usergroup'     => null,
                 'username'         => 'daffa_ganteng',
                 'email'            => 'daffa@gmail.com',
@@ -67,6 +48,7 @@ class UserSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 4,
                 'id_usergroup'     => 1,
                 'username'         => 'bimbims',
                 'email'            => 'bimasatria@gmail.com',
@@ -78,6 +60,7 @@ class UserSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 5,
                 'id_usergroup'     => 1,
                 'username'         => 'agussnya1',
                 'email'            => 'agussnya1@gmail.com',
@@ -89,6 +72,7 @@ class UserSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 6,
                 'id_usergroup'     => 1,
                 'username'         => 'alexasenyum12',
                 'email'            => 'broncolex@gmail.com',
@@ -100,6 +84,7 @@ class UserSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 7,
                 'id_usergroup'     => 1,
                 'username'         => 'dinaazzz',
                 'email'            => 'dinahmad@gmail.com',
@@ -111,6 +96,7 @@ class UserSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 8,
                 'id_usergroup'     => 1,
                 'username'         => 'lellly',
                 'email'            => 'lely@gmail.com',
@@ -122,6 +108,7 @@ class UserSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 9,
                 'id_usergroup'     => 1,
                 'username'         => 'zamhiruddin',
                 'email'            => 'zamhiruddinalamsyah@gmail.com',
@@ -133,6 +120,7 @@ class UserSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 10,
                 'id_usergroup'     => 2,
                 'username'         => 'jatmiko12',
                 'email'            => 'jatmiko@gmail.com',
@@ -144,6 +132,7 @@ class UserSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 11,
                 'id_usergroup'     => 2,
                 'username'         => 'amranxiacic',
                 'email'            => 'amran@gmail.com',
@@ -155,6 +144,7 @@ class UserSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 12,
                 'id_usergroup'     => 2,
                 'username'         => 'amsari69',
                 'email'            => 'amsarikurniadi@gmail.com',
@@ -166,6 +156,7 @@ class UserSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 13,
                 'id_usergroup'     => 2,
                 'username'         => 'haryati2002',
                 'email'            => 'haryati2002@gmail.com',
@@ -177,6 +168,7 @@ class UserSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 14,
                 'id_usergroup'     => 2,
                 'username'         => 'lodpau',
                 'email'            => 'wick2lod@gmail.com',
@@ -188,6 +180,7 @@ class UserSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 15,
                 'id_usergroup'     => 2,
                 'username'         => 'cipto26',
                 'email'            => 'cipto26@gmail.com',
@@ -199,6 +192,7 @@ class UserSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 16,
                 'id_usergroup'     => 3,
                 'username'         => 'fira2020',
                 'email'            => 'putrimayang@gmail.com',
@@ -210,6 +204,7 @@ class UserSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 17,
                 'id_usergroup'     => 3,
                 'username'         => 'atriana',
                 'email'            => 'herlitaatrianan@gmail.com',
@@ -221,6 +216,7 @@ class UserSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 18,
                 'id_usergroup'     => 3,
                 'username'         => 'devdev',
                 'email'            => 'devy@gmail.com',
@@ -232,6 +228,7 @@ class UserSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 19,
                 'id_usergroup'     => 3,
                 'username'         => 'hidayat11',
                 'email'            => 'hidayat@gmail.com',
@@ -243,6 +240,7 @@ class UserSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 20,
                 'id_usergroup'     => 3,
                 'username'         => 'luqmanhkm',
                 'email'            => 'luqmanhkm@gmail.com',
@@ -254,6 +252,7 @@ class UserSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 21,
                 'id_usergroup'     => 3,
                 'username'         => 'marco',
                 'email'            => 'marcophp22@gmail.com',
@@ -265,6 +264,7 @@ class UserSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 22,
                 'id_usergroup'     => 4,
                 'username'         => 'diego',
                 'email'            => 'diegoggs@gmail.com',
@@ -276,6 +276,7 @@ class UserSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 23,
                 'id_usergroup'     => 4,
                 'username'         => 'hamidah',
                 'email'            => 'hamidah@gmail.com',
@@ -287,6 +288,7 @@ class UserSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 24,
                 'id_usergroup'     => 4,
                 'username'         => 'irawan',
                 'email'            => 'irawan@gmail.com',
@@ -298,17 +300,19 @@ class UserSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 25,
                 'id_usergroup'     => 4,
                 'username'         => 'marwati',
                 'email'            => 'marwati@gmail.com',
                 'password'         => md5('123456'),
                 'user_level'       => 'staff',
-                'nama'             => 'Warwati Ardina',
+                'nama'             => 'Marwati Ardina',
                 'foto_profil'      => 'tester_marwati.jpeg',
                 'created_at'       => Time::now(),
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 26,
                 'id_usergroup'     => 4,
                 'username'         => 'Putra',
                 'email'            => 'putput@gmail.com',
@@ -320,6 +324,7 @@ class UserSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 27,
                 'id_usergroup'     => 5,
                 'username'         => 'agatha12',
                 'email'            => 'agatha12@gmail.com',
@@ -331,6 +336,7 @@ class UserSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 28,
                 'id_usergroup'     => 5,
                 'username'         => 'arifrahman',
                 'email'            => 'arifrahman@gmail.com',
@@ -342,6 +348,7 @@ class UserSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 29,
                 'id_usergroup'     => 5,
                 'username'         => 'boyke',
                 'email'            => 'boyke@gmail.com',
@@ -353,6 +360,7 @@ class UserSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 30,
                 'id_usergroup'     => 5,
                 'username'         => 'fatin',
                 'email'            => 'fatin@gmail.com',
@@ -364,6 +372,7 @@ class UserSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 31,
                 'id_usergroup'     => 5,
                 'username'         => 'ulfah',
                 'email'            => 'ulfah@gmail.com',
@@ -375,6 +384,7 @@ class UserSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 32,
                 'id_usergroup'     => 6,
                 'username'         => 'farah',
                 'email'            => 'farah@gmail.com',
@@ -386,6 +396,7 @@ class UserSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 33,
                 'id_usergroup'     => 6,
                 'username'         => 'irma',
                 'email'            => 'irma@gmail.com',
@@ -397,6 +408,7 @@ class UserSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 34,
                 'id_usergroup'     => 6,
                 'username'         => 'pierro',
                 'email'            => 'pierro@gmail.com',
@@ -408,6 +420,7 @@ class UserSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 35,
                 'id_usergroup'     => 6,
                 'username'         => 'titan',
                 'email'            => 'titan@gmail.com',
@@ -419,13 +432,38 @@ class UserSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
+                'id_user'          => 36,
                 'id_usergroup'     => 6,
                 'username'         => 'veronica',
                 'email'            => 'veronica@gmail.com',
                 'password'         => md5('123456'),
-                'user_level'       => 'staff',
+                'user_level'       => 'supervisi',
                 'nama'             => 'Lina Veronica Atmaja',
                 'foto_profil'      => 'helpdesk_vero.jpeg',
+                'created_at'       => Time::now(),
+                'updated_at'       => Time::now()
+            ],
+            [
+                'id_user'          => 37,
+                'id_usergroup'     => 1,
+                'username'         => 'rijal',
+                'email'            => 'rijal@gmail.com',
+                'password'         => md5('123456'),
+                'user_level'       => 'staff',
+                'nama'             => 'Rijal',
+                'foto_profil'      => 'user.png',
+                'created_at'       => Time::now(),
+                'updated_at'       => Time::now()
+            ],
+            [
+                'id_user'          => 38,
+                'id_usergroup'     => 1,
+                'username'         => 'kurniawan',
+                'email'            => 'kurniawan@gmail.com',
+                'password'         => md5('123456'),
+                'user_level'       => 'supervisi',
+                'nama'             => 'kurniawan',
+                'foto_profil'      => 'user.png',
                 'created_at'       => Time::now(),
                 'updated_at'       => Time::now()
             ],
