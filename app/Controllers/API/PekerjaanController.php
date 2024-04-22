@@ -17,7 +17,7 @@ class PekerjaanController extends ResourceController {
 
     public function index() {
         $model = new $this->modelName();
-        $data = $model->where(['deleted_at' => null])->orderBy('id_pekerjaan', 'ASC')->findAll();
+        $data = $model->where(['deleted_at' => null])->orderBy('id_pekerjaan', 'DESC')->findAll();
         return $this->respond($data, 200);
     }
 
@@ -107,7 +107,7 @@ class PekerjaanController extends ResourceController {
         $result = [];
 
         //jika id user = role personil maka id pekerjaan dimasukan ke pekerjaan
-        $pekerjaan = $personilModel->where('id_user', $iduser)->findAll();
+        $pekerjaan = $personilModel->where('id_user', $iduser)->orderBy('id_pekerjaan', 'DESC')->findAll();
         if ($pekerjaan) {
             $idPekerjaan = array_column($pekerjaan, 'id_pekerjaan');
             $data = $pekerjaanModel->whereIn('id_pekerjaan', $idPekerjaan)->findAll();

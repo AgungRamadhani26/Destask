@@ -54,4 +54,39 @@ class UserModel extends Model
     {
         return $this->where(['deleted_at' => null, 'user_level' => 'supervisi', 'id_usergroup' => $id_usergroup])->countAllResults();
     }
+
+        
+    //MOBILE
+    function getUserById($id)
+    {
+        $builder = $this->table('user');
+        $data = $builder->where('id_user', $id)->first();
+        if ($data != null) {
+            return $data;
+        } else {
+            return null;
+        }
+    }
+    
+    //MOBILE
+    function getIdentitas($identitas)
+    {
+        $builder = $this->table('user');
+
+        if (filter_var($identitas, FILTER_VALIDATE_EMAIL)) {
+            $credentials['email'] = $identitas;
+            unset($credentials['identifier']);
+            $data = $builder->where('email', $identitas)->first();
+        } else {
+            $credentials['username'] = $identitas;
+            unset($credentials['identifier']);
+            $data = $builder->where('username', $identitas)->first();
+        }
+
+        if ($data != null) {
+            return $data;
+        } else {
+            return null;
+        }
+    }
 }

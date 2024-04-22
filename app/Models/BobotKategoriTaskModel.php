@@ -102,4 +102,11 @@ class BobotKategoriTaskModel extends Model
         //Mengubah output menjadi array asosiatif
         return array_column($result, 'id_bobot_kategori_task', 'id_kategori_task');
     }
+
+    //mobile
+    //getBobotKategoriTaskById
+    public function getBobotKategoriTaskById($id_kategori_task)
+    {
+        return $this->where(['id_kategori_task' => $id_kategori_task, 'deleted_at' => NULL])->first();
+    }
 }
