@@ -128,7 +128,7 @@
                             <?php foreach ($pekerjaan_presales as $pp) : ?>
                                 <div class="kanban-card">
                                     <?php if (session()->get('user_level') == "staff" || session()->get('user_level') == "supervisi") : ?>
-                                        <a href="" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
+                                        <a href="/task/add_task/<?= $pp['id_pekerjaan'] ?>" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
                                     <?php endif ?>
                                     <a href="/task/daftar_task/<?= $pp['id_pekerjaan'] ?>" class="badge btn bg-primary" title="Lihat daftar task atau verifikasi task"><i class="bi bi-clipboard-data"></i></a>
                                     <?php if (session()->get('user_level') == "hod" || session()->get('user_level') == "admin") : ?>
@@ -187,7 +187,7 @@
                             <?php foreach ($pekerjaan_onprogres as $po) : ?>
                                 <div class="kanban-card">
                                     <?php if (session()->get('user_level') == "staff" || session()->get('user_level') == "supervisi") : ?>
-                                        <a href="" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
+                                        <a href="/task/add_task/<?= $po['id_pekerjaan'] ?>" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
                                     <?php endif ?>
                                     <a href="/task/daftar_task/<?= $po['id_pekerjaan'] ?>" class="badge btn bg-primary" title="Lihat daftar task atau verifikasi task"><i class="bi bi-clipboard-data"></i></a>
                                     <?php if (session()->get('user_level') == "hod" || session()->get('user_level') == "admin") : ?>
@@ -246,7 +246,7 @@
                             <?php foreach ($pekerjaan_bast as $pb) : ?>
                                 <div class="kanban-card">
                                     <?php if (session()->get('user_level') == "staff" || session()->get('user_level') == "supervisi") : ?>
-                                        <a href="" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
+                                        <a href="/task/add_task/<?= $pb['id_pekerjaan'] ?>" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
                                     <?php endif ?>
                                     <a href="/task/daftar_task/<?= $pb['id_pekerjaan'] ?>" class="badge btn bg-primary" title="Lihat daftar task atau verifikasi task"><i class="bi bi-clipboard-data"></i></a>
                                     <?php if (session()->get('user_level') == "hod" || session()->get('user_level') == "admin") : ?>
@@ -308,7 +308,7 @@
                             <?php foreach ($pekerjaan_support as $psp) : ?>
                                 <div class="kanban-card">
                                     <?php if (session()->get('user_level') == "staff" || session()->get('user_level') == "supervisi") : ?>
-                                        <a href="" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
+                                        <a href="/task/add_task/<?= $psp['id_pekerjaan'] ?>" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
                                     <?php endif ?>
                                     <a href="/task/daftar_task/<?= $psp['id_pekerjaan'] ?>" class="badge btn bg-primary" title="Lihat daftar task atau verifikasi task"><i class="bi bi-clipboard-data"></i></a>
                                     <?php if (session()->get('user_level') == "hod" || session()->get('user_level') == "admin") : ?>
@@ -367,7 +367,7 @@
                             <?php foreach ($pekerjaan_cancle as $pc) : ?>
                                 <div class="kanban-card">
                                     <?php if (session()->get('user_level') == "staff" || session()->get('user_level') == "supervisi") : ?>
-                                        <a href="" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
+                                        <a href="/task/add_task/<?= $pc['id_pekerjaan'] ?>" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
                                     <?php endif ?>
                                     <a href="/task/daftar_task/<?= $pc['id_pekerjaan'] ?>" class="badge btn bg-primary" title="Lihat daftar task atau verifikasi task"><i class="bi bi-clipboard-data"></i></a>
                                     <?php if (session()->get('user_level') == "hod" || session()->get('user_level') == "admin") : ?>

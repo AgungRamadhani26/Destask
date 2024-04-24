@@ -56,6 +56,7 @@ $routes->delete('/pekerjaan/delete_pekerjaan/(:num)', 'Pekerjaan::delete_pekerja
 //Rotes Task
 //Untuk menampilkan halaman daftar task
 $routes->get('/task/daftar_task/(:num)', 'Task::daftar_task/$1');
+$routes->get('/task/add_task/(:num)', 'Task::add_task/$1');
 
 //Routes Personil
 //Untuk edit personil pm
