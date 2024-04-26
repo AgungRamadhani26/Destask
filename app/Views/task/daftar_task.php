@@ -208,9 +208,6 @@
                                     <td>
                                        <div class="btn-group" role="group">
                                           <div>
-                                             <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
-                                          </div>
-                                          <div>
                                              <a href="" class="btn btn-warning" title="Klik untuk mengedit"><i class=" ri-edit-2-line"></i></a>
                                           </div>
                                           <form action="" method="POST" class="d-inline">
@@ -288,10 +285,7 @@
                                     <td>
                                        <div class="btn-group" role="group">
                                           <div>
-                                             <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
-                                          </div>
-                                          <div>
-                                             <a href="" class="btn btn-warning" title="Klik untuk mengedit"><i class=" ri-edit-2-line"></i></a>
+                                             <a href="/task/edit_task/<?= $task_pl_bs['id_kategori_task'] ?>" class="btn btn-warning" title="Klik untuk mengedit"><i class=" ri-edit-2-line"></i></a>
                                           </div>
                                           <form action="" method="POST" class="d-inline">
                                              <?= csrf_field(); ?>
@@ -366,9 +360,6 @@
                                     <td><?= $b++ ?></td>
                                     <td>
                                        <div class="btn-group" role="group">
-                                          <div>
-                                             <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
-                                          </div>
                                           <div>
                                              <a href="" class="btn btn-warning" title="Klik untuk mengedit"><i class=" ri-edit-2-line"></i></a>
                                           </div>

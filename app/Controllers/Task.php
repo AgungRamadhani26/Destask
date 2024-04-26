@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\BobotKategoriTaskModel;
 use App\Models\HariLiburModel;
 use App\Models\KategoriPekerjaanModel;
 use App\Models\KategoriTaskModel;
@@ -11,6 +12,7 @@ use App\Models\PersonilModel;
 use App\Models\StatusPekerjaanModel;
 use App\Models\StatusTaskModel;
 use App\Models\TaskModel;
+use App\Models\UserGroupModel;
 use App\Models\UserModel;
 
 class Task extends BaseController
@@ -19,23 +21,27 @@ class Task extends BaseController
     protected $pekerjaanModel;
     protected $personilModel;
     protected $userModel;
+    protected $usergroupModel;
     protected $kategoriPekerjaanModel;
     protected $kategoriTaskModel;
     protected $statusPekerjaanModel;
     protected $statusTaskModel;
     protected $hariliburModel;
     protected $taskModel;
+    protected $bobot_kategori_task;
     public function __construct()
     {
         $this->pekerjaanModel = new PekerjaanModel();
         $this->personilModel = new PersonilModel();
         $this->userModel = new UserModel();
+        $this->usergroupModel = new UserGroupModel();
         $this->kategoriPekerjaanModel = new KategoriPekerjaanModel();
         $this->kategoriTaskModel = new KategoriTaskModel();
         $this->statusPekerjaanModel = new StatusPekerjaanModel();
         $this->statusTaskModel = new StatusTaskModel();
         $this->hariliburModel = new HariLiburModel();
         $this->taskModel = new TaskModel();
+        $this->bobot_kategori_task = new BobotKategoriTaskModel();
         helper(['swal_helper', 'option_helper']);
     }
 
@@ -82,13 +88,70 @@ class Task extends BaseController
             'kategori_task' => $this->kategoriTaskModel->getKategoriTask(),
             'status_task' => $this->statusTaskModel->getStatusTask(),
         ];
-        // dd($data);
         return view('task/daftar_task', $data);
     }
 
-
+    //Fungsi untuk menambah Task
     public function add_task($id_pekerjaan)
     {
+        $year_now = date("Y");
+        $personil_pm = $this->personilModel->getPersonilByIdPekerjaanRolePersonil($id_pekerjaan, 'project_manager');
+        if ($personil_pm[0]['id_user'] == session()->get('id_user')) {
+            $personil = $this->personilModel->getPersonilByIdPekerjaan($id_pekerjaan);
+            $usergroup = $this->usergroupModel->getUserGroup();
+            $jumlah_usergroup = count($usergroup);
+            foreach ($usergroup as $ug) {
+                $bobot_kategori_task = $this->bobot_kategori_task->getBobotKategoriTaskByUsergroupTahun($year_now, $ug['id_usergroup']);
+                if ($bobot_kategori_task == '' || $bobot_kategori_task == null) {
+                    $id_usergroup_yang_tidak_ada_dibobot_kategori_task[] = $ug['id_usergroup'];
+                } else {
+                    $id_usergroup_yang_ada_dibobot_kategori_task[] = $ug['id_usergroup'];
+                }
+            }
+            $jumlah_usergroup_yang_ada_dibobot_kategori_task = count($id_usergroup_yang_ada_dibobot_kategori_task);
+            if ($jumlah_usergroup != $jumlah_usergroup_yang_ada_dibobot_kategori_task) {
+                $dapat_tambah_task = false;
+                foreach ($id_usergroup_yang_tidak_ada_dibobot_kategori_task as $id_usergroup_tidak_ada) {
+                    $usergroup_yang_tidak_ada_dibobot_kategori_task[] = $this->usergroupModel->getUserGroup($id_usergroup_tidak_ada);
+                }
+            } else {
+                $dapat_tambah_task = true;
+                $usergroup_yang_tidak_ada_dibobot_kategori_task[] = null;
+            }
+        } else {
+            $personil = $this->personilModel->getPersonilByIdPekerjaanIdUser($id_pekerjaan, session()->get('id_user'));
+            $id_usergroup = session()->get('id_usergroup');
+            $usergroup = $this->usergroupModel->getUserGroup($id_usergroup);
+            //Pengecekan apakah tahun ini bobot kategori task sudah di setting, jika belum maka tidak bisa menambahkan task
+            $bobot_kategori_task = $this->bobot_kategori_task->getBobotKategoriTaskByUsergroupTahun($year_now, $id_usergroup);
+            if ($bobot_kategori_task == '' || $bobot_kategori_task == null) {
+                $dapat_tambah_task = false;
+                $usergroup_yang_tidak_ada_dibobot_kategori_task[] = $usergroup;
+            } else {
+                $dapat_tambah_task = true;
+                $usergroup_yang_tidak_ada_dibobot_kategori_task[] = null;
+            }
+        }
+        $data = [
+            'url1' => '/dashboard',
+            'url' => '/dashboard',
+            'usergroup_yang_tidak_ada_dibobot_kategori_task' => $usergroup_yang_tidak_ada_dibobot_kategori_task,
+            'pekerjaan' => $this->pekerjaanModel->getPekerjaan($id_pekerjaan),
+            'project_manager' => $this->userModel->getUser($personil_pm[0]['id_user']),
+            'personil' =>  $personil,
+            'user' => $this->userModel->getUser(),
+            'dapat_tambah_task' => $dapat_tambah_task,
+            'kategori_task' => $this->kategoriTaskModel->getKategoriTask(),
+            'hari_libur' => $this->hariliburModel->getHariLibur(),
+        ];
+        return view('task/add_task', $data);
+    }
+
+    //Fungsi untuk mengedit Task
+    public function edit_task($id_task)
+    {
+        $task = $this->taskModel->getTask($id_task);
+        $id_pekerjaan = $task['id_pekerjaan'];
         $data = [
             'url1' => '/dashboard',
             'url' => '/dashboard',
@@ -98,6 +161,6 @@ class Task extends BaseController
             'kategori_task' => $this->kategoriTaskModel->getKategoriTask(),
             'hari_libur' => $this->hariliburModel->getHariLibur(),
         ];
-        return view('task/add_task', $data);
+        return view('task/edit_task', $data);
     }
 }

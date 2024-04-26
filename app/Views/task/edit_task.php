@@ -2,24 +2,12 @@
 <?= $this->section('content'); ?>
 
 <div class="pagetitle">
-   <h1>Form Tambah Task</h1>
+   <h1>Form Edit Task</h1>
 </div>
 
 <section class="section">
    <div class="row">
       <div class="col-lg-12">
-         <?php if ($dapat_tambah_task == false) : ?>
-            <div class="alert alert-danger d-flex align-items-center" role="alert">
-               <div>
-                  <i class="bi bi-exclamation-triangle-fill"> <b>Perhatian : </b></i> Bobot kategori task untuk usergroup
-                  <?php foreach ($usergroup_yang_tidak_ada_dibobot_kategori_task as $ug) : ?>
-                     <b><?= $ug['nama_usergroup'] ?></b>,
-                  <?php endforeach; ?>
-                  di tahun <b><?= date("Y") ?></b> belum ditambahkan oleh <b>Head Of Departmen (HOD)</b>, sehingga anda
-                  belum dapat membuat task baru. Hubungi <b>HOD</b> agar bobot kategori task untuk usergroup tersebut segera ditambahkan.
-               </div>
-            </div>
-         <?php endif ?>
          <div class="card">
             <div class="card-body">
                <form action="/task/tambah_task" method="POST">
@@ -50,7 +38,22 @@
                                  <tr>
                                     <td><span class="fw-bold">PM</span></td>
                                     <td>:</td>
-                                    <td><i class="bi bi-person-fill"> <?= $project_manager['nama'] ?></i></td>
+                                    <td>
+                                       <i class="bi bi-person-fill">
+                                          <?php
+                                          foreach ($personil as $per) {
+                                             if ($pekerjaan['id_pekerjaan'] == $per['id_pekerjaan'] && $per['role_personil'] == 'project_manager') {
+                                                foreach ($user as $usr) {
+                                                   if ($per['id_user'] == $usr['id_user']) {
+                                                      echo $usr['nama'];
+                                                      break; // Keluar dari loop setelah menemukan nilai yang cocok
+                                                   }
+                                                }
+                                             }
+                                          }
+                                          ?>
+                                       </i>
+                                    </td>
                                  </tr>
                                  <tr>
                                     <td><span class="fw-bold">PIC</span></td>
@@ -111,9 +114,8 @@
                      </div>
                      <hr style="border-top: 3px solid black;">
                      <div class="text-center">
-                        <button type="submit" class="btn btn-primary" <?= ($dapat_tambah_task == false) ? 'disabled' : '' ?>>Simpan</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
                      </div>
-
                   </div>
                </form>
             </div>

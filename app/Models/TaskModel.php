@@ -15,6 +15,11 @@ class TaskModel extends Model
         'tgl_selesai', 'tgl_verifikasi_diterima', 'status_verifikasi', 'persentase_selesai',
         'deskripsi_task', 'alasan_verifikasi', 'bukti_selesai', 'tautan_task'
     ];
+    //Fungsi untuk mendapatkan data task berdasarkan id_task
+    public function getTask($id_task)
+    {
+        return $this->where(['id_task' => $id_task])->first();
+    }
 
     //Fungsi untuk mendapatkan data task hari ini yang belum submit berdasarkan id pekerjaan
     public function getTaskHariIni_BelumSubmit_ByIdPekerjaan($id_pekerjaan)
