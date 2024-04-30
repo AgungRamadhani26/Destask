@@ -7,7 +7,10 @@ use App\Models\KategoriPekerjaanModel;
 use App\Models\PekerjaanModel;
 use App\Models\PersonilModel;
 use App\Models\StatusPekerjaanModel;
+use App\Models\TargetPoinHarianModel;
+use App\Models\UserGroupModel;
 use App\Models\UserModel;
+use PhpParser\Node\Stmt\If_;
 
 class Dashboard extends BaseController
 {
@@ -15,17 +18,21 @@ class Dashboard extends BaseController
     protected $pekerjaanModel;
     protected $personilModel;
     protected $userModel;
+    protected $usergroupModel;
     protected $kategoriPekerjaanModel;
     protected $statusPekerjaanModel;
     protected $hariliburModel;
+    protected $targetpoinharianModel;
     public function __construct()
     {
         $this->pekerjaanModel = new PekerjaanModel();
         $this->personilModel = new PersonilModel();
         $this->userModel = new UserModel();
+        $this->usergroupModel = new UserGroupModel();
         $this->kategoriPekerjaanModel = new KategoriPekerjaanModel();
         $this->statusPekerjaanModel = new StatusPekerjaanModel();
         $this->hariliburModel = new HariLiburModel();
+        $this->targetpoinharianModel = new TargetPoinHarianModel();
         helper(['swal_helper', 'option_helper']);
     }
 
@@ -56,7 +63,93 @@ class Dashboard extends BaseController
             $jumlah_pekerjaan_support = $this->pekerjaanModel->countPekerjaanHodAdminDireksi_ByStatusPekerjaan(4);
             $jumlah_pekerjaan_cancle = $this->pekerjaanModel->countPekerjaanHodAdminDireksi_ByStatusPekerjaan(5);
         }
+        $tahun_ini = date("Y");
+        $bulan_ini = date("n");
+        if ((session()->get('user_level') == 'supervisi') || (session()->get('user_level') == 'staff')) {
+            $id_usergroup = session()->get('id_usergroup');
+            $usergroup = $this->usergroupModel->getUserGroup($id_usergroup);
+            //Pengecekan apakah tahun ini target poin harian sudah di setting, jika belum maka tidak bisa membuka form add task
+            $target_poin_harian1 = $this->targetpoinharianModel->getTargetPoinHarianByTahunBulanIdusergroup($tahun_ini, $bulan_ini, $id_usergroup);
+            if (empty($target_poin_harian1)) {
+                $target_poin_harian_tahun_bulan_ini_lengkap = false;
+                $usergroup_yang_tidak_ada_ditarget_poin_harian[] = $usergroup;
+            } else {
+                $target_poin_harian_tahun_bulan_ini_lengkap = true;
+                $usergroup_yang_tidak_ada_ditarget_poin_harian[] = null;
+            }
+        } elseif ((session()->get('user_level') == 'hod') || (session()->get('user_level') == 'direksi')) {
+            $usergroup = $this->usergroupModel->getUserGroup();
+            $jumlah_usergroup = count($usergroup);
+            foreach ($usergroup as $ug) {
+                $target_poin_harian1 = $this->targetpoinharianModel->getTargetPoinHarianByTahunBulanIdusergroup($tahun_ini, $bulan_ini, $ug['id_usergroup']);
+                if (empty($target_poin_harian1)) {
+                    $id_usergroup_yang_tidak_ada_ditarget_poin_harian[] = $ug['id_usergroup'];
+                } else {
+                    $id_usergroup_yang_ada_ditarget_poin_harian[] = $ug['id_usergroup'];
+                }
+            }
+            $jumlah_usergroup_yang_ada_ditarget_poin_harian = count($id_usergroup_yang_ada_ditarget_poin_harian);
+            if ($jumlah_usergroup != $jumlah_usergroup_yang_ada_ditarget_poin_harian) {
+                $target_poin_harian_tahun_bulan_ini_lengkap = false;
+                foreach ($id_usergroup_yang_tidak_ada_ditarget_poin_harian as $id_usergroup_tidak_ada) {
+                    $usergroup_yang_tidak_ada_ditarget_poin_harian[] = $this->usergroupModel->getUserGroup($id_usergroup_tidak_ada);
+                }
+            } else {
+                $target_poin_harian_tahun_bulan_ini_lengkap = true;
+                $usergroup_yang_tidak_ada_ditarget_poin_harian[] = null;
+            }
+        } else {
+            //untuk admin karena tidak ada hubungannya dengan menu target poin harian maka ditampilannya dianggap lengkap
+            $target_poin_harian_tahun_bulan_ini_lengkap = true;
+            $usergroup_yang_tidak_ada_ditarget_poin_harian[] = null;
+        }
+
+
+        $target_poin_harian_design = $this->targetpoinharianModel->getTargetPoinHarianByTahunBulanIdusergroup($tahun_ini, $bulan_ini, 1);
+        if (!empty($target_poin_harian_design)) {
+            $target_poin_harian_design1 = $target_poin_harian_design[0]['jumlah_target_poin_sebulan'];
+        } else {
+            $target_poin_harian_design1 = 'Belum diset';
+        }
+        $target_poin_harian_web = $this->targetpoinharianModel->getTargetPoinHarianByTahunBulanIdusergroup($tahun_ini, $bulan_ini, 2);
+        if (!empty($target_poin_harian_web)) {
+            $target_poin_harian_web1 = $target_poin_harian_web[0]['jumlah_target_poin_sebulan'];
+        } else {
+            $target_poin_harian_web1 = 'Belum diset';
+        }
+        $target_poin_harian_mobile = $this->targetpoinharianModel->getTargetPoinHarianByTahunBulanIdusergroup($tahun_ini, $bulan_ini, 3);
+        if (!empty($target_poin_harian_mobile)) {
+            $target_poin_harian_mobile1 = $target_poin_harian_mobile[0]['jumlah_target_poin_sebulan'];
+        } else {
+            $target_poin_harian_mobile1 = 'Belum diset';
+        }
+        $target_poin_harian_tester = $this->targetpoinharianModel->getTargetPoinHarianByTahunBulanIdusergroup($tahun_ini, $bulan_ini, 4);
+        if (!empty($target_poin_harian_tester)) {
+            $target_poin_harian_tester1 = $target_poin_harian_tester[0]['jumlah_target_poin_sebulan'];
+        } else {
+            $target_poin_harian_tester1 = 'Belum diset';
+        }
+        $target_poin_harian_admin = $this->targetpoinharianModel->getTargetPoinHarianByTahunBulanIdusergroup($tahun_ini, $bulan_ini, 5);
+        if (!empty($target_poin_harian_admin)) {
+            $target_poin_harian_admin1 = $target_poin_harian_admin[0]['jumlah_target_poin_sebulan'];
+        } else {
+            $target_poin_harian_admin1 = 'Belum diset';
+        }
+        $target_poin_harian_helpdesk = $this->targetpoinharianModel->getTargetPoinHarianByTahunBulanIdusergroup($tahun_ini, $bulan_ini, 6);
+        if (!empty($target_poin_harian_helpdesk)) {
+            $target_poin_harian_helpdesk1 = $target_poin_harian_helpdesk[0]['jumlah_target_poin_sebulan'];
+        } else {
+            $target_poin_harian_helpdesk1 = 'Belum diset';
+        }
         $data = [
+            'usergroup_yang_tidak_ada_ditarget_poin_harian' => $usergroup_yang_tidak_ada_ditarget_poin_harian,
+            'target_poin_harian_tahun_bulan_ini_lengkap' => $target_poin_harian_tahun_bulan_ini_lengkap,
+            'target_poin_harian_design' => $target_poin_harian_design1,
+            'target_poin_harian_web' => $target_poin_harian_web1,
+            'target_poin_harian_mobile' => $target_poin_harian_mobile1,
+            'target_poin_harian_tester' => $target_poin_harian_tester1,
+            'target_poin_harian_admin' => $target_poin_harian_admin1,
+            'target_poin_harian_helpdesk' => $target_poin_harian_helpdesk1,
             'jumlah_pekerjaan' => $jumlah_pekerjaan,
             'jumlah_pekerjaan_presales' => $jumlah_pekerjaan_presales,
             'jumlah_pekerjaan_onprogres' => $jumlah_pekerjaan_onprogres,

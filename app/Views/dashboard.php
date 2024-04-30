@@ -8,6 +8,90 @@
 <section class="section dashboard">
     <div class="row">
         <div class="col-lg-12">
+            <?php if ($target_poin_harian_tahun_bulan_ini_lengkap == false) : ?>
+                <?php if ((session()->get('user_level') == 'supervisi') || (session()->get('user_level') == 'staff')) : ?>
+                    <div class="alert alert-danger d-flex align-items-center" role="alert">
+                        <div>
+                            <i class="bi bi-exclamation-triangle-fill"> <b>Perhatian : </b></i> <b>Direksi</b> ataupun <b>Head of Department (HOD)</b> belum menambahkan target poin harian untuk usergroup
+                            <?php foreach ($usergroup_yang_tidak_ada_ditarget_poin_harian as $ugt) : ?>
+                                <b><?= $ugt['nama_usergroup'] ?></b>,
+                            <?php endforeach; ?>
+                            di tahun <b><?= date("Y") ?></b> bulan <b>
+                                <?php if (date("n") == 1) : ?>
+                                    Januari
+                                <?php elseif (date("n") == 2) : ?>
+                                    Februari
+                                <?php elseif (date("n") == 3) : ?>
+                                    Maret
+                                <?php elseif (date("n") == 4) : ?>
+                                    April
+                                <?php elseif (date("n") == 5) : ?>
+                                    Mei
+                                <?php elseif (date("n") == 6) : ?>
+                                    Juni
+                                <?php elseif (date("n") == 7) : ?>
+                                    Juli
+                                <?php elseif (date("n") == 8) : ?>
+                                    Agustus
+                                <?php elseif (date("n") == 9) : ?>
+                                    September
+                                <?php elseif (date("n") == 10) : ?>
+                                    Oktober
+                                <?php elseif (date("n") == 11) : ?>
+                                    November
+                                <?php elseif (date("n") == 12) : ?>
+                                    Desember
+                                <?php else : ?>
+                                    Bulan tidak valid
+                                <?php endif ?></b>
+                            . Sehingga anda tidak dapat membuka form tambah task baru ditahun dan bulan ini,
+                            Segera hubungi mereka !!!.
+                        </div>
+                    </div>
+                <?php elseif ((session()->get('user_level') == 'hod') || (session()->get('user_level') == 'direksi')) : ?>
+                    <div class="alert alert-danger d-flex align-items-center" role="alert">
+                        <div>
+                            <i class="bi bi-exclamation-triangle-fill"> <b>Perhatian : </b></i> Anda masih belum menambahkan target poin harian untuk usergroup
+                            <?php foreach ($usergroup_yang_tidak_ada_ditarget_poin_harian as $ugt) : ?>
+                                <b><?= $ugt['nama_usergroup'] ?></b>,
+                            <?php endforeach; ?>
+                            di tahun <b><?= date("Y") ?></b> bulan <b>
+                                <?php if (date("n") == 1) : ?>
+                                    Januari
+                                <?php elseif (date("n") == 2) : ?>
+                                    Februari
+                                <?php elseif (date("n") == 3) : ?>
+                                    Maret
+                                <?php elseif (date("n") == 4) : ?>
+                                    April
+                                <?php elseif (date("n") == 5) : ?>
+                                    Mei
+                                <?php elseif (date("n") == 6) : ?>
+                                    Juni
+                                <?php elseif (date("n") == 7) : ?>
+                                    Juli
+                                <?php elseif (date("n") == 8) : ?>
+                                    Agustus
+                                <?php elseif (date("n") == 9) : ?>
+                                    September
+                                <?php elseif (date("n") == 10) : ?>
+                                    Oktober
+                                <?php elseif (date("n") == 11) : ?>
+                                    November
+                                <?php elseif (date("n") == 12) : ?>
+                                    Desember
+                                <?php else : ?>
+                                    Bulan tidak valid
+                                <?php endif ?></b>
+                            . Sehingga <b>Supervisi</b> dan <b>Staff</b> tidak dapat membuka form tambah task baru ditahun dan bulan ini,
+                            Segera tambahkan target poin harian tersebut secepatnya !!!.
+                        </div>
+                    </div>
+                <?php endif ?>
+            <?php endif ?>
+        </div>
+
+        <div class="col-lg-12">
             <div class="row">
 
                 <div class="col-xl-3">
@@ -35,23 +119,7 @@
                                 </div>
                                 <div class="ps-3 pt-2 pb-2">
                                     <h5 class="judul_card">Total Pekerjaan</h5>
-                                    <span class="text-danger small fw-bold"><?= $jumlah_pekerjaan ?></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3">
-                    <div class="card target_tahun_card">
-                        <div class="body_card">
-                            <div class="d-flex align-items-center">
-                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                    <i class="bi bi-bullseye"></i>
-                                </div>
-                                <div class="ps-3">
-                                    <h5 class="judul_card">Target poin bulan ini</h5>
-                                    <span class="text-danger small fw-bold">600</span>
+                                    <span class="text-danger small fw-bold"><?= $jumlah_pekerjaan ?> pekerjaan</span>
                                 </div>
                             </div>
                         </div>
@@ -74,6 +142,58 @@
                     </div>
                 </div>
 
+                <div class="col-xl-3">
+                    <div class="card target_tahun_card">
+                        <div class="body_card">
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-bullseye"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h5 class="judul_card">Target poin bulan ini</h5>
+                                    <?php if (session()->get('user_level') == 'staff' || session()->get('user_level') == 'supervisi') : ?>
+                                        <?php if (session()->get('id_usergroup') == 1) : ?>
+                                            <span class="text-danger small fw-bold"><?= $target_poin_harian_design ?> poin</span>
+                                        <?php elseif (session()->get('id_usergroup') == 2) : ?>
+                                            <span class="text-danger small fw-bold"><?= $target_poin_harian_web ?> poin</span>
+                                        <?php elseif (session()->get('id_usergroup') == 3) : ?>
+                                            <span class="text-danger small fw-bold"><?= $target_poin_harian_mobile ?> poin</span>
+                                        <?php elseif (session()->get('id_usergroup') == 4) : ?>
+                                            <span class="text-danger small fw-bold"><?= $target_poin_harian_tester ?> poin</span>
+                                        <?php elseif (session()->get('id_usergroup') == 5) : ?>
+                                            <span class="text-danger small fw-bold"><?= $target_poin_harian_admin ?> poin</span>
+                                        <?php elseif (session()->get('id_usergroup') == 6) : ?>
+                                            <span class="text-danger small fw-bold"><?= $target_poin_harian_helpdesk ?> poin</span>
+                                        <?php endif; ?>
+                                    <?php else : ?>
+                                        <div id="accordionExample_dash">
+                                            <span class="text-danger small fw-bold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo_dash" aria-expanded="false" aria-controls="collapseTwo">
+                                                Klik untuk melihat
+                                            </span>
+                                            <div id="collapseTwo_dash" class="accordion-collapse collapse" data-bs-parent="#accordionExample_dash">
+                                                <div class="accordion-body">
+                                                    <hr style="margin: 2px 0;">
+                                                    <span class="small">Design : <?= $target_poin_harian_design ?> poin</span>
+                                                    <hr style="margin: 2px 0;">
+                                                    <span class="small">Web : <?= $target_poin_harian_web ?> poin</span>
+                                                    <hr style="margin: 2px 0;">
+                                                    <span class="small">Mobile : <?= $target_poin_harian_mobile ?> poin</span>
+                                                    <hr style="margin: 2px 0;">
+                                                    <span class="small">Tester : <?= $target_poin_harian_tester ?> poin</span>
+                                                    <hr style="margin: 2px 0;">
+                                                    <span class="small">Admin : <?= $target_poin_harian_admin ?> poin</span>
+                                                    <hr style="margin: 2px 0;">
+                                                    <span class="small">Helpdesk : <?= $target_poin_harian_helpdesk ?> poin</span>
+                                                    <hr style="margin: 2px 0;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endif ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -128,7 +248,7 @@
                             <?php foreach ($pekerjaan_presales as $pp) : ?>
                                 <div class="kanban-card">
                                     <?php if (session()->get('user_level') == "staff" || session()->get('user_level') == "supervisi") : ?>
-                                        <a href="/task/add_task/<?= $pp['id_pekerjaan'] ?>" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
+                                        <a href="<?= ($target_poin_harian_tahun_bulan_ini_lengkap == false) ? 'javascript:void(0)' : '/task/add_task/' . $pp['id_pekerjaan'] ?>" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
                                     <?php endif ?>
                                     <a href="/task/daftar_task/<?= $pp['id_pekerjaan'] ?>" class="badge btn bg-primary" title="Lihat daftar task atau verifikasi task"><i class="bi bi-clipboard-data"></i></a>
                                     <?php if (session()->get('user_level') == "hod" || session()->get('user_level') == "admin") : ?>
@@ -187,7 +307,7 @@
                             <?php foreach ($pekerjaan_onprogres as $po) : ?>
                                 <div class="kanban-card">
                                     <?php if (session()->get('user_level') == "staff" || session()->get('user_level') == "supervisi") : ?>
-                                        <a href="/task/add_task/<?= $po['id_pekerjaan'] ?>" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
+                                        <a href="<?= ($target_poin_harian_tahun_bulan_ini_lengkap == false) ? 'javascript:void(0)' : '/task/add_task/' . $po['id_pekerjaan'] ?>" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
                                     <?php endif ?>
                                     <a href="/task/daftar_task/<?= $po['id_pekerjaan'] ?>" class="badge btn bg-primary" title="Lihat daftar task atau verifikasi task"><i class="bi bi-clipboard-data"></i></a>
                                     <?php if (session()->get('user_level') == "hod" || session()->get('user_level') == "admin") : ?>
@@ -246,7 +366,7 @@
                             <?php foreach ($pekerjaan_bast as $pb) : ?>
                                 <div class="kanban-card">
                                     <?php if (session()->get('user_level') == "staff" || session()->get('user_level') == "supervisi") : ?>
-                                        <a href="/task/add_task/<?= $pb['id_pekerjaan'] ?>" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
+                                        <a href="<?= ($target_poin_harian_tahun_bulan_ini_lengkap == false) ? 'javascript:void(0)' : '/task/add_task/' . $pb['id_pekerjaan'] ?>" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
                                     <?php endif ?>
                                     <a href="/task/daftar_task/<?= $pb['id_pekerjaan'] ?>" class="badge btn bg-primary" title="Lihat daftar task atau verifikasi task"><i class="bi bi-clipboard-data"></i></a>
                                     <?php if (session()->get('user_level') == "hod" || session()->get('user_level') == "admin") : ?>
@@ -308,7 +428,7 @@
                             <?php foreach ($pekerjaan_support as $psp) : ?>
                                 <div class="kanban-card">
                                     <?php if (session()->get('user_level') == "staff" || session()->get('user_level') == "supervisi") : ?>
-                                        <a href="/task/add_task/<?= $psp['id_pekerjaan'] ?>" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
+                                        <a href="<?= ($target_poin_harian_tahun_bulan_ini_lengkap == false) ? 'javascript:void(0)' : '/task/add_task/' . $psp['id_pekerjaan'] ?>" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
                                     <?php endif ?>
                                     <a href="/task/daftar_task/<?= $psp['id_pekerjaan'] ?>" class="badge btn bg-primary" title="Lihat daftar task atau verifikasi task"><i class="bi bi-clipboard-data"></i></a>
                                     <?php if (session()->get('user_level') == "hod" || session()->get('user_level') == "admin") : ?>
@@ -367,7 +487,7 @@
                             <?php foreach ($pekerjaan_cancle as $pc) : ?>
                                 <div class="kanban-card">
                                     <?php if (session()->get('user_level') == "staff" || session()->get('user_level') == "supervisi") : ?>
-                                        <a href="/task/add_task/<?= $pc['id_pekerjaan'] ?>" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
+                                        <a href="<?= ($target_poin_harian_tahun_bulan_ini_lengkap == false) ? 'javascript:void(0)' : '/task/add_task/' . $pc['id_pekerjaan'] ?>" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
                                     <?php endif ?>
                                     <a href="/task/daftar_task/<?= $pc['id_pekerjaan'] ?>" class="badge btn bg-primary" title="Lihat daftar task atau verifikasi task"><i class="bi bi-clipboard-data"></i></a>
                                     <?php if (session()->get('user_level') == "hod" || session()->get('user_level') == "admin") : ?>

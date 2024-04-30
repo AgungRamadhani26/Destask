@@ -7,6 +7,18 @@
 
 <div class="row">
    <div class="col-md-4">
+      <?php if ($bobot_kategori_task_tahun_ini_lengkap == false) : ?>
+         <div class="alert alert-danger d-flex align-items-center" role="alert">
+            <div>
+               <i class="bi bi-exclamation-triangle-fill"> <b>Perhatian : </b></i> Anda masih belum menambahkan bobot kategori task untuk usergroup
+               <?php foreach ($usergroup_yang_tidak_ada_dibobot_kategori_task as $ug) : ?>
+                  <b><?= $ug['nama_usergroup'] ?></b>,
+               <?php endforeach; ?>
+               di tahun <b><?= date("Y") ?></b>. Sehingga <b>Supervisi</b> dan <b>Staff</b> tidak dapat membuat task baru ditahun ini,
+               Segera tambahkan bobot kategori task tersebut secepatnya !!!.
+            </div>
+         </div>
+      <?php endif ?>
       <div class="card">
          <div class="card_title_firter_poin_harian bg-primary">
             <h4 class="card-title" style="color: white;">Fiter Bobot Task</h4>

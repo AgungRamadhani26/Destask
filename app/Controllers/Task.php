@@ -28,7 +28,7 @@ class Task extends BaseController
     protected $statusTaskModel;
     protected $hariliburModel;
     protected $taskModel;
-    protected $bobot_kategori_task;
+    protected $bobotkategoritaskModel;
     public function __construct()
     {
         $this->pekerjaanModel = new PekerjaanModel();
@@ -41,7 +41,7 @@ class Task extends BaseController
         $this->statusTaskModel = new StatusTaskModel();
         $this->hariliburModel = new HariLiburModel();
         $this->taskModel = new TaskModel();
-        $this->bobot_kategori_task = new BobotKategoriTaskModel();
+        $this->bobotkategoritaskModel = new BobotKategoriTaskModel();
         helper(['swal_helper', 'option_helper']);
     }
 
@@ -101,8 +101,8 @@ class Task extends BaseController
             $usergroup = $this->usergroupModel->getUserGroup();
             $jumlah_usergroup = count($usergroup);
             foreach ($usergroup as $ug) {
-                $bobot_kategori_task = $this->bobot_kategori_task->getBobotKategoriTaskByUsergroupTahun($year_now, $ug['id_usergroup']);
-                if ($bobot_kategori_task == '' || $bobot_kategori_task == null) {
+                $bobot_kategori_task = $this->bobotkategoritaskModel->getBobotKategoriTaskByUsergroupTahun($year_now, $ug['id_usergroup']);
+                if (empty($bobot_kategori_task)) {
                     $id_usergroup_yang_tidak_ada_dibobot_kategori_task[] = $ug['id_usergroup'];
                 } else {
                     $id_usergroup_yang_ada_dibobot_kategori_task[] = $ug['id_usergroup'];
@@ -123,7 +123,7 @@ class Task extends BaseController
             $id_usergroup = session()->get('id_usergroup');
             $usergroup = $this->usergroupModel->getUserGroup($id_usergroup);
             //Pengecekan apakah tahun ini bobot kategori task sudah di setting, jika belum maka tidak bisa menambahkan task
-            $bobot_kategori_task = $this->bobot_kategori_task->getBobotKategoriTaskByUsergroupTahun($year_now, $id_usergroup);
+            $bobot_kategori_task = $this->bobotkategoritaskModel->getBobotKategoriTaskByUsergroupTahun($year_now, $id_usergroup);
             if ($bobot_kategori_task == '' || $bobot_kategori_task == null) {
                 $dapat_tambah_task = false;
                 $usergroup_yang_tidak_ada_dibobot_kategori_task[] = $usergroup;

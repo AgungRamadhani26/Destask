@@ -6,6 +6,48 @@
 </div>
 
 <div class="row">
+   <div class="col-md-12">
+      <?php if ($target_poin_harian_tahun_bulan_ini_lengkap == false) : ?>
+         <div class="alert alert-danger d-flex align-items-center" role="alert">
+            <div>
+               <i class="bi bi-exclamation-triangle-fill"> <b>Perhatian : </b></i> Anda masih belum menambahkan target poin harian untuk usergroup
+               <?php foreach ($usergroup_yang_tidak_ada_ditarget_poin_harian as $ugt) : ?>
+                  <b><?= $ugt['nama_usergroup'] ?></b>,
+               <?php endforeach; ?>
+               di tahun <b><?= date("Y") ?></b> bulan <b>
+                  <?php if (date("n") == 1) : ?>
+                     Januari
+                  <?php elseif (date("n") == 2) : ?>
+                     Februari
+                  <?php elseif (date("n") == 3) : ?>
+                     Maret
+                  <?php elseif (date("n") == 4) : ?>
+                     April
+                  <?php elseif (date("n") == 5) : ?>
+                     Mei
+                  <?php elseif (date("n") == 6) : ?>
+                     Juni
+                  <?php elseif (date("n") == 7) : ?>
+                     Juli
+                  <?php elseif (date("n") == 8) : ?>
+                     Agustus
+                  <?php elseif (date("n") == 9) : ?>
+                     September
+                  <?php elseif (date("n") == 10) : ?>
+                     Oktober
+                  <?php elseif (date("n") == 11) : ?>
+                     November
+                  <?php elseif (date("n") == 12) : ?>
+                     Desember
+                  <?php else : ?>
+                     Bulan tidak valid
+                  <?php endif ?></b>
+               . Sehingga <b>Supervisi</b> dan <b>Staff</b> tidak dapat membuka form tambah task baru ditahun dan bulan ini,
+               Segera tambahkan target poin harian tersebut secepatnya !!!.
+            </div>
+         </div>
+      <?php endif ?>
+   </div>
    <div class="col-md-6">
       <div class="card">
          <div class="card_title_firter_poin_harian bg-primary">

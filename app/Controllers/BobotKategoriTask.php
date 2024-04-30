@@ -24,9 +24,32 @@ class BobotKategoriTask extends BaseController
     //Fungsi daftar_bobot_kategori_task
     public function daftar_bobot_kategori_task()
     {
+        $year_now = date("Y");
+        $usergroup = $this->usergroupModel->getUserGroup();
+        $jumlah_usergroup = count($usergroup);
+        foreach ($usergroup as $ug) {
+            $bobot_kategori_task1 = $this->bobotkategoritaskModel->getBobotKategoriTaskByUsergroupTahun($year_now, $ug['id_usergroup']);
+            if (empty($bobot_kategori_task1)) {
+                $id_usergroup_yang_tidak_ada_dibobot_kategori_task[] = $ug['id_usergroup'];
+            } else {
+                $id_usergroup_yang_ada_dibobot_kategori_task[] = $ug['id_usergroup'];
+            }
+        }
+        $jumlah_usergroup_yang_ada_dibobot_kategori_task = count($id_usergroup_yang_ada_dibobot_kategori_task);
+        if ($jumlah_usergroup != $jumlah_usergroup_yang_ada_dibobot_kategori_task) {
+            $bobot_kategori_task_tahun_ini_lengkap = false;
+            foreach ($id_usergroup_yang_tidak_ada_dibobot_kategori_task as $id_usergroup_tidak_ada) {
+                $usergroup_yang_tidak_ada_dibobot_kategori_task[] = $this->usergroupModel->getUserGroup($id_usergroup_tidak_ada);
+            }
+        } else {
+            $bobot_kategori_task_tahun_ini_lengkap = true;
+            $usergroup_yang_tidak_ada_dibobot_kategori_task[] = null;
+        }
         $data = [
             'bobot_kategori_task' => $this->bobotkategoritaskModel->getTotalBobotKategoriTaskPerUsergroupPerYear(),
-            'usergroup' => $this->usergroupModel->getUserGroup(),
+            'usergroup' => $usergroup,
+            'usergroup_yang_tidak_ada_dibobot_kategori_task' => $usergroup_yang_tidak_ada_dibobot_kategori_task,
+            'bobot_kategori_task_tahun_ini_lengkap' => $bobot_kategori_task_tahun_ini_lengkap,
             'kategori_task' => $this->kategoriTaskModel->getKategoriTaskASC(),
             'url1' => '/bobot_kategori_task/daftar_bobot_kategori_task',
             'filter_tahun_bkt' => '',
@@ -41,9 +64,32 @@ class BobotKategoriTask extends BaseController
         $usergroup_bkt = $this->request->getGet('usergroup_bkt');
         $tahun_bkt = $this->request->getGet('tahun_bkt');
         $bobot_kategori_task = $this->bobotkategoritaskModel->getTotalBobotKategoriTaskPerUsergroupPerYear_ByTahunUsergroup($usergroup_bkt, $tahun_bkt);
+        $year_now = date("Y");
+        $usergroup = $this->usergroupModel->getUserGroup();
+        $jumlah_usergroup = count($usergroup);
+        foreach ($usergroup as $ug) {
+            $bobot_kategori_task1 = $this->bobotkategoritaskModel->getBobotKategoriTaskByUsergroupTahun($year_now, $ug['id_usergroup']);
+            if (empty($bobot_kategori_task1)) {
+                $id_usergroup_yang_tidak_ada_dibobot_kategori_task[] = $ug['id_usergroup'];
+            } else {
+                $id_usergroup_yang_ada_dibobot_kategori_task[] = $ug['id_usergroup'];
+            }
+        }
+        $jumlah_usergroup_yang_ada_dibobot_kategori_task = count($id_usergroup_yang_ada_dibobot_kategori_task);
+        if ($jumlah_usergroup != $jumlah_usergroup_yang_ada_dibobot_kategori_task) {
+            $bobot_kategori_task_tahun_ini_lengkap = false;
+            foreach ($id_usergroup_yang_tidak_ada_dibobot_kategori_task as $id_usergroup_tidak_ada) {
+                $usergroup_yang_tidak_ada_dibobot_kategori_task[] = $this->usergroupModel->getUserGroup($id_usergroup_tidak_ada);
+            }
+        } else {
+            $bobot_kategori_task_tahun_ini_lengkap = true;
+            $usergroup_yang_tidak_ada_dibobot_kategori_task[] = null;
+        }
         $data = [
             'bobot_kategori_task' => $bobot_kategori_task,
-            'usergroup' => $this->usergroupModel->getUserGroup(),
+            'usergroup' => $usergroup,
+            'usergroup_yang_tidak_ada_dibobot_kategori_task' => $usergroup_yang_tidak_ada_dibobot_kategori_task,
+            'bobot_kategori_task_tahun_ini_lengkap' => $bobot_kategori_task_tahun_ini_lengkap,
             'kategori_task' => $this->kategoriTaskModel->getKategoriTaskASC(),
             'url1' => '/bobot_kategori_task/daftar_bobot_kategori_task',
             'filter_usergroup_bkt' => $usergroup_bkt,
@@ -62,7 +108,6 @@ class BobotKategoriTask extends BaseController
             'kategori_task_dan_poin' => $this->bobotkategoritaskModel->getBobotKategoriTaskByUsergroupTahun($tahun, $id_usergroup),
             'url1' => '/bobot_kategori_task/daftar_bobot_kategori_task',
         ];
-        // dd($data);
         return view('bobot_kategoritask/detail_bobot_kategoritask', $data);
     }
 

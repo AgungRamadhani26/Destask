@@ -21,9 +21,33 @@ class TargetPoinHarian extends BaseController
     //Fungsi daftar_target_poin_harian
     public function daftar_target_poin_harian()
     {
+        $tahun_ini = date("Y");
+        $bulan_ini = date("n");
+        $usergroup = $this->usergroupModel->getUserGroup();
+        $jumlah_usergroup = count($usergroup);
+        foreach ($usergroup as $ug) {
+            $target_poin_harian1 = $this->targetpoinharianModel->getTargetPoinHarianByTahunBulanIdusergroup($tahun_ini, $bulan_ini, $ug['id_usergroup']);
+            if (empty($target_poin_harian1)) {
+                $id_usergroup_yang_tidak_ada_ditarget_poin_harian[] = $ug['id_usergroup'];
+            } else {
+                $id_usergroup_yang_ada_ditarget_poin_harian[] = $ug['id_usergroup'];
+            }
+        }
+        $jumlah_usergroup_yang_ada_ditarget_poin_harian = count($id_usergroup_yang_ada_ditarget_poin_harian);
+        if ($jumlah_usergroup != $jumlah_usergroup_yang_ada_ditarget_poin_harian) {
+            $target_poin_harian_tahun_bulan_ini_lengkap = false;
+            foreach ($id_usergroup_yang_tidak_ada_ditarget_poin_harian as $id_usergroup_tidak_ada) {
+                $usergroup_yang_tidak_ada_ditarget_poin_harian[] = $this->usergroupModel->getUserGroup($id_usergroup_tidak_ada);
+            }
+        } else {
+            $target_poin_harian_tahun_bulan_ini_lengkap = true;
+            $usergroup_yang_tidak_ada_ditarget_poin_harian[] = null;
+        }
         $data = [
             'target_poin_harian' => $this->targetpoinharianModel->getTargetPoinHarian(),
             'usergroup' => $this->usergroupModel->getUserGroup(),
+            'usergroup_yang_tidak_ada_ditarget_poin_harian' => $usergroup_yang_tidak_ada_ditarget_poin_harian,
+            'target_poin_harian_tahun_bulan_ini_lengkap' => $target_poin_harian_tahun_bulan_ini_lengkap,
             'url1' => '/target_poin_harian/daftar_target_poin_harian',
             'filter_bulan' => '',
             'filter_tahun' => ''
