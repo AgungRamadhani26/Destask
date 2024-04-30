@@ -147,6 +147,73 @@ class Task extends BaseController
         return view('task/add_task', $data);
     }
 
+    public function tambah_task()
+    {
+        $validasi = \Config\Services::validation();
+        $aturan = [
+            'personil_add_task' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Personil harus dipilih',
+                ]
+            ],
+            'kategori_task_add_task' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Kategori task harus dipilih',
+                ]
+            ],
+            'target_waktu_selesai_add_task' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Target waktu selesai harus diisi',
+                ]
+            ],
+            'deskripsi_add_task' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Deskripsi task harus diisi',
+                ]
+            ]
+        ];
+        $validasi->setRules($aturan);
+        $id_pekerjaan = $this->request->getPost('id_pekerjaan_add_task');
+        $pekerjaan = $this->pekerjaanModel->getPekerjaan($id_pekerjaan);
+        if ($validasi->withRequest($this->request)->run()) {
+            //Mengambil data untuk tabel task
+            $id_user = $this->request->getPost('personil_add_task');
+            $id_kategori_task = $this->request->getPost('kategori_task_add_task');
+            $tgl_planing = $this->request->getPost('target_waktu_selesai_add_task');
+            $deskripsi_task = preg_replace('/\s+/', ' ', trim(strval($this->request->getPost('deskripsi_add_task'))));
+            //Proses memasukkan data ke database
+            $data_task = [
+                'id_pekerjaan' => $id_pekerjaan,
+                'id_user' => $id_user,
+                'id_kategori_task' => $id_kategori_task,
+                'id_status_task' => 1,
+                'tgl_planing' => $tgl_planing,
+                'tgl_selesai' => null,
+                'tgl_verifikasi_diterima' => null,
+                'status_verifikasi' => 0,
+                'persentase_selesai' => 0,
+                'deskripsi_task' => $deskripsi_task,
+                'alasan_verifikasi' => null,
+                'bukti_selesai' => null,
+                'tautan_task' => null
+            ];
+            $this->taskModel->save($data_task);
+            Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil menambah data task untuk pekerjaan ' . $pekerjaan['nama_pekerjaan']);
+            return redirect()->to('task/daftar_task/' . $id_pekerjaan);
+        } else {
+            session()->setFlashdata('err_personil_add_task', $validasi->getError('personil_add_task'));
+            session()->setFlashdata('err_kategori_task_add_task', $validasi->getError('kategori_task_add_task'));
+            session()->setFlashdata('err_target_waktu_selesai_add_task', $validasi->getError('target_waktu_selesai_add_task'));
+            session()->setFlashdata('err_deskripsi_add_task', $validasi->getError('deskripsi_add_task'));
+            Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Terdapat inputan yang kurang sesuai, periksa form tambah task');
+            return redirect()->to('/task/add_task/' . $id_pekerjaan)->withInput();
+        }
+    }
+
     //Fungsi untuk mengedit Task
     public function edit_task($id_task)
     {

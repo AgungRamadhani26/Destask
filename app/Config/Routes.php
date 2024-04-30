@@ -58,6 +58,8 @@ $routes->delete('/pekerjaan/delete_pekerjaan/(:num)', 'Pekerjaan::delete_pekerja
 $routes->get('/task/daftar_task/(:num)', 'Task::daftar_task/$1');
 //Untuk menampilkan form tambah task
 $routes->get('/task/add_task/(:num)', 'Task::add_task/$1');
+//Untuk menambah task
+$routes->post('/task/tambah_task', 'Task::tambah_task');
 //Untuk menampilkan form edit task
 $routes->get('/task/edit_task/(:num)', 'Task::edit_task/$1');
 
