@@ -191,7 +191,9 @@
                            <thead>
                               <tr>
                                  <th style="background-color: orange;">No</th>
-                                 <th style="background-color: orange;">Aksi</th>
+                                 <?php if (session()->get('user_level') == 'staff' || session()->get('user_level') == 'supervisi') : ?>
+                                    <th style="background-color: orange;">Aksi</th>
+                                 <?php endif ?>
                                  <th style="background-color: orange;">Persentase Selesai</th>
                                  <th style="background-color: orange;">Deskripsi Task</th>
                                  <th style="background-color: orange;">Nama Personil</th>
@@ -205,21 +207,25 @@
                               <?php foreach ($task_hariini_belumsubmit as $task_hi_bs) : ?>
                                  <tr>
                                     <td><?= $i++ ?></td>
-                                    <td>
-                                       <div class="btn-group" role="group">
-                                          <div>
-                                             <a href="" class="btn btn-warning" title="Klik untuk mengedit"><i class=" ri-edit-2-line"></i></a>
+                                    <?php if (session()->get('user_level') == 'staff' || session()->get('user_level') == 'supervisi') : ?>
+                                       <td>
+                                          <?php if (session()->get('id_user') == $project_manager['id_user']) : ?>
+                                             <div class="btn-group" role="group">
+                                                <div>
+                                                   <a href="/task/edit_task/<?= $task_hi_bs['id_task'] ?>" class="btn btn-warning" title="Klik untuk mengedit"><i class=" ri-edit-2-line"></i></a>
+                                                </div>
+                                                <form action="" method="POST" class="d-inline">
+                                                   <?= csrf_field(); ?>
+                                                   <input type="hidden" name="_method" value="DELETE">
+                                                   <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data task ?');"><i class="ri-delete-bin-5-line"></i></button>
+                                                </form>
+                                             </div>
+                                          <?php endif ?>
+                                          <div class="btn-group mt-1" role="group">
+                                             <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Submit</a>
                                           </div>
-                                          <form action="" method="POST" class="d-inline">
-                                             <?= csrf_field(); ?>
-                                             <input type="hidden" name="_method" value="DELETE">
-                                             <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data task ?');"><i class="ri-delete-bin-5-line"></i></button>
-                                          </form>
-                                       </div>
-                                       <div class="btn-group mt-1" role="group">
-                                          <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Submit</a>
-                                       </div>
-                                    </td>
+                                       </td>
+                                    <?php endif ?>
                                     <td>
                                        <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="<?= $task_hi_bs['persentase_selesai'] ?>" aria-valuemin="0" aria-valuemax="100" style="height: 20px">
                                           <div class="progress-bar progress-bar-striped progress-bar-animated overflow-visible text-dark" style="background-color: #73ff85; width: <?= $task_hi_bs['persentase_selesai'] ?>%"><b><?= $task_hi_bs['persentase_selesai'] ?>%</b></div>
@@ -268,7 +274,9 @@
                            <thead>
                               <tr>
                                  <th style="background-color: blue;">No</th>
-                                 <th style="background-color: blue;">Aksi</th>
+                                 <?php if (session()->get('user_level') == 'staff' || session()->get('user_level') == 'supervisi') : ?>
+                                    <th style="background-color: blue;">Aksi</th>
+                                 <?php endif ?>
                                  <th style="background-color: blue;">Persentase Selesai</th>
                                  <th style="background-color: blue;">Deskripsi Task</th>
                                  <th style="background-color: blue;">Nama Personil</th>
@@ -282,21 +290,25 @@
                               <?php foreach ($task_planing_belumsubmit as $task_pl_bs) : ?>
                                  <tr>
                                     <td><?= $a++ ?></td>
-                                    <td>
-                                       <div class="btn-group" role="group">
-                                          <div>
-                                             <a href="/task/edit_task/<?= $task_pl_bs['id_kategori_task'] ?>" class="btn btn-warning" title="Klik untuk mengedit"><i class=" ri-edit-2-line"></i></a>
+                                    <?php if (session()->get('user_level') == 'staff' || session()->get('user_level') == 'supervisi') : ?>
+                                       <td>
+                                          <?php if (session()->get('id_user') == $project_manager['id_user']) : ?>
+                                             <div class="btn-group" role="group">
+                                                <div>
+                                                   <a href="/task/edit_task/<?= $task_pl_bs['id_task'] ?>" class="btn btn-warning" title="Klik untuk mengedit"><i class=" ri-edit-2-line"></i></a>
+                                                </div>
+                                                <form action="" method="POST" class="d-inline">
+                                                   <?= csrf_field(); ?>
+                                                   <input type="hidden" name="_method" value="DELETE">
+                                                   <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data task ?');"><i class="ri-delete-bin-5-line"></i></button>
+                                                </form>
+                                             </div>
+                                          <?php endif ?>
+                                          <div class="btn-group mt-1" role="group">
+                                             <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Submit</a>
                                           </div>
-                                          <form action="" method="POST" class="d-inline">
-                                             <?= csrf_field(); ?>
-                                             <input type="hidden" name="_method" value="DELETE">
-                                             <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data task ?');"><i class="ri-delete-bin-5-line"></i></button>
-                                          </form>
-                                       </div>
-                                       <div class="btn-group mt-1" role="group">
-                                          <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Submit</a>
-                                       </div>
-                                    </td>
+                                       </td>
+                                    <?php endif ?>
                                     <td>
                                        <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="<?= $task_pl_bs['persentase_selesai'] ?>" aria-valuemin="0" aria-valuemax="100" style="height: 20px">
                                           <div class="progress-bar progress-bar-striped progress-bar-animated overflow-visible text-dark" style="background-color: #73ff85; width: <?= $task_pl_bs['persentase_selesai'] ?>%"><b><?= $task_pl_bs['persentase_selesai'] ?>%</b></div>
@@ -344,7 +356,9 @@
                            <thead>
                               <tr>
                                  <th style="background-color: rgb(212, 2, 2);">No</th>
-                                 <th style="background-color: rgb(212, 2, 2);">Aksi</th>
+                                 <?php if (session()->get('user_level') == 'staff' || session()->get('user_level') == 'supervisi') : ?>
+                                    <th style="background-color: rgb(212, 2, 2);">Aksi</th>
+                                 <?php endif ?>
                                  <th style="background-color: rgb(212, 2, 2);">Persentase Selesai</th>
                                  <th style="background-color: rgb(212, 2, 2);">Deskripsi Task</th>
                                  <th style="background-color: rgb(212, 2, 2);">Nama Personil</th>
@@ -358,21 +372,25 @@
                               <?php foreach ($task_overdue_belumsubmit as $task_ov_bs) : ?>
                                  <tr>
                                     <td><?= $b++ ?></td>
-                                    <td>
-                                       <div class="btn-group" role="group">
-                                          <div>
-                                             <a href="" class="btn btn-warning" title="Klik untuk mengedit"><i class=" ri-edit-2-line"></i></a>
+                                    <?php if (session()->get('user_level') == 'staff' || session()->get('user_level') == 'supervisi') : ?>
+                                       <td>
+                                          <?php if (session()->get('id_user') == $project_manager['id_user']) : ?>
+                                             <div class="btn-group" role="group">
+                                                <div>
+                                                   <a href="/task/edit_task/<?= $task_ov_bs['id_task'] ?>" class="btn btn-warning" title="Klik untuk mengedit"><i class=" ri-edit-2-line"></i></a>
+                                                </div>
+                                                <form action="" method="POST" class="d-inline">
+                                                   <?= csrf_field(); ?>
+                                                   <input type="hidden" name="_method" value="DELETE">
+                                                   <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data task ?');"><i class="ri-delete-bin-5-line"></i></button>
+                                                </form>
+                                             </div>
+                                          <?php endif ?>
+                                          <div class="btn-group mt-1" role="group">
+                                             <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Submit</a>
                                           </div>
-                                          <form action="" method="POST" class="d-inline">
-                                             <?= csrf_field(); ?>
-                                             <input type="hidden" name="_method" value="DELETE">
-                                             <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data task ?');"><i class="ri-delete-bin-5-line"></i></button>
-                                          </form>
-                                       </div>
-                                       <div class="btn-group mt-1" role="group">
-                                          <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Submit</a>
-                                       </div>
-                                    </td>
+                                       </td>
+                                    <?php endif ?>
                                     <td>
                                        <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="<?= $task_ov_bs['persentase_selesai'] ?>" aria-valuemin="0" aria-valuemax="100" style="height: 20px">
                                           <div class="progress-bar progress-bar-striped progress-bar-animated overflow-visible text-dark" style="background-color: #73ff85; width: <?= $task_ov_bs['persentase_selesai'] ?>%"><b><?= $task_ov_bs['persentase_selesai'] ?>%</b></div>
@@ -437,24 +455,45 @@
                            <tbody>
                               <tr>
                                  <td>1</td>
-                                 <td>
-                                    <div class="btn-group" role="group">
-                                       <div>
-                                          <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
+                                 <?php if (session()->get('user_level') == 'staff' || session()->get('user_level') == 'supervisi') : ?>
+                                    <td>
+                                       <?php if (session()->get('id_user') == $project_manager['id_user']) : ?>
+                                          <div class="btn-group" role="group">
+                                             <div>
+                                                <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
+                                             </div>
+                                             <div>
+                                                <a href="" class="btn btn-warning" title="Klik untuk mengedit"><i class=" ri-edit-2-line"></i></a>
+                                             </div>
+                                             <form action="" method="POST" class="d-inline">
+                                                <?= csrf_field(); ?>
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data task ?');"><i class="ri-delete-bin-5-line"></i></button>
+                                             </form>
+                                          </div>
+                                          <div class="btn-group mt-1" role="group">
+                                             <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Submit</a>
+                                          </div>
+                                       <?php else : ?>
+                                          <div class="btn-group" role="group">
+                                             <div>
+                                                <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
+                                             </div>
+                                             <div>
+                                                <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Submit</a>
+                                             </div>
+                                          </div>
+                                       <?php endif ?>
+                                    </td>
+                                 <?php else : ?>
+                                    <td>
+                                       <div class="btn-group" role="group">
+                                          <div>
+                                             <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
+                                          </div>
                                        </div>
-                                       <div>
-                                          <a href="" class="btn btn-warning" title="Klik untuk mengedit"><i class=" ri-edit-2-line"></i></a>
-                                       </div>
-                                       <form action="" method="POST" class="d-inline">
-                                          <?= csrf_field(); ?>
-                                          <input type="hidden" name="_method" value="DELETE">
-                                          <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data task ?');"><i class="ri-delete-bin-5-line"></i></button>
-                                       </form>
-                                    </div>
-                                    <div class="btn-group mt-1" role="group">
-                                       <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Submit</a>
-                                    </div>
-                                 </td>
+                                    </td>
+                                 <?php endif ?>
                                  <td>
                                     <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="86" aria-valuemin="0" aria-valuemax="100" style="height: 20px">
                                        <div class="progress-bar progress-bar-striped progress-bar-animated overflow-visible text-dark" style="background-color: #73ff85; width: 86%"><b>86%</b></div>
@@ -476,24 +515,45 @@
                               </tr>
                               <tr>
                                  <td>2</td>
-                                 <td>
-                                    <div class="btn-group" role="group">
-                                       <div>
-                                          <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
+                                 <?php if (session()->get('user_level') == 'staff' || session()->get('user_level') == 'supervisi') : ?>
+                                    <td>
+                                       <?php if (session()->get('id_user') == $project_manager['id_user']) : ?>
+                                          <div class="btn-group" role="group">
+                                             <div>
+                                                <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
+                                             </div>
+                                             <div>
+                                                <a href="" class="btn btn-warning" title="Klik untuk mengedit"><i class=" ri-edit-2-line"></i></a>
+                                             </div>
+                                             <form action="" method="POST" class="d-inline">
+                                                <?= csrf_field(); ?>
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data task ?');"><i class="ri-delete-bin-5-line"></i></button>
+                                             </form>
+                                          </div>
+                                          <div class="btn-group mt-1" role="group">
+                                             <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Submit</a>
+                                          </div>
+                                       <?php else : ?>
+                                          <div class="btn-group" role="group">
+                                             <div>
+                                                <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
+                                             </div>
+                                             <div>
+                                                <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Submit</a>
+                                             </div>
+                                          </div>
+                                       <?php endif ?>
+                                    </td>
+                                 <?php else : ?>
+                                    <td>
+                                       <div class="btn-group" role="group">
+                                          <div>
+                                             <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
+                                          </div>
                                        </div>
-                                       <div>
-                                          <a href="" class="btn btn-warning" title="Klik untuk mengedit"><i class=" ri-edit-2-line"></i></a>
-                                       </div>
-                                       <form action="" method="POST" class="d-inline">
-                                          <?= csrf_field(); ?>
-                                          <input type="hidden" name="_method" value="DELETE">
-                                          <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data task ?');"><i class="ri-delete-bin-5-line"></i></button>
-                                       </form>
-                                    </div>
-                                    <div class="btn-group mt-1" role="group">
-                                       <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Submit</a>
-                                    </div>
-                                 </td>
+                                    </td>
+                                 <?php endif ?>
                                  <td>
                                     <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="86" aria-valuemin="0" aria-valuemax="100" style="height: 20px">
                                        <div class="progress-bar progress-bar-striped progress-bar-animated overflow-visible text-dark" style="background-color: #73ff85; width: 86%"><b>86%</b></div>
@@ -515,24 +575,45 @@
                               </tr>
                               <tr>
                                  <td>3</td>
-                                 <td>
-                                    <div class="btn-group" role="group">
-                                       <div>
-                                          <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
+                                 <?php if (session()->get('user_level') == 'staff' || session()->get('user_level') == 'supervisi') : ?>
+                                    <td>
+                                       <?php if (session()->get('id_user') == $project_manager['id_user']) : ?>
+                                          <div class="btn-group" role="group">
+                                             <div>
+                                                <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
+                                             </div>
+                                             <div>
+                                                <a href="" class="btn btn-warning" title="Klik untuk mengedit"><i class=" ri-edit-2-line"></i></a>
+                                             </div>
+                                             <form action="" method="POST" class="d-inline">
+                                                <?= csrf_field(); ?>
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data task ?');"><i class="ri-delete-bin-5-line"></i></button>
+                                             </form>
+                                          </div>
+                                          <div class="btn-group mt-1" role="group">
+                                             <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Submit</a>
+                                          </div>
+                                       <?php else : ?>
+                                          <div class="btn-group" role="group">
+                                             <div>
+                                                <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
+                                             </div>
+                                             <div>
+                                                <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Submit</a>
+                                             </div>
+                                          </div>
+                                       <?php endif ?>
+                                    </td>
+                                 <?php else : ?>
+                                    <td>
+                                       <div class="btn-group" role="group">
+                                          <div>
+                                             <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
+                                          </div>
                                        </div>
-                                       <div>
-                                          <a href="" class="btn btn-warning" title="Klik untuk mengedit"><i class=" ri-edit-2-line"></i></a>
-                                       </div>
-                                       <form action="" method="POST" class="d-inline">
-                                          <?= csrf_field(); ?>
-                                          <input type="hidden" name="_method" value="DELETE">
-                                          <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data task ?');"><i class="ri-delete-bin-5-line"></i></button>
-                                       </form>
-                                    </div>
-                                    <div class="btn-group mt-1" role="group">
-                                       <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Submit</a>
-                                    </div>
-                                 </td>
+                                    </td>
+                                 <?php endif ?>
                                  <td>
                                     <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="86" aria-valuemin="0" aria-valuemax="100" style="height: 20px">
                                        <div class="progress-bar progress-bar-striped progress-bar-animated overflow-visible text-dark" style="background-color: #73ff85; width: 86%"><b>86%</b></div>
@@ -863,9 +944,11 @@
                                  <td>1</td>
                                  <td>
                                     <div class="btn-group" role="group">
-                                       <div>
-                                          <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
-                                       </div>
+                                       <?php if (session()->get('user_level') == 'supervisi') : ?>
+                                          <div>
+                                             <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
+                                          </div>
+                                       <?php endif ?>
                                        <div>
                                           <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Verifikasi</a>
                                        </div>
@@ -897,9 +980,11 @@
                                  <td>2</td>
                                  <td>
                                     <div class="btn-group" role="group">
-                                       <div>
-                                          <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
-                                       </div>
+                                       <?php if (session()->get('user_level') == 'supervisi') : ?>
+                                          <div>
+                                             <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
+                                          </div>
+                                       <?php endif ?>
                                        <div>
                                           <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Verifikasi</a>
                                        </div>
@@ -931,9 +1016,11 @@
                                  <td>3</td>
                                  <td>
                                     <div class="btn-group" role="group">
-                                       <div>
-                                          <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
-                                       </div>
+                                       <?php if (session()->get('user_level') == 'supervisi') : ?>
+                                          <div>
+                                             <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
+                                          </div>
+                                       <?php endif ?>
                                        <div>
                                           <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Verifikasi</a>
                                        </div>

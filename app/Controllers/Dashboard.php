@@ -65,6 +65,9 @@ class Dashboard extends BaseController
         }
         $tahun_ini = date("Y");
         $bulan_ini = date("n");
+        // Inisialisasi array sebelum loop
+        $id_usergroup_yang_ada_ditarget_poin_harian = array();
+        $id_usergroup_yang_tidak_ada_ditarget_poin_harian = array();
         if ((session()->get('user_level') == 'supervisi') || (session()->get('user_level') == 'staff')) {
             $id_usergroup = session()->get('id_usergroup');
             $usergroup = $this->usergroupModel->getUserGroup($id_usergroup);

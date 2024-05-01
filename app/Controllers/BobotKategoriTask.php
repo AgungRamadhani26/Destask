@@ -27,6 +27,9 @@ class BobotKategoriTask extends BaseController
         $year_now = date("Y");
         $usergroup = $this->usergroupModel->getUserGroup();
         $jumlah_usergroup = count($usergroup);
+        // Inisialisasi array sebelum loop
+        $id_usergroup_yang_ada_dibobot_kategori_task = array();
+        $id_usergroup_yang_tidak_ada_dibobot_kategori_task = array();
         foreach ($usergroup as $ug) {
             $bobot_kategori_task1 = $this->bobotkategoritaskModel->getBobotKategoriTaskByUsergroupTahun($year_now, $ug['id_usergroup']);
             if (empty($bobot_kategori_task1)) {
@@ -67,6 +70,9 @@ class BobotKategoriTask extends BaseController
         $year_now = date("Y");
         $usergroup = $this->usergroupModel->getUserGroup();
         $jumlah_usergroup = count($usergroup);
+        // Inisialisasi array sebelum loop
+        $id_usergroup_yang_ada_dibobot_kategori_task = array();
+        $id_usergroup_yang_tidak_ada_dibobot_kategori_task = array();
         foreach ($usergroup as $ug) {
             $bobot_kategori_task1 = $this->bobotkategoritaskModel->getBobotKategoriTaskByUsergroupTahun($year_now, $ug['id_usergroup']);
             if (empty($bobot_kategori_task1)) {

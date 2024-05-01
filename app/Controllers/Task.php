@@ -79,6 +79,7 @@ class Task extends BaseController
             'pekerjaan' => $this->pekerjaanModel->getPekerjaan($id_pekerjaan),
             'personil' => $this->personilModel->getPersonilByIdPekerjaan($id_pekerjaan),
             'task_hariini_belumsubmit' => $task_hariini_belumsubmit,
+            'project_manager' => $this->userModel->getUser($personil_pm[0]['id_user']),
             'task_planing_belumsubmit' => $task_planing_belumsubmit,
             'task_overdue_belumsubmit' => $task_overdue_belumsubmit,
             'jumlahtask_hariini_belumsubmit' => $jumlahtask_hariini_belumsubmit,
@@ -96,6 +97,9 @@ class Task extends BaseController
     {
         $year_now = date("Y");
         $personil_pm = $this->personilModel->getPersonilByIdPekerjaanRolePersonil($id_pekerjaan, 'project_manager');
+        // Inisialisasi array sebelum loop
+        $id_usergroup_yang_ada_dibobot_kategori_task = array();
+        $id_usergroup_yang_tidak_ada_dibobot_kategori_task = array();
         if ($personil_pm[0]['id_user'] == session()->get('id_user')) {
             $personil = $this->personilModel->getPersonilByIdPekerjaan($id_pekerjaan);
             $usergroup = $this->usergroupModel->getUserGroup();
@@ -219,15 +223,95 @@ class Task extends BaseController
     {
         $task = $this->taskModel->getTask($id_task);
         $id_pekerjaan = $task['id_pekerjaan'];
+        $personil_pm = $this->personilModel->getPersonilByIdPekerjaanRolePersonil($id_pekerjaan, 'project_manager');
         $data = [
             'url1' => '/dashboard',
             'url' => '/dashboard',
             'pekerjaan' => $this->pekerjaanModel->getPekerjaan($id_pekerjaan),
+            'task' => $task,
+            'project_manager' => $this->userModel->getUser($personil_pm[0]['id_user']),
             'personil' => $this->personilModel->getPersonilByIdPekerjaan($id_pekerjaan),
             'user' => $this->userModel->getUser(),
             'kategori_task' => $this->kategoriTaskModel->getKategoriTask(),
             'hari_libur' => $this->hariliburModel->getHariLibur(),
         ];
         return view('task/edit_task', $data);
+    }
+    public function update_task()
+    {
+        $validasi = \Config\Services::validation();
+        $task_lama = $this->taskModel->getTask($this->request->getPost('id_task_e'));
+        $aturan = [
+            'personil_add_task_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Personil harus dipilih',
+                ]
+            ],
+            'kategori_task_add_task_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Kategori task harus dipilih',
+                ]
+            ],
+            'target_waktu_selesai_add_task_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Target waktu selesai harus diisi',
+                ]
+            ],
+            'deskripsi_add_task_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Deskripsi task harus diisi',
+                ]
+            ]
+        ];
+        $validasi->setRules($aturan);
+        $id_pekerjaan = $this->request->getPost('id_pekerjaan_add_task_e');
+        if ($validasi->withRequest($this->request)->run()) {
+            //Mengambil data untuk tabel task
+            $id_task = $this->request->getPost('id_task_e');
+            $id_user = $this->request->getPost('personil_add_task_e');
+            $id_kategori_task = $this->request->getPost('kategori_task_add_task_e');
+            $tgl_planing = $this->request->getPost('target_waktu_selesai_add_task_e');
+            $deskripsi_task = preg_replace('/\s+/', ' ', trim(strval($this->request->getPost('deskripsi_add_task_e'))));
+            // Memeriksa apakah data baru sama dengan data yang sudah ada
+            if (
+                $task_lama['id_user'] === $id_user && $task_lama['id_kategori_task'] === $id_kategori_task &&
+                $task_lama['tgl_planing'] === $tgl_planing && $task_lama['deskripsi_task'] === $deskripsi_task
+            ) {
+                Set_notifikasi_swal_berhasil('info', 'Uppsss :|', 'Tidak ada data yang anda ubah, kembali ke form edit task jika ingin mengubah data');
+                return redirect()->withInput()->back();
+            } else {
+                //Proses memasukkan data ke database
+                $data_task = [
+                    'id_task' => $id_task,
+                    'id_pekerjaan' => $id_pekerjaan,
+                    'id_user' => $id_user,
+                    'id_kategori_task' => $id_kategori_task,
+                    'id_status_task' => 1,
+                    'tgl_planing' => $tgl_planing,
+                    'tgl_selesai' => null,
+                    'tgl_verifikasi_diterima' => null,
+                    'status_verifikasi' => 0,
+                    'persentase_selesai' => 0,
+                    'deskripsi_task' => $deskripsi_task,
+                    'alasan_verifikasi' => null,
+                    'bukti_selesai' => null,
+                    'tautan_task' => null
+                ];
+                $this->taskModel->save($data_task);
+                Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil mengedit data task');
+                return redirect()->to('task/daftar_task/' . $id_pekerjaan);
+            }
+        } else {
+            session()->setFlashdata('err_personil_add_task_e', $validasi->getError('personil_add_task_e'));
+            session()->setFlashdata('err_kategori_task_add_task_e', $validasi->getError('kategori_task_add_task_e'));
+            session()->setFlashdata('err_target_waktu_selesai_add_task_e', $validasi->getError('target_waktu_selesai_add_task_e'));
+            session()->setFlashdata('err_deskripsi_add_task_e', $validasi->getError('deskripsi_add_task_e'));
+            Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Terdapat inputan yang kurang sesuai, periksa form edit task');
+            return redirect()->withInput()->back();
+        }
     }
 }

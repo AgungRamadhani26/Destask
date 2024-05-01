@@ -84,7 +84,7 @@
                                     Bulan tidak valid
                                 <?php endif ?></b>
                             . Sehingga <b>Supervisi</b> dan <b>Staff</b> tidak dapat membuka form tambah task baru ditahun dan bulan ini,
-                            Segera tambahkan target poin harian tersebut secepatnya !!!.
+                            <a href="/target_poin_harian/daftar_target_poin_harian"><u>Segera tambahkan target poin harian tersebut secepatnya !!!.</u></a>
                         </div>
                     </div>
                 <?php endif ?>

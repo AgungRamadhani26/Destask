@@ -10,7 +10,7 @@
       <div class="col-lg-12">
          <div class="card">
             <div class="card-body">
-               <form action="/task/tambah_task" method="POST">
+               <form action="/task/update_task" method="POST">
                   <h5 class="card-title">Data Task</h5>
                   <hr style="border-top: 3px solid black;">
                   <div class="row mt-4">
@@ -39,20 +39,7 @@
                                     <td><span class="fw-bold">PM</span></td>
                                     <td>:</td>
                                     <td>
-                                       <i class="bi bi-person-fill">
-                                          <?php
-                                          foreach ($personil as $per) {
-                                             if ($pekerjaan['id_pekerjaan'] == $per['id_pekerjaan'] && $per['role_personil'] == 'project_manager') {
-                                                foreach ($user as $usr) {
-                                                   if ($per['id_user'] == $usr['id_user']) {
-                                                      echo $usr['nama'];
-                                                      break; // Keluar dari loop setelah menemukan nilai yang cocok
-                                                   }
-                                                }
-                                             }
-                                          }
-                                          ?>
-                                       </i>
+                                       <i class="bi bi-person-fill"> <?= $project_manager['nama'] ?></i>
                                     </td>
                                  </tr>
                                  <tr>
@@ -67,47 +54,54 @@
                      <div class="col-md-8 mt-3">
                         <div class="row">
                            <?= csrf_field(); ?>
-                           <input type="hidden" id="id_pekerjaan_add_task" name="id_pekerjaan_add_task" value="<?= $pekerjaan['id_pekerjaan']; ?>">
+                           <input type="hidden" id="id_pekerjaan_add_task_e" name="id_pekerjaan_add_task_e" value="<?= $pekerjaan['id_pekerjaan']; ?>">
+                           <input type="hidden" id="id_task_e" name="id_task_e" value="<?= $task['id_task']; ?>">
                            <div class="col-md-4 mb-3">
-                              <label for="personil_add_task" class="form-label" style="font-weight: 600;">Personil</label>
-                              <select class="form-control <?= (session()->getFlashdata('err_personil_add_task')) ? 'is-invalid' : ''; ?>" name="personil_add_task" id="personil_add_task">
+                              <label for="personil_add_task_e" class="form-label" style="font-weight: 600;">Personil</label>
+                              <select class="form-control <?= (session()->getFlashdata('err_personil_add_task_e')) ? 'is-invalid' : ''; ?>" name="personil_add_task_e" id="personil_add_task_e">
                                  <option value="">-- Pilih personil --</option>
+                                 <?php
+                                 $selectedpersonil = old('personil_add_task_e') ?? $task['id_user'] ?? '';
+                                 ?>
                                  <?php foreach ($personil as $per) : ?>
                                     <?php foreach ($user as $usr) : ?>
                                        <?php if ($per['id_user'] == $usr['id_user']) : ?>
-                                          <option value="<?= $usr['id_user'] ?>" <?= ($usr['id_user'] == old('personil_add_task')) ? 'selected' : '' ?>><?= $usr['nama'] . '-' . $per['role_personil'] ?></option>
+                                          <option value="<?= $usr['id_user'] ?>" <?= ($usr['id_user'] == $selectedpersonil) ? 'selected' : '' ?>><?= $usr['nama'] . '-' . $per['role_personil'] ?></option>
                                        <?php endif; ?>
                                     <?php endforeach; ?>
                                  <?php endforeach; ?>
                               </select>
                               <div class="invalid-feedback">
-                                 <?= session()->getFlashdata('err_personil_add_task') ?>
+                                 <?= session()->getFlashdata('err_personil_add_task_e') ?>
                               </div>
                            </div>
                            <div class="col-md-4 mb-3">
-                              <label for="kategori_task_add_task" class="form-label" style="font-weight: 600;">Kategori Task</label>
-                              <select class="form-control <?= (session()->getFlashdata('err_kategori_task_add_task')) ? 'is-invalid' : ''; ?>" name="kategori_task_add_task" id="kategori_task_add_task">
+                              <label for="kategori_task_add_task_e" class="form-label" style="font-weight: 600;">Kategori Task</label>
+                              <select class="form-control <?= (session()->getFlashdata('err_kategori_task_add_task_e')) ? 'is-invalid' : ''; ?>" name="kategori_task_add_task_e" id="kategori_task_add_task_e">
                                  <option value="">-- Pilih Kategori Task --</option>
+                                 <?php
+                                 $selectedkategoritask = old('kategori_task_add_task_e') ?? $task['id_kategori_task'] ?? '';
+                                 ?>
                                  <?php foreach ($kategori_task as $kt) : ?>
-                                    <option value="<?= $kt['id_kategori_task'] ?>" <?= ($kt['id_kategori_task'] == old('kategori_task_add_task')) ? 'selected' : '' ?>><?= $kt['nama_kategori_task'] ?></option>
+                                    <option value="<?= $kt['id_kategori_task'] ?>" <?= ($kt['id_kategori_task'] == $selectedkategoritask) ? 'selected' : '' ?>><?= $kt['nama_kategori_task'] ?></option>
                                  <?php endforeach; ?>
                               </select>
                               <div class="invalid-feedback">
-                                 <?= session()->getFlashdata('err_kategori_task_add_task') ?>
+                                 <?= session()->getFlashdata('err_kategori_task_add_task_e') ?>
                               </div>
                            </div>
                            <div class="col-md-4 mb-4">
-                              <label for="target_waktu_selesai_add_task" class="form-label" style="font-weight: 600;">Target Waktu Selesai</label>
-                              <input type="text" class="form-control <?= (session()->getFlashdata('err_target_waktu_selesai_add_task')) ? 'is-invalid' : ''; ?>" name="target_waktu_selesai_add_task" id="target_waktu_selesai_add_task" placeholder="dd-mm-yyyy" value="<?= old('target_waktu_selesai_add_task'); ?>">
+                              <label for="target_waktu_selesai_add_task_e" class="form-label" style="font-weight: 600;">Target Waktu Selesai</label>
+                              <input type="text" class="form-control <?= (session()->getFlashdata('err_target_waktu_selesai_add_task_e')) ? 'is-invalid' : ''; ?>" name="target_waktu_selesai_add_task_e" id="target_waktu_selesai_add_task_e" placeholder="dd-mm-yyyy" value="<?= old('target_waktu_selesai_add_task_e') ?? $task['tgl_planing'] ?? '' ?>">
                               <div class="invalid-feedback">
-                                 <?= session()->getFlashdata('err_target_waktu_selesai_add_task') ?>
+                                 <?= session()->getFlashdata('err_target_waktu_selesai_add_task_e') ?>
                               </div>
                            </div>
                            <div class="col-md-12 mb-4">
-                              <label for="deskripsi_add_task" class="form-label" style="font-weight: 600;">Deskripsi Task</label>
-                              <textarea class="form-control <?= (session()->getFlashdata('err_deskripsi_add_task')) ? 'is-invalid' : ''; ?>" rows="4" name="deskripsi_add_task" id="deskripsi_add_task"><?= old('deskripsi_add_task'); ?></textarea>
+                              <label for="deskripsi_add_task_e" class="form-label" style="font-weight: 600;">Deskripsi Task</label>
+                              <textarea class="form-control <?= (session()->getFlashdata('err_deskripsi_add_task_e')) ? 'is-invalid' : ''; ?>" rows="4" name="deskripsi_add_task_e" id="deskripsi_add_task_e"><?= old('deskripsi_add_task_e') ?? $task['deskripsi_task'] ?? '' ?></textarea>
                               <div class="invalid-feedback">
-                                 <?= session()->getFlashdata('err_deskripsi_add_task') ?>
+                                 <?= session()->getFlashdata('err_deskripsi_add_task_e') ?>
                               </div>
                            </div>
                         </div>
@@ -135,7 +129,6 @@
       locale: {
          "firstDayOfWeek": 1 // start week on Monday
       },
-      minDate: "today",
       disable: [
          function(date) {
             // Disable weekends
@@ -145,7 +138,7 @@
          <?php endforeach; ?>
       ]
    };
-   flatpickr("#target_waktu_selesai_add_task", config);
+   flatpickr("#target_waktu_selesai_add_task_e", config);
 </script>
 
 <?= $this->endSection(); ?>
