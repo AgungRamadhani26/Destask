@@ -29,16 +29,16 @@ class PersonilModel extends Model
         return $this->where(['id_pekerjaan' => $id_pekerjaan])->findAll();
     }
 
-    // //Fungsi untuk mendapatkan data personil berdasarkan id_user
-    // public function getPersonilByIdUser($id_user)
-    // {
-    //     return $this->where(['id_user' => $id_user])->findAll();
-    // }
+    //Fungsi untuk mendapatkan data personil berdasarkan id_pekerjaan dan id_user (untuk add task)
+    public function getPersonilByIdPekerjaanIdUser($id_pekerjaan, $id_user)
+    {
+        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'id_user' => $id_user])->findAll();
+    }
 
     //Fungsi unutk mendapatkan data personil berdasarkan id_pekerjaan dan role_personil (untuk_edit)
     public function getPersonilByIdPekerjaanRolePersonil($id_pekerjaan, $role_personil)
     {
-        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'role_personil' => $role_personil])->findAll();
+        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'role_personil' => $role_personil, 'deleted_at' => null])->findAll();
     }
 
     //Fungsi untuk menghitung jumlah personil berdasarkan id_pekerjaan dan role_personil
