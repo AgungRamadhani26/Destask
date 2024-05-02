@@ -80,10 +80,17 @@ class AuthController extends ResourceController
     return $this->respond($response, 200);
   }
 
-  public function user()
+  public function cekuser()
   {
     $model = new $this->modelName();
-    $data = $model->orderBy('id_user', 'ASC')->findAll();
-    return $this->respond($data, 200);
+    $email = $this->request->getVar('email');
+    $data = $model->where(['email' => $email])->first();
+    $response = [
+      'status' => 200,
+      'error' => false,
+      'data' => $data,
+      'messages' => 'Data berhasil ditemukan'
+    ];
+    return $this->respond($response, 200);
   }
 }

@@ -12,7 +12,7 @@ class FotoProfilController extends ResourceController
   protected $model = 'App\Models\UserModel';
   protected $validation;
 
-  public function create()
+  public function upload()
   {
     $id = $this->request->getVar('id_user');
     $fotoProfil = $this->request->getFile('foto_profil');
@@ -31,10 +31,10 @@ class FotoProfilController extends ResourceController
           'id_user' => 'required',
           'foto_profil'    => [
               'label' => 'Foto Profil',
-              'rules' => 'uploaded[foto_profil]|max_size[foto_profil,1024]|is_image[foto_profil]|mime_in[foto_profil,image/jpg,image/jpeg,image/png]',
+              'rules' => 'uploaded[foto_profil]|max_size[foto_profil,4096]|is_image[foto_profil]|mime_in[foto_profil,image/jpg,image/jpeg,image/png]',
               'errors' => [
                   'uploaded' => '{field} tidak boleh kosong.',
-                  'max_size' => '{field} tidak boleh lebih dari 1MB.',
+                  'max_size' => '{field} tidak boleh lebih dari 5MB.',
                   'is_image' => '{field} harus berformat JPG, JPEG, atau PNG.',
                   'mime_in' => '{field} harus berformat JPG, JPEG, atau PNG.'
               ]
@@ -53,7 +53,7 @@ class FotoProfilController extends ResourceController
           'message' => 'Validasi gagal'
         ], 400);
       } else {
-        $fotoProfil->move('assets/foto_profil', $namaFotoProfil);
+        $fotoProfil->move('assets/file_pengguna/foto_user', $namaFotoProfil);
         $this->model->update($id, $data);
         return $this->respond([
           'status' => 200,

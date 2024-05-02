@@ -42,9 +42,12 @@ class Filters extends BaseConfig
         'before' => [
             // 'honeypot',
             'csrf' => ['except' => [
+                'lupapassword',
+                'lupapassword/verifikasitoken',
+                'lupapassword/resetpassword',
                 'api/*',
                 'authlogin',
-                'cekuser'
+                'authcekuser',
             ],]
             // 'invalidchars',
         ],
@@ -80,10 +83,11 @@ class Filters extends BaseConfig
             'jwtfilter' => [
                 'api/*',
                 'authlogin',
-                'cekuser'
+                'cekuser',
+                'lupapassword/*',
         ],
             'cors' => [
-                'api/*'
+                'api/*',
             ]
         ],
     ];

@@ -69,6 +69,7 @@ class TaskController extends ResourceController{
         $tgl_planing = $this->request->getVar('tgl_planing');
         $deskripsi_task = $this->request->getVar('deskripsi_task');
         $tautan_task = $this->request->getVar('tautan_task');
+        $status_verifikasi = $this->request->getVar('status_verifikasi');
 
         //validasi input
         $validation = $this->validate([
@@ -92,6 +93,7 @@ class TaskController extends ResourceController{
                 'tgl_planing' => $tgl_planing,
                 'persentase_selesai' => 0,
                 'deskripsi_task' => $deskripsi_task,
+                'status_verifikasi' => $status_verifikasi,
                 'tautan_task' => $tautan_task,
             ];
             $simpan = $model->insert($data);
@@ -242,6 +244,7 @@ class TaskController extends ResourceController{
     public function submit()
     {
         $id = $this->request->getVar('id_task');
+        $status_verifikasi = $this->request->getVar('status_verifikasi');
         $BuktiSelesai = $this->request->getFile('bukti_selesai');
         if ($BuktiSelesai == null) {
         return $this->respond([
@@ -256,6 +259,7 @@ class TaskController extends ResourceController{
         $namaBuktiSelesai = $BuktiSelesai->getRandomName();
         $validation = $this->validate([
             'id_task' => 'required',
+            'status_verifikasi' => 'required',
             'bukti_selesai'    => [
                 'label' => 'Foto Profil',
                 'rules' => 'uploaded[bukti_selesai]|max_size[bukti_selesai,2048]|is_image[bukti_selesai]|mime_in[bukti_selesai,image/jpg,image/jpeg,image/png]',
@@ -270,7 +274,7 @@ class TaskController extends ResourceController{
 
         $data = [
             'id_task' => $id,
-            'status_verifikasi' => 1,
+            'status_verifikasi' => $status_verifikasi,
             'bukti_selesai' => $namaBuktiSelesai
         ];
 
@@ -386,6 +390,9 @@ class TaskController extends ResourceController{
     public function showTaskVerifikasi($iduser) {
         $modelTask = new $this->modelName();
         $modelUser = new $this->modelUser();
+        $pekerjaanModel = new $this->modelPekerjaan();
+        $statusModel = new $this->modelStatus();
+        $kategoriModel = new $this->modelKategori();
     
         // Dapatkan id user group dari user yang sedang login
         $user = $modelUser->getUserById($iduser);
@@ -396,51 +403,41 @@ class TaskController extends ResourceController{
         $usersExceptCurrentUser = [];
         foreach ($usersInGroup as $user) {
             if ($user['id_user'] != $iduser) {
-                $usersExceptCurrentUser[] = $user;
+                $usersExceptCurrentUser[] = $user['id_user'];
             }
         }
     
         // Dapatkan semua task yang dimiliki oleh user dalam daftar tersebut
-        /*status verifikasi
-        0 = belum diverifikasi
-        1 = diproses verifikasi
-        2 = diverifikasi
-        */
-        foreach ($usersExceptCurrentUser as $user) {
-            $data = $modelTask->where([
-                'id_user' => $user['id_user'],
-                'status_verifikasi' => 1,
-                'persentase_selesai' => '100',
-            ])->findAll();
-        
-    
         $result = [];
-
-        $modelUser = new $this->modelUser();
-        $pekerjaanModel = new $this->modelPekerjaan();
-        $statusModel = new $this->modelStatus();
-        $kategoriModel = new $this->modelKategori();
-        foreach ($data as $taskItem) {
-            // Fetch user data based on id_user
-            $userData = $modelUser->getUserById($taskItem['id_user']);
-            $pekerjaanData = $pekerjaanModel->find($taskItem['id_pekerjaan']);
-            $statusData = $statusModel->find($taskItem['id_status_task']);
-            $kategoriData = $kategoriModel->find($taskItem['id_kategori_task']);
-
-            // Add user's name to the task item
-            $taskItem['data_tambahan'] = [
-                'nama_user' => $userData['nama'],
-                'nama_pekerjaan' => $pekerjaanData['nama_pekerjaan'],
-                'nama_status_task' => $statusData['nama_status_task'],
-                'nama_kategori_task' => $kategoriData['nama_kategori_task']
-            ];
-
-            $result[] = $taskItem;
+        foreach ($usersExceptCurrentUser as $idUser) {
+            $data = $modelTask->where([
+                'id_user' => $idUser,
+                'status_verifikasi' => 1,
+                // 'persentase_selesai' => '100',
+            ])->findAll();
+    
+            // Tambahkan data tambahan ke result
+            foreach ($data as $taskItem) {
+                // Fetch user data based on id_user
+                $userData = $modelUser->getUserById($taskItem['id_user']);
+                $pekerjaanData = $pekerjaanModel->find($taskItem['id_pekerjaan']);
+                $statusData = $statusModel->find($taskItem['id_status_task']);
+                $kategoriData = $kategoriModel->find($taskItem['id_kategori_task']);
+    
+                // Add user's name to the task item
+                $taskItem['data_tambahan'] = [
+                    'nama_user' => $userData['nama'],
+                    'nama_pekerjaan' => $pekerjaanData['nama_pekerjaan'],
+                    'nama_status_task' => $statusData['nama_status_task'],
+                    'nama_kategori_task' => $kategoriData['nama_kategori_task']
+                ];
+    
+                $result[] = $taskItem;
+            }
         }
-
+    
         // Mengirimkan data pekerjaan yang telah di-update sebagai response JSON
         return $this->response->setJSON($result);
-    }
     }
     
     

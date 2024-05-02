@@ -38,15 +38,20 @@ class TargetPoinHarianController extends ResourceController {
         $modeluser = new $this->modelUser();
         //cek id user group
         $user = $modeluser->getWhere(['id_user' => $iduser, 'deleted_at' => null])->getRow();
+        $bulan = date('m');
+        $tahun = date('Y');
         if ($user) {
             //cek target poin harian by usergroup
-            $data = $model->getWhere(['id_usergroup' => $user->id_usergroup, 'deleted_at' => null])->getResult();
+            $data = $model->where(['id_usergroup' => $user->id_usergroup, 'bulan' => $bulan, 'tahun' => $tahun, 'deleted_at' => null])->orderBy('id_target_poin_harian', 'ASC')->first();
             if ($data) {
                 return $this->respond($data, 200);
             } else {
                 $response = [
                     'status' => 404,
                     'error' => true,
+                    'bulan' => $bulan,
+                    'tahun' => $tahun,
+                    'id_usergroup' => $user->id_usergroup,
                     'messages' => 'Data tidak ditemukan'
                 ];
                 return $this->respond($response, 404);

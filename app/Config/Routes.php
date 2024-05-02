@@ -205,7 +205,12 @@ $routes->post('/profile/update_profile', 'Profile::update_profile');
  */
 //login
 $routes->post('authlogin', 'API\AuthController::login');
-$routes->get('authcekuser', 'API\AuthController::user');
+$routes->post('authcekuser', 'API\AuthController::cekuser');
+
+//lupapassword
+$routes->post('lupapassword', 'API\LupaPasswordController::lupaPassword');
+$routes->post('lupapassword/verifikasitoken', 'API\LupaPasswordController::verifikasiToken');
+$routes->post('lupapassword/resetpassword', 'API\LupaPasswordController::resetPassword');
 
 $routes->group('api', ['filter' => 'jwtfilter', 'namespace' => 'App\Controllers\API'], function ($routes) {
    //user
@@ -214,10 +219,12 @@ $routes->group('api', ['filter' => 'jwtfilter', 'namespace' => 'App\Controllers\
    $routes->post('user', 'UserController::create');
    $routes->put('user/(:num)', 'UserController::update/$1');
    $routes->delete('user/(:num)', 'UserController::delete/$1');
-   $routes->post('user/fotoprofil', 'FotoProfilController::create');
+   $routes->post('user/fotoprofil', 'FotoProfilController::upload');
 
    //ganti password
    $routes->put('gantipassword', 'GantiPasswordController::index');
+
+
 
    //pekerjaan
    $routes->get('pekerjaan', 'PekerjaanController::index');
