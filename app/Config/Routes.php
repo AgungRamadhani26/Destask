@@ -63,6 +63,8 @@ $routes->post('/task/tambah_task', 'Task::tambah_task');
 //Untuk menampilkan form edit task
 $routes->get('/task/edit_task/(:num)', 'Task::edit_task/$1');
 $routes->post('/task/update_task', 'Task::update_task');
+//Untuk menghapus task
+$routes->delete('/task/delete_task/(:num)', 'Task::delete_task/$1');
 
 //Routes Personil
 //Untuk edit personil pm

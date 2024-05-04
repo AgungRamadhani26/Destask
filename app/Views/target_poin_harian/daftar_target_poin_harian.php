@@ -109,7 +109,7 @@
    <div class="col-md-6">
       <div class="card">
          <div class="card_title_firter_poin_harian bg-warning">
-            <h4 class="card-title" style="color: white;">Perhatian</h4>
+            <h4 class="card-title" style="color: white;">Keterangan</h4>
          </div>
          <div class="card-body mb-2 mt-1">
             <p>

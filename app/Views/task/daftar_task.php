@@ -197,6 +197,7 @@
                                  <th style="background-color: orange;">Persentase Selesai</th>
                                  <th style="background-color: orange;">Deskripsi Task</th>
                                  <th style="background-color: orange;">Nama Personil</th>
+                                 <th style="background-color: orange;">Pembuat Task</th>
                                  <th style="background-color: orange;">Kategori Task</th>
                                  <th style="background-color: orange;">Status Task</th>
                                  <th style="background-color: orange;">Target Waktu Selesai</th>
@@ -209,21 +210,24 @@
                                     <td><?= $i++ ?></td>
                                     <?php if (session()->get('user_level') == 'staff' || session()->get('user_level') == 'supervisi') : ?>
                                        <td>
-                                          <?php if (session()->get('id_user') == $project_manager['id_user']) : ?>
+                                          <?php if ($task_hi_bs['creator'] == session()->get('id_user') || $project_manager['id_user'] == session()->get('id_user')) : ?>
                                              <div class="btn-group" role="group">
                                                 <div>
                                                    <a href="/task/edit_task/<?= $task_hi_bs['id_task'] ?>" class="btn btn-warning" title="Klik untuk mengedit"><i class=" ri-edit-2-line"></i></a>
                                                 </div>
-                                                <form action="" method="POST" class="d-inline">
+                                                <form action="/task/delete_task/<?= $task_hi_bs['id_task'] ?>" method="POST" class="d-inline">
                                                    <?= csrf_field(); ?>
                                                    <input type="hidden" name="_method" value="DELETE">
                                                    <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data task ?');"><i class="ri-delete-bin-5-line"></i></button>
                                                 </form>
                                              </div>
                                           <?php endif ?>
-                                          <div class="btn-group mt-1" role="group">
-                                             <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Submit</a>
-                                          </div>
+
+                                          <?php if ($task_hi_bs['id_user'] == session()->get('id_user')) : ?>
+                                             <div class="btn-group mt-1" role="group">
+                                                <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Submit</a>
+                                             </div>
+                                          <?php endif ?>
                                        </td>
                                     <?php endif ?>
                                     <td>
@@ -237,6 +241,16 @@
                                        foreach ($user as $usr) {
                                           if ($task_hi_bs['id_user'] == $usr['id_user']) {
                                              echo $usr['nama'];
+                                             break; // Keluar dari loop setelah menemukan nilai yang cocok
+                                          }
+                                       }
+                                       ?>
+                                    </td>
+                                    <td>
+                                       <?php
+                                       foreach ($user as $usrr) {
+                                          if ($task_hi_bs['creator'] == $usrr['id_user']) {
+                                             echo $usrr['nama'];
                                              break; // Keluar dari loop setelah menemukan nilai yang cocok
                                           }
                                        }
@@ -280,6 +294,7 @@
                                  <th style="background-color: blue;">Persentase Selesai</th>
                                  <th style="background-color: blue;">Deskripsi Task</th>
                                  <th style="background-color: blue;">Nama Personil</th>
+                                 <th style="background-color: blue;">Pembuat Task</th>
                                  <th style="background-color: blue;">Kategori Task</th>
                                  <th style="background-color: blue;">Status Task</th>
                                  <th style="background-color: blue;">Target Waktu Selesai</th>
@@ -292,21 +307,24 @@
                                     <td><?= $a++ ?></td>
                                     <?php if (session()->get('user_level') == 'staff' || session()->get('user_level') == 'supervisi') : ?>
                                        <td>
-                                          <?php if (session()->get('id_user') == $project_manager['id_user']) : ?>
+                                          <?php if ($task_pl_bs['creator'] == session()->get('id_user') || $project_manager['id_user'] == session()->get('id_user')) : ?>
                                              <div class="btn-group" role="group">
                                                 <div>
                                                    <a href="/task/edit_task/<?= $task_pl_bs['id_task'] ?>" class="btn btn-warning" title="Klik untuk mengedit"><i class=" ri-edit-2-line"></i></a>
                                                 </div>
-                                                <form action="" method="POST" class="d-inline">
+                                                <form action="/task/delete_task/<?= $task_pl_bs['id_task'] ?>" method="POST" class="d-inline">
                                                    <?= csrf_field(); ?>
                                                    <input type="hidden" name="_method" value="DELETE">
                                                    <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data task ?');"><i class="ri-delete-bin-5-line"></i></button>
                                                 </form>
                                              </div>
                                           <?php endif ?>
-                                          <div class="btn-group mt-1" role="group">
-                                             <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Submit</a>
-                                          </div>
+
+                                          <?php if ($task_pl_bs['id_user'] == session()->get('id_user')) : ?>
+                                             <div class="btn-group mt-1" role="group">
+                                                <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Submit</a>
+                                             </div>
+                                          <?php endif ?>
                                        </td>
                                     <?php endif ?>
                                     <td>
@@ -324,6 +342,17 @@
                                           }
                                        }
                                        ?>
+                                    </td>
+                                    <td>
+                                       <?php
+                                       foreach ($user as $usrr) {
+                                          if ($task_pl_bs['creator'] == $usrr['id_user']) {
+                                             echo $usrr['nama'];
+                                             break; // Keluar dari loop setelah menemukan nilai yang cocok
+                                          }
+                                       }
+                                       ?>
+                                    </td>
                                     <td>
                                        <?php foreach ($kategori_task as $kt) : ?>
                                           <?php if ($task_pl_bs['id_kategori_task'] == $kt['id_kategori_task']) : ?>
@@ -362,6 +391,7 @@
                                  <th style="background-color: rgb(212, 2, 2);">Persentase Selesai</th>
                                  <th style="background-color: rgb(212, 2, 2);">Deskripsi Task</th>
                                  <th style="background-color: rgb(212, 2, 2);">Nama Personil</th>
+                                 <th style="background-color: rgb(212, 2, 2);">Pembuat Task</th>
                                  <th style="background-color: rgb(212, 2, 2);">Kategori Task</th>
                                  <th style="background-color: rgb(212, 2, 2);">Status Task</th>
                                  <th style="background-color: rgb(212, 2, 2);">Target Waktu Selesai</th>
@@ -374,21 +404,24 @@
                                     <td><?= $b++ ?></td>
                                     <?php if (session()->get('user_level') == 'staff' || session()->get('user_level') == 'supervisi') : ?>
                                        <td>
-                                          <?php if (session()->get('id_user') == $project_manager['id_user']) : ?>
+                                          <?php if ($task_ov_bs['creator'] == session()->get('id_user') || $project_manager['id_user'] == session()->get('id_user')) : ?>
                                              <div class="btn-group" role="group">
                                                 <div>
                                                    <a href="/task/edit_task/<?= $task_ov_bs['id_task'] ?>" class="btn btn-warning" title="Klik untuk mengedit"><i class=" ri-edit-2-line"></i></a>
                                                 </div>
-                                                <form action="" method="POST" class="d-inline">
+                                                <form action="/task/delete_task/<?= $task_ov_bs['id_task'] ?>" method="POST" class="d-inline">
                                                    <?= csrf_field(); ?>
                                                    <input type="hidden" name="_method" value="DELETE">
                                                    <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data task ?');"><i class="ri-delete-bin-5-line"></i></button>
                                                 </form>
                                              </div>
                                           <?php endif ?>
-                                          <div class="btn-group mt-1" role="group">
-                                             <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Submit</a>
-                                          </div>
+
+                                          <?php if ($task_ov_bs['id_user'] == session()->get('id_user')) : ?>
+                                             <div class="btn-group mt-1" role="group">
+                                                <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Submit</a>
+                                             </div>
+                                          <?php endif ?>
                                        </td>
                                     <?php endif ?>
                                     <td>
@@ -404,6 +437,16 @@
                                        foreach ($user as $usr) {
                                           if ($task_ov_bs['id_user'] == $usr['id_user']) {
                                              echo $usr['nama'];
+                                             break; // Keluar dari loop setelah menemukan nilai yang cocok
+                                          }
+                                       }
+                                       ?>
+                                    </td>
+                                    <td>
+                                       <?php
+                                       foreach ($user as $usrr) {
+                                          if ($task_ov_bs['creator'] == $usrr['id_user']) {
+                                             echo $usrr['nama'];
                                              break; // Keluar dari loop setelah menemukan nilai yang cocok
                                           }
                                        }
@@ -462,9 +505,6 @@
                                              <div>
                                                 <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
                                              </div>
-                                             <div>
-                                                <a href="" class="btn btn-warning" title="Klik untuk mengedit"><i class=" ri-edit-2-line"></i></a>
-                                             </div>
                                              <form action="" method="POST" class="d-inline">
                                                 <?= csrf_field(); ?>
                                                 <input type="hidden" name="_method" value="DELETE">
@@ -522,9 +562,6 @@
                                              <div>
                                                 <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
                                              </div>
-                                             <div>
-                                                <a href="" class="btn btn-warning" title="Klik untuk mengedit"><i class=" ri-edit-2-line"></i></a>
-                                             </div>
                                              <form action="" method="POST" class="d-inline">
                                                 <?= csrf_field(); ?>
                                                 <input type="hidden" name="_method" value="DELETE">
@@ -581,9 +618,6 @@
                                           <div class="btn-group" role="group">
                                              <div>
                                                 <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
-                                             </div>
-                                             <div>
-                                                <a href="" class="btn btn-warning" title="Klik untuk mengedit"><i class=" ri-edit-2-line"></i></a>
                                              </div>
                                              <form action="" method="POST" class="d-inline">
                                                 <?= csrf_field(); ?>
@@ -663,9 +697,6 @@
                                        <div>
                                           <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
                                        </div>
-                                       <div>
-                                          <a href="" class="btn btn-warning" title="Klik untuk mengedit"><i class=" ri-edit-2-line"></i></a>
-                                       </div>
                                        <form action="" method="POST" class="d-inline">
                                           <?= csrf_field(); ?>
                                           <input type="hidden" name="_method" value="DELETE">
@@ -702,9 +733,6 @@
                                        <div>
                                           <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
                                        </div>
-                                       <div>
-                                          <a href="" class="btn btn-warning" title="Klik untuk mengedit"><i class=" ri-edit-2-line"></i></a>
-                                       </div>
                                        <form action="" method="POST" class="d-inline">
                                           <?= csrf_field(); ?>
                                           <input type="hidden" name="_method" value="DELETE">
@@ -740,9 +768,6 @@
                                     <div class="btn-group" role="group">
                                        <div>
                                           <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
-                                       </div>
-                                       <div>
-                                          <a href="" class="btn btn-warning" title="Klik untuk mengedit"><i class=" ri-edit-2-line"></i></a>
                                        </div>
                                        <form action="" method="POST" class="d-inline">
                                           <?= csrf_field(); ?>
@@ -803,9 +828,6 @@
                                        <div>
                                           <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
                                        </div>
-                                       <div>
-                                          <a href="" class="btn btn-warning" title="Klik untuk mengedit"><i class=" ri-edit-2-line"></i></a>
-                                       </div>
                                        <form action="" method="POST" class="d-inline">
                                           <?= csrf_field(); ?>
                                           <input type="hidden" name="_method" value="DELETE">
@@ -842,9 +864,6 @@
                                        <div>
                                           <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
                                        </div>
-                                       <div>
-                                          <a href="" class="btn btn-warning" title="Klik untuk mengedit"><i class=" ri-edit-2-line"></i></a>
-                                       </div>
                                        <form action="" method="POST" class="d-inline">
                                           <?= csrf_field(); ?>
                                           <input type="hidden" name="_method" value="DELETE">
@@ -880,9 +899,6 @@
                                     <div class="btn-group" role="group">
                                        <div>
                                           <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
-                                       </div>
-                                       <div>
-                                          <a href="" class="btn btn-warning" title="Klik untuk mengedit"><i class=" ri-edit-2-line"></i></a>
                                        </div>
                                        <form action="" method="POST" class="d-inline">
                                           <?= csrf_field(); ?>
@@ -946,11 +962,11 @@
                                     <div class="btn-group" role="group">
                                        <?php if (session()->get('user_level') == 'supervisi') : ?>
                                           <div>
-                                             <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
+                                             <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Verifikasi</a>
                                           </div>
                                        <?php endif ?>
                                        <div>
-                                          <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Verifikasi</a>
+                                          <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
                                        </div>
                                     </div>
                                  </td>
@@ -982,11 +998,11 @@
                                     <div class="btn-group" role="group">
                                        <?php if (session()->get('user_level') == 'supervisi') : ?>
                                           <div>
-                                             <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
+                                             <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Verifikasi</a>
                                           </div>
                                        <?php endif ?>
                                        <div>
-                                          <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Verifikasi</a>
+                                          <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
                                        </div>
                                     </div>
                                  </td>
@@ -1018,11 +1034,11 @@
                                     <div class="btn-group" role="group">
                                        <?php if (session()->get('user_level') == 'supervisi') : ?>
                                           <div>
-                                             <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
+                                             <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Verifikasi</a>
                                           </div>
                                        <?php endif ?>
                                        <div>
-                                          <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Verifikasi</a>
+                                          <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
                                        </div>
                                     </div>
                                  </td>

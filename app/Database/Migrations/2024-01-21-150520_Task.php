@@ -25,6 +25,11 @@ class Task extends Migration
                 'constraint'     => 11,
                 'unsigned'       => true,
             ],
+            'creator' => [
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => true,
+            ],
             'id_status_task' => [
                 'type'           => 'INT',
                 'constraint'     => 11,

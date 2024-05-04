@@ -69,6 +69,18 @@
          digits: 0 // Hanya menerima nilai bulat
       });
    });
+
+   $(document).ready(function() {
+      $('#persentase_selesai_add_task_e').inputmask("numeric", {
+         suffix: ' %', // Sufikskan dengan simbol persen
+         allowMinus: false, // Tidak mengizinkan tanda minus
+         rightAlign: false, // Memastikan input diarahkan ke kiri
+         min: 0, // Nilai minimum adalah 0
+         max: 100, // Nilai maksimum adalah 100
+         placeholder: '',
+         digits: 0 // Hanya menerima nilai bulat
+      });
+   });
 </script>
 <!-- Data Table -->
 <script>
