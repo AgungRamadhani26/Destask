@@ -254,6 +254,7 @@ $routes->group('api', ['filter' => 'jwtfilter', 'namespace' => 'App\Controllers\
    //bobot kategori task
    $routes->get('bobotkategoritask', 'BobotKategoriTaskController::index');
    $routes->get('bobotkategoritask/(:num)', 'BobotKategoriTaskController::show/$1');
+   $routes->get('cekbobotkategoritask', 'BobotKategoriTaskController::cekbobot');
 
    //hari libur
    $routes->get('harilibur', 'HariLiburController::index');
@@ -294,6 +295,7 @@ $routes->group('api', ['filter' => 'jwtfilter', 'namespace' => 'App\Controllers\
    $routes->get('targetpoinharian', 'TargetPoinHarianController::index');
    $routes->get('targetpoinharian/(:num)', 'TargetPoinHarianController::show/$1');
    $routes->get('targetpoinharianbyuser/(:num)', 'TargetPoinHarianController::targetpoinharianbyuser/$1');
+   $routes->get('cektargetpoinharian', 'TargetPoinHarianController::cektargetpoinharian');
 
    //rekap point
    $routes->get('rekappoint/(:num)', 'RekapPointController::rekappoint/$1');

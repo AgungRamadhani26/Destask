@@ -189,6 +189,7 @@ class TaskController extends ResourceController{
         $alasan_verifikasi = $this->request->getVar('alasan_verifikasi');
         $status_verifikasi = $this->request->getVar('status_verifikasi');
         $tgl_verifikasi_diterima = $this->request->getVar('tgl_verifikasi_diterima');
+        $tgl_verifikasi_diterima = $this->request->getVar('tgl_selesai');
 
         //validasi
         $validation = $this->validate([
@@ -271,6 +272,8 @@ class TaskController extends ResourceController{
                 ]
             ]
         ]);
+        
+        
 
         $data = [
             'id_task' => $id,

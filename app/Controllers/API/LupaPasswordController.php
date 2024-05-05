@@ -28,7 +28,8 @@ class LupaPasswordController extends ResourceController
             $email->setTo($user['email']);
             $email->setFrom('newstar23135@gmail.com', 'DESTASK');
             $email->setSubject('Reset Password');
-            $email->setMessage('Kode reset password anda adalah ' . $token);
+            $email->setMessage('Berikut kode reset password anda : <b>'.$token.'</b>
+            <br><b>Noted:</b> Jika anda tidak merasa melakukan reset password, abaikan email ini !.');
         
             if ($email->send()) {
                 $response = [

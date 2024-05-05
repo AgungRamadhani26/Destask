@@ -7,6 +7,7 @@ class BobotKategoriTaskController extends ResourceController {
     use ResponseTrait;
 
     protected $modelName = 'App\Models\BobotKategoriTaskModel';
+    protected $modelUserGroup = 'App\Models\UserGroupModel';
     protected $format    = 'json';
 
     public function index() {
@@ -30,6 +31,40 @@ class BobotKategoriTaskController extends ResourceController {
             return $this->respond($response, 404);
         }
     }
+
+    public function cekbobot() {
+        $modelbobot = new $this->modelName();
+        $modelusergroup = new $this->modelUserGroup();
+        $tahun = date('Y');
+        $id_usergroups = $modelusergroup->select('id_usergroup')->findAll();
+        //jika id usergroup dan tahun sudah ada di tabel bobot_kategori_task dan memiliki bobot poin maka masuk data
+        $data = [];
+        foreach ($id_usergroups as $id) {
+            $id_usergroup = $id['id_usergroup'];
+            $cek = $modelbobot->where(['id_usergroup' => $id_usergroup, 'tahun' => $tahun])->first();
+            if ($cek) {
+                $data[] = $cek;
+            }
+        }
+        if (count($data) === count($id_usergroups)) {
+            $response = [
+                'status' => 200,
+                'error' => false,
+                'messages' => 'Data bobot kategori task sudah ada'
+            ];
+            return $this->respond($response, 200);
+        } else {
+            $response = [
+                'status' => 404,
+                'error' => true,
+                // 'count' => count($data),
+                // 'id_usergroups' => count($id_usergroups),
+                'messages' => 'Data bobot kategori task belum lengkap',
+            ];
+            return $this->respond($response, 404);
+        }
+    }
+    
 }
 
 ?>
