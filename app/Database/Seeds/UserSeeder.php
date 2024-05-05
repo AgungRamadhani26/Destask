@@ -447,7 +447,7 @@ class UserSeeder extends Seeder
                 'id_user'          => 37,
                 'id_usergroup'     => 1,
                 'username'         => 'rijal',
-                'email'            => 'rijal@gmail.com',
+                'email'            => 'anonimxie@gmail.com',
                 'password'         => md5('123456'),
                 'user_level'       => 'staff',
                 'nama'             => 'Rijal',
