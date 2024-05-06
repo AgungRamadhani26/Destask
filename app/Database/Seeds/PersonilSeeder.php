@@ -94,7 +94,7 @@ class PersonilSeeder extends Seeder
             [
                 'id_personil' => 11,
                 'id_pekerjaan' => 1,
-                'id_user' => 37,
+                'id_user' => 19,
                 'role_personil' => 'frontend_mobile',
                 'created_at'       => Time::now(),
                 'updated_at'       => Time::now()
@@ -215,7 +215,7 @@ class PersonilSeeder extends Seeder
             [
                 'id_personil' => 26,
                 'id_pekerjaan' => 2,
-                'id_user' => 37,
+                'id_user' => 17,
                 'role_personil' => 'backend_mobile',
                 'created_at'       => Time::now(),
                 'updated_at'       => Time::now()
@@ -302,9 +302,9 @@ class PersonilSeeder extends Seeder
                 'updated_at'       => Time::now()
             ],
             [
-                'id_personil' => 37,
+                'id_personil' => 11,
                 'id_pekerjaan' => 3,
-                'id_user' => 38,
+                'id_user' => 11,
                 'role_personil' => 'frontend_web',
                 'created_at'       => Time::now(),
                 'updated_at'       => Time::now()
@@ -336,7 +336,7 @@ class PersonilSeeder extends Seeder
             [
                 'id_personil' => 41,
                 'id_pekerjaan' => 3,
-                'id_user' => 37,
+                'id_user' => 35,
                 'role_personil' => 'helpdesk',
                 'created_at'       => Time::now(),
                 'updated_at'       => Time::now()
@@ -417,7 +417,7 @@ class PersonilSeeder extends Seeder
             [
                 'id_personil' => 51,
                 'id_pekerjaan' => 4,
-                'id_user' => 38,
+                'id_user' => 15,
                 'role_personil' => 'frontend_web',
                 'created_at'       => Time::now(),
                 'updated_at'       => Time::now()
@@ -490,7 +490,7 @@ class PersonilSeeder extends Seeder
             [
                 'id_personil' => 60,
                 'id_pekerjaan' => 5,
-                'id_user' => 37,
+                'id_user' => 15,
                 'role_personil' => 'backend_web',
                 'created_at'       => Time::now(),
                 'updated_at'       => Time::now()

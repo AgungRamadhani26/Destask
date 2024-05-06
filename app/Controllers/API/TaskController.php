@@ -40,6 +40,7 @@ class TaskController extends ResourceController{
                     $taskItem['data_tambahan'] = [
                         'nama_user' => $userData['nama'],
                         'nama_pekerjaan' => $pekerjaanData['nama_pekerjaan'],
+                        'target_waktu_selesai' => $pekerjaanData['target_waktu_selesai'],
                         'nama_status_task' => $statusData['nama_status_task'],
                         'nama_kategori_task' => $kategoriData['nama_kategori_task']
                     ];
@@ -347,6 +348,7 @@ class TaskController extends ResourceController{
             $taskItem['data_tambahan'] = [
                 'nama_user' => $userData['nama'],
                 'nama_pekerjaan' => $pekerjaanData['nama_pekerjaan'],
+                'target_waktu_selesai' => $pekerjaanData['target_waktu_selesai'],
                 'nama_status_task' => $statusData['nama_status_task'],
                 'nama_kategori_task' => $kategoriData['nama_kategori_task']
             ];
@@ -379,6 +381,7 @@ class TaskController extends ResourceController{
             $taskItem['data_tambahan'] = [
                 'nama_user' => $userData['nama'],
                 'nama_pekerjaan' => $pekerjaanData['nama_pekerjaan'],
+                'target_waktu_selesai' => $pekerjaanData['target_waktu_selesai'],
                 'nama_status_task' => $statusData['nama_status_task'],
                 'nama_kategori_task' => $kategoriData['nama_kategori_task']
             ];
@@ -431,6 +434,7 @@ class TaskController extends ResourceController{
                 $taskItem['data_tambahan'] = [
                     'nama_user' => $userData['nama'],
                     'nama_pekerjaan' => $pekerjaanData['nama_pekerjaan'],
+                    'target_waktu_selesai' => $pekerjaanData['target_waktu_selesai'],
                     'nama_status_task' => $statusData['nama_status_task'],
                     'nama_kategori_task' => $kategoriData['nama_kategori_task']
                 ];
