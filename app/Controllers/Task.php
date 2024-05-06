@@ -346,4 +346,87 @@ class Task extends BaseController
         Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil menghapus data task');
         return redirect()->to('task/daftar_task/' . $id_pekerjaan);
     }
+
+    //Fungsi untuk menampilkan form submit task
+    public function submit_task($id_task)
+    {
+        $task = $this->taskModel->getTask($id_task);
+        $id_pekerjaan = $task['id_pekerjaan'];
+        $personil_pm = $this->personilModel->getPersonilByIdPekerjaanRolePersonil($id_pekerjaan, 'project_manager');
+        $data = [
+            'url1' => '/dashboard',
+            'url' => '/dashboard',
+            'pekerjaan' => $this->pekerjaanModel->getPekerjaan($id_pekerjaan),
+            'task' => $task,
+            'project_manager' => $this->userModel->getUser($personil_pm[0]['id_user']),
+            'personil' => $this->personilModel->getPersonilByIdPekerjaan($id_pekerjaan),
+            'user' => $this->userModel->getUser(),
+            'status_task' => $this->statusTaskModel->getStatusTask(),
+            'kategori_task' => $this->kategoriTaskModel->getKategoriTask(),
+            'hari_libur' => $this->hariliburModel->getHariLibur(),
+        ];
+        return view('task/submit_task', $data);
+    }
+
+    //Fungsi untuk submit task
+    public function save_submit_task()
+    {
+        $validasi = \Config\Services::validation();
+        $aturan = [
+            'tautan_task_submit_task' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Tautan task harus diisi',
+                ]
+            ],
+            'bukti_selesai_submit_task' => [
+                'rules' => 'uploaded[bukti_selesai_submit_task]|max_size[bukti_selesai_submit_task,3072]|mime_in[bukti_selesai_submit_task,image/png,image/jpeg,application/pdf,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document]',
+                'errors' => [
+                    'uploaded' => 'Bukti selesai harus diisi',
+                    'max_size' => 'Ukuran file terlalu besar, maksimal 3 MB',
+                    'mime_in' => 'Format file tidak sesuai, format yang diperbolehkan adalah Doc, Docx, Xls, Xlsx, Png, Jpg, Jpeg, atau PDF',
+                ]
+            ]
+        ];
+        $validasi->setRules($aturan);
+        $id_task = $this->request->getPost('id_task_submit_task');
+        $id_pekerjaan = $this->request->getPost('id_pekerjaan_submit_task');
+        if ($validasi->withRequest($this->request)->run()) {
+            //Mengambil data dari form
+            $tautan_task = $this->request->getPost('tautan_task_submit_task');
+            $bukti_selesai = $this->request->getFile('bukti_selesai_submit_task');
+            //Mendapatkan pekerjaan dan task terkait
+            $task = $this->taskModel->getTask($id_task);
+            $pekerjaan = $this->pekerjaanModel->getPekerjaan($id_pekerjaan);
+            //Proses upload file
+            $nama_bukti_selesai = $bukti_selesai->getRandomName();
+            $bukti_selesai->move('assets/bukti_task', $nama_bukti_selesai);
+            //Proses memasukkan data ke database
+            $data_task = [
+                'id_task' => $id_task,
+                'id_pekerjaan' => $id_pekerjaan,
+                'id_user' => $task['id_user'],
+                'creator' => $task['creator'],
+                'id_kategori_task' => $task['id_kategori_task'],
+                'id_status_task' => 3,
+                'tgl_planing' => $task['tgl_planing'],
+                'tgl_selesai' => date("Y-m-d"),
+                'tgl_verifikasi_diterima' => null,
+                'status_verifikasi' => 1,
+                'persentase_selesai' => 100,
+                'deskripsi_task' => $task['deskripsi_task'],
+                'alasan_verifikasi' => null,
+                'bukti_selesai' => $nama_bukti_selesai,
+                'tautan_task' => $tautan_task
+            ];
+            $this->taskModel->save($data_task);
+            Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil submit task untuk pekerjaan ' . $pekerjaan['nama_pekerjaan']);
+            return redirect()->to('task/daftar_task/' . $id_pekerjaan);
+        } else {
+            session()->setFlashdata('err_tautan_task_submit_task', $validasi->getError('tautan_task_submit_task'));
+            session()->setFlashdata('err_bukti_selesai_submit_task', $validasi->getError('bukti_selesai_submit_task'));
+            Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Terdapat inputan yang kurang sesuai, periksa form submit task');
+            return redirect()->to('task/submit_task/' . $id_task)->withInput();
+        }
+    }
 }

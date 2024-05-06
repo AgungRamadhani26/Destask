@@ -225,7 +225,7 @@
 
                                           <?php if ($task_hi_bs['id_user'] == session()->get('id_user')) : ?>
                                              <div class="btn-group mt-1" role="group">
-                                                <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Submit</a>
+                                                <a href="/task/submit_task/<?= $task_hi_bs['id_task'] ?>" class="btn btn-primary"><i class="bi bi-check2-square"></i> Submit</a>
                                              </div>
                                           <?php endif ?>
                                        </td>
@@ -322,7 +322,7 @@
 
                                           <?php if ($task_pl_bs['id_user'] == session()->get('id_user')) : ?>
                                              <div class="btn-group mt-1" role="group">
-                                                <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Submit</a>
+                                                <a href="/task/submit_task/<?= $task_pl_bs['id_task'] ?>" class="btn btn-primary"><i class="bi bi-check2-square"></i> Submit</a>
                                              </div>
                                           <?php endif ?>
                                        </td>
@@ -419,7 +419,7 @@
 
                                           <?php if ($task_ov_bs['id_user'] == session()->get('id_user')) : ?>
                                              <div class="btn-group mt-1" role="group">
-                                                <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Submit</a>
+                                                <a href="/task/submit_task/<?= $task_ov_bs['id_task'] ?>" class="btn btn-primary"><i class="bi bi-check2-square"></i> Submit</a>
                                              </div>
                                           <?php endif ?>
                                        </td>

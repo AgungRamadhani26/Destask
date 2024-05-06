@@ -35,7 +35,7 @@
                <div class="row mb-3">
                   <label for="nama_pekerjaan_e" style="font-weight: 600;">Nama Pekerjaan</label>
                   <div class="col-sm-12">
-                     <input type="text" class="form-control" name="nama_pekerjaan_e" id="nama_pekerjaan_e" value="<?= old('nama_pekerjaan_e') ?>" style="background-color:gainsboro" readonly>
+                     <input type="text" class="form-control" name="nama_pekerjaan_e" id="nama_pekerjaan_e" value="<?= old('nama_pekerjaan_e') ?>" style="background-color: #e9ecef" readonly>
                   </div>
                </div>
                <div class="row mb-3">
