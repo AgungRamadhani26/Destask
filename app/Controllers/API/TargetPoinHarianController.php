@@ -8,6 +8,7 @@ class TargetPoinHarianController extends ResourceController {
 
     protected $modelName = 'App\Models\TargetPoinHarianModel';
     protected $modelUser = 'App\Models\UserModel';
+    protected $modelUserGroup = 'App\Models\UserGroupModel';
     protected $format    = 'json';
 
     public function index() {
@@ -61,6 +62,40 @@ class TargetPoinHarianController extends ResourceController {
                 'status' => 404,
                 'error' => true,
                 'messages' => 'User tidak ditemukan'
+            ];
+            return $this->respond($response, 404);
+        }
+    }
+
+    public function cektargetpoinharian() {
+        $modelbobot = new $this->modelName();
+        $modelusergroup = new $this->modelUserGroup();
+        $tahun = date('Y');
+        $bulan = date('m');
+        $id_usergroups = $modelusergroup->select('id_usergroup')->findAll();
+        //jika id usergroup dan tahun sudah ada di tabel bobot_kategori_task dan memiliki bobot poin maka masuk data
+        $data = [];
+        foreach ($id_usergroups as $id) {
+            $id_usergroup = $id['id_usergroup'];
+            $cek = $modelbobot->where(['id_usergroup' => $id_usergroup, 'tahun' => $tahun, 'bulan' => $bulan])->first();
+            if ($cek) {
+                $data[] = $cek;
+            }
+        }
+        if (count($data) === count($id_usergroups)) {
+            $response = [
+                'status' => 200,
+                'error' => false,
+                'messages' => 'Data target poin harian sudah ada'
+            ];
+            return $this->respond($response, 200);
+        } else {
+            $response = [
+                'status' => 404,
+                'error' => true,
+                'count' => count($data),
+                'id_usergroups' => count($id_usergroups),
+                'messages' => 'Data target poin harian belum lengkap',
             ];
             return $this->respond($response, 404);
         }

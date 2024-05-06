@@ -40,6 +40,7 @@ class TaskController extends ResourceController{
                     $taskItem['data_tambahan'] = [
                         'nama_user' => $userData['nama'],
                         'nama_pekerjaan' => $pekerjaanData['nama_pekerjaan'],
+                        'target_waktu_selesai' => $pekerjaanData['target_waktu_selesai'],
                         'nama_status_task' => $statusData['nama_status_task'],
                         'nama_kategori_task' => $kategoriData['nama_kategori_task']
                     ];
@@ -189,6 +190,7 @@ class TaskController extends ResourceController{
         $alasan_verifikasi = $this->request->getVar('alasan_verifikasi');
         $status_verifikasi = $this->request->getVar('status_verifikasi');
         $tgl_verifikasi_diterima = $this->request->getVar('tgl_verifikasi_diterima');
+        $tgl_verifikasi_diterima = $this->request->getVar('tgl_selesai');
 
         //validasi
         $validation = $this->validate([
@@ -271,6 +273,8 @@ class TaskController extends ResourceController{
                 ]
             ]
         ]);
+        
+        
 
         $data = [
             'id_task' => $id,
@@ -344,6 +348,7 @@ class TaskController extends ResourceController{
             $taskItem['data_tambahan'] = [
                 'nama_user' => $userData['nama'],
                 'nama_pekerjaan' => $pekerjaanData['nama_pekerjaan'],
+                'target_waktu_selesai' => $pekerjaanData['target_waktu_selesai'],
                 'nama_status_task' => $statusData['nama_status_task'],
                 'nama_kategori_task' => $kategoriData['nama_kategori_task']
             ];
@@ -376,6 +381,7 @@ class TaskController extends ResourceController{
             $taskItem['data_tambahan'] = [
                 'nama_user' => $userData['nama'],
                 'nama_pekerjaan' => $pekerjaanData['nama_pekerjaan'],
+                'target_waktu_selesai' => $pekerjaanData['target_waktu_selesai'],
                 'nama_status_task' => $statusData['nama_status_task'],
                 'nama_kategori_task' => $kategoriData['nama_kategori_task']
             ];
@@ -428,6 +434,7 @@ class TaskController extends ResourceController{
                 $taskItem['data_tambahan'] = [
                     'nama_user' => $userData['nama'],
                     'nama_pekerjaan' => $pekerjaanData['nama_pekerjaan'],
+                    'target_waktu_selesai' => $pekerjaanData['target_waktu_selesai'],
                     'nama_status_task' => $statusData['nama_status_task'],
                     'nama_kategori_task' => $kategoriData['nama_kategori_task']
                 ];

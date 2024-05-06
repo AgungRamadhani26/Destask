@@ -9,6 +9,7 @@ class PekerjaanController extends ResourceController {
     protected $modelName = 'App\Models\PekerjaanModel';
     protected $modelPersonil = 'App\Models\PersonilModel';
     protected $modelUser = 'App\Models\UserModel';
+    protected $modelUserGroup = 'App\Models\UserGroupModel';
     protected $modelStatus = 'App\Models\StatusPekerjaanModel';
     protected $modelKategori = 'App\Models\KategoriPekerjaanModel';
     protected $modelTask = 'App\Models\TaskModel';
@@ -65,7 +66,7 @@ class PekerjaanController extends ResourceController {
                 }
                 
                 $data_tambahan['pm'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama']];
+                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'nama_usergroup' => $item['nama_usergroup']];
                 }, $pm);
                 
                 $data_tambahan['desainer'] = array_map(function($item) {
@@ -101,6 +102,7 @@ class PekerjaanController extends ResourceController {
         $pekerjaanModel = new $this->modelName();
         $personilModel = new $this->modelPersonil();
         $userModel = new $this->modelUser();
+        $userGroupModel = new $this->modelUserGroup();
         $statusModel = new $this->modelStatus();
         $kategoriModel = new $this->modelKategori();
         $taskModel = new $this->modelTask();
@@ -129,40 +131,65 @@ class PekerjaanController extends ResourceController {
                 $frontend_mobile = [];
                 foreach ($personil as $personilItem) {
                     $user = $userModel->find($personilItem['id_user']);
+                    $usergroup = $userGroupModel->find($user['id_usergroup']); // Ambil informasi usergroup
                     if ($personilItem['role_personil'] === 'project_manager') {
-                        $pm[] = $user;
+                        $pm[] = [
+                            'id_user' => $user['id_user'],
+                            'nama' => $user['nama'],
+                            'nama_usergroup' => $usergroup['nama_usergroup'] // Tambahkan informasi usergroup
+                        ];
                     } elseif ($personilItem['role_personil'] === 'desainer') {
-                        $desainer[] = $user;
+                        $desainer[] = [
+                            'id_user' => $user['id_user'],
+                            'nama' => $user['nama'],
+                            'nama_usergroup' => $usergroup['nama_usergroup'] // Tambahkan informasi usergroup
+                        ];
                     } elseif ($personilItem['role_personil'] === 'backend_web') {
-                        $backend_web[] = $user;
+                        $backend_web[] = [
+                            'id_user' => $user['id_user'],
+                            'nama' => $user['nama'],
+                            'nama_usergroup' => $usergroup['nama_usergroup'] // Tambahkan informasi usergroup
+                        ];
                     } elseif ($personilItem['role_personil'] === 'backend_mobile') {
-                        $backend_mobile[] = $user;
+                        $backend_mobile[] = [
+                            'id_user' => $user['id_user'],
+                            'nama' => $user['nama'],
+                            'nama_usergroup' => $usergroup['nama_usergroup'] // Tambahkan informasi usergroup
+                        ];
                     } elseif ($personilItem['role_personil'] === 'frontend_web') {
-                        $frontend_web[] = $user;
+                        $frontend_web[] = [
+                            'id_user' => $user['id_user'],
+                            'nama' => $user['nama'],
+                            'nama_usergroup' => $usergroup['nama_usergroup'] // Tambahkan informasi usergroup
+                        ];
                     } elseif ($personilItem['role_personil'] === 'frontend_mobile') {
-                        $frontend_mobile[] = $user;
+                        $frontend_mobile[] = [
+                            'id_user' => $user['id_user'],
+                            'nama' => $user['nama'],
+                            'nama_usergroup' => $usergroup['nama_usergroup'] // Tambahkan informasi usergroup
+                        ];
                     }
                 }
                 
                 $data_tambahan['pm'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama']];
+                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'nama_usergroup' => $item['nama_usergroup']];
                 }, $pm);
                 
                 $data_tambahan['desainer'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama']];
+                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'nama_usergroup' => $item['nama_usergroup']];
                 }, $desainer);
                 
                 $data_tambahan['backend_web'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama']];
+                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'nama_usergroup' => $item['nama_usergroup']];
                 }, $backend_web);
                 $data_tambahan['backend_mobile'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama']];
+                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'nama_usergroup' => $item['nama_usergroup']];
                 }, $backend_web);
                 $data_tambahan['frontend_web'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama']];
+                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'nama_usergroup' => $item['nama_usergroup']];
                 }, $frontend_web);
                 $data_tambahan['frontend_mobile'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama']];
+                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'nama_usergroup' => $item['nama_usergroup']];
                 }, $frontend_web);
 
                 // Menghitung jumlah task untuk pekerjaan ini
