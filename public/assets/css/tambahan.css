@@ -161,6 +161,28 @@
   background-color: rgb(212, 2, 2);
 }
 
+/* untuk file preview ubmit task */
+.preview-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto; /* Setel ketinggian ke otomatis */
+}
+
+.preview-container iframe,
+.preview-container img,
+.preview-container p {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* Atur tinggi menjadi 0 jika tidak ada konten */
+.preview-container:empty {
+  height: 0;
+}
+
+
+
 
 
 

@@ -12,7 +12,7 @@ class TaskModel extends Model
     protected $useTimestamps    = true;
     protected $allowedFields    = [
         'id_pekerjaan', 'id_user', 'creator', 'id_status_task', 'id_kategori_task', 'tgl_planing',
-        'tgl_selesai', 'tgl_verifikasi_diterima', 'status_verifikasi', 'persentase_selesai',
+        'tgl_selesai', 'tgl_verifikasi_diterima', 'persentase_selesai',
         'deskripsi_task', 'alasan_verifikasi', 'bukti_selesai', 'tautan_task'
     ];
     //Fungsi untuk mendapatkan data task berdasarkan id_task
@@ -25,7 +25,7 @@ class TaskModel extends Model
     public function getTaskHariIni_BelumSubmit_ByIdPekerjaan($id_pekerjaan)
     {
         $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
-        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'tgl_planing' => $today, 'status_verifikasi' => 0])
+        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'tgl_planing' => $today, 'id_status_task' => 1])
             ->orderBy('tgl_planing', 'ASC')
             ->findAll();
     }
@@ -34,7 +34,7 @@ class TaskModel extends Model
     public function getTaskHariIni_BelumSubmit_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
     {
         $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
-        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'id_user' => $id_user, 'deleted_at' => null, 'tgl_planing' => $today, 'status_verifikasi' => 0])
+        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'id_user' => $id_user, 'deleted_at' => null, 'tgl_planing' => $today, 'id_status_task' => 1])
             ->orderBy('tgl_planing', 'ASC')
             ->findAll();
     }
@@ -43,7 +43,7 @@ class TaskModel extends Model
     public function countTaskHariIni_BelumSubmit_ByIdPekerjaan($id_pekerjaan)
     {
         $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
-        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'tgl_planing' => $today, 'status_verifikasi' => 0])
+        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'tgl_planing' => $today, 'id_status_task' => 1])
             ->countAllResults(); // Menghitung jumlah baris yang cocok dengan kriteria
     }
 
@@ -51,7 +51,7 @@ class TaskModel extends Model
     public function countTaskHariIni_BelumSubmit_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
     {
         $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
-        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'id_user' => $id_user, 'deleted_at' => null, 'tgl_planing' => $today, 'status_verifikasi' => 0])
+        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'id_user' => $id_user, 'deleted_at' => null, 'tgl_planing' => $today, 'id_status_task' => 1])
             ->countAllResults(); // Menghitung jumlah baris yang cocok dengan kriteria
     }
 
@@ -61,7 +61,7 @@ class TaskModel extends Model
     public function getTaskPlaning_BelumSubmit_ByIdPekerjaan($id_pekerjaan)
     {
         $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
-        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'tgl_planing >' => $today, 'status_verifikasi' => 0])
+        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'tgl_planing >' => $today, 'id_status_task' => 1])
             ->orderBy('tgl_planing', 'ASC')
             ->findAll();
     }
@@ -70,7 +70,7 @@ class TaskModel extends Model
     public function getTaskPlaning_BelumSubmit_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
     {
         $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
-        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'id_user' => $id_user, 'deleted_at' => null, 'tgl_planing >' => $today, 'status_verifikasi' => 0])
+        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'id_user' => $id_user, 'deleted_at' => null, 'tgl_planing >' => $today, 'id_status_task' => 1])
             ->orderBy('tgl_planing', 'ASC')
             ->findAll();
     }
@@ -79,7 +79,7 @@ class TaskModel extends Model
     public function countTaskPlaning_BelumSubmit_ByIdPekerjaan($id_pekerjaan)
     {
         $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
-        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'tgl_planing >' => $today, 'status_verifikasi' => 0])
+        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'tgl_planing >' => $today, 'id_status_task' => 1])
             ->countAllResults(); // Menghitung jumlah baris yang cocok dengan kriteria
     }
 
@@ -87,7 +87,7 @@ class TaskModel extends Model
     public function countTaskPlaning_BelumSubmit_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
     {
         $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
-        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'id_user' => $id_user, 'deleted_at' => null, 'tgl_planing >' => $today, 'status_verifikasi' => 0])
+        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'id_user' => $id_user, 'deleted_at' => null, 'tgl_planing >' => $today, 'id_status_task' => 1])
             ->countAllResults(); // Menghitung jumlah baris yang cocok dengan kriteria
     }
 
@@ -97,7 +97,7 @@ class TaskModel extends Model
     public function getTaskOverdue_BelumSubmit_ByIdPekerjaan($id_pekerjaan)
     {
         $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
-        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'tgl_planing <' => $today, 'status_verifikasi' => 0])
+        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'tgl_planing <' => $today, 'id_status_task' => 1])
             ->orderBy('tgl_planing', 'ASC')
             ->findAll();
     }
@@ -106,7 +106,7 @@ class TaskModel extends Model
     public function getTaskOverdue_BelumSubmit_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
     {
         $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
-        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'id_user' => $id_user, 'deleted_at' => null, 'tgl_planing <' => $today, 'status_verifikasi' => 0])
+        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'id_user' => $id_user, 'deleted_at' => null, 'tgl_planing <' => $today, 'id_status_task' => 1])
             ->orderBy('tgl_planing', 'ASC')
             ->findAll();
     }
@@ -115,7 +115,7 @@ class TaskModel extends Model
     public function countTaskOverdue_BelumSubmit_ByIdPekerjaan($id_pekerjaan)
     {
         $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
-        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'tgl_planing <' => $today, 'status_verifikasi' => 0])
+        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'tgl_planing <' => $today, 'id_status_task' => 1])
             ->countAllResults(); // Menghitung jumlah baris yang cocok dengan kriteria
     }
 
@@ -123,7 +123,7 @@ class TaskModel extends Model
     public function countTaskOverdue_BelumSubmit_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
     {
         $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
-        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'id_user' => $id_user, 'deleted_at' => null, 'tgl_planing <' => $today, 'status_verifikasi' => 0])
+        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'id_user' => $id_user, 'deleted_at' => null, 'tgl_planing <' => $today, 'id_status_task' => 1])
             ->countAllResults(); // Menghitung jumlah baris yang cocok dengan kriteria
     }
 }

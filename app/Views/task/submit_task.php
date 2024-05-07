@@ -79,14 +79,14 @@
                            </div>
                            <div class="col-md-12">
                               <label for="bukti_selesai_submit_task" class="form-label" style="font-weight: 600;">Bukti Selesai<span style="color: red;font-size: 13px;"> *Ukuran maksimal 3 mb, jenis file Doc, Docx, Xls, Xlsx, Png, Jpg, Jpeg</span></label>
-                              <input type="file" class="form-control <?= (session()->getFlashdata('err_bukti_selesai_submit_task')) ? 'is-invalid' : ''; ?>" name="bukti_selesai_submit_task" id="bukti_selesai_submit_task" value="<?= old('bukti_selesai_submit_task') ?>" accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png" onchange="previewFile()">
+                              <input type="file" class="form-control <?= (session()->getFlashdata('err_bukti_selesai_submit_task')) ? 'is-invalid' : ''; ?>" name="bukti_selesai_submit_task" id="bukti_selesai_submit_task" value="<?= old('bukti_selesai_submit_task') ?>" accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png,.ppt,.pptx" onchange="previewFile()">
                               <div class="invalid-feedback">
                                  <?= session()->getFlashdata('err_bukti_selesai_submit_task') ?>
                               </div>
                            </div>
                         </div>
                      </div>
-                     <div class="col-md-12 ps-3 pe-3" id="filePreview"></div>
+                     <div class="col-md-12 ps-3 pe-3 preview-container" id="filePreview"></div>
                   </div>
                   <hr style="border-top: 3px solid black;">
                   <div class="text-center">
@@ -112,7 +112,7 @@
          } else if (fileType.includes('image')) {
             preview.innerHTML = '<img src="' + reader.result + '" style="max-width:100%; max-height:500px;">';
          } else {
-            preview.innerHTML = '<p>File dengan jenis Doc, Docx, Xls, Xlsx tidak dapat di preview namun tenang saja karena tidak terjadi masalah dengan penginputan. file tetap terkirim dan tetap dapat dibuka oleh penerimanya.</p>';
+            preview.innerHTML = '<p>File dengan jenis selain image dan pdf tidak dapat di preview namun tenang saja karena tidak terjadi masalah dengan penginputan. file tetap terkirim dan tetap dapat dibuka oleh penerimanya.</p>';
          }
       }, false);
 
