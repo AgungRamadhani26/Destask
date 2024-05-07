@@ -92,21 +92,21 @@
             </div>
             <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                <a href="#TableDitolak_DatelineHariIni" class="btn mb-2" style="background-color: Orange; color:white">
-                  Ditolak <span class="badge bg-white text-primary">4</span>
+                  Ditolak <span class="badge bg-white text-primary">0</span>
                </a>
                <a href="#TableDitolak_DatelinePlan" class="btn mb-2" style="background-color: blue; color:white">
-                  Ditolak <span class="badge bg-white text-primary">4</span>
+                  Ditolak <span class="badge bg-white text-primary">0</span>
                </a>
                <a href="#TableDitolak_DatelineOverdue" class="btn mb-2" style="background-color: rgb(212, 2, 2); color:white">
-                  Ditolak <span class="badge bg-white text-primary">4</span>
+                  Ditolak <span class="badge bg-white text-primary">0</span>
                </a>
             </div>
             <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                <a href="#TableMenungguVerifikasi" class="btn mb-2" style="background-color: greenyellow; color:white">
-                  Menunggu Verifikasi <span class="badge bg-white text-primary">4</span>
+                  Menunggu Verifikasi <span class="badge bg-white text-primary">0</span>
                </a>
                <a href="#TableSudahVerifikasi" class="btn mb-2" style="background-color: green; color:white">
-                  Sudah Diverifikasi <span class="badge bg-white text-primary">4</span>
+                  Sudah Diverifikasi <span class="badge bg-white text-primary">0</span>
                </a>
             </div>
          </div>
@@ -141,7 +141,17 @@
                   <div class="card-body">
                      <form action="" method="GET" id=filter_daftar_task>
                         <div class="row">
-                           <div class="col-md-4 mb-4">
+                           <div class="col-md-2 mb-2">
+                              <button type="submit" class="btn btn-primary">
+                                 <i class="bi bi-filter"></i> Filter
+                              </button>
+                           </div>
+                           <div class="col-md-2 mb-2">
+                              <button type="button" class="btn btn-secondary" onclick="resetFilterTask()">
+                                 <i class="bx bx-reset"></i> Reset
+                              </button>
+                           </div>
+                           <div class="col-md-4 mb-2">
                               <div class="input-group">
                                  <label class="input-group-text" for="">Personil</label>
                                  <select class="form-select" id="filter_task_personil" name="filter_task_personil">
@@ -149,33 +159,13 @@
                                  </select>
                               </div>
                            </div>
-                           <div class="col-md-4 mb-4">
+                           <div class="col-md-4 mb-2">
                               <div class="input-group">
                                  <label class="input-group-text" for="">Kategori Task</label>
                                  <select class="form-select" id="filter_task_kategori_task" name="filter_task_kategori_task">
                                     <option value="">Semua Kategori Task</option>
                                  </select>
                               </div>
-                           </div>
-                           <div class="col-md-4 mb-4">
-                              <div class="input-group">
-                                 <label class="input-group-text" for="">Status Task</label>
-                                 <select class="form-select" id="filter_task_status_task" name="filter_task_status_task">
-                                    <option value="">Semua Status Task</option>
-                                 </select>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="row">
-                           <div class="col-md-6 mb-1 d-flex justify-content-center align-items-center">
-                              <button type="submit" class="btn btn-primary">
-                                 <i class="bi bi-filter"></i> Filter
-                              </button>
-                           </div>
-                           <div class="col-md-6 mb-1 d-flex justify-content-center align-items-center">
-                              <button type="button" class="btn btn-secondary" onclick="resetFilterTask()">
-                                 <i class="bx bx-reset"></i> Reset
-                              </button>
                            </div>
                         </div>
                      </form>
@@ -225,7 +215,7 @@
 
                                           <?php if ($task_hi_bs['id_user'] == session()->get('id_user')) : ?>
                                              <div class="btn-group mt-1" role="group">
-                                                <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Submit</a>
+                                                <a href="/task/submit_task/<?= $task_hi_bs['id_task'] ?>" class="btn btn-primary"><i class="bi bi-check2-square"></i> Submit</a>
                                              </div>
                                           <?php endif ?>
                                        </td>
@@ -322,7 +312,7 @@
 
                                           <?php if ($task_pl_bs['id_user'] == session()->get('id_user')) : ?>
                                              <div class="btn-group mt-1" role="group">
-                                                <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Submit</a>
+                                                <a href="/task/submit_task/<?= $task_pl_bs['id_task'] ?>" class="btn btn-primary"><i class="bi bi-check2-square"></i> Submit</a>
                                              </div>
                                           <?php endif ?>
                                        </td>
@@ -419,7 +409,7 @@
 
                                           <?php if ($task_ov_bs['id_user'] == session()->get('id_user')) : ?>
                                              <div class="btn-group mt-1" role="group">
-                                                <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Submit</a>
+                                                <a href="/task/submit_task/<?= $task_ov_bs['id_task'] ?>" class="btn btn-primary"><i class="bi bi-check2-square"></i> Submit</a>
                                              </div>
                                           <?php endif ?>
                                        </td>

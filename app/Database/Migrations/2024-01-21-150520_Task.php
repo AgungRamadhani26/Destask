@@ -52,12 +52,6 @@ class Task extends Migration
                 'type'       => 'DATE',
                 'null'       => true
             ],
-            'status_verifikasi' => [
-                'type'           => 'INT',
-                'constraint'     => 1,
-                'unsigned'       => true,
-                'null'  => true
-            ],
             'persentase_selesai' => [
                 'type'           => 'INT',
                 'constraint'     => 3,

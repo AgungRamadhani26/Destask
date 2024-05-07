@@ -76,7 +76,7 @@
                                  <?= session()->getFlashdata('err_kategori_task_add_task_e') ?>
                               </div>
                            </div>
-                           <div class="col-md-8 mb-3">
+                           <div class="col-md-4 mb-3">
                               <label for="personil_add_task_e" class="form-label" style="font-weight: 600;">Personil</label>
                               <select class="form-control <?= (session()->getFlashdata('err_personil_add_task_e')) ? 'is-invalid' : ''; ?>" name="personil_add_task_e" id="personil_add_task_e">
                                  <option value="">-- Pilih personil --</option>
@@ -95,21 +95,6 @@
                                  <?= session()->getFlashdata('err_personil_add_task_e') ?>
                               </div>
                            </div>
-                           <div class="col-md-4 mb-3">
-                              <label for="status_task_add_task_e" class="form-label" style="font-weight: 600;">Status Task</label>
-                              <select class="form-control <?= (session()->getFlashdata('err_status_task_add_task_e')) ? 'is-invalid' : ''; ?>" name="status_task_add_task_e" id="status_task_add_task_e">
-                                 <option value="">-- Pilih Status Task --</option>
-                                 <?php
-                                 $selectedstatustask = old('status_task_add_task_e') ?? $task['id_status_task'] ?? '';
-                                 ?>
-                                 <?php foreach ($status_task as $st) : ?>
-                                    <option value="<?= $st['id_status_task'] ?>" <?= ($st['id_status_task'] == $selectedstatustask) ? 'selected' : '' ?>><?= $st['nama_status_task'] ?></option>
-                                 <?php endforeach; ?>
-                              </select>
-                              <div class="invalid-feedback">
-                                 <?= session()->getFlashdata('err_status_task_add_task_e') ?>
-                              </div>
-                           </div>
                            <div class=" col-md-4 mb-3">
                               <label for="persentase_selesai_add_task_e" class="form-label" style="font-weight: 600;">Persentase Selesai</label>
                               <input type="text" class="form-control <?= (session()->getFlashdata('err_persentase_selesai_add_task_e')) ? 'is-invalid' : ''; ?>" name="persentase_selesai_add_task_e" id="persentase_selesai_add_task_e" value="<?= old('persentase_selesai_add_task_e') ?? $task['persentase_selesai'] ?? '' ?>">
@@ -124,7 +109,7 @@
                                  <?= session()->getFlashdata('err_target_waktu_selesai_add_task_e') ?>
                               </div>
                            </div>
-                           <div class="col-md-12 mb-4">
+                           <div class="col-md-8 mb-4">
                               <label for="deskripsi_add_task_e" class="form-label" style="font-weight: 600;">Deskripsi Task</label>
                               <textarea class="form-control <?= (session()->getFlashdata('err_deskripsi_add_task_e')) ? 'is-invalid' : ''; ?>" rows="2" name="deskripsi_add_task_e" id="deskripsi_add_task_e"><?= old('deskripsi_add_task_e') ?? $task['deskripsi_task'] ?? '' ?></textarea>
                               <div class="invalid-feedback">
