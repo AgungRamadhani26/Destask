@@ -48,20 +48,66 @@ class PekerjaanController extends ResourceController {
                 $backend_mobile = [];
                 $frontend_web = [];
                 $frontend_mobile = [];
+                $tester = [];
+                $admin = [];
+                $helpdesk = [];
                 foreach ($personil as $personilItem) {
                     $user = $userModel->find($personilItem['id_user']);
+                    $usergroup = $userGroupModel->find($user['id_usergroup']); // Ambil informasi usergroup
                     if ($personilItem['role_personil'] === 'project_manager') {
-                        $pm[] = $user;
+                        $pm[] = [
+                            'id_user' => $user['id_user'],
+                            'nama' => $user['nama'],
+                            'nama_usergroup' => $usergroup['nama_usergroup'] // Tambahkan informasi usergroup
+                        ];
                     } elseif ($personilItem['role_personil'] === 'desainer') {
-                        $desainer[] = $user;
+                        $desainer[] = [
+                            'id_user' => $user['id_user'],
+                            'nama' => $user['nama'],
+                            'nama_usergroup' => $usergroup['nama_usergroup'] // Tambahkan informasi usergroup
+                        ];
                     } elseif ($personilItem['role_personil'] === 'backend_web') {
-                        $backend_web[] = $user;
+                        $backend_web[] = [
+                            'id_user' => $user['id_user'],
+                            'nama' => $user['nama'],
+                            'nama_usergroup' => $usergroup['nama_usergroup'] // Tambahkan informasi usergroup
+                        ];
                     } elseif ($personilItem['role_personil'] === 'backend_mobile') {
-                        $backend_mobile[] = $user;
+                        $backend_mobile[] = [
+                            'id_user' => $user['id_user'],
+                            'nama' => $user['nama'],
+                            'nama_usergroup' => $usergroup['nama_usergroup'] // Tambahkan informasi usergroup
+                        ];
                     } elseif ($personilItem['role_personil'] === 'frontend_web') {
-                        $frontend_web[] = $user;
+                        $frontend_web[] = [
+                            'id_user' => $user['id_user'],
+                            'nama' => $user['nama'],
+                            'nama_usergroup' => $usergroup['nama_usergroup'] // Tambahkan informasi usergroup
+                        ];
                     } elseif ($personilItem['role_personil'] === 'frontend_mobile') {
-                        $frontend_mobile[] = $user;
+                        $frontend_mobile[] = [
+                            'id_user' => $user['id_user'],
+                            'nama' => $user['nama'],
+                            'nama_usergroup' => $usergroup['nama_usergroup'] // Tambahkan informasi usergroup
+                        ];
+                    } else if ($personilItem['role_personil'] === 'tester') {
+                        $tester[] = [
+                            'id_user' => $user['id_user'],
+                            'nama' => $user['nama'],
+                            'nama_usergroup' => $usergroup['nama_usergroup'] // Tambahkan informasi usergroup
+                        ];
+                    } else if ($personilItem['role_personil'] === 'admin') {
+                        $admin[] = [
+                            'id_user' => $user['id_user'],
+                            'nama' => $user['nama'],
+                            'nama_usergroup' => $usergroup['nama_usergroup'] // Tambahkan informasi usergroup
+                        ];
+                    } else if ($personilItem['role_personil'] === 'helpdesk') {
+                        $helpdesk[] = [
+                            'id_user' => $user['id_user'],
+                            'nama' => $user['nama'],
+                            'nama_usergroup' => $usergroup['nama_usergroup'] // Tambahkan informasi usergroup
+                        ];
                     }
                 }
                 
@@ -70,22 +116,47 @@ class PekerjaanController extends ResourceController {
                 }, $pm);
                 
                 $data_tambahan['desainer'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama']];
+                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'nama_usergroup' => $item['nama_usergroup']];
                 }, $desainer);
                 
                 $data_tambahan['backend_web'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama']];
+                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'nama_usergroup' => $item['nama_usergroup']];
                 }, $backend_web);
                 $data_tambahan['backend_mobile'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama']];
+                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'nama_usergroup' => $item['nama_usergroup']];
                 }, $backend_web);
                 $data_tambahan['frontend_web'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama']];
+                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'nama_usergroup' => $item['nama_usergroup']];
                 }, $frontend_web);
                 $data_tambahan['frontend_mobile'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama']];
+                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'nama_usergroup' => $item['nama_usergroup']];
                 }, $frontend_web);
+                $data_tambahan['tester'] = array_map(function($item) {
+                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'nama_usergroup' => $item['nama_usergroup']];
+                }, $tester);
+                $data_tambahan['admin'] = array_map(function($item) {
+                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'nama_usergroup' => $item['nama_usergroup']];
+                }, $admin);
+                $data_tambahan['helpdesk'] = array_map(function($item) {
+                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'nama_usergroup' => $item['nama_usergroup']];
+                }, $helpdesk);
                 
+                // Menghitung jumlah task untuk pekerjaan ini
+                // Menghitung jumlah task selesai untuk pekerjaan ini
+                #id task = 2 = selesai
+                // Menghitung jumlah task selesai untuk pekerjaan ini
+                $jumlah_task_selesai = $taskModel->where(['id_pekerjaan' => $pekerjaanItem['id_pekerjaan'], 'id_status_task' => '2'])->countAllResults();
+
+                // Menghitung jumlah task total untuk pekerjaan ini
+                $jumlah_task_total = $taskModel->where('id_pekerjaan', $pekerjaanItem['id_pekerjaan'])->countAllResults();
+
+                // Menghitung persentase task yang selesai
+                $persentase_selesai = ($jumlah_task_total > 0) ? ($jumlah_task_selesai / $jumlah_task_total) * 100 : 0;
+
+                $data_tambahan['persentase_task_selesai'] = $persentase_selesai;
+
+
+
                 $pekerjaanItem['data_tambahan'] = $data_tambahan;
                 array_push($result, $pekerjaanItem);
             }
@@ -129,6 +200,9 @@ class PekerjaanController extends ResourceController {
                 $backend_mobile = [];
                 $frontend_web = [];
                 $frontend_mobile = [];
+                $tester = [];
+                $admin = [];
+                $helpdesk = [];
                 foreach ($personil as $personilItem) {
                     $user = $userModel->find($personilItem['id_user']);
                     $usergroup = $userGroupModel->find($user['id_usergroup']); // Ambil informasi usergroup
@@ -168,6 +242,24 @@ class PekerjaanController extends ResourceController {
                             'nama' => $user['nama'],
                             'nama_usergroup' => $usergroup['nama_usergroup'] // Tambahkan informasi usergroup
                         ];
+                    } else if ($personilItem['role_personil'] === 'tester') {
+                        $tester[] = [
+                            'id_user' => $user['id_user'],
+                            'nama' => $user['nama'],
+                            'nama_usergroup' => $usergroup['nama_usergroup'] // Tambahkan informasi usergroup
+                        ];
+                    } else if ($personilItem['role_personil'] === 'admin') {
+                        $admin[] = [
+                            'id_user' => $user['id_user'],
+                            'nama' => $user['nama'],
+                            'nama_usergroup' => $usergroup['nama_usergroup'] // Tambahkan informasi usergroup
+                        ];
+                    } else if ($personilItem['role_personil'] === 'helpdesk') {
+                        $helpdesk[] = [
+                            'id_user' => $user['id_user'],
+                            'nama' => $user['nama'],
+                            'nama_usergroup' => $usergroup['nama_usergroup'] // Tambahkan informasi usergroup
+                        ];
                     }
                 }
                 
@@ -191,6 +283,15 @@ class PekerjaanController extends ResourceController {
                 $data_tambahan['frontend_mobile'] = array_map(function($item) {
                     return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'nama_usergroup' => $item['nama_usergroup']];
                 }, $frontend_web);
+                $data_tambahan['tester'] = array_map(function($item) {
+                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'nama_usergroup' => $item['nama_usergroup']];
+                }, $tester);
+                $data_tambahan['admin'] = array_map(function($item) {
+                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'nama_usergroup' => $item['nama_usergroup']];
+                }, $admin);
+                $data_tambahan['helpdesk'] = array_map(function($item) {
+                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'nama_usergroup' => $item['nama_usergroup']];
+                }, $helpdesk);
 
                 // Menghitung jumlah task untuk pekerjaan ini
                 // Menghitung jumlah task selesai untuk pekerjaan ini

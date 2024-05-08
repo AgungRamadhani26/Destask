@@ -264,12 +264,10 @@ class TaskController extends ResourceController{
             'status_verifikasi' => 'required',
             'bukti_selesai'    => [
                 'label' => 'Foto Profil',
-                'rules' => 'uploaded[bukti_selesai]|max_size[bukti_selesai,2048]|is_image[bukti_selesai]|mime_in[bukti_selesai,image/jpg,image/jpeg,image/png]',
+                'rules' => 'uploaded[bukti_selesai]|max_size[bukti_selesai,4096]',
                 'errors' => [
                     'uploaded' => '{field} tidak boleh kosong.',
-                    'max_size' => '{field} tidak boleh lebih dari 2MB.',
-                    'is_image' => '{field} harus berformat JPG, JPEG, atau PNG.',
-                    'mime_in' => '{field} harus berformat JPG, JPEG, atau PNG.'
+                    'max_size' => '{field} tidak boleh lebih dari 4MB.',
                 ]
             ]
         ]);
