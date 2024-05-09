@@ -952,11 +952,11 @@
                                        <div class="btn-group" role="group">
                                           <?php if ((session()->get('user_level') == 'supervisi') && ($task_mv['id_user'] != session()->get('id_user'))) : ?>
                                              <div>
-                                                <a href="task/verifikasi_task/<?= $task_mv['id_task'] ?>" class="btn btn-primary"><i class="bi bi-check2-square"></i> Verifikasi</a>
+                                                <a href="/task/verifikasi_task/<?= $task_mv['id_task'] ?>" class="btn btn-primary"><i class="bi bi-check2-square"></i> Verifikasi</a>
                                              </div>
                                           <?php endif ?>
                                           <div>
-                                             <a href="task/detail_task/<?= $task_mv['id_task'] ?>" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
+                                             <a href="/task/detail_task/<?= $task_mv['id_task'] ?>" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
                                           </div>
                                        </div>
                                     </td>

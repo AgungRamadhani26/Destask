@@ -438,4 +438,24 @@ class Task extends BaseController
             return redirect()->to('task/submit_task/' . $id_task)->withInput();
         }
     }
+
+    //Fungsi untuk melihat detail task
+    public function detail_task($id_task)
+    {
+        $task = $this->taskModel->getTask($id_task);
+        $id_pekerjaan = $task['id_pekerjaan'];
+        $personil_pm = $this->personilModel->getPersonilByIdPekerjaanRolePersonil($id_pekerjaan, 'project_manager');
+        $data = [
+            'url1' => '/dashboard',
+            'url' => '/dashboard',
+            'pekerjaan' => $this->pekerjaanModel->getPekerjaan($id_pekerjaan),
+            'task' => $task,
+            'project_manager' => $this->userModel->getUser($personil_pm[0]['id_user']),
+            'user' => $this->userModel->getUser(),
+            'kategori_task' => $this->kategoriTaskModel->getKategoriTask(),
+            'status_task' => $this->statusTaskModel->getStatusTask(),
+            'hari_libur' => $this->hariliburModel->getHariLibur(),
+        ];
+        return view('task/detail_task', $data);
+    }
 }
