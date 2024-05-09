@@ -49,6 +49,7 @@ class Task extends BaseController
     public function daftar_task($id_pekerjaan)
     {
         $personil_pm = $this->personilModel->getPersonilByIdPekerjaanRolePersonil($id_pekerjaan, 'project_manager');
+        //Untuk Task Belum Submit
         if ((session()->get('user_level') == 'supervisi') || (session()->get('user_level') == 'staff')) {
             if ($personil_pm[0]['id_user'] == session()->get('id_user')) {
                 $task_hariini_belumsubmit = $this->taskModel->getTaskHariIni_BelumSubmit_ByIdPekerjaan($id_pekerjaan);
@@ -73,18 +74,28 @@ class Task extends BaseController
             $jumlahtask_planing_belumsubmit = $this->taskModel->countTaskPlaning_BelumSubmit_ByIdPekerjaan($id_pekerjaan);
             $jumlahtask_overdue_belumsubmit = $this->taskModel->countTaskOverdue_BelumSubmit_ByIdPekerjaan($id_pekerjaan);
         }
+        //Untuk Task Menunggu Verifikasi
+        if (session()->get('user_level') == 'staff') {
+            $task_menunggu_verifikasi = $this->taskModel->get_TaskMenungguVerifikasi_ByIdPekerjaanIdUser($id_pekerjaan, session()->get('id_user'));
+            $jumlahtask_menunggu_verifikasi = $this->taskModel->count_TaskMenungguVerifikasi_ByIdPekerjaanIdUser($id_pekerjaan, session()->get('id_user'));
+        } else {
+            $task_menunggu_verifikasi = $this->taskModel->get_TaskMenungguVerifikasi_ByIdPekerjaan($id_pekerjaan);
+            $jumlahtask_menunggu_verifikasi = $this->taskModel->count_TaskMenungguVerifikasi_ByIdPekerjaan($id_pekerjaan);
+        }
         $data = [
             'url1' => '/dashboard',
             'url' => '/dashboard',
             'pekerjaan' => $this->pekerjaanModel->getPekerjaan($id_pekerjaan),
             'personil' => $this->personilModel->getPersonilByIdPekerjaan($id_pekerjaan),
-            'task_hariini_belumsubmit' => $task_hariini_belumsubmit,
             'project_manager' => $this->userModel->getUser($personil_pm[0]['id_user']),
+            'task_hariini_belumsubmit' => $task_hariini_belumsubmit,
             'task_planing_belumsubmit' => $task_planing_belumsubmit,
             'task_overdue_belumsubmit' => $task_overdue_belumsubmit,
+            'task_menunggu_verifikasi' => $task_menunggu_verifikasi,
             'jumlahtask_hariini_belumsubmit' => $jumlahtask_hariini_belumsubmit,
             'jumlahtask_planing_belumsubmit' => $jumlahtask_planing_belumsubmit,
             'jumlahtask_overdue_belumsubmit' => $jumlahtask_overdue_belumsubmit,
+            'jumlahtask_menunggu_verifikasi' => $jumlahtask_menunggu_verifikasi,
             'user' => $this->userModel->getUser(),
             'kategori_task' => $this->kategoriTaskModel->getKategoriTask(),
             'status_task' => $this->statusTaskModel->getStatusTask(),
@@ -335,9 +346,16 @@ class Task extends BaseController
     {
         $task = $this->taskModel->getTask($id_task);
         $id_pekerjaan = $task['id_pekerjaan'];
-        $this->taskModel->delete($id_task);
-        Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil menghapus data task');
-        return redirect()->to('task/daftar_task/' . $id_pekerjaan);
+        $personil_pm = $this->personilModel->getPersonilByIdPekerjaanRolePersonil($id_pekerjaan, 'project_manager');
+        $pm = $this->userModel->getUser($personil_pm[0]['id_user']);
+        if ($task['creator'] != session()->get('id_user') || $pm != session()->get('id_user')) {
+            Set_notifikasi_swal_berhasil('error', 'Gagal :v', 'Anda jangan nakal untuk hapus pekerjaan yang harusnya tidak boleh anda hapus !');
+            return redirect()->to('task/daftar_task/' . $id_pekerjaan);
+        } else {
+            $this->taskModel->delete($id_task);
+            Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil menghapus data task');
+            return redirect()->to('task/daftar_task/' . $id_pekerjaan);
+        }
     }
 
     //Fungsi untuk menampilkan form submit task

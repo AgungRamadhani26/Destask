@@ -355,7 +355,7 @@ class TaskSeeder extends Seeder
                 'id_status_task'          => 2, //task pending menunggu verifikasi
                 'id_kategori_task'        => 3,
                 'tgl_planing'             => '2024-06-10',
-                'tgl_selesai'             => Time::now(),,
+                'tgl_selesai'             => Time::now(),
                 'tgl_verifikasi_diterima' => null,
                 'persentase_selesai'      => 100,
                 'deskripsi_task'          => 'Pembuatan backend mobile pendaftaran user',

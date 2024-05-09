@@ -103,7 +103,7 @@
             </div>
             <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                <a href="#TableMenungguVerifikasi" class="btn mb-2" style="background-color: greenyellow; color:white">
-                  Menunggu Verifikasi <span class="badge bg-white text-primary">0</span>
+                  Menunggu Verifikasi <span class="badge bg-white text-primary"><?= $jumlahtask_menunggu_verifikasi ?></span>
                </a>
                <a href="#TableSudahVerifikasi" class="btn mb-2" style="background-color: green; color:white">
                   Sudah Diverifikasi <span class="badge bg-white text-primary">0</span>
@@ -937,123 +937,80 @@
                                  <th style="background-color: greenyellow;">Persentase Selesai</th>
                                  <th style="background-color: greenyellow;">Deskripsi Task</th>
                                  <th style="background-color: greenyellow;">Nama Personil</th>
+                                 <th style="background-color: greenyellow;">Pembuat Task</th>
                                  <th style="background-color: greenyellow;">Kategori Task</th>
                                  <th style="background-color: greenyellow;">Status Task</th>
-                                 <th style="background-color: greenyellow;">Target Waktu Selesai</th>
-                                 <th style="background-color: greenyellow;">Waktu Selesai</th>
                                  <th style="background-color: greenyellow;">Keterangan Tambahan</th>
-                                 <th style="background-color: greenyellow;">Status Verifikasi</th>
                               </tr>
                            </thead>
                            <tbody>
-                              <tr>
-                                 <td>1</td>
-                                 <td>
-                                    <div class="btn-group" role="group">
-                                       <?php if (session()->get('user_level') == 'supervisi') : ?>
+                              <?php $c = 1 ?>
+                              <?php foreach ($task_menunggu_verifikasi as $task_mv) : ?>
+                                 <tr>
+                                    <td><?= $c++ ?></td>
+                                    <td>
+                                       <div class="btn-group" role="group">
+                                          <?php if ((session()->get('user_level') == 'supervisi') && ($task_mv['id_user'] != session()->get('id_user'))) : ?>
+                                             <div>
+                                                <a href="task/verifikasi_task/<?= $task_mv['id_task'] ?>" class="btn btn-primary"><i class="bi bi-check2-square"></i> Verifikasi</a>
+                                             </div>
+                                          <?php endif ?>
                                           <div>
-                                             <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Verifikasi</a>
+                                             <a href="task/detail_task/<?= $task_mv['id_task'] ?>" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
                                           </div>
-                                       <?php endif ?>
-                                       <div>
-                                          <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
                                        </div>
-                                    </div>
-                                 </td>
-                                 <td>
-                                    <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="86" aria-valuemin="0" aria-valuemax="100" style="height: 20px">
-                                       <div class="progress-bar progress-bar-striped progress-bar-animated overflow-visible text-dark" style="background-color: #73ff85; width: 86%"><b>86%</b></div>
-                                    </div>
-                                 </td>
-                                 <td>Pembuatan modul pendaftaran user</td>
-                                 <td>Ahmad Muhadjir</td>
-                                 <td>
-                                    <span style="background-color: green;" class="badge rounded-pill">Coding</span>
-                                 </td>
-                                 <td>
-                                    <span style="background-color:cadetblue" class="badge rounded-pill">Selesai</span>
-                                 </td>
-                                 <td>29-07-2023</td>
-                                 <td>29-07-2023</td>
-                                 <td>
-                                    <span style="background-color:green" class="badge rounded-pill">Tepat Waktu</span>
-                                 </td>
-                                 <td>
-                                    <span style="background-color: greenyellow;" class="badge rounded-pill">Menuggu Verifikasi</span>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>2</td>
-                                 <td>
-                                    <div class="btn-group" role="group">
-                                       <?php if (session()->get('user_level') == 'supervisi') : ?>
-                                          <div>
-                                             <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Verifikasi</a>
-                                          </div>
-                                       <?php endif ?>
-                                       <div>
-                                          <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
+                                    </td>
+                                    <td>
+                                       <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="<?= $task_mv['persentase_selesai'] ?>" aria-valuemin="0" aria-valuemax="100" style="height: 20px">
+                                          <div class="progress-bar progress-bar-striped progress-bar-animated overflow-visible text-dark" style="background-color: #73ff85; width: <?= $task_mv['persentase_selesai'] ?>%"><b><?= $task_mv['persentase_selesai'] ?>%</b></div>
                                        </div>
-                                    </div>
-                                 </td>
-                                 <td>
-                                    <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="86" aria-valuemin="0" aria-valuemax="100" style="height: 20px">
-                                       <div class="progress-bar progress-bar-striped progress-bar-animated overflow-visible text-dark" style="background-color: #73ff85; width: 86%"><b>86%</b></div>
-                                    </div>
-                                 </td>
-                                 <td>Pembuatan modul pendaftaran user</td>
-                                 <td>Ahmad Muhadjir</td>
-                                 <td>
-                                    <span style="background-color: green;" class="badge rounded-pill">Coding</span>
-                                 </td>
-                                 <td>
-                                    <span style="background-color:cadetblue" class="badge rounded-pill">Selesai</span>
-                                 </td>
-                                 <td>29-07-2023</td>
-                                 <td>30-07-2023</td>
-                                 <td>
-                                    <span style="background-color:red" class="badge rounded-pill">Terlambat</span>
-                                 </td>
-                                 <td>
-                                    <span style="background-color: greenyellow;" class="badge rounded-pill">Menuggu Verifikasi</span>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>3</td>
-                                 <td>
-                                    <div class="btn-group" role="group">
-                                       <?php if (session()->get('user_level') == 'supervisi') : ?>
-                                          <div>
-                                             <a href="" class="btn btn-primary"><i class="bi bi-check2-square"></i> Verifikasi</a>
-                                          </div>
-                                       <?php endif ?>
-                                       <div>
-                                          <a href="" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
-                                       </div>
-                                    </div>
-                                 </td>
-                                 <td>
-                                    <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="86" aria-valuemin="0" aria-valuemax="100" style="height: 20px">
-                                       <div class="progress-bar progress-bar-striped progress-bar-animated overflow-visible text-dark" style="background-color: #73ff85; width: 86%"><b>86%</b></div>
-                                    </div>
-                                 </td>
-                                 <td>Pembuatan modul pendaftaran user</td>
-                                 <td>Ahmad Muhadjir</td>
-                                 <td>
-                                    <span style="background-color: green;" class="badge rounded-pill">Coding</span>
-                                 </td>
-                                 <td>
-                                    <span style="background-color:cadetblue" class="badge rounded-pill">Selesai</span>
-                                 </td>
-                                 <td>29-07-2023</td>
-                                 <td>29-07-2023</td>
-                                 <td>
-                                    <span style="background-color:green" class="badge rounded-pill">Tepat Waktu</span>
-                                 </td>
-                                 <td>
-                                    <span style="background-color: greenyellow;" class="badge rounded-pill">Menuggu Verifikasi</span>
-                                 </td>
-                              </tr>
+                                    </td>
+                                    <td>
+                                       <?= $task_mv['deskripsi_task'] ?>
+                                    </td>
+                                    <td>
+                                       <?php
+                                       foreach ($user as $usr) {
+                                          if ($task_mv['id_user'] == $usr['id_user']) {
+                                             echo $usr['nama'];
+                                             break; // Keluar dari loop setelah menemukan nilai yang cocok
+                                          }
+                                       }
+                                       ?>
+                                    </td>
+                                    <td>
+                                       <?php
+                                       foreach ($user as $usrr) {
+                                          if ($task_mv['creator'] == $usrr['id_user']) {
+                                             echo $usrr['nama'];
+                                             break; // Keluar dari loop setelah menemukan nilai yang cocok
+                                          }
+                                       }
+                                       ?>
+                                    </td>
+                                    <td>
+                                       <?php foreach ($kategori_task as $kt) : ?>
+                                          <?php if ($task_mv['id_kategori_task'] == $kt['id_kategori_task']) : ?>
+                                             <span style="background-color: <?= $kt['color'] ?>;" class="badge rounded-pill"><?= $kt['nama_kategori_task'] ?></span>
+                                          <?php endif; ?>
+                                       <?php endforeach; ?>
+                                    </td>
+                                    <td>
+                                       <?php foreach ($status_task as $st) : ?>
+                                          <?php if ($task_mv['id_status_task'] == $st['id_status_task']) : ?>
+                                             <span style="background-color: <?= $st['color'] ?>;" class="badge rounded-pill"><?= $st['nama_status_task'] ?></span>
+                                          <?php endif; ?>
+                                       <?php endforeach; ?>
+                                    </td>
+                                    <td>
+                                       <?php if ($task_mv['tgl_selesai'] <= $task_mv['tgl_planing']) : ?>
+                                          <span style="background-color:green" class="badge rounded-pill">Tepat Waktu</span>
+                                       <?php else : ?>
+                                          <span style="background-color:red" class="badge rounded-pill">Terlambat</span>
+                                       <?php endif; ?>
+                                    </td>
+                                 </tr>
+                              <?php endforeach; ?>
                            </tbody>
                         </table>
                      </div>

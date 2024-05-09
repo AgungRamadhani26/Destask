@@ -126,4 +126,36 @@ class TaskModel extends Model
         return $this->where(['id_pekerjaan' => $id_pekerjaan, 'id_user' => $id_user, 'deleted_at' => null, 'tgl_planing <' => $today, 'id_status_task' => 1])
             ->countAllResults(); // Menghitung jumlah baris yang cocok dengan kriteria
     }
+
+
+
+    //Fungsi untuk mendapatkan data task menunggu verifikasi berdasarkan id pekerjaan
+    public function get_TaskMenungguVerifikasi_ByIdPekerjaan($id_pekerjaan)
+    {
+        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'id_status_task' => 2])
+            ->orderBy('tgl_planing', 'ASC')
+            ->findAll();
+    }
+
+    //Fungsi untuk mendapatkan data task menunggu verifikasi berdasarkan id pekerjaan, dan id user
+    public function get_TaskMenungguVerifikasi_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
+    {
+        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'id_user' => $id_user, 'deleted_at' => null, 'id_status_task' => 2])
+            ->orderBy('tgl_planing', 'ASC')
+            ->findAll();
+    }
+
+    // Fungsi untuk menghitung jumlah task menunggu verifikasi berdasarkan id pekerjaan
+    public function count_TaskMenungguVerifikasi_ByIdPekerjaan($id_pekerjaan)
+    {
+        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'id_status_task' => 2])
+            ->countAllResults(); // Menghitung jumlah baris yang cocok dengan kriteria
+    }
+
+    // Fungsi untuk menghitung jumlah task menunggu verifikasi berdasarkan id pekerjaan dan id user
+    public function count_TaskMenungguVerifikasi_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
+    {
+        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'id_user' => $id_user, 'deleted_at' => null, 'id_status_task' => 2])
+            ->countAllResults(); // Menghitung jumlah baris yang cocok dengan kriteria
+    }
 }
