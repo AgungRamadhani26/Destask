@@ -139,7 +139,7 @@
                      <h4 class="card-title" style="color: white;">Fiter Task</h4>
                   </div>
                   <div class="card-body">
-                     <form action="" method="GET" id=filter_daftar_task>
+                     <form action="/task/filter_task/<?= $pekerjaan['id_pekerjaan'] ?>" method="GET" id=filter_daftar_task>
                         <div class="row">
                            <div class="col-md-2 mb-2">
                               <button type="submit" class="btn btn-primary">
@@ -155,7 +155,35 @@
                               <div class="input-group">
                                  <label class="input-group-text" for="">Personil</label>
                                  <select class="form-select" id="filter_task_personil" name="filter_task_personil">
-                                    <option value="">Semua Personil</option>
+                                    <?php if ((session()->get('user_level') == 'supervisi') || (session()->get('user_level') == 'staff')) : ?>
+                                       <?php if (session()->get('id_user') == $project_manager['id_user']) : ?>
+                                          <option value="">Semua Personil</option>
+                                          <?php foreach ($personil_filter as $per_ftr) : ?>
+                                             <?php foreach ($user as $usr) : ?>
+                                                <?php if ($per_ftr['id_user'] == $usr['id_user']) : ?>
+                                                   <option value="<?= $usr['id_user'] ?>" <?= ($usr['id_user'] == $filter_task_personil) ? 'selected' : '' ?>><?= $usr['nama'] ?></option>
+                                                <?php endif; ?>
+                                             <?php endforeach; ?>
+                                          <?php endforeach; ?>
+                                       <?php else : ?>
+                                          <?php foreach ($personil_filter as $per_ftr) : ?>
+                                             <?php foreach ($user as $usr) : ?>
+                                                <?php if ($per_ftr['id_user'] == $usr['id_user']) : ?>
+                                                   <option value="<?= $usr['id_user'] ?>" <?= ($usr['id_user'] == $filter_task_personil) ? 'selected' : '' ?>><?= $usr['nama'] ?></option>
+                                                <?php endif; ?>
+                                             <?php endforeach; ?>
+                                          <?php endforeach; ?>
+                                       <?php endif ?>
+                                    <?php else : ?>
+                                       <option value="">Semua Personil</option>
+                                       <?php foreach ($personil_filter as $per_ftr) : ?>
+                                          <?php foreach ($user as $usr) : ?>
+                                             <?php if ($per_ftr['id_user'] == $usr['id_user']) : ?>
+                                                <option value="<?= $usr['id_user'] ?>" <?= ($usr['id_user'] == $filter_task_personil) ? 'selected' : '' ?>><?= $usr['nama'] ?></option>
+                                             <?php endif; ?>
+                                          <?php endforeach; ?>
+                                       <?php endforeach; ?>
+                                    <?php endif ?>
                                  </select>
                               </div>
                            </div>
@@ -164,6 +192,9 @@
                                  <label class="input-group-text" for="">Kategori Task</label>
                                  <select class="form-select" id="filter_task_kategori_task" name="filter_task_kategori_task">
                                     <option value="">Semua Kategori Task</option>
+                                    <?php foreach ($kategori_task as $kt) : ?>
+                                       <option value="<?= $kt['id_kategori_task'] ?>" <?= ($kt['id_kategori_task'] == $filter_task_kategori) ? 'selected' : '' ?>><?= $kt['nama_kategori_task'] ?></option>
+                                    <?php endforeach; ?>
                                  </select>
                               </div>
                            </div>
@@ -1141,6 +1172,19 @@
       </div>
    </div>
 </section>
+
+<script>
+   //                       //
+   // PENGELOLAAN DATA TASK //
+   //                       //
+   function resetFilterTask() {
+      // Mengatur nilai elemen formulir menjadi kosong
+      document.getElementById('filter_task_personil').value = '';
+      document.getElementById('filter_task_kategori_task').value = '';
+      // Mengarahkan pengguna kembali ke URL yang diinginkan
+      window.location.href = "/task/daftar_task/<?= $pekerjaan['id_pekerjaan'] ?>";
+   }
+</script>
 
 
 <?= $this->endSection(); ?>

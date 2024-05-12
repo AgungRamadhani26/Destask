@@ -39,6 +39,21 @@ class TaskModel extends Model
             ->findAll();
     }
 
+    // Fungsi untuk mendapatkan data task hari ini yang belum submit berdasarkan id pekerjaan, id user, dan id_kategori_task
+    public function getFiltered_TaskHariIni_BelumSubmit_ByIdPekerjaanIdUserKategoriTask($id_pekerjaan, $id_user, $id_kategori_task)
+    {
+        $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
+        $query = $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'tgl_planing' => $today, 'id_status_task' => 1]);
+        if ($id_user !== '') {
+            $query->where('id_user', $id_user);
+        }
+        if ($id_kategori_task !== '') {
+            $query->where('id_kategori_task', $id_kategori_task);
+        }
+        return $query->orderBy('tgl_planing', 'ASC')->findAll();
+    }
+
+
     // Fungsi untuk menghitung jumlah task hari ini yang belum submit berdasarkan id pekerjaan
     public function countTaskHariIni_BelumSubmit_ByIdPekerjaan($id_pekerjaan)
     {
@@ -73,6 +88,20 @@ class TaskModel extends Model
         return $this->where(['id_pekerjaan' => $id_pekerjaan, 'id_user' => $id_user, 'deleted_at' => null, 'tgl_planing >' => $today, 'id_status_task' => 1])
             ->orderBy('tgl_planing', 'ASC')
             ->findAll();
+    }
+
+    // Fungsi untuk mendapatkan data task planing yang belum submit berdasarkan id pekerjaan, id user, dan id_kategori_task
+    public function getFiltered_TaskPlaning_BelumSubmit_ByIdPekerjaanIdUserKategoriTask($id_pekerjaan, $id_user, $id_kategori_task)
+    {
+        $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
+        $query = $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'tgl_planing >' => $today, 'id_status_task' => 1]);
+        if ($id_user !== '') {
+            $query->where('id_user', $id_user);
+        }
+        if ($id_kategori_task !== '') {
+            $query->where('id_kategori_task', $id_kategori_task);
+        }
+        return $query->orderBy('tgl_planing', 'ASC')->findAll();
     }
 
     // Fungsi untuk menghitung jumlah task planing yang belum submit berdasarkan id pekerjaan
@@ -111,6 +140,20 @@ class TaskModel extends Model
             ->findAll();
     }
 
+    //Fungsi untuk mendapatkan data task overdue yang belum submit berdasarkan id pekerjaan, id user, dan id_kategori_task
+    public function getFiltered_TaskOverdue_BelumSubmit_ByIdPekerjaanIdUserKategoriTask($id_pekerjaan, $id_user, $id_kategori_task)
+    {
+        $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
+        $query = $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'tgl_planing <' => $today, 'id_status_task' => 1]);
+        if ($id_user !== '') {
+            $query->where('id_user', $id_user);
+        }
+        if ($id_kategori_task !== '') {
+            $query->where('id_kategori_task', $id_kategori_task);
+        }
+        return $query->orderBy('tgl_planing', 'ASC')->findAll();
+    }
+
     // Fungsi untuk menghitung jumlah task overdue yang belum submit berdasarkan id pekerjaan
     public function countTaskOverdue_BelumSubmit_ByIdPekerjaan($id_pekerjaan)
     {
@@ -143,6 +186,19 @@ class TaskModel extends Model
         return $this->where(['id_pekerjaan' => $id_pekerjaan, 'id_user' => $id_user, 'deleted_at' => null, 'id_status_task' => 2])
             ->orderBy('tgl_planing', 'ASC')
             ->findAll();
+    }
+
+    //Fungsi untuk mendapatkan data task menunggu verifikasi berdasarkan id pekerjaan, id user, dan id_kategori_task
+    public function getFiltered_TaskMenungguVerifikasi_ByIdPekerjaanIdUserKategoriTask($id_pekerjaan, $id_user, $id_kategori_task)
+    {
+        $query = $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'id_status_task' => 2]);
+        if ($id_user !== '') {
+            $query->where('id_user', $id_user);
+        }
+        if ($id_kategori_task !== '') {
+            $query->where('id_kategori_task', $id_kategori_task);
+        }
+        return $query->orderBy('tgl_planing', 'ASC')->findAll();
     }
 
     // Fungsi untuk menghitung jumlah task menunggu verifikasi berdasarkan id pekerjaan

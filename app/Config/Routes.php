@@ -71,6 +71,8 @@ $routes->get('/task/submit_task/(:num)', 'Task::submit_task/$1');
 $routes->post('/task/save_submit_task', 'Task::save_submit_task');
 //Untuk melihat detail task
 $routes->get('/task/detail_task/(:num)', 'Task::detail_task/$1');
+//Untuk memfilter data yang ditampilkan
+$routes->get('/task/filter_task/(:num)', 'Task::filter_task/$1');
 
 //Routes Personil
 //Untuk edit personil pm
