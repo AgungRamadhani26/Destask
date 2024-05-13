@@ -2,7 +2,7 @@
 <?= $this->section('content'); ?>
 
 <div class="pagetitle">
-   <h1>Detail Task</h1>
+   <h1>Verifikasi Task</h1>
 </div>
 
 <section class="section">
@@ -129,6 +129,23 @@
                      </div>
                   </div>
                   <hr style="border-top: 3px solid black;">
+                  <div class="row g-3">
+                     <div class="col-md-12">
+                        <div class="row">
+                           <div class="col-md-12 mb-3">
+                              <div class="alert alert-primary d-flex align-items-center" role="alert">
+                                 <div>
+                                    <i class="bi bi-info-circle-fill"> Silahkan lakukan verifikasi, anda dapat menerima jika task sudah sesuai, selain itu anda juga dapat menolaknya.</i>
+                                 </div>
+                              </div>
+                              <div class="text-center">
+                                 <a href="" class="btn btn-success"><i class="bi bi-check2-circle"></i> Terima</a>
+                                 <a href="" class="btn btn-danger"><i class="bi bi-x-circle"></i></i> Tolak</a>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
                </div>
             </div>
          </div>

@@ -2078,7 +2078,477 @@ class TaskSeeder extends Seeder
                 'tautan_task'             => null,
                 'created_at'              => Time::now(),
                 'updated_at'              => Time::now(),
-            ]
+            ],
+
+
+
+
+            //DENGAN ID PEKERJAAN 2
+            //DESAINER TASK
+            //Task User Bima Satria pekerjaan Aplikasi Absensi SMAN 1 Bandar
+            [
+                'id_task'                 => 112,
+                'id_pekerjaan'            => 2,
+                'id_user'                 => 4,
+                'creator'                 => 4,
+                'id_status_task'          => 4, //task ditolak(cancle)
+                'id_kategori_task'        => 2,
+                'tgl_planing'             => '2024-08-01',
+                'tgl_selesai'             => null,
+                'tgl_verifikasi_diterima' => null,
+                'persentase_selesai'      => 0,
+                'deskripsi_task'          => 'Analisis tampilan menu rekapitulasi absensi dan detail absensi',
+                'alasan_verifikasi'       => 'Hasil analisis kurang mendalam coba untuk lebih dijabarkan terkait hubungannya per aktor dari aplikasi.',
+                'bukti_selesai'           => 'analisis_tampilan_menu_rekapitulasi_absensi_dan_detail_absensi.pdf',
+                'tautan_task'             => 'https://getbootstrap.com/docs/5.3/forms/validation/',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+            //BACKEND WEB TASK
+            //Task User Haryati Dian Pertiwi pekerjaan Aplikasi Absensi SMAN 1 Bandar
+            [
+                'id_task'                 => 113,
+                'id_pekerjaan'            => 2,
+                'id_user'                 => 13,
+                'creator'                 => 13,
+                'id_status_task'          => 4, //task ditolak(cancle)
+                'id_kategori_task'        => 3,
+                'tgl_planing'             => '2024-08-05',
+                'tgl_selesai'             => null,
+                'tgl_verifikasi_diterima' => null,
+                'persentase_selesai'      => 0,
+                'deskripsi_task'          => 'Pembuatan backend rekapitulasi data absensi',
+                'alasan_verifikasi'       => 'Rekapitulasi harusnya diberi fitur filter sehingga pengguna dapat melakukan rekap perbulan dan pertahun.',
+                'bukti_selesai'           => 'pembuatan_backend_rekapitulasi_data_absensi.png',
+                'tautan_task'             => 'https://github.com/AgungRamadhani26/Destask/commit/a413129c1c73e4b2ac10d6e346cb74ff8e131106',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+            //FRONTEND WEB TASK
+            //Task User Lodwick Paulus Situmeang pekerjaan Aplikasi Absensi SMAN 1 Bandar
+            [
+                'id_task'                 => 114,
+                'id_pekerjaan'            => 2,
+                'id_user'                 => 14,
+                'creator'                 => 14,
+                'id_status_task'          => 4, //task ditolak(cancle)
+                'id_kategori_task'        => 3,
+                'tgl_planing'             => '2024-08-02',
+                'tgl_selesai'             => null,
+                'tgl_verifikasi_diterima' => null,
+                'persentase_selesai'      => 0,
+                'deskripsi_task'          => 'Pembuatan frontend rekapitulasi data absensi',
+                'alasan_verifikasi'       => 'Rekapitulasi harusnya diberi fitur filter sehingga pengguna dapat melakukan rekap perbulan dan pertahun, maka dari itu frontend harus diubah.',
+                'bukti_selesai'           => 'pembuatan_frontend_rekapitulasi_data_absensi.png',
+                'tautan_task'             => 'https://github.com/AgungRamadhani26/Destask/commit/912c34ba2a6ecca61da2ceea3e1e642ed0c53a7f',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+            //BACKEND MOBILE TASK
+            //Task User Atriana Herlita Salim pekerjaan Aplikasi Absensi SMAN 1 Bandar
+            [
+                'id_task'                 => 115,
+                'id_pekerjaan'            => 2,
+                'id_user'                 => 17,
+                'creator'                 => 17,
+                'id_status_task'          => 4, //task ditolak(cancle)
+                'id_kategori_task'        => 3,
+                'tgl_planing'             => '2024-08-07',
+                'tgl_selesai'             => null,
+                'tgl_verifikasi_diterima' => null,
+                'persentase_selesai'      => 0,
+                'deskripsi_task'          => 'Pembuatan backend mobile rekapitulasi data absensi',
+                'alasan_verifikasi'       => 'Rekapitulasi di mobile harusnya diberi fitur filter sehingga pengguna dapat melakukan rekap perbulan dan pertahun, maka dari itu backend harus diubah.',
+                'bukti_selesai'           => 'pembuatan_backend_mobile_rekapitulasi_data_absensi.png',
+                'tautan_task'             => 'https://github.com/AgungRamadhani26/Destask/commit/a2fb83842732eb7e4f7000930023939d74cbbf32',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+            //FRONTEND MOBILE TASK
+            //Task User Marco Xaverius pekerjaan Aplikasi Absensi SMAN 1 Bandar
+            [
+                'id_task'                 => 116,
+                'id_pekerjaan'            => 2,
+                'id_user'                 => 21,
+                'creator'                 => 21,
+                'id_status_task'          => 4, //task ditolak(cancle)
+                'id_kategori_task'        => 3,
+                'tgl_planing'             => '2024-08-06',
+                'tgl_selesai'             => null,
+                'tgl_verifikasi_diterima' => null,
+                'persentase_selesai'      => 0,
+                'deskripsi_task'          => 'Pembuatan frontend mobile rekapitulasi data absensi',
+                'alasan_verifikasi'       => 'Rekapitulasi di mobile harusnya diberi fitur filter sehingga pengguna dapat melakukan rekap perbulan dan pertahun, maka dari itu frontend harus diubah.',
+                'bukti_selesai'           => 'pembuatan_frontend_mobile_rekapitulasi_data_absensi.jpg',
+                'tautan_task'             => 'https://github.com/AgungRamadhani26/Destask/commit/a39b11795f01e458549d40677b2fa5798d546bc6',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+            //TESTER TASK
+            //Task User Bisma Irawan pekerjaan Aplikasi Absensi SMAN 1 Bandar
+            [
+                'id_task'                 => 117,
+                'id_pekerjaan'            => 2,
+                'id_user'                 => 24,
+                'creator'                 => 24,
+                'id_status_task'          => 4, //task ditolak(cancle)
+                'id_kategori_task'        => 4,
+                'tgl_planing'             => '2024-08-9',
+                'tgl_selesai'             => null,
+                'tgl_verifikasi_diterima' => null,
+                'persentase_selesai'      => 0,
+                'deskripsi_task'          => 'Testing modul rekapitulasi absen',
+                'alasan_verifikasi'       => 'Harusnya hasil testing dibagi menjadi 20 test case termasuk sql injection.',
+                'bukti_selesai'           => 'testing_modul_rekapitulasi_absen.pdf',
+                'tautan_task'             => 'Tidak diperlukan tautan karena semua hasil testing sudah ada pada report.',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+            //ADMIN APLIKASI TASK
+            //Task User Boyke Raden Ananda pekerjaan Aplikasi Absensi SMAN 1 Bandar
+            [
+                'id_task'                 => 118,
+                'id_pekerjaan'            => 2,
+                'id_user'                 => 29,
+                'creator'                 => 29,
+                'id_status_task'          => 4, //task ditolak(cancle)
+                'id_kategori_task'        => 1,
+                'tgl_planing'             => '2024-08-12',
+                'tgl_selesai'             => null,
+                'tgl_verifikasi_diterima' => null,
+                'persentase_selesai'      => 0,
+                'deskripsi_task'          => 'Pelayanan pendaftaran user',
+                'alasan_verifikasi'       => 'Task admin setidaknya mencakup pekerjaan yang lebih besar.',
+                'bukti_selesai'           => 'pelayanan_pendaftaran_user.png',
+                'tautan_task'             => 'https://getbootstrap.com/docs/5.3/forms/form-control/',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+            //HELPDESK TASK
+            //Task User Jose Pierro pekerjaan Aplikasi Absensi SMAN 1 Bandar
+            [
+                'id_task'                 => 119,
+                'id_pekerjaan'            => 2,
+                'id_user'                 => 34,
+                'creator'                 => 34,
+                'id_status_task'          => 4, //task ditolak(cancle)
+                'id_kategori_task'        => 1,
+                'tgl_planing'             => '2024-08-13',
+                'tgl_selesai'             => null,
+                'tgl_verifikasi_diterima' => null,
+                'persentase_selesai'      => 0,
+                'deskripsi_task'          => 'Memberikan pelatihan penggunaan aplikasi pada stakeholder',
+                'alasan_verifikasi'       => 'Selain modul pelatihan, harusnya juga ada video tutorial yang linknya dicantumkan pada modul.',
+                'bukti_selesai'           => 'memberikan_pelatihan_penggunaan_aplikasi_pada_stakeholder.pdf',
+                'tautan_task'             => 'Tidak ada karena semua hal sudah terlampir pada manual book.',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+            //PROJECT MANAGER
+            //Task User Amsari Kurniadi pekerjaan Aplikasi Absensi SMAN 1 Bandar
+            [
+                'id_task'                 => 120,
+                'id_pekerjaan'            => 2,
+                'id_user'                 => 12,
+                'creator'                 => 12,
+                'id_status_task'          => 4, //task ditolak(cancle)
+                'id_kategori_task'        => 1,
+                'tgl_planing'             => '2024-08-14',
+                'tgl_selesai'             => null,
+                'tgl_verifikasi_diterima' => null,
+                'persentase_selesai'      => 0,
+                'deskripsi_task'          => 'Evaluasi backend aplikasi',
+                'alasan_verifikasi'       => 'Hasil evaluasi tidak menyertakan hasil pengujian, tolong untuk dilampirkan.',
+                'bukti_selesai'           => 'evaluasi_backend_aplikasi.docx',
+                'tautan_task'             => 'Tidak ada karena semuanya sudah terlampir pada laporan evaluasi.',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+
+
+
+            // //DENGAN ID PEKERJAAN 4
+            // //DESAINER TASK
+            // //Task User Dina Zulfina Ahmad pekerjaan Website Recruitement Pegawai PT Agung Jaya Mineral
+            // [
+            //     'id_task'                 => 46,
+            //     'id_pekerjaan'            => 4,
+            //     'id_user'                 => 7,
+            //     'creator'                 => 10,
+            //     'id_status_task'          => 2, //task pending menunggu verifikasi
+            //     'id_kategori_task'        => 2,
+            //     'tgl_planing'             => '2024-06-03',
+            //     'tgl_selesai'             => Time::now(),
+            //     'tgl_verifikasi_diterima' => null,
+            //     'persentase_selesai'      => 100,
+            //     'deskripsi_task'          => 'Analisis tampilan landing page',
+            //     'alasan_verifikasi'       => null,
+            //     'bukti_selesai'           => 'analisis_tampilan_landing_page.png',
+            //     'tautan_task'             => 'https://getbootstrap.com/docs/5.3/forms/select/',
+            //     'created_at'              => Time::now(),
+            //     'updated_at'              => Time::now(),
+            // ],
+            // //BACKEND WEB TASK
+            // //Task User Jatmiko Adi Nugroho pekerjaan Website Recruitement Pegawai PT Agung Jaya Mineral
+            // [
+            //     'id_task'                 => 52,
+            //     'id_pekerjaan'            => 4,
+            //     'id_user'                 => 10,
+            //     'creator'                 => 10,
+            //     'id_status_task'          => 2, //task pending menunggu verifikasi
+            //     'id_kategori_task'        => 3,
+            //     'tgl_planing'             => '2024-06-07',
+            //     'tgl_selesai'             => Time::now(),
+            //     'tgl_verifikasi_diterima' => null,
+            //     'persentase_selesai'      => 100,
+            //     'deskripsi_task'          => 'Pembuatan backend web tampilan landing page',
+            //     'alasan_verifikasi'       => null,
+            //     'bukti_selesai'           => 'pembuatan_backend_web_tampilan_landing_page.png',
+            //     'tautan_task'             => 'https://github.com/AgungRamadhani26/Destask/commit/38c6cfb7dd00f964767f31e8085fc4814f0fa918',
+            //     'created_at'              => Time::now(),
+            //     'updated_at'              => Time::now(),
+            // ],
+            // //FRONTEND WEB TASK
+            // //Task User Haryati Dian Pertiwi pekerjaan Website Recruitement Pegawai PT Agung Jaya Mineral
+            // [
+            //     'id_task'                 => 58,
+            //     'id_pekerjaan'            => 4,
+            //     'id_user'                 => 13,
+            //     'creator'                 => 10,
+            //     'id_status_task'          => 2, //task pending menunggu verifikasi
+            //     'id_kategori_task'        => 3,
+            //     'tgl_planing'             => '2024-06-05',
+            //     'tgl_selesai'             => Time::now(),
+            //     'tgl_verifikasi_diterima' => null,
+            //     'persentase_selesai'      => 100,
+            //     'deskripsi_task'          => 'Pembuatan frontend web tampilan landing page',
+            //     'alasan_verifikasi'       => null,
+            //     'bukti_selesai'           => 'pembuatan_frontend_web_tampilan_landing_page.png',
+            //     'tautan_task'             => 'https://github.com/AgungRamadhani26/Destask/commit/1bd3faafdb1b87a25cdffc4356c2edf7d25f50c9',
+            //     'created_at'              => Time::now(),
+            //     'updated_at'              => Time::now(),
+            // ],
+            // //TESTER TASK
+            // //Task User Putra Hardika Sinaga pekerjaan Website Recruitement Pegawai PT Agung Jaya Mineral
+            // [
+            //     'id_task'                 => 64,
+            //     'id_pekerjaan'            => 4,
+            //     'id_user'                 => 26,
+            //     'creator'                 => 10,
+            //     'id_status_task'          => 2, //task pending menunggu verifikasi
+            //     'id_kategori_task'        => 4,
+            //     'tgl_planing'             => '2024-06-10',
+            //     'tgl_selesai'             => Time::now(),
+            //     'tgl_verifikasi_diterima' => null,
+            //     'persentase_selesai'      => 100,
+            //     'deskripsi_task'          => 'Testing tampilan landing page web',
+            //     'alasan_verifikasi'       => null,
+            //     'bukti_selesai'           => 'testing_tampilan_landing_page_web.pdf',
+            //     'tautan_task'             => 'Tidak ada tautan karena semua lampiran sudah ada pada hasil testing.',
+            //     'created_at'              => Time::now(),
+            //     'updated_at'              => Time::now(),
+            // ],
+            // //ADMIN APLIKASI TASK
+            // //Task User Ulfah Zidni Hakim pekerjaan Website Recruitement Pegawai PT Agung Jaya Mineral
+            // [
+            //     'id_task'                 => 70,
+            //     'id_pekerjaan'            => 4,
+            //     'id_user'                 => 31,
+            //     'creator'                 => 10,
+            //     'id_status_task'          => 2, //task pending menunggu verifikasi
+            //     'id_kategori_task'        => 1,
+            //     'tgl_planing'             => '2024-07-01',
+            //     'tgl_selesai'             => Time::now(),
+            //     'tgl_verifikasi_diterima' => null,
+            //     'persentase_selesai'      => 100,
+            //     'deskripsi_task'          => 'Verifikasi data pengguna',
+            //     'alasan_verifikasi'       => null,
+            //     'bukti_selesai'           => 'verifikasi_data_pengguna.png',
+            //     'tautan_task'             => 'Tidak ada tautan karena data verifikasi sudah ada pada bukti gambar.',
+            //     'created_at'              => Time::now(),
+            //     'updated_at'              => Time::now(),
+            // ],
+            // //HELPDESK TASK
+            // //Task User Lina Veronica Atmaja pekerjaan Website Recruitement Pegawai PT Agung Jaya Mineral
+            // [
+            //     'id_task'                 => 73,
+            //     'id_pekerjaan'            => 4,
+            //     'id_user'                 => 36,
+            //     'creator'                 => 10,
+            //     'id_status_task'          => 2, //task pending menunggu verifikasi
+            //     'id_kategori_task'        => 1,
+            //     'tgl_planing'             => '2024-07-04',
+            //     'tgl_selesai'             => Time::now(),
+            //     'tgl_verifikasi_diterima' => null,
+            //     'persentase_selesai'      => 100,
+            //     'deskripsi_task'          => 'Pemberian penjelasan fitur login pada user',
+            //     'alasan_verifikasi'       => null,
+            //     'bukti_selesai'           => 'pemberian_penjelasan_fitur_login_pada_user.pdf',
+            //     'tautan_task'             => 'Tidak ada tautan karena penjelasan sudah terlampir pada pdf',
+            //     'created_at'              => Time::now(),
+            //     'updated_at'              => Time::now(),
+            // ],
+            // //PROJECT MANAGER
+            // //Task User Jatmiko Adi Nugroho pekerjaan Website Recruitement Pegawai PT Agung Jaya Mineral
+            // [
+            //     'id_task'                 => 76,
+            //     'id_pekerjaan'            => 4,
+            //     'id_user'                 => 10,
+            //     'creator'                 => 10,
+            //     'id_status_task'          => 2, //task pending menunggu verifikasi
+            //     'id_kategori_task'        => 1,
+            //     'tgl_planing'             => '2024-07-09',
+            //     'tgl_selesai'             => Time::now(),
+            //     'tgl_verifikasi_diterima' => null,
+            //     'persentase_selesai'      => 100,
+            //     'deskripsi_task'          => 'Evaluasi hasil testing tahap 1',
+            //     'alasan_verifikasi'       => null,
+            //     'bukti_selesai'           => 'evaluasi_hasil_testing_tahap_1.pdf',
+            //     'tautan_task'             => 'Tidak ada tautan karena evaluasi terting tahap 1 sudah dirincikan pada laporan.',
+            //     'created_at'              => Time::now(),
+            //     'updated_at'              => Time::now(),
+            // ],
+            // //DENGAN ID PEKERJAAN 3
+            // //DESAINER TASK
+            // //Task User Bima Satria pekerjaan Web Profile Dinkes Kota Semarang
+            // [
+            //     'id_task'                 => 79,
+            //     'id_pekerjaan'            => 3,
+            //     'id_user'                 => 4,
+            //     'creator'                 => 6,
+            //     'id_status_task'          => 2, //task pending menunggu verifikasi
+            //     'id_kategori_task'        => 2,
+            //     'tgl_planing'             => '2024-06-12',
+            //     'tgl_selesai'             => Time::now(),
+            //     'tgl_verifikasi_diterima' => null,
+            //     'persentase_selesai'      => 100,
+            //     'deskripsi_task'          => 'Analisis tampilan navbar dan menu apa saja yang dibutuhkan',
+            //     'alasan_verifikasi'       => null,
+            //     'bukti_selesai'           => 'analisis_tampilan_navbar_dan_menu_apa_saja_yang_dibutuhkan.docx',
+            //     'tautan_task'             => 'Tidak ada lampiran task karena hasil analisis sudah terperinci.',
+            //     'created_at'              => Time::now(),
+            //     'updated_at'              => Time::now(),
+            // ],
+            // //BACKEND WEB TASK
+            // //Task User Lodwick Paulus Situmeang pekerjaan Web Profile Dinkes Kota Semarang
+            // [
+            //     'id_task'                 => 85,
+            //     'id_pekerjaan'            => 3,
+            //     'id_user'                 => 14,
+            //     'creator'                 => 6,
+            //     'id_status_task'          => 2, //task pending menunggu verifikasi
+            //     'id_kategori_task'        => 3,
+            //     'tgl_planing'             => '2024-06-17',
+            //     'tgl_selesai'             => Time::now(),
+            //     'tgl_verifikasi_diterima' => null,
+            //     'persentase_selesai'      => 100,
+            //     'deskripsi_task'          => 'Pembuatan backend web navbar dan daftar menu',
+            //     'alasan_verifikasi'       => null,
+            //     'bukti_selesai'           => 'pembuatan_backend_web_navbar_dan_daftar_menu.png',
+            //     'tautan_task'             => 'https://github.com/AgungRamadhani26/Destask/commit/1e054a4c18a966fa7b11e4d66b0942359cd972c0',
+            //     'created_at'              => Time::now(),
+            //     'updated_at'              => Time::now(),
+            // ],
+            // //FRONTEND WEB TASK
+            // //Task User Amsari Kurniadi pekerjaan Web Profile Dinkes Kota Semarang
+            // [
+            //     'id_task'                 => 91,
+            //     'id_pekerjaan'            => 3,
+            //     'id_user'                 => 12,
+            //     'creator'                 => 6,
+            //     'id_status_task'          => 2, //task pending menunggu verifikasi
+            //     'id_kategori_task'        => 3,
+            //     'tgl_planing'             => '2024-06-14',
+            //     'tgl_selesai'             => Time::now(),
+            //     'tgl_verifikasi_diterima' => null,
+            //     'persentase_selesai'      => 100,
+            //     'deskripsi_task'          => 'Pembuatan frontend web navbar dan daftar menu',
+            //     'alasan_verifikasi'       => null,
+            //     'bukti_selesai'           => 'pembuatan_frontend_web_navbar_dan_daftar_menu1.png',
+            //     'tautan_task'             => 'https://github.com/AgungRamadhani26/Destask/commit/ea170401129e9c4234d1883dc33ccd7d2ed715e7',
+            //     'created_at'              => Time::now(),
+            //     'updated_at'              => Time::now(),
+            // ],
+            // //TESTER TASK
+            // //Task User Marwati Ardina pekerjaan Web Profile Dinkes Kota Semarang
+            // [
+            //     'id_task'                 => 97,
+            //     'id_pekerjaan'            => 3,
+            //     'id_user'                 => 25,
+            //     'creator'                 => 6,
+            //     'id_status_task'          => 2, //task pending menunggu verifikasi
+            //     'id_kategori_task'        => 4,
+            //     'tgl_planing'             => '2024-06-19',
+            //     'tgl_selesai'             => Time::now(),
+            //     'tgl_verifikasi_diterima' => null,
+            //     'persentase_selesai'      => 100,
+            //     'deskripsi_task'          => 'Testing navbar dan daftar menu web',
+            //     'alasan_verifikasi'       => null,
+            //     'bukti_selesai'           => 'testing_navbar_dan_daftar_menu_web1.pdf',
+            //     'tautan_task'             => 'Tidak ada tautan karena hasil testing sudah ada pada laporan.',
+            //     'created_at'              => Time::now(),
+            //     'updated_at'              => Time::now(),
+            // ],
+            // //ADMIN APLIKASI TASK
+            // //Task User Fatin Triamanda pekerjaan Web Profile Dinkes Kota Semarang
+            // [
+            //     'id_task'                 => 103,
+            //     'id_pekerjaan'            => 3,
+            //     'id_user'                 => 30,
+            //     'creator'                 => 6,
+            //     'id_status_task'          => 2, //task pending menunggu verifikasi
+            //     'id_kategori_task'        => 1,
+            //     'tgl_planing'             => '2024-07-02',
+            //     'tgl_selesai'             => Time::now(),
+            //     'tgl_verifikasi_diterima' => null,
+            //     'persentase_selesai'      => 100,
+            //     'deskripsi_task'          => 'Pengelolaan data berita',
+            //     'alasan_verifikasi'       => null,
+            //     'bukti_selesai'           => 'pengelolaan_data_berita.pdf',
+            //     'tautan_task'             => 'Tidak ada tautan data berita sudah ada pada laporan.',
+            //     'created_at'              => Time::now(),
+            //     'updated_at'              => Time::now(),
+            // ],
+            // //HELPDESK TASK
+            // //Task User Titan Wardoyo pekerjaan Web Profile Dinkes Kota Semarang
+            // [
+            //     'id_task'                 => 106,
+            //     'id_pekerjaan'            => 3,
+            //     'id_user'                 => 35,
+            //     'creator'                 => 6,
+            //     'id_status_task'          => 2, //task pending menunggu verifikasi
+            //     'id_kategori_task'        => 1,
+            //     'tgl_planing'             => '2024-07-05',
+            //     'tgl_selesai'             => Time::now(),
+            //     'tgl_verifikasi_diterima' => null,
+            //     'persentase_selesai'      => 100,
+            //     'deskripsi_task'          => 'Pemberian penjelasan terhadap pengaturan portal berita',
+            //     'alasan_verifikasi'       => null,
+            //     'bukti_selesai'           => 'pemberian_penjelasan_terhadap_pengaturan_portal_berita.pdf',
+            //     'tautan_task'             => 'Tidak ada tautan semua penjelasan sudah ada pada file.',
+            //     'created_at'              => Time::now(),
+            //     'updated_at'              => Time::now(),
+            // ],
+            // //PROJECT MANAGER
+            // //Task User Alexandria Bronco Saraswati pekerjaan Web Profile Dinkes Kota Semarang
+            // [
+            //     'id_task'                 => 109,
+            //     'id_pekerjaan'            => 3,
+            //     'id_user'                 => 6,
+            //     'creator'                 => 6,
+            //     'id_status_task'          => 2, //task pending menunggu verifikasi
+            //     'id_kategori_task'        => 1,
+            //     'tgl_planing'             => '2024-07-10',
+            //     'tgl_selesai'             => Time::now(),
+            //     'tgl_verifikasi_diterima' => null,
+            //     'persentase_selesai'      => 100,
+            //     'deskripsi_task'          => 'Evaluasi penyesuaian backend dan frontend tahap 1',
+            //     'alasan_verifikasi'       => null,
+            //     'bukti_selesai'           => 'evaluasi_penyesuaian_backend_dan_frontend_tahap1.png',
+            //     'tautan_task'             => 'https://github.com/AgungRamadhani26/Destask/commit/076a77c652dfeacb8af9422e0da7cdd6f26a2db3',
+            //     'created_at'              => Time::now(),
+            //     'updated_at'              => Time::now(),
+            // ],
         ];
         $this->db->table('task')->insertBatch($data);
     }
