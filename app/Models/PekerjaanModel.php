@@ -64,7 +64,7 @@ class PekerjaanModel extends Model
             ->findAll();
     }
 
-    //Fungsi untuk mendapatkan data pekerjaan berdasarkan filter (lebih ke admin, hod, direksi)
+    //Fungsi untuk mendapatkan data pekerjaan berdasarkan filter (lebih ke admin, hod, direksi, supervisi)
     public function getFilteredPekerjaan($id_kategori_pekerjaan, $id_status_pekerjaan, $jenis_layanan, $id_user_pm)
     {
         $query = $this->select('pekerjaan.*')
@@ -87,8 +87,8 @@ class PekerjaanModel extends Model
         return $query->get()->getResultArray();
     }
 
-    // Fungsi untuk mendapatkan data pekerjaan berdasarkan filter (utk supervisi dan staff)
-    public function getFilteredPekerjaanforSupervisiStaff($id_kategori_pekerjaan, $id_status_pekerjaan, $jenis_layanan, $id_user_pm, $id_user)
+    // Fungsi untuk mendapatkan data pekerjaan berdasarkan filter (utk staff)
+    public function getFilteredPekerjaanforStaff($id_kategori_pekerjaan, $id_status_pekerjaan, $jenis_layanan, $id_user_pm, $id_user)
     {
         $query = $this->distinct()
             ->select('pekerjaan.*')
@@ -144,15 +144,15 @@ class PekerjaanModel extends Model
         return count($pekerjaan);
     }
 
-    //Fungsi untuk menghitung jumlah pekerjaan berdasarkan id user dan status pekerjaan untuk staff dan supervisi
-    public function countPekerjaanSupervisiStaff_ByUserIdStatusPekerjaan($id_user, $status_pekerjaan)
+    //Fungsi untuk menghitung jumlah pekerjaan berdasarkan id user dan status pekerjaan untuk staff
+    public function countPekerjaanStaff_ByUserIdStatusPekerjaan($id_user, $status_pekerjaan)
     {
-        $pekerjaan = $this->getFilteredPekerjaanforSupervisiStaff('', $status_pekerjaan, '', '', $id_user);
+        $pekerjaan = $this->getFilteredPekerjaanforStaff('', $status_pekerjaan, '', '', $id_user);
         return count($pekerjaan);
     }
 
-    //Fungsi untuk menghitung jumlah pekerjaan berdasarkan status pekerjaan untuk hod, admin, dan direksi
-    public function countPekerjaanHodAdminDireksi_ByStatusPekerjaan($status_pekerjaan)
+    //Fungsi untuk menghitung jumlah pekerjaan berdasarkan status pekerjaan untuk hod, admin, dan direksi, supervisi
+    public function countPekerjaanHodAdminDireksiSupervisi_ByStatusPekerjaan($status_pekerjaan)
     {
         $pekerjaan = $this->getFilteredPekerjaan('', $status_pekerjaan, '', '');
         return count($pekerjaan);

@@ -169,6 +169,34 @@ class TaskModel extends Model
             ->orderBy('tgl_planing', 'ASC')
             ->findAll();
     }
+
+    //Fungsi untuk mendapatkan data task menunggu verifikasi untuk supervisi
+    public function get_TaskMenungguVerifikasi_ByIdPekerjaanIdUsergroupIdUser($id_pekerjaan, $id_usergroup, $id_user)
+    {
+        $userModel = new \App\Models\UserModel();
+        // Dapatkan semua user yang memiliki id user group yang sama dan bukan user yang sedang login
+        $users_in_usergroup = $userModel->where('id_usergroup', $id_usergroup)->findAll();
+        $id_users_except_currentUser = [];
+        foreach ($users_in_usergroup as $user) {
+            if ($user['id_user'] != $id_user) {
+                $id_users_except_currentUser[] = $user['id_user'];
+            }
+        }
+        // Dapatkan semua task yang memiliki id pekerjaan yang sama dan id_usergroup yang sama
+        $result = [];
+        foreach ($id_users_except_currentUser as $idUser) {
+            $data_tasks = $this->where([
+                'id_user' => $idUser,
+                'id_pekerjaan' => $id_pekerjaan,
+                'deleted_at' => null,
+                'id_status_task' => 2
+            ])->orderBy('tgl_planing', 'ASC')->findAll();
+
+            // Gabungkan hasil task ke dalam array result
+            $result = array_merge($result, $data_tasks);
+        }
+        return $result;
+    }
     //Fungsi untuk mendapatkan data task menunggu verifikasi berdasarkan id pekerjaan, dan id user
     public function get_TaskMenungguVerifikasi_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
     {
@@ -199,6 +227,11 @@ class TaskModel extends Model
     {
         return $this->where(['id_pekerjaan' => $id_pekerjaan, 'id_user' => $id_user, 'deleted_at' => null, 'id_status_task' => 2])
             ->countAllResults(); // Menghitung jumlah baris yang cocok dengan kriteria
+    }
+    //Fungsi untuk menghitung jumlah task menunggu verifikasi supervisi
+    public function count_TaskMenungguVerifikasi_ByIdPekerjaanIdUsergroupIdUser($id_pekerjaan, $id_usergroup, $id_user)
+    {
+        return count($this->get_TaskMenungguVerifikasi_ByIdPekerjaanIdUsergroupIdUser($id_pekerjaan, $id_usergroup, $id_user));
     }
 
 

@@ -247,7 +247,7 @@
                         <div class="kanban-droppable" id="todo">
                             <?php foreach ($pekerjaan_presales as $pp) : ?>
                                 <div class="kanban-card">
-                                    <?php if (session()->get('user_level') == "staff" || session()->get('user_level') == "supervisi") : ?>
+                                    <?php if (check_personil($pp['id_pekerjaan'], session()->get('id_user')) != null) : ?>
                                         <a href="<?= ($target_poin_harian_tahun_bulan_ini_lengkap == false) ? 'javascript:void(0)' : '/task/add_task/' . $pp['id_pekerjaan'] ?>" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
                                     <?php endif ?>
                                     <a href="/task/daftar_task/<?= $pp['id_pekerjaan'] ?>" class="badge btn bg-primary" title="Lihat daftar task atau verifikasi task"><i class="bi bi-clipboard-data"></i></a>
@@ -306,7 +306,7 @@
                         <div class="kanban-droppable" id="todo">
                             <?php foreach ($pekerjaan_onprogres as $po) : ?>
                                 <div class="kanban-card">
-                                    <?php if (session()->get('user_level') == "staff" || session()->get('user_level') == "supervisi") : ?>
+                                    <?php if (check_personil($po['id_pekerjaan'], session()->get('id_user')) != null) : ?>
                                         <a href="<?= ($target_poin_harian_tahun_bulan_ini_lengkap == false) ? 'javascript:void(0)' : '/task/add_task/' . $po['id_pekerjaan'] ?>" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
                                     <?php endif ?>
                                     <a href="/task/daftar_task/<?= $po['id_pekerjaan'] ?>" class="badge btn bg-primary" title="Lihat daftar task atau verifikasi task"><i class="bi bi-clipboard-data"></i></a>
@@ -365,7 +365,7 @@
                         <div class="kanban-droppable" id="todo">
                             <?php foreach ($pekerjaan_bast as $pb) : ?>
                                 <div class="kanban-card">
-                                    <?php if (session()->get('user_level') == "staff" || session()->get('user_level') == "supervisi") : ?>
+                                    <?php if (check_personil($pb['id_pekerjaan'], session()->get('id_user')) != null) : ?>
                                         <a href="<?= ($target_poin_harian_tahun_bulan_ini_lengkap == false) ? 'javascript:void(0)' : '/task/add_task/' . $pb['id_pekerjaan'] ?>" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
                                     <?php endif ?>
                                     <a href="/task/daftar_task/<?= $pb['id_pekerjaan'] ?>" class="badge btn bg-primary" title="Lihat daftar task atau verifikasi task"><i class="bi bi-clipboard-data"></i></a>
@@ -427,7 +427,7 @@
                         <div class="kanban-droppable" id="todo">
                             <?php foreach ($pekerjaan_support as $psp) : ?>
                                 <div class="kanban-card">
-                                    <?php if (session()->get('user_level') == "staff" || session()->get('user_level') == "supervisi") : ?>
+                                    <?php if (check_personil($psp['id_pekerjaan'], session()->get('id_user')) != null) : ?>
                                         <a href="<?= ($target_poin_harian_tahun_bulan_ini_lengkap == false) ? 'javascript:void(0)' : '/task/add_task/' . $psp['id_pekerjaan'] ?>" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
                                     <?php endif ?>
                                     <a href="/task/daftar_task/<?= $psp['id_pekerjaan'] ?>" class="badge btn bg-primary" title="Lihat daftar task atau verifikasi task"><i class="bi bi-clipboard-data"></i></a>
@@ -486,7 +486,7 @@
                         <div class="kanban-droppable" id="todo">
                             <?php foreach ($pekerjaan_cancle as $pc) : ?>
                                 <div class="kanban-card">
-                                    <?php if (session()->get('user_level') == "staff" || session()->get('user_level') == "supervisi") : ?>
+                                    <?php if (check_personil($pc['id_pekerjaan'], session()->get('id_user')) != null) : ?>
                                         <a href="<?= ($target_poin_harian_tahun_bulan_ini_lengkap == false) ? 'javascript:void(0)' : '/task/add_task/' . $pc['id_pekerjaan'] ?>" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
                                     <?php endif ?>
                                     <a href="/task/daftar_task/<?= $pc['id_pekerjaan'] ?>" class="badge btn bg-primary" title="Lihat daftar task atau verifikasi task"><i class="bi bi-clipboard-data"></i></a>

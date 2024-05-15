@@ -35,7 +35,7 @@ class Pekerjaan extends BaseController
     //Fungsi daftar_pekerjaan
     public function daftar_pekerjaan()
     {
-        if ((session()->get('user_level') == 'supervisi') || (session()->get('user_level') == 'staff')) {
+        if ((session()->get('user_level') == 'staff')) {
             $pekerjaan = $this->pekerjaanModel->getPekerjaanByUserId(session()->get('id_user'));
         } else {
             $pekerjaan = $this->pekerjaanModel->getPekerjaan();
@@ -64,8 +64,8 @@ class Pekerjaan extends BaseController
         $filter_pekerjaan_jenislayanan = $this->request->getGet('filter_pekerjaan_jenislayanan');
         $filter_pekerjaan_kategori_pekerjaan = $this->request->getGet('filter_pekerjaan_kategori_pekerjaan');
         $filter_pekerjaan_status_pekerjaan = $this->request->getGet('filter_pekerjaan_status_pekerjaan');
-        if ((session()->get('user_level') == 'supervisi') || (session()->get('user_level') == 'staff')) {
-            $pekerjaan_filtered = $this->pekerjaanModel->getFilteredPekerjaanforSupervisiStaff($filter_pekerjaan_kategori_pekerjaan, $filter_pekerjaan_status_pekerjaan, $filter_pekerjaan_jenislayanan, $filter_pekerjaan_pm, session()->get('id_user'));
+        if ((session()->get('user_level') == 'staff')) {
+            $pekerjaan_filtered = $this->pekerjaanModel->getFilteredPekerjaanforStaff($filter_pekerjaan_kategori_pekerjaan, $filter_pekerjaan_status_pekerjaan, $filter_pekerjaan_jenislayanan, $filter_pekerjaan_pm, session()->get('id_user'));
         } else {
             $pekerjaan_filtered = $this->pekerjaanModel->getFilteredPekerjaan($filter_pekerjaan_kategori_pekerjaan, $filter_pekerjaan_status_pekerjaan, $filter_pekerjaan_jenislayanan, $filter_pekerjaan_pm);
         }

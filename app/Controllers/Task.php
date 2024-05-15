@@ -104,6 +104,14 @@ class Task extends BaseController
                 $task_menunggu_verifikasi = $this->taskModel->get_TaskMenungguVerifikasi_ByIdPekerjaanIdUser($id_pekerjaan, session()->get('id_user'));
                 $jumlahtask_menunggu_verifikasi = $this->taskModel->count_TaskMenungguVerifikasi_ByIdPekerjaanIdUser($id_pekerjaan, session()->get('id_user'));
             }
+        } elseif (session()->get('user_level') == 'supervisi') {
+            if ($personil_pm[0]['id_user'] == session()->get('id_user')) {
+                $task_menunggu_verifikasi = $this->taskModel->get_TaskMenungguVerifikasi_ByIdPekerjaan($id_pekerjaan);
+                $jumlahtask_menunggu_verifikasi = $this->taskModel->count_TaskMenungguVerifikasi_ByIdPekerjaan($id_pekerjaan);
+            } else {
+                $task_menunggu_verifikasi = $this->taskModel->get_TaskMenungguVerifikasi_ByIdPekerjaanIdUsergroupIdUser($id_pekerjaan, session()->get('id_usergroup'), session()->get('id_user'));
+                $jumlahtask_menunggu_verifikasi = $this->taskModel->count_TaskMenungguVerifikasi_ByIdPekerjaanIdUsergroupIdUser($id_pekerjaan, session()->get('id_usergroup'), session()->get('id_user'));
+            }
         } else {
             $task_menunggu_verifikasi = $this->taskModel->get_TaskMenungguVerifikasi_ByIdPekerjaan($id_pekerjaan);
             $jumlahtask_menunggu_verifikasi = $this->taskModel->count_TaskMenungguVerifikasi_ByIdPekerjaan($id_pekerjaan);
@@ -478,12 +486,12 @@ class Task extends BaseController
         $id_pekerjaan = $task['id_pekerjaan'];
         $personil_pm = $this->personilModel->getPersonilByIdPekerjaanRolePersonil($id_pekerjaan, 'project_manager');
         $pm = $this->userModel->getUser($personil_pm[0]['id_user']);
-        if ($task['creator'] != session()->get('id_user') || $pm != session()->get('id_user')) {
-            Set_notifikasi_swal_berhasil('error', 'Gagal :v', 'Anda jangan nakal untuk hapus pekerjaan yang harusnya tidak boleh anda hapus !');
-            return redirect()->to('task/daftar_task/' . $id_pekerjaan);
-        } else {
+        if ($task['creator'] == session()->get('id_user') || $pm['id_user'] == session()->get('id_user')) {
             $this->taskModel->delete($id_task);
             Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil menghapus data task');
+            return redirect()->to('task/daftar_task/' . $id_pekerjaan);
+        } else {
+            Set_notifikasi_swal_berhasil('error', 'Gagal :v', 'Anda jangan nakal untuk hapus pekerjaan yang harusnya tidak boleh anda hapus !');
             return redirect()->to('task/daftar_task/' . $id_pekerjaan);
         }
     }
