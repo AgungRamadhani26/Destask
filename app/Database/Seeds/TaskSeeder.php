@@ -36,7 +36,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 2,
                 'id_pekerjaan'            => 2,
                 'id_user'                 => 4,
-                'creator'                 => 12,
+                'creator'                 => 4,
                 'id_status_task'          => 2, //task pending menunggu verifikasi
                 'id_kategori_task'        => 5,
                 'tgl_planing'             => '2024-06-07',
@@ -54,7 +54,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 3,
                 'id_pekerjaan'            => 2,
                 'id_user'                 => 4,
-                'creator'                 => 4,
+                'creator'                 => 12,
                 'id_status_task'          => 1, //task onprogress
                 'id_kategori_task'        => 2,
                 'tgl_planing'             => '2024-06-10',
@@ -147,7 +147,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 8,
                 'id_pekerjaan'            => 2,
                 'id_user'                 => 13,
-                'creator'                 => 12,
+                'creator'                 => 13,
                 'id_status_task'          => 2, //task pending menunggu verifikasi
                 'id_kategori_task'        => 3,
                 'tgl_planing'             => '2024-06-11',
@@ -165,7 +165,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 9,
                 'id_pekerjaan'            => 2,
                 'id_user'                 => 13,
-                'creator'                 => 13,
+                'creator'                 => 12,
                 'id_status_task'          => 1, //task onprogress
                 'id_kategori_task'        => 3,
                 'tgl_planing'             => '2024-06-13',
@@ -258,7 +258,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 14,
                 'id_pekerjaan'            => 2,
                 'id_user'                 => 14,
-                'creator'                 => 12,
+                'creator'                 => 14,
                 'id_status_task'          => 2, //task pending menunggu verifikasi
                 'id_kategori_task'        => 3,
                 'tgl_planing'             => '2024-06-10',
@@ -276,7 +276,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 15,
                 'id_pekerjaan'            => 2,
                 'id_user'                 => 14,
-                'creator'                 => 14,
+                'creator'                 => 12,
                 'id_status_task'          => 1, //task onprogress
                 'id_kategori_task'        => 3,
                 'tgl_planing'             => '2024-06-12',
@@ -369,7 +369,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 20,
                 'id_pekerjaan'            => 2,
                 'id_user'                 => 17,
-                'creator'                 => 12,
+                'creator'                 => 17,
                 'id_status_task'          => 2, //task pending menunggu verifikasi
                 'id_kategori_task'        => 3,
                 'tgl_planing'             => '2024-06-12',
@@ -387,7 +387,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 21,
                 'id_pekerjaan'            => 2,
                 'id_user'                 => 17,
-                'creator'                 => 17,
+                'creator'                 => 12,
                 'id_status_task'          => 1, //task onprogress
                 'id_kategori_task'        => 3,
                 'tgl_planing'             => '2024-06-14',
@@ -480,7 +480,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 26,
                 'id_pekerjaan'            => 2,
                 'id_user'                 => 21,
-                'creator'                 => 12,
+                'creator'                 => 21,
                 'id_status_task'          => 2, //task pending menunggu verifikasi
                 'id_kategori_task'        => 3,
                 'tgl_planing'             => '2024-06-11',
@@ -498,7 +498,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 27,
                 'id_pekerjaan'            => 2,
                 'id_user'                 => 21,
-                'creator'                 => 21,
+                'creator'                 => 12,
                 'id_status_task'          => 1, //task onprogress
                 'id_kategori_task'        => 3,
                 'tgl_planing'             => '2024-06-13',
@@ -591,7 +591,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 32,
                 'id_pekerjaan'            => 2,
                 'id_user'                 => 24,
-                'creator'                 => 12,
+                'creator'                 => 24,
                 'id_status_task'          => 2, //task pending menunggu verifikasi
                 'id_kategori_task'        => 4,
                 'tgl_planing'             => '2024-06-13',
@@ -609,7 +609,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 33,
                 'id_pekerjaan'            => 2,
                 'id_user'                 => 24,
-                'creator'                 => 24,
+                'creator'                 => 12,
                 'id_status_task'          => 1, //task onprogress
                 'id_kategori_task'        => 4,
                 'tgl_planing'             => '2024-06-17',
@@ -741,7 +741,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 40,
                 'id_pekerjaan'            => 2,
                 'id_user'                 => 34,
-                'creator'                 => 12,
+                'creator'                 => 34,
                 'id_status_task'          => 2, //task pending menunggu verifikasi
                 'id_kategori_task'        => 1,
                 'tgl_planing'             => '2024-07-15',
@@ -759,7 +759,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 41,
                 'id_pekerjaan'            => 2,
                 'id_user'                 => 34,
-                'creator'                 => 34,
+                'creator'                 => 12,
                 'id_status_task'          => 1, //task onprogress
                 'id_kategori_task'        => 1,
                 'tgl_planing'             => '2024-07-16',
@@ -800,15 +800,15 @@ class TaskSeeder extends Seeder
                 'id_user'                 => 12,
                 'creator'                 => 12,
                 'id_status_task'          => 2, //task pending menunggu verifikasi
-                'id_kategori_task'        => 1,
+                'id_kategori_task'        => 3,
                 'tgl_planing'             => '2024-07-25',
                 'tgl_selesai'             => Time::now(),
                 'tgl_verifikasi_diterima' => null,
                 'persentase_selesai'      => 100,
-                'deskripsi_task'          => 'Evaluasi hasil testing',
+                'deskripsi_task'          => 'Pembuatan halaman perizinan sakit',
                 'alasan_verifikasi'       => null,
-                'bukti_selesai'           => 'evaluasi_hasil_testing.docx',
-                'tautan_task'             => 'Tidak ada karena semuanya sudah terlampir pada laporan evaluasi.',
+                'bukti_selesai'           => 'pembuatan_halaman_perizinan_sakit.docx',
+                'tautan_task'             => 'https://github.com/AgungRamadhani26/Destask/commits?author=AgungRamadhani26',
                 'created_at'              => Time::now(),
                 'updated_at'              => Time::now(),
             ],
@@ -818,12 +818,12 @@ class TaskSeeder extends Seeder
                 'id_user'                 => 12,
                 'creator'                 => 12,
                 'id_status_task'          => 1, //task onprogress
-                'id_kategori_task'        => 1,
+                'id_kategori_task'        => 3,
                 'tgl_planing'             => '2024-07-23',
                 'tgl_selesai'             => null,
                 'tgl_verifikasi_diterima' => null,
                 'persentase_selesai'      => 0,
-                'deskripsi_task'          => 'Evalusi kinerja tim',
+                'deskripsi_task'          => 'Pembuatan halaman perizinan izin khusus',
                 'alasan_verifikasi'       => null,
                 'bukti_selesai'           => null,
                 'tautan_task'             => null,
@@ -836,12 +836,12 @@ class TaskSeeder extends Seeder
                 'id_user'                 => 12,
                 'creator'                 => 12,
                 'id_status_task'          => 1, //task onprogress
-                'id_kategori_task'        => 1,
+                'id_kategori_task'        => 3,
                 'tgl_planing'             => '2024-07-24',
                 'tgl_selesai'             => null,
                 'tgl_verifikasi_diterima' => null,
                 'persentase_selesai'      => 0,
-                'deskripsi_task'          => 'Evaluasi dokumentasi awal',
+                'deskripsi_task'          => 'Pembuatan halaman perizinan izin pulang awal',
                 'alasan_verifikasi'       => null,
                 'bukti_selesai'           => null,
                 'tautan_task'             => null,
@@ -874,7 +874,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 47,
                 'id_pekerjaan'            => 4,
                 'id_user'                 => 7,
-                'creator'                 => 10,
+                'creator'                 => 7,
                 'id_status_task'          => 2, //task pending menunggu verifikasi
                 'id_kategori_task'        => 5,
                 'tgl_planing'             => '2024-06-05',
@@ -892,7 +892,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 48,
                 'id_pekerjaan'            => 4,
                 'id_user'                 => 7,
-                'creator'                 => 7,
+                'creator'                 => 10,
                 'id_status_task'          => 1, //task onprogress
                 'id_kategori_task'        => 2,
                 'tgl_planing'             => '2024-06-07',
@@ -1095,7 +1095,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 59,
                 'id_pekerjaan'            => 4,
                 'id_user'                 => 13,
-                'creator'                 => 10,
+                'creator'                 => 13,
                 'id_status_task'          => 2, //task pending menunggu verifikasi
                 'id_kategori_task'        => 3,
                 'tgl_planing'             => '2024-06-07',
@@ -1113,7 +1113,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 60,
                 'id_pekerjaan'            => 4,
                 'id_user'                 => 13,
-                'creator'                 => 13,
+                'creator'                 => 10,
                 'id_status_task'          => 1, //task onprogress
                 'id_kategori_task'        => 3,
                 'tgl_planing'             => '2024-06-10',
@@ -1206,7 +1206,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 65,
                 'id_pekerjaan'            => 4,
                 'id_user'                 => 26,
-                'creator'                 => 10,
+                'creator'                 => 26,
                 'id_status_task'          => 2, //task pending menunggu verifikasi
                 'id_kategori_task'        => 4,
                 'tgl_planing'             => '2024-06-12',
@@ -1224,7 +1224,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 66,
                 'id_pekerjaan'            => 4,
                 'id_user'                 => 26,
-                'creator'                 => 26,
+                'creator'                 => 10,
                 'id_status_task'          => 1, //task onprogress
                 'id_kategori_task'        => 4,
                 'tgl_planing'             => '2024-06-14',
@@ -1356,7 +1356,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 73,
                 'id_pekerjaan'            => 4,
                 'id_user'                 => 36,
-                'creator'                 => 10,
+                'creator'                 => 36,
                 'id_status_task'          => 2, //task pending menunggu verifikasi
                 'id_kategori_task'        => 1,
                 'tgl_planing'             => '2024-07-04',
@@ -1415,15 +1415,15 @@ class TaskSeeder extends Seeder
                 'id_user'                 => 10,
                 'creator'                 => 10,
                 'id_status_task'          => 2, //task pending menunggu verifikasi
-                'id_kategori_task'        => 1,
+                'id_kategori_task'        => 3,
                 'tgl_planing'             => '2024-07-09',
                 'tgl_selesai'             => Time::now(),
                 'tgl_verifikasi_diterima' => null,
                 'persentase_selesai'      => 100,
-                'deskripsi_task'          => 'Evaluasi hasil testing tahap 1',
+                'deskripsi_task'          => 'Pembuatan halaman update profil user',
                 'alasan_verifikasi'       => null,
-                'bukti_selesai'           => 'evaluasi_hasil_testing_tahap_1.pdf',
-                'tautan_task'             => 'Tidak ada tautan karena evaluasi terting tahap 1 sudah dirincikan pada laporan.',
+                'bukti_selesai'           => 'pembuatan_halaman_update_profil_user.pdf',
+                'tautan_task'             => 'https://github.com/AgungRamadhani26/Destask/commit/099c9559a02b54f1668c5a11a6df514f3a3efac4',
                 'created_at'              => Time::now(),
                 'updated_at'              => Time::now(),
             ],
@@ -1433,12 +1433,12 @@ class TaskSeeder extends Seeder
                 'id_user'                 => 10,
                 'creator'                 => 10,
                 'id_status_task'          => 1, //task onprogress
-                'id_kategori_task'        => 1,
+                'id_kategori_task'        => 3,
                 'tgl_planing'             => '2024-07-10',
                 'tgl_selesai'             => null,
                 'tgl_verifikasi_diterima' => null,
                 'persentase_selesai'      => 0,
-                'deskripsi_task'          => 'Evalusi kinerja tim tahap 1',
+                'deskripsi_task'          => 'Pembuatan halaman update password user',
                 'alasan_verifikasi'       => null,
                 'bukti_selesai'           => null,
                 'tautan_task'             => null,
@@ -1451,12 +1451,12 @@ class TaskSeeder extends Seeder
                 'id_user'                 => 10,
                 'creator'                 => 10,
                 'id_status_task'          => 1, //task onprogress
-                'id_kategori_task'        => 5,
+                'id_kategori_task'        => 3,
                 'tgl_planing'             => '2024-07-11',
                 'tgl_selesai'             => null,
                 'tgl_verifikasi_diterima' => null,
                 'persentase_selesai'      => 0,
-                'deskripsi_task'          => 'Dokumentasi desain awal web',
+                'deskripsi_task'          => 'Pembuatan halaman update foto profil user',
                 'alasan_verifikasi'       => null,
                 'bukti_selesai'           => null,
                 'tautan_task'             => null,
@@ -1489,7 +1489,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 80,
                 'id_pekerjaan'            => 3,
                 'id_user'                 => 4,
-                'creator'                 => 6,
+                'creator'                 => 4,
                 'id_status_task'          => 2, //task pending menunggu verifikasi
                 'id_kategori_task'        => 5,
                 'tgl_planing'             => '2024-06-14',
@@ -1507,7 +1507,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 81,
                 'id_pekerjaan'            => 3,
                 'id_user'                 => 4,
-                'creator'                 => 4,
+                'creator'                 => 6,
                 'id_status_task'          => 1, //task onprogress
                 'id_kategori_task'        => 2,
                 'tgl_planing'             => '2024-06-17',
@@ -1600,7 +1600,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 86,
                 'id_pekerjaan'            => 3,
                 'id_user'                 => 14,
-                'creator'                 => 6,
+                'creator'                 => 14,
                 'id_status_task'          => 2, //task pending menunggu verifikasi
                 'id_kategori_task'        => 3,
                 'tgl_planing'             => '2024-06-19',
@@ -1618,7 +1618,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 87,
                 'id_pekerjaan'            => 3,
                 'id_user'                 => 14,
-                'creator'                 => 14,
+                'creator'                 => 6,
                 'id_status_task'          => 1, //task onprogress
                 'id_kategori_task'        => 3,
                 'tgl_planing'             => '2024-06-21',
@@ -1711,7 +1711,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 92,
                 'id_pekerjaan'            => 3,
                 'id_user'                 => 12,
-                'creator'                 => 6,
+                'creator'                 => 12,
                 'id_status_task'          => 2, //task pending menunggu verifikasi
                 'id_kategori_task'        => 3,
                 'tgl_planing'             => '2024-06-17',
@@ -1729,7 +1729,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 93,
                 'id_pekerjaan'            => 3,
                 'id_user'                 => 12,
-                'creator'                 => 12,
+                'creator'                 => 6,
                 'id_status_task'          => 1, //task onprogress
                 'id_kategori_task'        => 3,
                 'tgl_planing'             => '2024-06-19',
@@ -1822,7 +1822,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 98,
                 'id_pekerjaan'            => 3,
                 'id_user'                 => 25,
-                'creator'                 => 6,
+                'creator'                 => 25,
                 'id_status_task'          => 2, //task pending menunggu verifikasi
                 'id_kategori_task'        => 4,
                 'tgl_planing'             => '2024-06-21',
@@ -1840,7 +1840,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 99,
                 'id_pekerjaan'            => 3,
                 'id_user'                 => 25,
-                'creator'                 => 25,
+                'creator'                 => 6,
                 'id_status_task'          => 1, //task onprogress
                 'id_kategori_task'        => 4,
                 'tgl_planing'             => '2024-06-24',
@@ -1972,7 +1972,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 106,
                 'id_pekerjaan'            => 3,
                 'id_user'                 => 35,
-                'creator'                 => 6,
+                'creator'                 => 35,
                 'id_status_task'          => 2, //task pending menunggu verifikasi
                 'id_kategori_task'        => 1,
                 'tgl_planing'             => '2024-07-05',
@@ -1990,7 +1990,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 107,
                 'id_pekerjaan'            => 3,
                 'id_user'                 => 35,
-                'creator'                 => 35,
+                'creator'                 => 6,
                 'id_status_task'          => 1, //task onprogress
                 'id_kategori_task'        => 1,
                 'tgl_planing'             => '2024-07-08',
@@ -2036,10 +2036,10 @@ class TaskSeeder extends Seeder
                 'tgl_selesai'             => Time::now(),
                 'tgl_verifikasi_diterima' => null,
                 'persentase_selesai'      => 100,
-                'deskripsi_task'          => 'Evaluasi penyesuaian backend dan frontend tahap 1',
+                'deskripsi_task'          => 'Support pembuatan desain halaman portal berita dinkes',
                 'alasan_verifikasi'       => null,
-                'bukti_selesai'           => 'evaluasi_penyesuaian_backend_dan_frontend_tahap1.png',
-                'tautan_task'             => 'https://github.com/AgungRamadhani26/Destask/commit/076a77c652dfeacb8af9422e0da7cdd6f26a2db3',
+                'bukti_selesai'           => 'support_pembuatan_desain_halaman_portal_berita_dinkes.png',
+                'tautan_task'             => 'Tidak ada tautan karena sudah ada pada gambar.',
                 'created_at'              => Time::now(),
                 'updated_at'              => Time::now(),
             ],
@@ -2054,7 +2054,7 @@ class TaskSeeder extends Seeder
                 'tgl_selesai'             => null,
                 'tgl_verifikasi_diterima' => null,
                 'persentase_selesai'      => 0,
-                'deskripsi_task'          => 'Evaluasi penyesuaian backend dan frontend tahap 2',
+                'deskripsi_task'          => 'Support evaluasi penyesuaian desain dengan frontend halaman portal berita dinkes.',
                 'alasan_verifikasi'       => null,
                 'bukti_selesai'           => null,
                 'tautan_task'             => null,
@@ -2072,7 +2072,7 @@ class TaskSeeder extends Seeder
                 'tgl_selesai'             => null,
                 'tgl_verifikasi_diterima' => null,
                 'persentase_selesai'      => 0,
-                'deskripsi_task'          => 'Dokumentasi hasil testing tahap 1',
+                'deskripsi_task'          => 'Dokumentasi hasil desain tahap 1',
                 'alasan_verifikasi'       => null,
                 'bukti_selesai'           => null,
                 'tautan_task'             => null,
@@ -2090,7 +2090,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 112,
                 'id_pekerjaan'            => 2,
                 'id_user'                 => 4,
-                'creator'                 => 4,
+                'creator'                 => 12,
                 'id_status_task'          => 4, //task ditolak(cancle)
                 'id_kategori_task'        => 2,
                 'tgl_planing'             => '2024-08-01',
@@ -2130,7 +2130,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 114,
                 'id_pekerjaan'            => 2,
                 'id_user'                 => 14,
-                'creator'                 => 14,
+                'creator'                 => 12,
                 'id_status_task'          => 4, //task ditolak(cancle)
                 'id_kategori_task'        => 3,
                 'tgl_planing'             => '2024-08-02',
@@ -2170,7 +2170,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 116,
                 'id_pekerjaan'            => 2,
                 'id_user'                 => 21,
-                'creator'                 => 21,
+                'creator'                 => 12,
                 'id_status_task'          => 4, //task ditolak(cancle)
                 'id_kategori_task'        => 3,
                 'tgl_planing'             => '2024-08-06',
@@ -2210,7 +2210,7 @@ class TaskSeeder extends Seeder
                 'id_task'                 => 118,
                 'id_pekerjaan'            => 2,
                 'id_user'                 => 29,
-                'creator'                 => 29,
+                'creator'                 => 12,
                 'id_status_task'          => 4, //task ditolak(cancle)
                 'id_kategori_task'        => 1,
                 'tgl_planing'             => '2024-08-12',
@@ -2252,13 +2252,13 @@ class TaskSeeder extends Seeder
                 'id_user'                 => 12,
                 'creator'                 => 12,
                 'id_status_task'          => 4, //task ditolak(cancle)
-                'id_kategori_task'        => 1,
+                'id_kategori_task'        => 3,
                 'tgl_planing'             => '2024-08-14',
                 'tgl_selesai'             => null,
                 'tgl_verifikasi_diterima' => null,
                 'persentase_selesai'      => 0,
                 'deskripsi_task'          => 'Evaluasi backend aplikasi',
-                'alasan_verifikasi'       => 'Hasil evaluasi tidak menyertakan hasil pengujian, tolong untuk dilampirkan.',
+                'alasan_verifikasi'       => 'Hasil evaluasi tidak menjelaskan kondisi sebelum dan sesudah evaluasi.',
                 'bukti_selesai'           => 'evaluasi_backend_aplikasi.docx',
                 'tautan_task'             => 'Tidak ada karena semuanya sudah terlampir pada laporan evaluasi.',
                 'created_at'              => Time::now(),
@@ -2267,288 +2267,292 @@ class TaskSeeder extends Seeder
 
 
 
-            // //DENGAN ID PEKERJAAN 4
-            // //DESAINER TASK
-            // //Task User Dina Zulfina Ahmad pekerjaan Website Recruitement Pegawai PT Agung Jaya Mineral
-            // [
-            //     'id_task'                 => 46,
-            //     'id_pekerjaan'            => 4,
-            //     'id_user'                 => 7,
-            //     'creator'                 => 10,
-            //     'id_status_task'          => 2, //task pending menunggu verifikasi
-            //     'id_kategori_task'        => 2,
-            //     'tgl_planing'             => '2024-06-03',
-            //     'tgl_selesai'             => Time::now(),
-            //     'tgl_verifikasi_diterima' => null,
-            //     'persentase_selesai'      => 100,
-            //     'deskripsi_task'          => 'Analisis tampilan landing page',
-            //     'alasan_verifikasi'       => null,
-            //     'bukti_selesai'           => 'analisis_tampilan_landing_page.png',
-            //     'tautan_task'             => 'https://getbootstrap.com/docs/5.3/forms/select/',
-            //     'created_at'              => Time::now(),
-            //     'updated_at'              => Time::now(),
-            // ],
-            // //BACKEND WEB TASK
-            // //Task User Jatmiko Adi Nugroho pekerjaan Website Recruitement Pegawai PT Agung Jaya Mineral
-            // [
-            //     'id_task'                 => 52,
-            //     'id_pekerjaan'            => 4,
-            //     'id_user'                 => 10,
-            //     'creator'                 => 10,
-            //     'id_status_task'          => 2, //task pending menunggu verifikasi
-            //     'id_kategori_task'        => 3,
-            //     'tgl_planing'             => '2024-06-07',
-            //     'tgl_selesai'             => Time::now(),
-            //     'tgl_verifikasi_diterima' => null,
-            //     'persentase_selesai'      => 100,
-            //     'deskripsi_task'          => 'Pembuatan backend web tampilan landing page',
-            //     'alasan_verifikasi'       => null,
-            //     'bukti_selesai'           => 'pembuatan_backend_web_tampilan_landing_page.png',
-            //     'tautan_task'             => 'https://github.com/AgungRamadhani26/Destask/commit/38c6cfb7dd00f964767f31e8085fc4814f0fa918',
-            //     'created_at'              => Time::now(),
-            //     'updated_at'              => Time::now(),
-            // ],
-            // //FRONTEND WEB TASK
-            // //Task User Haryati Dian Pertiwi pekerjaan Website Recruitement Pegawai PT Agung Jaya Mineral
-            // [
-            //     'id_task'                 => 58,
-            //     'id_pekerjaan'            => 4,
-            //     'id_user'                 => 13,
-            //     'creator'                 => 10,
-            //     'id_status_task'          => 2, //task pending menunggu verifikasi
-            //     'id_kategori_task'        => 3,
-            //     'tgl_planing'             => '2024-06-05',
-            //     'tgl_selesai'             => Time::now(),
-            //     'tgl_verifikasi_diterima' => null,
-            //     'persentase_selesai'      => 100,
-            //     'deskripsi_task'          => 'Pembuatan frontend web tampilan landing page',
-            //     'alasan_verifikasi'       => null,
-            //     'bukti_selesai'           => 'pembuatan_frontend_web_tampilan_landing_page.png',
-            //     'tautan_task'             => 'https://github.com/AgungRamadhani26/Destask/commit/1bd3faafdb1b87a25cdffc4356c2edf7d25f50c9',
-            //     'created_at'              => Time::now(),
-            //     'updated_at'              => Time::now(),
-            // ],
-            // //TESTER TASK
-            // //Task User Putra Hardika Sinaga pekerjaan Website Recruitement Pegawai PT Agung Jaya Mineral
-            // [
-            //     'id_task'                 => 64,
-            //     'id_pekerjaan'            => 4,
-            //     'id_user'                 => 26,
-            //     'creator'                 => 10,
-            //     'id_status_task'          => 2, //task pending menunggu verifikasi
-            //     'id_kategori_task'        => 4,
-            //     'tgl_planing'             => '2024-06-10',
-            //     'tgl_selesai'             => Time::now(),
-            //     'tgl_verifikasi_diterima' => null,
-            //     'persentase_selesai'      => 100,
-            //     'deskripsi_task'          => 'Testing tampilan landing page web',
-            //     'alasan_verifikasi'       => null,
-            //     'bukti_selesai'           => 'testing_tampilan_landing_page_web.pdf',
-            //     'tautan_task'             => 'Tidak ada tautan karena semua lampiran sudah ada pada hasil testing.',
-            //     'created_at'              => Time::now(),
-            //     'updated_at'              => Time::now(),
-            // ],
-            // //ADMIN APLIKASI TASK
-            // //Task User Ulfah Zidni Hakim pekerjaan Website Recruitement Pegawai PT Agung Jaya Mineral
-            // [
-            //     'id_task'                 => 70,
-            //     'id_pekerjaan'            => 4,
-            //     'id_user'                 => 31,
-            //     'creator'                 => 10,
-            //     'id_status_task'          => 2, //task pending menunggu verifikasi
-            //     'id_kategori_task'        => 1,
-            //     'tgl_planing'             => '2024-07-01',
-            //     'tgl_selesai'             => Time::now(),
-            //     'tgl_verifikasi_diterima' => null,
-            //     'persentase_selesai'      => 100,
-            //     'deskripsi_task'          => 'Verifikasi data pengguna',
-            //     'alasan_verifikasi'       => null,
-            //     'bukti_selesai'           => 'verifikasi_data_pengguna.png',
-            //     'tautan_task'             => 'Tidak ada tautan karena data verifikasi sudah ada pada bukti gambar.',
-            //     'created_at'              => Time::now(),
-            //     'updated_at'              => Time::now(),
-            // ],
-            // //HELPDESK TASK
-            // //Task User Lina Veronica Atmaja pekerjaan Website Recruitement Pegawai PT Agung Jaya Mineral
-            // [
-            //     'id_task'                 => 73,
-            //     'id_pekerjaan'            => 4,
-            //     'id_user'                 => 36,
-            //     'creator'                 => 10,
-            //     'id_status_task'          => 2, //task pending menunggu verifikasi
-            //     'id_kategori_task'        => 1,
-            //     'tgl_planing'             => '2024-07-04',
-            //     'tgl_selesai'             => Time::now(),
-            //     'tgl_verifikasi_diterima' => null,
-            //     'persentase_selesai'      => 100,
-            //     'deskripsi_task'          => 'Pemberian penjelasan fitur login pada user',
-            //     'alasan_verifikasi'       => null,
-            //     'bukti_selesai'           => 'pemberian_penjelasan_fitur_login_pada_user.pdf',
-            //     'tautan_task'             => 'Tidak ada tautan karena penjelasan sudah terlampir pada pdf',
-            //     'created_at'              => Time::now(),
-            //     'updated_at'              => Time::now(),
-            // ],
-            // //PROJECT MANAGER
-            // //Task User Jatmiko Adi Nugroho pekerjaan Website Recruitement Pegawai PT Agung Jaya Mineral
-            // [
-            //     'id_task'                 => 76,
-            //     'id_pekerjaan'            => 4,
-            //     'id_user'                 => 10,
-            //     'creator'                 => 10,
-            //     'id_status_task'          => 2, //task pending menunggu verifikasi
-            //     'id_kategori_task'        => 1,
-            //     'tgl_planing'             => '2024-07-09',
-            //     'tgl_selesai'             => Time::now(),
-            //     'tgl_verifikasi_diterima' => null,
-            //     'persentase_selesai'      => 100,
-            //     'deskripsi_task'          => 'Evaluasi hasil testing tahap 1',
-            //     'alasan_verifikasi'       => null,
-            //     'bukti_selesai'           => 'evaluasi_hasil_testing_tahap_1.pdf',
-            //     'tautan_task'             => 'Tidak ada tautan karena evaluasi terting tahap 1 sudah dirincikan pada laporan.',
-            //     'created_at'              => Time::now(),
-            //     'updated_at'              => Time::now(),
-            // ],
-            // //DENGAN ID PEKERJAAN 3
-            // //DESAINER TASK
-            // //Task User Bima Satria pekerjaan Web Profile Dinkes Kota Semarang
-            // [
-            //     'id_task'                 => 79,
-            //     'id_pekerjaan'            => 3,
-            //     'id_user'                 => 4,
-            //     'creator'                 => 6,
-            //     'id_status_task'          => 2, //task pending menunggu verifikasi
-            //     'id_kategori_task'        => 2,
-            //     'tgl_planing'             => '2024-06-12',
-            //     'tgl_selesai'             => Time::now(),
-            //     'tgl_verifikasi_diterima' => null,
-            //     'persentase_selesai'      => 100,
-            //     'deskripsi_task'          => 'Analisis tampilan navbar dan menu apa saja yang dibutuhkan',
-            //     'alasan_verifikasi'       => null,
-            //     'bukti_selesai'           => 'analisis_tampilan_navbar_dan_menu_apa_saja_yang_dibutuhkan.docx',
-            //     'tautan_task'             => 'Tidak ada lampiran task karena hasil analisis sudah terperinci.',
-            //     'created_at'              => Time::now(),
-            //     'updated_at'              => Time::now(),
-            // ],
-            // //BACKEND WEB TASK
-            // //Task User Lodwick Paulus Situmeang pekerjaan Web Profile Dinkes Kota Semarang
-            // [
-            //     'id_task'                 => 85,
-            //     'id_pekerjaan'            => 3,
-            //     'id_user'                 => 14,
-            //     'creator'                 => 6,
-            //     'id_status_task'          => 2, //task pending menunggu verifikasi
-            //     'id_kategori_task'        => 3,
-            //     'tgl_planing'             => '2024-06-17',
-            //     'tgl_selesai'             => Time::now(),
-            //     'tgl_verifikasi_diterima' => null,
-            //     'persentase_selesai'      => 100,
-            //     'deskripsi_task'          => 'Pembuatan backend web navbar dan daftar menu',
-            //     'alasan_verifikasi'       => null,
-            //     'bukti_selesai'           => 'pembuatan_backend_web_navbar_dan_daftar_menu.png',
-            //     'tautan_task'             => 'https://github.com/AgungRamadhani26/Destask/commit/1e054a4c18a966fa7b11e4d66b0942359cd972c0',
-            //     'created_at'              => Time::now(),
-            //     'updated_at'              => Time::now(),
-            // ],
-            // //FRONTEND WEB TASK
-            // //Task User Amsari Kurniadi pekerjaan Web Profile Dinkes Kota Semarang
-            // [
-            //     'id_task'                 => 91,
-            //     'id_pekerjaan'            => 3,
-            //     'id_user'                 => 12,
-            //     'creator'                 => 6,
-            //     'id_status_task'          => 2, //task pending menunggu verifikasi
-            //     'id_kategori_task'        => 3,
-            //     'tgl_planing'             => '2024-06-14',
-            //     'tgl_selesai'             => Time::now(),
-            //     'tgl_verifikasi_diterima' => null,
-            //     'persentase_selesai'      => 100,
-            //     'deskripsi_task'          => 'Pembuatan frontend web navbar dan daftar menu',
-            //     'alasan_verifikasi'       => null,
-            //     'bukti_selesai'           => 'pembuatan_frontend_web_navbar_dan_daftar_menu1.png',
-            //     'tautan_task'             => 'https://github.com/AgungRamadhani26/Destask/commit/ea170401129e9c4234d1883dc33ccd7d2ed715e7',
-            //     'created_at'              => Time::now(),
-            //     'updated_at'              => Time::now(),
-            // ],
-            // //TESTER TASK
-            // //Task User Marwati Ardina pekerjaan Web Profile Dinkes Kota Semarang
-            // [
-            //     'id_task'                 => 97,
-            //     'id_pekerjaan'            => 3,
-            //     'id_user'                 => 25,
-            //     'creator'                 => 6,
-            //     'id_status_task'          => 2, //task pending menunggu verifikasi
-            //     'id_kategori_task'        => 4,
-            //     'tgl_planing'             => '2024-06-19',
-            //     'tgl_selesai'             => Time::now(),
-            //     'tgl_verifikasi_diterima' => null,
-            //     'persentase_selesai'      => 100,
-            //     'deskripsi_task'          => 'Testing navbar dan daftar menu web',
-            //     'alasan_verifikasi'       => null,
-            //     'bukti_selesai'           => 'testing_navbar_dan_daftar_menu_web1.pdf',
-            //     'tautan_task'             => 'Tidak ada tautan karena hasil testing sudah ada pada laporan.',
-            //     'created_at'              => Time::now(),
-            //     'updated_at'              => Time::now(),
-            // ],
-            // //ADMIN APLIKASI TASK
-            // //Task User Fatin Triamanda pekerjaan Web Profile Dinkes Kota Semarang
-            // [
-            //     'id_task'                 => 103,
-            //     'id_pekerjaan'            => 3,
-            //     'id_user'                 => 30,
-            //     'creator'                 => 6,
-            //     'id_status_task'          => 2, //task pending menunggu verifikasi
-            //     'id_kategori_task'        => 1,
-            //     'tgl_planing'             => '2024-07-02',
-            //     'tgl_selesai'             => Time::now(),
-            //     'tgl_verifikasi_diterima' => null,
-            //     'persentase_selesai'      => 100,
-            //     'deskripsi_task'          => 'Pengelolaan data berita',
-            //     'alasan_verifikasi'       => null,
-            //     'bukti_selesai'           => 'pengelolaan_data_berita.pdf',
-            //     'tautan_task'             => 'Tidak ada tautan data berita sudah ada pada laporan.',
-            //     'created_at'              => Time::now(),
-            //     'updated_at'              => Time::now(),
-            // ],
-            // //HELPDESK TASK
-            // //Task User Titan Wardoyo pekerjaan Web Profile Dinkes Kota Semarang
-            // [
-            //     'id_task'                 => 106,
-            //     'id_pekerjaan'            => 3,
-            //     'id_user'                 => 35,
-            //     'creator'                 => 6,
-            //     'id_status_task'          => 2, //task pending menunggu verifikasi
-            //     'id_kategori_task'        => 1,
-            //     'tgl_planing'             => '2024-07-05',
-            //     'tgl_selesai'             => Time::now(),
-            //     'tgl_verifikasi_diterima' => null,
-            //     'persentase_selesai'      => 100,
-            //     'deskripsi_task'          => 'Pemberian penjelasan terhadap pengaturan portal berita',
-            //     'alasan_verifikasi'       => null,
-            //     'bukti_selesai'           => 'pemberian_penjelasan_terhadap_pengaturan_portal_berita.pdf',
-            //     'tautan_task'             => 'Tidak ada tautan semua penjelasan sudah ada pada file.',
-            //     'created_at'              => Time::now(),
-            //     'updated_at'              => Time::now(),
-            // ],
-            // //PROJECT MANAGER
-            // //Task User Alexandria Bronco Saraswati pekerjaan Web Profile Dinkes Kota Semarang
-            // [
-            //     'id_task'                 => 109,
-            //     'id_pekerjaan'            => 3,
-            //     'id_user'                 => 6,
-            //     'creator'                 => 6,
-            //     'id_status_task'          => 2, //task pending menunggu verifikasi
-            //     'id_kategori_task'        => 1,
-            //     'tgl_planing'             => '2024-07-10',
-            //     'tgl_selesai'             => Time::now(),
-            //     'tgl_verifikasi_diterima' => null,
-            //     'persentase_selesai'      => 100,
-            //     'deskripsi_task'          => 'Evaluasi penyesuaian backend dan frontend tahap 1',
-            //     'alasan_verifikasi'       => null,
-            //     'bukti_selesai'           => 'evaluasi_penyesuaian_backend_dan_frontend_tahap1.png',
-            //     'tautan_task'             => 'https://github.com/AgungRamadhani26/Destask/commit/076a77c652dfeacb8af9422e0da7cdd6f26a2db3',
-            //     'created_at'              => Time::now(),
-            //     'updated_at'              => Time::now(),
-            // ],
+            //DENGAN ID PEKERJAAN 4
+            //DESAINER TASK
+            //Task User Dina Zulfina Ahmad pekerjaan Website Recruitement Pegawai PT Agung Jaya Mineral
+            [
+                'id_task'                 => 121,
+                'id_pekerjaan'            => 4,
+                'id_user'                 => 7,
+                'creator'                 => 7,
+                'id_status_task'          => 4, //task ditolak(cancle)
+                'id_kategori_task'        => 2,
+                'tgl_planing'             => '2024-07-01',
+                'tgl_selesai'             => null,
+                'tgl_verifikasi_diterima' => null,
+                'persentase_selesai'      => 0,
+                'deskripsi_task'          => 'Analisis tampilan data karir dan lowongan pekerjaan',
+                'alasan_verifikasi'       => 'Hasil analisis terlalu rumit tidak user friendly, coba untuk lebih sederhana dan mudah dipahami.',
+                'bukti_selesai'           => 'analisis_tampilan_data_karir_dan_lowongan_pekerjaan.pdf',
+                'tautan_task'             => 'https://getbootstrap.com/docs/5.3/forms/select/',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+            //BACKEND WEB TASK
+            //Task User Jatmiko Adi Nugroho pekerjaan Website Recruitement Pegawai PT Agung Jaya Mineral
+            [
+                'id_task'                 => 122,
+                'id_pekerjaan'            => 4,
+                'id_user'                 => 10,
+                'creator'                 => 10,
+                'id_status_task'          => 4, //task ditolak(cancle)
+                'id_kategori_task'        => 3,
+                'tgl_planing'             => '2024-07-03',
+                'tgl_selesai'             => null,
+                'tgl_verifikasi_diterima' => null,
+                'persentase_selesai'      => 0,
+                'deskripsi_task'          => 'Pembuatan backend web data karir dan lowongan pekerjaan',
+                'alasan_verifikasi'       => 'Terdapat kekurangan berupa kurangnya pengecekan session sehingga siapa saja bisa merubahnya, perbaiki hanya admin yang dapat merubahnya.',
+                'bukti_selesai'           => 'pembuatan_backend_web_data_karir_dan_lowongan_pekerjaan.png',
+                'tautan_task'             => 'https://github.com/AgungRamadhani26/Destask/commit/38c6cfb7dd00f964767f31e8085fc4814f0fa918',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+            //FRONTEND WEB TASK
+            //Task User Haryati Dian Pertiwi pekerjaan Website Recruitement Pegawai PT Agung Jaya Mineral
+            [
+                'id_task'                 => 123,
+                'id_pekerjaan'            => 4,
+                'id_user'                 => 13,
+                'creator'                 => 10,
+                'id_status_task'          => 4, //task ditolak(cancle)
+                'id_kategori_task'        => 3,
+                'tgl_planing'             => '2024-07-05',
+                'tgl_selesai'             => null,
+                'tgl_verifikasi_diterima' => null,
+                'persentase_selesai'      => 0,
+                'deskripsi_task'          => 'Pembuatan frontend web data karir dan lowongan pekerjaan',
+                'alasan_verifikasi'       => 'Terdapat kekurangan berupa kurangnya pengecekan session sebelum menampilkan tommbol tambah sehingga siapa saja bisa merubahnya, perbaiki hanya admin yang dapat merubahnya.',
+                'bukti_selesai'           => 'pembuatan_frontend_web_data_karir_dan_lowongan_pekerjaan.png',
+                'tautan_task'             => 'https://github.com/AgungRamadhani26/Destask/commit/1bd3faafdb1b87a25cdffc4356c2edf7d25f50c9',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+            //TESTER TASK
+            //Task User Putra Hardika Sinaga pekerjaan Website Recruitement Pegawai PT Agung Jaya Mineral
+            [
+                'id_task'                 => 124,
+                'id_pekerjaan'            => 4,
+                'id_user'                 => 26,
+                'creator'                 => 26,
+                'id_status_task'          => 4, //task ditolak(cancle)
+                'id_kategori_task'        => 4,
+                'tgl_planing'             => '2024-07-08',
+                'tgl_selesai'             => null,
+                'tgl_verifikasi_diterima' => null,
+                'persentase_selesai'      => 0,
+                'deskripsi_task'          => 'Testing tampilan data karir dan lowongan pekerjaan',
+                'alasan_verifikasi'       => 'Hasil testing tidak memenuhi standar, coba untuk lebih detail dan teliti.',
+                'bukti_selesai'           => 'testing_tampilan_data_karir_dan_lowongan_pekerjaan.pdf',
+                'tautan_task'             => 'Tidak ada tautan karena semua lampiran sudah ada pada hasil testing.',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+            //ADMIN APLIKASI TASK
+            //Task User Ulfah Zidni Hakim pekerjaan Website Recruitement Pegawai PT Agung Jaya Mineral
+            [
+                'id_task'                 => 125,
+                'id_pekerjaan'            => 4,
+                'id_user'                 => 31,
+                'creator'                 => 10,
+                'id_status_task'          => 4, //task ditolak(cancle)
+                'id_kategori_task'        => 1,
+                'tgl_planing'             => '2024-07-17',
+                'tgl_selesai'             => null,
+                'tgl_verifikasi_diterima' => null,
+                'persentase_selesai'      => 0,
+                'deskripsi_task'          => 'Verifikasi karir dan lowongan pekerjaan',
+                'alasan_verifikasi'       => 'Data yang diberikan tidak lengkap, coba untuk lebih detail dan teliti.',
+                'bukti_selesai'           => 'verifikasi_data_karir_dan_lowongan_pekerjaan.pdf',
+                'tautan_task'             => 'Tidak ada tautan karena data verifikasi sudah ada pada bukti PDF.',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+            //HELPDESK TASK
+            //Task User Lina Veronica Atmaja pekerjaan Website Recruitement Pegawai PT Agung Jaya Mineral
+            [
+                'id_task'                 => 126,
+                'id_pekerjaan'            => 4,
+                'id_user'                 => 36,
+                'creator'                 => 36,
+                'id_status_task'          => 4, //task ditolak(cancle)
+                'id_kategori_task'        => 1,
+                'tgl_planing'             => '2024-07-24',
+                'tgl_selesai'             => null,
+                'tgl_verifikasi_diterima' => null,
+                'persentase_selesai'      => 0,
+                'deskripsi_task'          => 'Pendeskripsian terhadap semua karir dan lowongan pekerjaan pada aplikasi',
+                'alasan_verifikasi'       => 'Pendeskripsian tidak lengkap, coba untuk lebih detail dan teliti.',
+                'bukti_selesai'           => 'pendeskripsian_terhadap_semua_karir_dan_lowongan_pekerjaan_pada_aplikasi.pdf',
+                'tautan_task'             => 'Tidak ada tautan karena penjelasan sudah terlampir pada pdf',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+
+            //PROJECT MANAGER
+            //Task User Jatmiko Adi Nugroho pekerjaan Website Recruitement Pegawai PT Agung Jaya Mineral
+            [
+                'id_task'                 => 127,
+                'id_pekerjaan'            => 4,
+                'id_user'                 => 10,
+                'creator'                 => 10,
+                'id_status_task'          => 4, //task ditolak(cancle)
+                'id_kategori_task'        => 3,
+                'tgl_planing'             => '2024-07-25',
+                'tgl_selesai'             => null,
+                'tgl_verifikasi_diterima' => null,
+                'persentase_selesai'      => 0,
+                'deskripsi_task'          => 'Integrasi frontend dan backend data karir dan lowongan pekerjaan',
+                'alasan_verifikasi'       => 'Integrasi tidak sesuai dengan standar, coba untuk lebih detail dan teliti.',
+                'bukti_selesai'           => 'integrasi_frontend_dan_backend_data_karir_dan_lowongan_pekerjaan.png',
+                'tautan_task'             => 'https://github.com/AgungRamadhani26/Destask/commit/099c9559a02b54f1668c5a11a6df514f3a3efac4',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+
+
+
+            //DENGAN ID PEKERJAAN 3
+            //DESAINER TASK
+            //Task User Bima Satria pekerjaan Web Profile Dinkes Kota Semarang
+            [
+                'id_task'                 => 128,
+                'id_pekerjaan'            => 3,
+                'id_user'                 => 4,
+                'creator'                 => 6,
+                'id_status_task'          => 4, //task ditolak(cancle)
+                'id_kategori_task'        => 2,
+                'tgl_planing'             => '2024-07-05',
+                'tgl_selesai'             => null,
+                'tgl_verifikasi_diterima' => null,
+                'persentase_selesai'      => 0,
+                'deskripsi_task'          => 'Analisis tampilan struktur organisasi dinkes',
+                'alasan_verifikasi'       => 'Hasil analisis kurang mendalam coba untuk lebih dijabarkan terkait struktur organisasi dinkes.',
+                'bukti_selesai'           => 'analisis_tampilan_struktur_organisasi_dinkes.docx',
+                'tautan_task'             => 'Tidak ada lampiran task karena hasil analisis sudah terperinci.',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+            //BACKEND WEB TASK
+            //Task User Lodwick Paulus Situmeang pekerjaan Web Profile Dinkes Kota Semarang
+            [
+                'id_task'                 => 129,
+                'id_pekerjaan'            => 3,
+                'id_user'                 => 14,
+                'creator'                 => 14,
+                'id_status_task'          => 4, //task ditolak(cancle)
+                'id_kategori_task'        => 3,
+                'tgl_planing'             => '2024-07-09',
+                'tgl_selesai'             => null,
+                'tgl_verifikasi_diterima' => null,
+                'persentase_selesai'      => 0,
+                'deskripsi_task'          => 'Pembuatan backend halaman struktur organisasi dinkes',
+                'alasan_verifikasi'       => 'Struktur organisasi harusnya diberi fitur filter perkepala divisi sehingga pengguna dapat melihat struktur jabatan perdivisi, maka dari itu backend harus diubah.',
+                'bukti_selesai'           => 'pembuatan_backend_halaman_struktur_organisasi_dinkes.png',
+                'tautan_task'             => 'https://github.com/AgungRamadhani26/Destask/commit/1e054a4c18a966fa7b11e4d66b0942359cd972c0',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+            //FRONTEND WEB TASK
+            //Task User Amsari Kurniadi pekerjaan Web Profile Dinkes Kota Semarang
+            [
+                'id_task'                 => 130,
+                'id_pekerjaan'            => 3,
+                'id_user'                 => 12,
+                'creator'                 => 6,
+                'id_status_task'          => 4, //task ditolak(cancle)
+                'id_kategori_task'        => 3,
+                'tgl_planing'             => '2024-07-11',
+                'tgl_selesai'             => null,
+                'tgl_verifikasi_diterima' => null,
+                'persentase_selesai'      => 0,
+                'deskripsi_task'          => 'Pembuatan frontend halaman struktur organisasi dinkes',
+                'alasan_verifikasi'       => 'Struktur organisasi harusnya diberi fitur filter perkepala divisi sehingga pengguna dapat melihat struktur jabatan perdivisi, maka dari itu frontend harus diubah.',
+                'bukti_selesai'           => 'pembuatan_frontend_halaman_struktur_organisasi_dinkes.png',
+                'tautan_task'             => 'https://github.com/AgungRamadhani26/Destask/commit/ea170401129e9c4234d1883dc33ccd7d2ed715e7',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+            //TESTER TASK
+            //Task User Marwati Ardina pekerjaan Web Profile Dinkes Kota Semarang
+            [
+                'id_task'                 => 131,
+                'id_pekerjaan'            => 3,
+                'id_user'                 => 25,
+                'creator'                 => 25,
+                'id_status_task'          => 4, //task ditolak(cancle)
+                'id_kategori_task'        => 4,
+                'tgl_planing'             => '2024-07-15',
+                'tgl_selesai'             => null,
+                'tgl_verifikasi_diterima' => null,
+                'persentase_selesai'      => 0,
+                'deskripsi_task'          => 'Testing halaman struktur organisasi dinkes',
+                'alasan_verifikasi'       => 'Hasil testing tidak memenuhi standar, coba untuk lebih detail dan teliti.',
+                'bukti_selesai'           => 'testing_halaman_struktur_organisasi_dinkes.pdf',
+                'tautan_task'             => 'Tidak ada tautan karena hasil testing sudah ada pada laporan.',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+            //ADMIN APLIKASI TASK
+            //Task User Fatin Triamanda pekerjaan Web Profile Dinkes Kota Semarang
+            [
+                'id_task'                 => 132,
+                'id_pekerjaan'            => 3,
+                'id_user'                 => 30,
+                'creator'                 => 6,
+                'id_status_task'          => 4, //task ditolak(cancle)
+                'id_kategori_task'        => 1,
+                'tgl_planing'             => '2024-07-17',
+                'tgl_selesai'             => null,
+                'tgl_verifikasi_diterima' => null,
+                'persentase_selesai'      => 0,
+                'deskripsi_task'          => 'Pengelolaan struktur organisasi dinkes',
+                'alasan_verifikasi'       => 'Pengelolaan data masih kurang sesuai, coba untuk mengurutkan berdasarkan jabatan dan divisi.',
+                'bukti_selesai'           => 'pengelolaan_struktur_organisasi_dinkes.pdf',
+                'tautan_task'             => 'Tidak ada tautan data berita sudah ada pada laporan.',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+            //HELPDESK TASK
+            //Task User Titan Wardoyo pekerjaan Web Profile Dinkes Kota Semarang
+            [
+                'id_task'                 => 133,
+                'id_pekerjaan'            => 3,
+                'id_user'                 => 35,
+                'creator'                 => 35,
+                'id_status_task'          => 4, //task ditolak(cancle)
+                'id_kategori_task'        => 1,
+                'tgl_planing'             => '2024-07-19',
+                'tgl_selesai'             => null,
+                'tgl_verifikasi_diterima' => null,
+                'persentase_selesai'      => 0,
+                'deskripsi_task'          => 'Pemberian penjelasan tentang cara pemasukan data struktur organisasi dinkes kepada PIC',
+                'alasan_verifikasi'       => 'modul penjelasan kurang lengkap, coba untuk lebih detail dan teliti.',
+                'bukti_selesai'           => 'pemberian_penjelasan_tentang_cara_pemasukan_data_struktur_organisasi_dinkes_kepada_pic.pdf',
+                'tautan_task'             => 'Tidak ada tautan semua penjelasan sudah ada pada file.',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+            //PROJECT MANAGER
+            //Task User Alexandria Bronco Saraswati pekerjaan Web Profile Dinkes Kota Semarang
+            [
+                'id_task'                 => 134,
+                'id_pekerjaan'            => 3,
+                'id_user'                 => 6,
+                'creator'                 => 6,
+                'id_status_task'          => 4, //task ditolak(cancle)
+                'id_kategori_task'        => 1,
+                'tgl_planing'             => '2024-07-22',
+                'tgl_selesai'             => null,
+                'tgl_verifikasi_diterima' => null,
+                'persentase_selesai'      => 0,
+                'deskripsi_task'          => 'Evaluasi desain halaman struktur organisasi dinkes',
+                'alasan_verifikasi'       => 'terdapat kekurangan dalam evaluasi yaitu tidak menjelaskan kondisi sebelum dan sesudah evaluasi, coba untuk lebih detail dan teliti.',
+                'bukti_selesai'           => 'evaluasi_desain_halaman_struktur_organisasi_dinkes.pdf',
+                'tautan_task'             => 'Tidak ada tautan semua penjelasan sudah ada pada file.',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
         ];
         $this->db->table('task')->insertBatch($data);
     }
