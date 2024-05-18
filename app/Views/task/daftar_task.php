@@ -832,9 +832,11 @@
                                              <a href="/task/detail_task/<?= $task_mv['id_task'] ?>" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
                                           </div>
                                           <?php if ((session()->get('user_level') == 'supervisi') && ($task_mv['id_user'] != session()->get('id_user'))) : ?>
-                                             <div>
-                                                <a href="/task/verifikasi_task/<?= $task_mv['id_task'] ?>" class="btn btn-primary"><i class="bi bi-check2-square"></i> Verifikasi</a>
-                                             </div>
+                                             <?php if (cek_idusergroup_dari_task_user(session()->get('id_usergroup'), $task_mv['id_task']) == true) : ?>
+                                                <div>
+                                                   <a href="/task/verifikasi_task/<?= $task_mv['id_task'] ?>" class="btn btn-primary"><i class="bi bi-check2-square"></i> Verifikasi</a>
+                                                </div>
+                                             <?php endif ?>
                                           <?php endif ?>
                                        </div>
                                     </td>

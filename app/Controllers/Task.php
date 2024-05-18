@@ -106,8 +106,8 @@ class Task extends BaseController
             }
         } elseif (session()->get('user_level') == 'supervisi') {
             if ($personil_pm[0]['id_user'] == session()->get('id_user')) {
-                $task_menunggu_verifikasi = $this->taskModel->get_TaskMenungguVerifikasi_ByIdPekerjaan($id_pekerjaan);
-                $jumlahtask_menunggu_verifikasi = $this->taskModel->count_TaskMenungguVerifikasi_ByIdPekerjaan($id_pekerjaan);
+                $task_menunggu_verifikasi = $this->taskModel->get_TaskMenungguVerifikasi_ByIdPekerjaanIdUserPm($id_pekerjaan, session()->get('id_user'));
+                $jumlahtask_menunggu_verifikasi = $this->taskModel->count_TaskMenungguVerifikasi_ByIdPekerjaanIdUserPm($id_pekerjaan, session()->get('id_user'));
             } else {
                 $task_menunggu_verifikasi = $this->taskModel->get_TaskMenungguVerifikasi_ByIdPekerjaanIdUsergroupIdUser($id_pekerjaan, session()->get('id_usergroup'), session()->get('id_user'));
                 $jumlahtask_menunggu_verifikasi = $this->taskModel->count_TaskMenungguVerifikasi_ByIdPekerjaanIdUsergroupIdUser($id_pekerjaan, session()->get('id_usergroup'), session()->get('id_user'));
