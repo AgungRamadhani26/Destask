@@ -59,12 +59,14 @@ class Task extends BaseController
                 $task_hariini_ditolak = $this->taskModel->getTaskHariIni_Ditolak_ByIdPekerjaan($id_pekerjaan);
                 $task_planing_ditolak = $this->taskModel->getTaskPlaning_Ditolak_ByIdPekerjaan($id_pekerjaan);
                 $task_overdue_ditolak = $this->taskModel->getTaskOverdue_Ditolak_ByIdPekerjaan($id_pekerjaan);
+                $task_selesai = $this->taskModel->getTaskSelesai_ByIdPekerjaan($id_pekerjaan);
                 $jumlahtask_hariini_belumsubmit = $this->taskModel->countTaskHariIni_BelumSubmit_ByIdPekerjaan($id_pekerjaan);
                 $jumlahtask_planing_belumsubmit = $this->taskModel->countTaskPlaning_BelumSubmit_ByIdPekerjaan($id_pekerjaan);
                 $jumlahtask_overdue_belumsubmit = $this->taskModel->countTaskOverdue_BelumSubmit_ByIdPekerjaan($id_pekerjaan);
                 $jumlahtask_hariini_ditolak = $this->taskModel->countTaskHariIni_Ditolak_ByIdPekerjaan($id_pekerjaan);
                 $jumlahtask_planing_ditolak = $this->taskModel->countTaskPlaning_Ditolak_ByIdPekerjaan($id_pekerjaan);
                 $jumlahtask_overdue_ditolak = $this->taskModel->countTaskOverdue_Ditolak_ByIdPekerjaan($id_pekerjaan);
+                $jumlah_task_selesai = $this->taskModel->countTaskSelesai_ByIdPekerjaan($id_pekerjaan);
             } else {
                 $personil_filter = $this->userModel->getPersonilDistinctByIdPekerjaanIdUser($id_pekerjaan, session()->get('id_user'));
                 $task_hariini_belumsubmit = $this->taskModel->getTaskHariIni_BelumSubmit_ByIdPekerjaanIdUser($id_pekerjaan, session()->get('id_user'));
@@ -73,12 +75,14 @@ class Task extends BaseController
                 $task_hariini_ditolak = $this->taskModel->getTaskHariIni_Ditolak_ByIdPekerjaanIdUser($id_pekerjaan, session()->get('id_user'));
                 $task_planing_ditolak = $this->taskModel->getTaskPlaning_Ditolak_ByIdPekerjaanIdUser($id_pekerjaan, session()->get('id_user'));
                 $task_overdue_ditolak = $this->taskModel->getTaskOverdue_Ditolak_ByIdPekerjaanIdUser($id_pekerjaan, session()->get('id_user'));
+                $task_selesai = $this->taskModel->getTaskSelesai_ByIdPekerjaanIdUser($id_pekerjaan, session()->get('id_user'));
                 $jumlahtask_hariini_belumsubmit = $this->taskModel->countTaskHariIni_BelumSubmit_ByIdPekerjaanIdUser($id_pekerjaan, session()->get('id_user'));
                 $jumlahtask_planing_belumsubmit = $this->taskModel->countTaskPlaning_BelumSubmit_ByIdPekerjaanIdUser($id_pekerjaan, session()->get('id_user'));
                 $jumlahtask_overdue_belumsubmit = $this->taskModel->countTaskOverdue_BelumSubmit_ByIdPekerjaanIdUser($id_pekerjaan, session()->get('id_user'));
                 $jumlahtask_hariini_ditolak = $this->taskModel->countTaskHariIni_Ditolak_ByIdPekerjaanIdUser($id_pekerjaan, session()->get('id_user'));
                 $jumlahtask_planing_ditolak = $this->taskModel->countTaskPlaning_Ditolak_ByIdPekerjaanIdUser($id_pekerjaan, session()->get('id_user'));
                 $jumlahtask_overdue_ditolak = $this->taskModel->countTaskOverdue_Ditolak_ByIdPekerjaanIdUser($id_pekerjaan, session()->get('id_user'));
+                $jumlah_task_selesai = $this->taskModel->countTaskSelesai_ByIdPekerjaanIdUser($id_pekerjaan, session()->get('id_user'));
             }
         } else {
             $personil_filter = $this->userModel->getPersonilDistinctByIdPekerjaan($id_pekerjaan);
@@ -88,12 +92,14 @@ class Task extends BaseController
             $task_hariini_ditolak = $this->taskModel->getTaskHariIni_Ditolak_ByIdPekerjaan($id_pekerjaan);
             $task_planing_ditolak = $this->taskModel->getTaskPlaning_Ditolak_ByIdPekerjaan($id_pekerjaan);
             $task_overdue_ditolak = $this->taskModel->getTaskOverdue_Ditolak_ByIdPekerjaan($id_pekerjaan);
+            $task_selesai = $this->taskModel->getTaskSelesai_ByIdPekerjaan($id_pekerjaan);
             $jumlahtask_hariini_belumsubmit = $this->taskModel->countTaskHariIni_BelumSubmit_ByIdPekerjaan($id_pekerjaan);
             $jumlahtask_planing_belumsubmit = $this->taskModel->countTaskPlaning_BelumSubmit_ByIdPekerjaan($id_pekerjaan);
             $jumlahtask_overdue_belumsubmit = $this->taskModel->countTaskOverdue_BelumSubmit_ByIdPekerjaan($id_pekerjaan);
             $jumlahtask_hariini_ditolak = $this->taskModel->countTaskHariIni_Ditolak_ByIdPekerjaan($id_pekerjaan);
             $jumlahtask_planing_ditolak = $this->taskModel->countTaskPlaning_Ditolak_ByIdPekerjaan($id_pekerjaan);
             $jumlahtask_overdue_ditolak = $this->taskModel->countTaskOverdue_Ditolak_ByIdPekerjaan($id_pekerjaan);
+            $jumlah_task_selesai = $this->taskModel->countTaskSelesai_ByIdPekerjaan($id_pekerjaan);
         }
         //Untuk Task Menunggu Verifikasi
         if (session()->get('user_level') == 'staff') {
@@ -130,6 +136,7 @@ class Task extends BaseController
             'task_hariini_ditolak' => $task_hariini_ditolak,
             'task_planing_ditolak' => $task_planing_ditolak,
             'task_overdue_ditolak' => $task_overdue_ditolak,
+            'task_selesai' => $task_selesai,
             'jumlahtask_hariini_belumsubmit' => $jumlahtask_hariini_belumsubmit,
             'jumlahtask_planing_belumsubmit' => $jumlahtask_planing_belumsubmit,
             'jumlahtask_overdue_belumsubmit' => $jumlahtask_overdue_belumsubmit,
@@ -137,6 +144,7 @@ class Task extends BaseController
             'jumlahtask_hariini_ditolak' => $jumlahtask_hariini_ditolak,
             'jumlahtask_planing_ditolak' => $jumlahtask_planing_ditolak,
             'jumlahtask_overdue_ditolak' => $jumlahtask_overdue_ditolak,
+            'jumlah_task_selesai' => $jumlah_task_selesai,
             'user' => $this->userModel->getUser(),
             'kategori_task' => $this->kategoriTaskModel->getKategoriTask(),
             'status_task' => $this->statusTaskModel->getStatusTask(),
@@ -162,12 +170,14 @@ class Task extends BaseController
                 $task_hariini_ditolak = $this->taskModel->getFiltered_TaskHariIni_Ditolak_ByIdPekerjaanIdUserKategoriTask($id_pekerjaan, $filter_task_personil, $filter_task_kategori);
                 $task_planing_ditolak = $this->taskModel->getFiltered_TaskPlaning_Ditolak_ByIdPekerjaanIdUserKategoriTask($id_pekerjaan, $filter_task_personil, $filter_task_kategori);
                 $task_overdue_ditolak = $this->taskModel->getFiltered_TaskOverdue_Ditolak_ByIdPekerjaanIdUserKategoriTask($id_pekerjaan, $filter_task_personil, $filter_task_kategori);
+                $task_selesai = $this->taskModel->getFiltered_TaskSelesai_ByIdPekerjaanIdUserKategoriTask($id_pekerjaan, $filter_task_personil, $filter_task_kategori);
                 $jumlahtask_hariini_belumsubmit = $this->taskModel->countTaskHariIni_BelumSubmit_ByIdPekerjaan($id_pekerjaan);
                 $jumlahtask_planing_belumsubmit = $this->taskModel->countTaskPlaning_BelumSubmit_ByIdPekerjaan($id_pekerjaan);
                 $jumlahtask_overdue_belumsubmit = $this->taskModel->countTaskOverdue_BelumSubmit_ByIdPekerjaan($id_pekerjaan);
                 $jumlahtask_hariini_ditolak = $this->taskModel->countTaskHariIni_Ditolak_ByIdPekerjaan($id_pekerjaan);
                 $jumlahtask_planing_ditolak = $this->taskModel->countTaskPlaning_Ditolak_ByIdPekerjaan($id_pekerjaan);
                 $jumlahtask_overdue_ditolak = $this->taskModel->countTaskOverdue_Ditolak_ByIdPekerjaan($id_pekerjaan);
+                $jumlah_task_selesai = $this->taskModel->countTaskSelesai_ByIdPekerjaan($id_pekerjaan);
             } else {
                 $personil_filter = $this->userModel->getPersonilDistinctByIdPekerjaanIdUser($id_pekerjaan, session()->get('id_user'));
                 $task_hariini_belumsubmit = $this->taskModel->getFiltered_TaskHariIni_BelumSubmit_ByIdPekerjaanIdUserKategoriTask($id_pekerjaan, session()->get('id_user'), $filter_task_kategori);
@@ -176,12 +186,14 @@ class Task extends BaseController
                 $task_hariini_ditolak = $this->taskModel->getFiltered_TaskHariIni_Ditolak_ByIdPekerjaanIdUserKategoriTask($id_pekerjaan, session()->get('id_user'), $filter_task_kategori);
                 $task_planing_ditolak = $this->taskModel->getFiltered_TaskPlaning_Ditolak_ByIdPekerjaanIdUserKategoriTask($id_pekerjaan, session()->get('id_user'), $filter_task_kategori);
                 $task_overdue_ditolak = $this->taskModel->getFiltered_TaskOverdue_Ditolak_ByIdPekerjaanIdUserKategoriTask($id_pekerjaan, session()->get('id_user'), $filter_task_kategori);
+                $task_selesai = $this->taskModel->getFiltered_TaskSelesai_ByIdPekerjaanIdUserKategoriTask($id_pekerjaan, session()->get('id_user'), $filter_task_kategori);
                 $jumlahtask_hariini_belumsubmit = $this->taskModel->countTaskHariIni_BelumSubmit_ByIdPekerjaanIdUser($id_pekerjaan, session()->get('id_user'));
                 $jumlahtask_planing_belumsubmit = $this->taskModel->countTaskPlaning_BelumSubmit_ByIdPekerjaanIdUser($id_pekerjaan, session()->get('id_user'));
                 $jumlahtask_overdue_belumsubmit = $this->taskModel->countTaskOverdue_BelumSubmit_ByIdPekerjaanIdUser($id_pekerjaan, session()->get('id_user'));
                 $jumlahtask_hariini_ditolak = $this->taskModel->countTaskHariIni_Ditolak_ByIdPekerjaanIdUser($id_pekerjaan, session()->get('id_user'));
                 $jumlahtask_planing_ditolak = $this->taskModel->countTaskPlaning_Ditolak_ByIdPekerjaanIdUser($id_pekerjaan, session()->get('id_user'));
                 $jumlahtask_overdue_ditolak = $this->taskModel->countTaskOverdue_Ditolak_ByIdPekerjaanIdUser($id_pekerjaan, session()->get('id_user'));
+                $jumlah_task_selesai = $this->taskModel->countTaskSelesai_ByIdPekerjaanIdUser($id_pekerjaan, session()->get('id_user'));
             }
         } else {
             $personil_filter = $this->userModel->getPersonilDistinctByIdPekerjaan($id_pekerjaan);
@@ -191,12 +203,14 @@ class Task extends BaseController
             $task_hariini_ditolak = $this->taskModel->getFiltered_TaskHariIni_Ditolak_ByIdPekerjaanIdUserKategoriTask($id_pekerjaan, $filter_task_personil, $filter_task_kategori);
             $task_planing_ditolak = $this->taskModel->getFiltered_TaskPlaning_Ditolak_ByIdPekerjaanIdUserKategoriTask($id_pekerjaan, $filter_task_personil, $filter_task_kategori);
             $task_overdue_ditolak = $this->taskModel->getFiltered_TaskOverdue_Ditolak_ByIdPekerjaanIdUserKategoriTask($id_pekerjaan, $filter_task_personil, $filter_task_kategori);
+            $task_selesai = $this->taskModel->getFiltered_TaskSelesai_ByIdPekerjaanIdUserKategoriTask($id_pekerjaan, $filter_task_personil, $filter_task_kategori);
             $jumlahtask_hariini_belumsubmit = $this->taskModel->countTaskHariIni_BelumSubmit_ByIdPekerjaan($id_pekerjaan);
             $jumlahtask_planing_belumsubmit = $this->taskModel->countTaskPlaning_BelumSubmit_ByIdPekerjaan($id_pekerjaan);
             $jumlahtask_overdue_belumsubmit = $this->taskModel->countTaskOverdue_BelumSubmit_ByIdPekerjaan($id_pekerjaan);
             $jumlahtask_hariini_ditolak = $this->taskModel->countTaskHariIni_Ditolak_ByIdPekerjaan($id_pekerjaan);
             $jumlahtask_planing_ditolak = $this->taskModel->countTaskPlaning_Ditolak_ByIdPekerjaan($id_pekerjaan);
             $jumlahtask_overdue_ditolak = $this->taskModel->countTaskOverdue_Ditolak_ByIdPekerjaan($id_pekerjaan);
+            $jumlah_task_selesai = $this->taskModel->countTaskSelesai_ByIdPekerjaan($id_pekerjaan);
         }
         //Untuk Task Menunggu Verifikasi
         if (session()->get('user_level') == 'staff') {
@@ -206,6 +220,14 @@ class Task extends BaseController
             } else {
                 $task_menunggu_verifikasi = $this->taskModel->getFiltered_TaskMenungguVerifikasi_ByIdPekerjaanIdUserKategoriTask($id_pekerjaan, session()->get('id_user'), $filter_task_kategori);
                 $jumlahtask_menunggu_verifikasi = $this->taskModel->count_TaskMenungguVerifikasi_ByIdPekerjaanIdUser($id_pekerjaan, session()->get('id_user'));
+            }
+        } elseif (session()->get('user_level') == 'supervisi') {
+            if ($personil_pm[0]['id_user'] == session()->get('id_user')) {
+                $task_menunggu_verifikasi = $this->taskModel->getFiltered_TaskMenungguVerifikasi_ByIdPekerjaanIdUserKategoriTask($id_pekerjaan, $filter_task_personil, $filter_task_kategori);
+                $jumlahtask_menunggu_verifikasi = $this->taskModel->count_TaskMenungguVerifikasi_ByIdPekerjaanIdUserPm($id_pekerjaan, session()->get('id_user'));
+            } else {
+                $task_menunggu_verifikasi = $this->taskModel->getFiltered_TaskMenungguVerifikasi_ByIdPekerjaanIdUsergroupIdUserKategoriTask($id_pekerjaan, session()->get('id_usergroup'), session()->get('id_user'), $filter_task_kategori);
+                $jumlahtask_menunggu_verifikasi = $this->taskModel->count_TaskMenungguVerifikasi_ByIdPekerjaanIdUsergroupIdUser($id_pekerjaan, session()->get('id_usergroup'), session()->get('id_user'));
             }
         } else {
             $task_menunggu_verifikasi = $this->taskModel->getFiltered_TaskMenungguVerifikasi_ByIdPekerjaanIdUserKategoriTask($id_pekerjaan, $filter_task_personil, $filter_task_kategori);
@@ -225,6 +247,7 @@ class Task extends BaseController
             'task_hariini_ditolak' => $task_hariini_ditolak,
             'task_planing_ditolak' => $task_planing_ditolak,
             'task_overdue_ditolak' => $task_overdue_ditolak,
+            'task_selesai' => $task_selesai,
             'jumlahtask_hariini_belumsubmit' => $jumlahtask_hariini_belumsubmit,
             'jumlahtask_planing_belumsubmit' => $jumlahtask_planing_belumsubmit,
             'jumlahtask_overdue_belumsubmit' => $jumlahtask_overdue_belumsubmit,
@@ -232,6 +255,7 @@ class Task extends BaseController
             'jumlahtask_hariini_ditolak' => $jumlahtask_hariini_ditolak,
             'jumlahtask_planing_ditolak' => $jumlahtask_planing_ditolak,
             'jumlahtask_overdue_ditolak' => $jumlahtask_overdue_ditolak,
+            'jumlah_task_selesai' => $jumlah_task_selesai,
             'user' => $this->userModel->getUser(),
             'kategori_task' => $this->kategoriTaskModel->getKategoriTask(),
             'status_task' => $this->statusTaskModel->getStatusTask(),
