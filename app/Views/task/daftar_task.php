@@ -121,16 +121,16 @@
             <div class="card-body">
                <ul class="nav nav-tabs mt-3">
                   <li class="nav-item">
-                     <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#task-belum-submit">Belum Submit</button>
+                     <button class="nav-link active" data-bs-toggle="tab" title="Jika anda seorang Staff non PM atau Supervisi non PM maka data yang muncul adalah data task anda sendiri yang belum submit, Jika anda Staff PM, Supervisi PM, Direksi, HOD, atau Admin maka data yang muncul adalah semua data task yang belum submit." data-bs-target="#task-belum-submit">Belum Submit</button>
                   </li>
                   <li class="nav-item">
-                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#task-ditolak">Ditolak</button>
+                     <button class="nav-link" data-bs-toggle="tab" title="Jika anda seorang Staff non PM atau Supervisi non PM maka data yang muncul adalah data task anda sendiri yang ditolak, Jika anda Staff PM, Supervisi PM, Direksi, HOD, atau Admin maka data yang muncul adalah semua data task yang ditolak." data-bs-target="#task-ditolak">Ditolak</button>
                   </li>
                   <li class="nav-item">
-                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#task-menunggu-verifikasi">Menunggu Verifikasi</button>
+                     <button class="nav-link" data-bs-toggle="tab" title="Jika anda seorang Staff non PM maka data yang akan muncul adalah data task anda sendiri yang menunggu verifikasi, Jika anda Supervisi non PM maka data yang muncul adalah data task dari user yang memiliki usergroup yang sama dengan anda, dan Jika anda Staff PM, Supervisi PM, Direksi, HOD, atau Admin maka data yang muncul adalah semua data task yang menunggu verifikasi." data-bs-target="#task-menunggu-verifikasi">Menunggu Verifikasi</button>
                   </li>
                   <li class="nav-item">
-                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#task-sudah-verifikasi" id="edit-profil">Sudah Diverifikasi</button>
+                     <button class="nav-link" data-bs-toggle="tab" title="Jika anda seorang Staff non PM atau Supervisi non PM maka data yang muncul adalah data task anda sendiri yang sudah selesai diverifikasi, Jika anda Staff PM, Supervisi PM, Direksi, HOD, atau Admin maka data yang muncul adalah semua data task yang sudah selesai diverifikasi." data-bs-target="#task-sudah-verifikasi" id="edit-profil">Sudah Diverifikasi</button>
                   </li>
                </ul>
 
@@ -587,7 +587,7 @@
                                              <span style="background-color: <?= $st['color'] ?>;" class="badge rounded-pill"><?= $st['nama_status_task'] ?></span>
                                           <?php endif; ?>
                                        <?php endforeach; ?>
-                                       <a href=""><u>Lihat Alasan</u></a>
+                                       <a href="#" data-bs-toggle="modal" data-bs-target="#modalalasan_verifikasi" onclick="lihat_alasan_verifikasi(<?= $task_hi_d['id_task'] ?>)"><u>Lihat Alasan</u></a>
                                     </td>
                                     <td>
                                        <?php $target_waktu_selesainya = date('d-m-Y', strtotime($task_hi_d['tgl_planing'])) ?>
@@ -688,7 +688,7 @@
                                              <span style="background-color: <?= $st['color'] ?>;" class="badge rounded-pill"><?= $st['nama_status_task'] ?></span>
                                           <?php endif; ?>
                                        <?php endforeach; ?>
-                                       <a href=""><u>Lihat Alasan</u></a>
+                                       <a href="#" data-bs-toggle="modal" data-bs-target="#modalalasan_verifikasi" onclick="lihat_alasan_verifikasi(<?= $task_pl_d['id_task'] ?>)"><u>Lihat Alasan</u></a>
                                     </td>
                                     <td>
                                        <?php $target_waktu_selesainya1 = date('d-m-Y', strtotime($task_pl_d['tgl_planing'])) ?>
@@ -789,7 +789,7 @@
                                              <span style="background-color: <?= $st['color'] ?>;" class="badge rounded-pill"><?= $st['nama_status_task'] ?></span>
                                           <?php endif; ?>
                                        <?php endforeach; ?>
-                                       <a href=""><u>Lihat Alasan</u></a>
+                                       <a href="#" data-bs-toggle="modal" data-bs-target="#modalalasan_verifikasi" onclick="lihat_alasan_verifikasi(<?= $task_ov_d['id_task'] ?>)"><u>Lihat Alasan</u></a>
                                     </td>
                                     <td>
                                        <?php $target_waktu_selesainya2 = date('d-m-Y', strtotime($task_ov_d['tgl_planing'])) ?>
@@ -1006,5 +1006,7 @@
    }
 </script>
 
+<!--include Modal untuk melihat alasan verifikasi-->
+<?= $this->include('task/modal_alasan_verifikasi'); ?>
 
 <?= $this->endSection(); ?>

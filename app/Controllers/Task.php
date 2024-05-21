@@ -48,6 +48,16 @@ class Task extends BaseController
 
     public function daftar_task($id_pekerjaan)
     {
+        //Pengecekan apakah yang login adalah staff jika staff maka akan di cek apakah terdaftar pada pekerjaan
+        //Jika tidak maka tidak boleh melihat halaman ini, karena data pekerjaan pada dashboard hanya boleh dibuka
+        //oleh staff yang terdaftar sebagai personil. Jika yang login selain staff maka boleh membuka pekerjaan apapun
+        if (session()->get('user_level') == 'staff') {
+            $personil = $this->personilModel->getPersonilByIdPekerjaanIdUser($id_pekerjaan, session()->get('id_user'));
+            if (!$personil) {
+                Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Anda jangan nakal, anda tidak berhak melihat daftar task tersebut !');
+                return redirect()->to('/dashboard');
+            }
+        }
         $personil_pm = $this->personilModel->getPersonilByIdPekerjaanRolePersonil($id_pekerjaan, 'project_manager');
         //Untuk Task Belum Submit
         if ((session()->get('user_level') == 'supervisi') || (session()->get('user_level') == 'staff')) {
@@ -101,7 +111,7 @@ class Task extends BaseController
             $jumlahtask_overdue_ditolak = $this->taskModel->countTaskOverdue_Ditolak_ByIdPekerjaan($id_pekerjaan);
             $jumlah_task_selesai = $this->taskModel->countTaskSelesai_ByIdPekerjaan($id_pekerjaan);
         }
-        //Untuk Task Menunggu Verifikasi
+        //Untuk Task Menunggu Verifikasi dan sudah verifikasi
         if (session()->get('user_level') == 'staff') {
             if ($personil_pm[0]['id_user'] == session()->get('id_user')) {
                 $task_menunggu_verifikasi = $this->taskModel->get_TaskMenungguVerifikasi_ByIdPekerjaan($id_pekerjaan);
@@ -157,6 +167,16 @@ class Task extends BaseController
     //Fungsi untuk memfilter task
     public function filter_task($id_pekerjaan)
     {
+        //Pengecekan apakah yang login adalah staff jika staff maka akan di cek apakah terdaftar pada pekerjaan
+        //Jika tidak maka tidak boleh melihat halaman ini, karena data pekerjaan pada dashboard hanya boleh dibuka
+        //oleh staff yang terdaftar sebagai personil. Jika yang login selain staff maka boleh membuka pekerjaan apapun
+        if (session()->get('user_level') == 'staff') {
+            $personil = $this->personilModel->getPersonilByIdPekerjaanIdUser($id_pekerjaan, session()->get('id_user'));
+            if (!$personil) {
+                Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Anda jangan nakal, anda tidak berhak melihat daftar task tersebut !');
+                return redirect()->to('/dashboard');
+            }
+        }
         $personil_pm = $this->personilModel->getPersonilByIdPekerjaanRolePersonil($id_pekerjaan, 'project_manager');
         $filter_task_personil = $this->request->getGet('filter_task_personil');
         $filter_task_kategori = $this->request->getGet('filter_task_kategori_task');
@@ -268,6 +288,17 @@ class Task extends BaseController
     //Fungsi untuk menambah Task
     public function add_task($id_pekerjaan)
     {
+        //Pengecekan apakah yang login adalah staff dan supervisi yang terdaftar pada personil jika tidak maka tidak boleh melihat halaman ini
+        if (session()->get('user_level') == 'staff' || session()->get('user_level') == 'supervisi') {
+            $personil = $this->personilModel->getPersonilByIdPekerjaanIdUser($id_pekerjaan, session()->get('id_user'));
+            if (!$personil) {
+                Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Anda jangan nakal, anda tidak berhak menambah task pada pekerjaan tersebut !');
+                return redirect()->to('/dashboard');
+            }
+        } else {
+            Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Anda jangan nakal, anda bukan staff atau supervisi, sehingga tidak berhak menambah task pada pekerjaan tersebut !');
+            return redirect()->to('/dashboard');
+        }
         $year_now = date("Y");
         $personil_pm = $this->personilModel->getPersonilByIdPekerjaanRolePersonil($id_pekerjaan, 'project_manager');
         $pekerjaan = $this->pekerjaanModel->getPekerjaan($id_pekerjaan);
@@ -398,23 +429,36 @@ class Task extends BaseController
         $task = $this->taskModel->getTask($id_task);
         $id_pekerjaan = $task['id_pekerjaan'];
         $personil_pm = $this->personilModel->getPersonilByIdPekerjaanRolePersonil($id_pekerjaan, 'project_manager');
-        if ($personil_pm[0]['id_user'] == session()->get('id_user')) {
-            $personil = $this->personilModel->getPersonilByIdPekerjaan($id_pekerjaan);
+        $pm = $this->userModel->getUser($personil_pm[0]['id_user']);
+        //Cek apakah yang login adalah pembuat/creator task ataupun pm yang terdaftar pada pekerjaan
+        if ($task['creator'] == session()->get('id_user') || $pm['id_user'] == session()->get('id_user')) {
+            //Cek apakah id status task on progress(1) ataupun cancle(4), jika ia bisa diedit namun kalau id status task menunggu verifikasi (2) atau selesai verifikasi (3) tidak bisa diedit
+            if ($task['id_status_task'] == 2 || $task['id_status_task'] == 3) {
+                Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Task yang sudah diverifikasi atau sedang menunggu verifikasi tidak bisa di edit !');
+                return redirect()->to('/dashboard');
+            } else {
+                if ($personil_pm[0]['id_user'] == session()->get('id_user')) {
+                    $personil = $this->personilModel->getPersonilByIdPekerjaan($id_pekerjaan);
+                } else {
+                    $personil = $this->personilModel->getPersonilByIdPekerjaanIdUser($id_pekerjaan, session()->get('id_user'));
+                }
+                $data = [
+                    'url1' => '/dashboard',
+                    'url' => '/dashboard',
+                    'pekerjaan' => $this->pekerjaanModel->getPekerjaan($id_pekerjaan),
+                    'task' => $task,
+                    'project_manager' => $this->userModel->getUser($personil_pm[0]['id_user']),
+                    'personil' => $personil,
+                    'user' => $this->userModel->getUser(),
+                    'kategori_task' => $this->kategoriTaskModel->getKategoriTask(),
+                    'hari_libur' => $this->hariliburModel->getHariLibur(),
+                ];
+                return view('task/edit_task', $data);
+            }
         } else {
-            $personil = $this->personilModel->getPersonilByIdPekerjaanIdUser($id_pekerjaan, session()->get('id_user'));
+            Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Anda jangan nakal, anda tidak berhak mengedit task tersebut !');
+            return redirect()->to('/dashboard');
         }
-        $data = [
-            'url1' => '/dashboard',
-            'url' => '/dashboard',
-            'pekerjaan' => $this->pekerjaanModel->getPekerjaan($id_pekerjaan),
-            'task' => $task,
-            'project_manager' => $this->userModel->getUser($personil_pm[0]['id_user']),
-            'personil' => $personil,
-            'user' => $this->userModel->getUser(),
-            'kategori_task' => $this->kategoriTaskModel->getKategoriTask(),
-            'hari_libur' => $this->hariliburModel->getHariLibur(),
-        ];
-        return view('task/edit_task', $data);
     }
     public function update_task()
     {
@@ -510,13 +554,20 @@ class Task extends BaseController
         $id_pekerjaan = $task['id_pekerjaan'];
         $personil_pm = $this->personilModel->getPersonilByIdPekerjaanRolePersonil($id_pekerjaan, 'project_manager');
         $pm = $this->userModel->getUser($personil_pm[0]['id_user']);
+        //Cek apakah yang login adalah pembuat/creator task ataupun pm yang terdaftar pada pekerjaan
         if ($task['creator'] == session()->get('id_user') || $pm['id_user'] == session()->get('id_user')) {
-            $this->taskModel->delete($id_task);
-            Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil menghapus data task');
-            return redirect()->to('task/daftar_task/' . $id_pekerjaan);
+            //Cek apakah id status task on progress(1) ataupun cancle(4), jika ia bisa dihapus namun kalau id status task menunggu verifikasi (2) atau selesai verifikasi (3) tidak bisa dihapus
+            if ($task['id_status_task'] == 2 || $task['id_status_task'] == 3) {
+                Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Task yang sudah diverifikasi atau sedang menunggu verifikasi tidak bisa di hapus !');
+                return redirect()->to('/dashboard');
+            } else {
+                $this->taskModel->delete($id_task);
+                Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil menghapus data task');
+                return redirect()->to('task/daftar_task/' . $id_pekerjaan);
+            }
         } else {
-            Set_notifikasi_swal_berhasil('error', 'Gagal :v', 'Anda jangan nakal untuk hapus pekerjaan yang harusnya tidak boleh anda hapus !');
-            return redirect()->to('task/daftar_task/' . $id_pekerjaan);
+            Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Anda jangan nakal menghapus pekerjaan yang harusnya tidak boleh anda hapus !');
+            return redirect()->to('/dashboard');
         }
     }
 
@@ -526,18 +577,28 @@ class Task extends BaseController
         $task = $this->taskModel->getTask($id_task);
         $id_pekerjaan = $task['id_pekerjaan'];
         $personil_pm = $this->personilModel->getPersonilByIdPekerjaanRolePersonil($id_pekerjaan, 'project_manager');
-        $data = [
-            'url1' => '/dashboard',
-            'url' => '/dashboard',
-            'pekerjaan' => $this->pekerjaanModel->getPekerjaan($id_pekerjaan),
-            'task' => $task,
-            'project_manager' => $this->userModel->getUser($personil_pm[0]['id_user']),
-            'personil' => $this->personilModel->getPersonilByIdPekerjaan($id_pekerjaan),
-            'user' => $this->userModel->getUser(),
-            'kategori_task' => $this->kategoriTaskModel->getKategoriTask(),
-            'hari_libur' => $this->hariliburModel->getHariLibur(),
-        ];
-        return view('task/submit_task', $data);
+        if ($task['id_user'] != session()->get('id_user')) {
+            Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Anda jangan nakal, anda tidak berhak submit task tersebut !');
+            return redirect()->to('/dashboard');
+        } else {
+            if ($task['id_status_task'] == 2 || $task['id_status_task'] == 3) {
+                Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Task yang sudah diverifikasi atau sedang menunggu verifikasi tidak bisa di submit ulang!');
+                return redirect()->to('/dashboard');
+            } else {
+                $data = [
+                    'url1' => '/dashboard',
+                    'url' => '/dashboard',
+                    'pekerjaan' => $this->pekerjaanModel->getPekerjaan($id_pekerjaan),
+                    'task' => $task,
+                    'project_manager' => $this->userModel->getUser($personil_pm[0]['id_user']),
+                    'personil' => $this->personilModel->getPersonilByIdPekerjaan($id_pekerjaan),
+                    'user' => $this->userModel->getUser(),
+                    'kategori_task' => $this->kategoriTaskModel->getKategoriTask(),
+                    'hari_libur' => $this->hariliburModel->getHariLibur(),
+                ];
+                return view('task/submit_task', $data);
+            }
+        }
     }
 
     //Fungsi untuk submit task
@@ -607,6 +668,24 @@ class Task extends BaseController
         $task = $this->taskModel->getTask($id_task);
         $id_pekerjaan = $task['id_pekerjaan'];
         $personil_pm = $this->personilModel->getPersonilByIdPekerjaanRolePersonil($id_pekerjaan, 'project_manager');
+        $pm = $this->userModel->getUser($personil_pm[0]['id_user']);
+        if (session()->get('user_level') == 'staff') {
+            if ($task['id_user'] != session()->get('id_user') && $pm['id_user'] != session()->get('id_user')) {
+                Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Anda jangan nakal, anda tidak berhak melihat detail task tersebut !');
+                return redirect()->to('/dashboard');
+            }
+        } elseif (session()->get('user_level') == 'supervisi') {
+            $pemilik_task = $this->userModel->getUser($task['id_user']);
+            if ($pemilik_task['id_usergroup'] != session()->get('id_usergroup') && $pm['id_user'] != session()->get('id_user')) {
+                Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Anda jangan nakal, anda tidak berhak melihat detail task tersebut !');
+                return redirect()->to('/dashboard');
+            }
+        }
+        //Cek apakah task belum submit, jika belum submit maka tidak bisa melihat detail task
+        if ($task['id_status_task'] == 1) {
+            Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Task yang belum pernah disubmit tidak bisa dilihat detailnya !');
+            return redirect()->to('/dashboard');
+        }
         $data = [
             'url1' => '/dashboard',
             'url' => '/dashboard',
@@ -621,23 +700,48 @@ class Task extends BaseController
         return view('task/detail_task', $data);
     }
 
+    //Fungsi untuk melihat alasan verifikasi task
+    public function alasan_verifikasi_task($id_task)
+    {
+        return json_encode($this->taskModel->find($id_task));
+    }
+
     //Fungsi untuk menampilkan form verifikasi
     public function verifikasi_task($id_task)
     {
         $task = $this->taskModel->getTask($id_task);
         $id_pekerjaan = $task['id_pekerjaan'];
         $personil_pm = $this->personilModel->getPersonilByIdPekerjaanRolePersonil($id_pekerjaan, 'project_manager');
-        $data = [
-            'url1' => '/dashboard',
-            'url' => '/dashboard',
-            'pekerjaan' => $this->pekerjaanModel->getPekerjaan($id_pekerjaan),
-            'task' => $task,
-            'project_manager' => $this->userModel->getUser($personil_pm[0]['id_user']),
-            'user' => $this->userModel->getUser(),
-            'kategori_task' => $this->kategoriTaskModel->getKategoriTask(),
-            'status_task' => $this->statusTaskModel->getStatusTask(),
-            'hari_libur' => $this->hariliburModel->getHariLibur(),
-        ];
-        return view('task/verifikasi_task', $data);
+        //Cek apakah yang login adalah supervisi, jika ia maka akan dicek apakah task tersebut adalah task yang dikerjakan 
+        //oleh personil yang terdaftar pada usergroup yang sama dengan supervisi, jika tidak maka tidak bisa melihat halaman ini
+        if (session()->get('user_level') != 'supervisi') {
+            Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Anda jangan nakal, tidak ada yang berhak memverifikasi task keculai supervisi !');
+            return redirect()->to('/dashboard');
+        } else {
+            $pemilik_task = $this->userModel->getUser($task['id_user']);
+            if ($pemilik_task['id_usergroup'] != session()->get('id_usergroup')) {
+                Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Anda jangan nakal, hanya supervisi dengan id usergroup yang sama dengan user pemilik task yang dapat memverifikasi task tersebut !');
+                return redirect()->to('/dashboard');
+            } else {
+                //Cek apakah task memiliki id status task menunggu verifikasi (2), jika tidak maka tidak bisa melihat halaman ini
+                if ($task['id_status_task'] != 2) {
+                    Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Anda jangan nakal, selain task menunggu verifikasi, tidak bisa diverifikasi !');
+                    return redirect()->to('/dashboard');
+                } else {
+                    $data = [
+                        'url1' => '/dashboard',
+                        'url' => '/dashboard',
+                        'pekerjaan' => $this->pekerjaanModel->getPekerjaan($id_pekerjaan),
+                        'task' => $task,
+                        'project_manager' => $this->userModel->getUser($personil_pm[0]['id_user']),
+                        'user' => $this->userModel->getUser(),
+                        'kategori_task' => $this->kategoriTaskModel->getKategoriTask(),
+                        'status_task' => $this->statusTaskModel->getStatusTask(),
+                        'hari_libur' => $this->hariliburModel->getHariLibur(),
+                    ];
+                    return view('task/verifikasi_task', $data);
+                }
+            }
+        }
     }
 }

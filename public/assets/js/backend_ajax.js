@@ -174,6 +174,22 @@ function edit_status_task($id){
    });
 }
 
+//Proses melihat alasan verifikasi task
+function lihat_alasan_verifikasi(id) {
+   $.ajax({
+      url: "/task/alasan_verifikasi_task/" + id,
+      type: "GET",
+      success: function(hasil) {
+         var obj = JSON.parse(hasil);
+         if (obj.id_task != '') {
+            $('#alasan_verifikasi_text').text(obj.alasan_verifikasi);
+         }
+      }
+   });
+}
+
+
+
 
 
 //                                //

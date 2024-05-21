@@ -24,7 +24,7 @@ class TaskModel extends Model
 
 
 
-    //Fungsi untuk mendapatkan data task hari ini yang belum submit berdasarkan id pekerjaan
+    //Fungsi untuk mendapatkan data task hari ini yang belum submit berdasarkan id pekerjaan (untuk staff pm, supervisi pm, hod, direksi, admin)
     public function getTaskHariIni_BelumSubmit_ByIdPekerjaan($id_pekerjaan)
     {
         $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
@@ -32,7 +32,7 @@ class TaskModel extends Model
             ->orderBy('tgl_planing', 'ASC')
             ->findAll();
     }
-    //Fungsi untuk mendapatkan data task hari ini yang belum submit berdasarkan id pekerjaan, dan id user
+    //Fungsi untuk mendapatkan data task hari ini yang belum submit berdasarkan id pekerjaan, dan id user (untuk staff non pm, supervisi non pm)
     public function getTaskHariIni_BelumSubmit_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
     {
         $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
@@ -40,7 +40,7 @@ class TaskModel extends Model
             ->orderBy('tgl_planing', 'ASC')
             ->findAll();
     }
-    // Fungsi untuk mendapatkan data task hari ini yang belum submit berdasarkan id pekerjaan, id user, dan id_kategori_task
+    // Fungsi untuk mendapatkan data task hari ini yang belum submit berdasarkan id pekerjaan, id user, dan id_kategori_task (untuk staff non pm, staff pm, supervisi non pm, supervisi pm, direksi, hod, admin)
     public function getFiltered_TaskHariIni_BelumSubmit_ByIdPekerjaanIdUserKategoriTask($id_pekerjaan, $id_user, $id_kategori_task)
     {
         $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
@@ -53,12 +53,12 @@ class TaskModel extends Model
         }
         return $query->orderBy('tgl_planing', 'ASC')->findAll();
     }
-    // Fungsi untuk menghitung jumlah task hari ini yang belum submit berdasarkan id pekerjaan
+    // Fungsi untuk menghitung jumlah task hari ini yang belum submit berdasarkan id pekerjaan (untuk staff pm, supervisi pm, hod, direksi, admin)
     public function countTaskHariIni_BelumSubmit_ByIdPekerjaan($id_pekerjaan)
     {
         return count($this->getTaskHariIni_BelumSubmit_ByIdPekerjaan($id_pekerjaan));
     }
-    // Fungsi untuk menghitung jumlah task hari ini yang belum submit berdasarkan id pekerjaan dan id user
+    // Fungsi untuk menghitung jumlah task hari ini yang belum submit berdasarkan id pekerjaan dan id user (untuk staff non pm, supervisi non pm)
     public function countTaskHariIni_BelumSubmit_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
     {
         return count($this->getTaskHariIni_BelumSubmit_ByIdPekerjaanIdUser($id_pekerjaan, $id_user));
@@ -66,7 +66,7 @@ class TaskModel extends Model
 
 
 
-    //Fungsi untuk mendapatkan data task planing yang belum submit berdasarkan id pekerjaan
+    //Fungsi untuk mendapatkan data task planing yang belum submit berdasarkan id pekerjaan (untuk staff pm, supervisi pm, hod, direksi, admin)
     public function getTaskPlaning_BelumSubmit_ByIdPekerjaan($id_pekerjaan)
     {
         $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
@@ -74,7 +74,7 @@ class TaskModel extends Model
             ->orderBy('tgl_planing', 'ASC')
             ->findAll();
     }
-    //Fungsi untuk mendapatkan data task planing yang belum submit berdasarkan id pekerjaan, dan id user
+    //Fungsi untuk mendapatkan data task planing yang belum submit berdasarkan id pekerjaan, dan id user (untuk staff non pm, supervisi non pm)
     public function getTaskPlaning_BelumSubmit_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
     {
         $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
@@ -82,7 +82,7 @@ class TaskModel extends Model
             ->orderBy('tgl_planing', 'ASC')
             ->findAll();
     }
-    // Fungsi untuk mendapatkan data task planing yang belum submit berdasarkan id pekerjaan, id user, dan id_kategori_task
+    // Fungsi untuk mendapatkan data task planing yang belum submit berdasarkan id pekerjaan, id user, dan id_kategori_task (untuk staff non pm, staff pm, supervisi non pm, supervisi pm, direksi, hod, admin)
     public function getFiltered_TaskPlaning_BelumSubmit_ByIdPekerjaanIdUserKategoriTask($id_pekerjaan, $id_user, $id_kategori_task)
     {
         $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
@@ -95,12 +95,12 @@ class TaskModel extends Model
         }
         return $query->orderBy('tgl_planing', 'ASC')->findAll();
     }
-    // Fungsi untuk menghitung jumlah task planing yang belum submit berdasarkan id pekerjaan
+    // Fungsi untuk menghitung jumlah task planing yang belum submit berdasarkan id pekerjaan (untuk staff pm, supervisi pm, hod, direksi, admin)
     public function countTaskPlaning_BelumSubmit_ByIdPekerjaan($id_pekerjaan)
     {
         return count($this->getTaskPlaning_BelumSubmit_ByIdPekerjaan($id_pekerjaan));
     }
-    // Fungsi untuk menghitung jumlah task planing yang belum submit berdasarkan id pekerjaan dan id user
+    // Fungsi untuk menghitung jumlah task planing yang belum submit berdasarkan id pekerjaan dan id user (untuk staff non pm, supervisi non pm)
     public function countTaskPlaning_BelumSubmit_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
     {
         return count($this->getTaskPlaning_BelumSubmit_ByIdPekerjaanIdUser($id_pekerjaan, $id_user));
@@ -108,7 +108,7 @@ class TaskModel extends Model
 
 
 
-    //Fungsi untuk mendapatkan data task overdue yang belum submit berdasarkan id pekerjaan
+    //Fungsi untuk mendapatkan data task overdue yang belum submit berdasarkan id pekerjaan (untuk staff pm, supervisi pm, hod, direksi, admin)
     public function getTaskOverdue_BelumSubmit_ByIdPekerjaan($id_pekerjaan)
     {
         $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
@@ -116,7 +116,7 @@ class TaskModel extends Model
             ->orderBy('tgl_planing', 'ASC')
             ->findAll();
     }
-    //Fungsi untuk mendapatkan data task overdue yang belum submit berdasarkan id pekerjaan, dan id user
+    //Fungsi untuk mendapatkan data task overdue yang belum submit berdasarkan id pekerjaan, dan id user (untuk staff non pm, supervisi non pm)
     public function getTaskOverdue_BelumSubmit_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
     {
         $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
@@ -124,7 +124,7 @@ class TaskModel extends Model
             ->orderBy('tgl_planing', 'ASC')
             ->findAll();
     }
-    //Fungsi untuk mendapatkan data task overdue yang belum submit berdasarkan id pekerjaan, id user, dan id_kategori_task
+    //Fungsi untuk mendapatkan data task overdue yang belum submit berdasarkan id pekerjaan, id user, dan id_kategori_task (untuk staff non pm, staff pm, supervisi non pm, supervisi pm, direksi, hod, admin)
     public function getFiltered_TaskOverdue_BelumSubmit_ByIdPekerjaanIdUserKategoriTask($id_pekerjaan, $id_user, $id_kategori_task)
     {
         $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
@@ -137,12 +137,12 @@ class TaskModel extends Model
         }
         return $query->orderBy('tgl_planing', 'ASC')->findAll();
     }
-    // Fungsi untuk menghitung jumlah task overdue yang belum submit berdasarkan id pekerjaan
+    // Fungsi untuk menghitung jumlah task overdue yang belum submit berdasarkan id pekerjaan (untuk staff pm, supervisi pm, hod, direksi, admin)
     public function countTaskOverdue_BelumSubmit_ByIdPekerjaan($id_pekerjaan)
     {
         return count($this->getTaskOverdue_BelumSubmit_ByIdPekerjaan($id_pekerjaan));
     }
-    // Fungsi untuk menghitung jumlah task overdue yang belum submit berdasarkan id pekerjaan dan id user
+    // Fungsi untuk menghitung jumlah task overdue yang belum submit berdasarkan id pekerjaan dan id user (untuk staff non pm, supervisi non pm)
     public function countTaskOverdue_BelumSubmit_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
     {
         return count($this->getTaskOverdue_BelumSubmit_ByIdPekerjaanIdUser($id_pekerjaan, $id_user));
@@ -150,21 +150,149 @@ class TaskModel extends Model
 
 
 
-    //Fungsi untuk mendapatkan data task menunggu verifikasi berdasarkan id pekerjaan
+
+    //Fungsi untuk mendapatkan data task hari ini yang ditolak berdasarkan id pekerjaan (untuk staff pm, supervisi pm, hod, direksi, admin)
+    public function getTaskHariIni_Ditolak_ByIdPekerjaan($id_pekerjaan)
+    {
+        $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
+        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'tgl_planing' => $today, 'id_status_task' => 4])
+            ->orderBy('tgl_planing', 'ASC')
+            ->findAll();
+    }
+    //Fungsi untuk mendapatkan data task hari ini yang ditolak berdasarkan id pekerjaan, dan id user (untuk staff non pm, supervisi non pm)
+    public function getTaskHariIni_Ditolak_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
+    {
+        $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
+        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'id_user' => $id_user, 'deleted_at' => null, 'tgl_planing' => $today, 'id_status_task' => 4])
+            ->orderBy('tgl_planing', 'ASC')
+            ->findAll();
+    }
+    // Fungsi untuk mendapatkan data task hari ini yang ditolak berdasarkan id pekerjaan, id user, dan id_kategori_task (untuk staff non pm, staff pm, supervisi non pm, supervisi pm, direksi, hod, admin)
+    public function getFiltered_TaskHariIni_Ditolak_ByIdPekerjaanIdUserKategoriTask($id_pekerjaan, $id_user, $id_kategori_task)
+    {
+        $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
+        $query = $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'tgl_planing' => $today, 'id_status_task' => 4]);
+        if ($id_user !== '') {
+            $query->where('id_user', $id_user);
+        }
+        if ($id_kategori_task !== '') {
+            $query->where('id_kategori_task', $id_kategori_task);
+        }
+        return $query->orderBy('tgl_planing', 'ASC')->findAll();
+    }
+    // Fungsi untuk menghitung jumlah task hari ini yang ditolak berdasarkan id pekerjaan (untuk staff pm, supervisi pm, hod, direksi, admin)
+    public function countTaskHariIni_Ditolak_ByIdPekerjaan($id_pekerjaan)
+    {
+        return count($this->getTaskHariIni_Ditolak_ByIdPekerjaan($id_pekerjaan));
+    }
+    // Fungsi untuk menghitung jumlah task hari ini yang ditolak berdasarkan id pekerjaan dan id user (untuk staff non pm, supervisi non pm)
+    public function countTaskHariIni_Ditolak_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
+    {
+        return count($this->getTaskHariIni_Ditolak_ByIdPekerjaanIdUser($id_pekerjaan, $id_user));
+    }
+
+
+
+    //Fungsi untuk mendapatkan data task planing yang ditolak berdasarkan id pekerjaan (untuk staff pm, supervisi pm, hod, direksi, admin)
+    public function getTaskPlaning_Ditolak_ByIdPekerjaan($id_pekerjaan)
+    {
+        $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
+        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'tgl_planing >' => $today, 'id_status_task' => 4])
+            ->orderBy('tgl_planing', 'ASC')
+            ->findAll();
+    }
+    //Fungsi untuk mendapatkan data task planing yang ditolak berdasarkan id pekerjaan, dan id user (untuk staff non pm, supervisi non pm)
+    public function getTaskPlaning_Ditolak_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
+    {
+        $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
+        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'id_user' => $id_user, 'deleted_at' => null, 'tgl_planing >' => $today, 'id_status_task' => 4])
+            ->orderBy('tgl_planing', 'ASC')
+            ->findAll();
+    }
+    //Fungsi untuk mendapatkan data task planing yang ditolak berdasarkan id pekerjaan, id user, dan id_kategori_task (untuk staff non pm, staff pm, supervisi non pm, supervisi pm, direksi, hod, admin)
+    public function getFiltered_TaskPlaning_Ditolak_ByIdPekerjaanIdUserKategoriTask($id_pekerjaan, $id_user, $id_kategori_task)
+    {
+        $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
+        $query = $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'tgl_planing >' => $today, 'id_status_task' => 4]);
+        if ($id_user !== '') {
+            $query->where('id_user', $id_user);
+        }
+        if ($id_kategori_task !== '') {
+            $query->where('id_kategori_task', $id_kategori_task);
+        }
+        return $query->orderBy('tgl_planing', 'ASC')->findAll();
+    }
+    // Fungsi untuk menghitung jumlah task planing yang ditolak berdasarkan id pekerjaan (untuk staff pm, supervisi pm, hod, direksi, admin)
+    public function countTaskPlaning_Ditolak_ByIdPekerjaan($id_pekerjaan)
+    {
+        return count($this->getTaskPlaning_Ditolak_ByIdPekerjaan($id_pekerjaan));
+    }
+    // Fungsi untuk menghitung jumlah task planing yang ditolak berdasarkan id pekerjaan dan id user (untuk staff non pm, supervisi non pm)
+    public function countTaskPlaning_Ditolak_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
+    {
+        return count($this->getTaskPlaning_Ditolak_ByIdPekerjaanIdUser($id_pekerjaan, $id_user));
+    }
+
+
+
+    //Fungsi untuk mendapatkan data task overdue yang ditolak berdasarkan id pekerjaan (untuk staff pm, supervisi pm, hod, direksi, admin)
+    public function getTaskOverdue_Ditolak_ByIdPekerjaan($id_pekerjaan)
+    {
+        $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
+        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'tgl_planing <' => $today, 'id_status_task' => 4])
+            ->orderBy('tgl_planing', 'ASC')
+            ->findAll();
+    }
+    //Fungsi untuk mendapatkan data task overdue yang ditolak berdasarkan id pekerjaan, dan id user (untuk staff non pm, supervisi non pm)
+    public function getTaskOverdue_Ditolak_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
+    {
+        $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
+        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'id_user' => $id_user, 'deleted_at' => null, 'tgl_planing <' => $today, 'id_status_task' => 4])
+            ->orderBy('tgl_planing', 'ASC')
+            ->findAll();
+    }
+    //Fungsi untuk mendapatkan data task overdue yang ditolak berdasarkan id pekerjaan, id user, dan id_kategori_task (untuk staff non pm, staff pm, supervisi non pm, supervisi pm, direksi, hod, admin)
+    public function getFiltered_TaskOverdue_Ditolak_ByIdPekerjaanIdUserKategoriTask($id_pekerjaan, $id_user, $id_kategori_task)
+    {
+        $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
+        $query = $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'tgl_planing <' => $today, 'id_status_task' => 4]);
+        if ($id_user !== '') {
+            $query->where('id_user', $id_user);
+        }
+        if ($id_kategori_task !== '') {
+            $query->where('id_kategori_task', $id_kategori_task);
+        }
+        return $query->orderBy('tgl_planing', 'ASC')->findAll();
+    }
+    // Fungsi untuk menghitung jumlah task overdue yang ditolak berdasarkan id pekerjaan (untuk staff pm, supervisi pm, hod, direksi, admin)
+    public function countTaskOverdue_Ditolak_ByIdPekerjaan($id_pekerjaan)
+    {
+        return count($this->getTaskOverdue_Ditolak_ByIdPekerjaan($id_pekerjaan));
+    }
+    // Fungsi untuk menghitung jumlah task overdue yang ditolak berdasarkan id pekerjaan dan id user (untuk staff non pm, supervisi non pm)
+    public function countTaskOverdue_Ditolak_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
+    {
+        return count($this->getTaskOverdue_Ditolak_ByIdPekerjaanIdUser($id_pekerjaan, $id_user));
+    }
+
+
+
+
+    //Fungsi untuk mendapatkan data task menunggu verifikasi berdasarkan id pekerjaan (untuk staff pm, hod, admin, direksi)
     public function get_TaskMenungguVerifikasi_ByIdPekerjaan($id_pekerjaan)
     {
         return $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'id_status_task' => 2])
             ->orderBy('tgl_planing', 'ASC')
             ->findAll();
     }
-    //Fungsi untuk mendapatkan data task menunggu verifikasi berdasarkan id pekerjaan, dan id user
+    //Fungsi untuk mendapatkan data task menunggu verifikasi berdasarkan id pekerjaan, dan id user (untuk staff non pm)
     public function get_TaskMenungguVerifikasi_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
     {
         return $this->where(['id_pekerjaan' => $id_pekerjaan, 'id_user' => $id_user, 'deleted_at' => null, 'id_status_task' => 2])
             ->orderBy('tgl_planing', 'ASC')
             ->findAll();
     }
-    //Fungsi untuk mendapatkan data task menunggu verifikasi berdasarkan id pekerjaan, id user, dan id_kategori_task (ini bisa digunakan untuk supervisi pm juga, karena supervisi tasknya akan selalu diterima ketika di submit dan tidak diverifikasi)
+    //Fungsi untuk mendapatkan data task menunggu verifikasi berdasarkan id pekerjaan, id user, dan id_kategori_task (untuk supervisi pm, staff pm, hod, admin, direksi) (ini bisa digunakan untuk supervisi pm juga, karena supervisi tasknya akan selalu diterima ketika di submit dan tidak diverifikasi)
     public function getFiltered_TaskMenungguVerifikasi_ByIdPekerjaanIdUserKategoriTask($id_pekerjaan, $id_user, $id_kategori_task)
     {
         $query = $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'id_status_task' => 2]);
@@ -176,7 +304,7 @@ class TaskModel extends Model
         }
         return $query->orderBy('tgl_planing', 'ASC')->findAll();
     }
-    //Fungsi untuk mendapatkan data task menunggu verifikasi untuk supervisi non pm
+    //Fungsi untuk mendapatkan data task menunggu verifikasi (untuk supervisi non pm)
     public function get_TaskMenungguVerifikasi_ByIdPekerjaanIdUsergroupIdUser($id_pekerjaan, $id_usergroup, $id_user)
     {
         $userModel = new \App\Models\UserModel();
@@ -203,7 +331,7 @@ class TaskModel extends Model
         }
         return $result;
     }
-    //Fungsi untuk mendapatkan data task menunggu verifikasi berdasarkan id pekerjaan, id user, dan id_kategori_task supervisi non pm
+    //Fungsi untuk mendapatkan data task menunggu verifikasi berdasarkan id pekerjaan, id user, dan id_kategori_task ( untuk supervisi non pm)
     public function getFiltered_TaskMenungguVerifikasi_ByIdPekerjaanIdUsergroupIdUserKategoriTask($id_pekerjaan, $id_usergroup, $id_user, $id_kategori_task)
     {
         $userModel = new \App\Models\UserModel();
@@ -245,8 +373,7 @@ class TaskModel extends Model
         }
         return $result;
     }
-
-    //Fungsi untuk mendapatkan data task menunggu verifikasi untuk supervisi pm
+    //Fungsi untuk mendapatkan data task menunggu verifikasi (untuk supervisi pm)
     public function get_TaskMenungguVerifikasi_ByIdPekerjaanIdUserPm($id_pekerjaan, $id_user)
     {
         return $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'id_status_task' => 2])
@@ -254,22 +381,22 @@ class TaskModel extends Model
             ->orderBy('tgl_planing', 'ASC')
             ->findAll();
     }
-    // Fungsi untuk menghitung jumlah task menunggu verifikasi berdasarkan id pekerjaan
+    // Fungsi untuk menghitung jumlah task menunggu verifikasi berdasarkan id pekerjaan (untuk staff pm, hod, admin, direksi)
     public function count_TaskMenungguVerifikasi_ByIdPekerjaan($id_pekerjaan)
     {
         return count($this->get_TaskMenungguVerifikasi_ByIdPekerjaan($id_pekerjaan));
     }
-    // Fungsi untuk menghitung jumlah task menunggu verifikasi berdasarkan id pekerjaan dan id user
+    // Fungsi untuk menghitung jumlah task menunggu verifikasi berdasarkan id pekerjaan dan id user (untuk staff non pm)
     public function count_TaskMenungguVerifikasi_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
     {
         return count($this->get_TaskMenungguVerifikasi_ByIdPekerjaanIdUser($id_pekerjaan, $id_user));
     }
-    //Fungsi untuk menghitung jumlah task menunggu verifikasi supervisi non pm
+    //Fungsi untuk menghitung jumlah task menunggu verifikasi (untuk supervisi non pm)
     public function count_TaskMenungguVerifikasi_ByIdPekerjaanIdUsergroupIdUser($id_pekerjaan, $id_usergroup, $id_user)
     {
         return count($this->get_TaskMenungguVerifikasi_ByIdPekerjaanIdUsergroupIdUser($id_pekerjaan, $id_usergroup, $id_user));
     }
-    //Fungsi untuk menghitung jumlah task menunggu verifikasi supervisi pm
+    //Fungsi untuk menghitung jumlah task menunggu verifikasi (untuk supervisi pm)
     public function count_TaskMenungguVerifikasi_ByIdPekerjaanIdUserPm($id_pekerjaan, $id_user)
     {
         return count($this->get_TaskMenungguVerifikasi_ByIdPekerjaanIdUserPm($id_pekerjaan, $id_user));
@@ -277,147 +404,21 @@ class TaskModel extends Model
 
 
 
-    //Fungsi untuk mendapatkan data task hari ini yang ditolak berdasarkan id pekerjaan
-    public function getTaskHariIni_Ditolak_ByIdPekerjaan($id_pekerjaan)
-    {
-        $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
-        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'tgl_planing' => $today, 'id_status_task' => 4])
-            ->orderBy('tgl_planing', 'ASC')
-            ->findAll();
-    }
-    //Fungsi untuk mendapatkan data task hari ini yang ditolak berdasarkan id pekerjaan, dan id user
-    public function getTaskHariIni_Ditolak_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
-    {
-        $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
-        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'id_user' => $id_user, 'deleted_at' => null, 'tgl_planing' => $today, 'id_status_task' => 4])
-            ->orderBy('tgl_planing', 'ASC')
-            ->findAll();
-    }
-    // Fungsi untuk mendapatkan data task hari ini yang ditolak berdasarkan id pekerjaan, id user, dan id_kategori_task
-    public function getFiltered_TaskHariIni_Ditolak_ByIdPekerjaanIdUserKategoriTask($id_pekerjaan, $id_user, $id_kategori_task)
-    {
-        $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
-        $query = $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'tgl_planing' => $today, 'id_status_task' => 4]);
-        if ($id_user !== '') {
-            $query->where('id_user', $id_user);
-        }
-        if ($id_kategori_task !== '') {
-            $query->where('id_kategori_task', $id_kategori_task);
-        }
-        return $query->orderBy('tgl_planing', 'ASC')->findAll();
-    }
-    // Fungsi untuk menghitung jumlah task hari ini yang ditolak berdasarkan id pekerjaan
-    public function countTaskHariIni_Ditolak_ByIdPekerjaan($id_pekerjaan)
-    {
-        return count($this->getTaskHariIni_Ditolak_ByIdPekerjaan($id_pekerjaan));
-    }
-    // Fungsi untuk menghitung jumlah task hari ini yang ditolak berdasarkan id pekerjaan dan id user
-    public function countTaskHariIni_Ditolak_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
-    {
-        return count($this->getTaskHariIni_Ditolak_ByIdPekerjaanIdUser($id_pekerjaan, $id_user));
-    }
-
-
-
-    //Fungsi untuk mendapatkan data task planing yang ditolak berdasarkan id pekerjaan
-    public function getTaskPlaning_Ditolak_ByIdPekerjaan($id_pekerjaan)
-    {
-        $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
-        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'tgl_planing >' => $today, 'id_status_task' => 4])
-            ->orderBy('tgl_planing', 'ASC')
-            ->findAll();
-    }
-    //Fungsi untuk mendapatkan data task planing yang ditolak berdasarkan id pekerjaan, dan id user
-    public function getTaskPlaning_Ditolak_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
-    {
-        $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
-        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'id_user' => $id_user, 'deleted_at' => null, 'tgl_planing >' => $today, 'id_status_task' => 4])
-            ->orderBy('tgl_planing', 'ASC')
-            ->findAll();
-    }
-    //Fungsi untuk mendapatkan data task planing yang ditolak berdasarkan id pekerjaan, id user, dan id_kategori_task
-    public function getFiltered_TaskPlaning_Ditolak_ByIdPekerjaanIdUserKategoriTask($id_pekerjaan, $id_user, $id_kategori_task)
-    {
-        $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
-        $query = $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'tgl_planing >' => $today, 'id_status_task' => 4]);
-        if ($id_user !== '') {
-            $query->where('id_user', $id_user);
-        }
-        if ($id_kategori_task !== '') {
-            $query->where('id_kategori_task', $id_kategori_task);
-        }
-        return $query->orderBy('tgl_planing', 'ASC')->findAll();
-    }
-    // Fungsi untuk menghitung jumlah task planing yang ditolak berdasarkan id pekerjaan
-    public function countTaskPlaning_Ditolak_ByIdPekerjaan($id_pekerjaan)
-    {
-        return count($this->getTaskPlaning_Ditolak_ByIdPekerjaan($id_pekerjaan));
-    }
-    // Fungsi untuk menghitung jumlah task planing yang ditolak berdasarkan id pekerjaan dan id user
-    public function countTaskPlaning_Ditolak_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
-    {
-        return count($this->getTaskPlaning_Ditolak_ByIdPekerjaanIdUser($id_pekerjaan, $id_user));
-    }
-
-
-
-    //Fungsi untuk mendapatkan data task overdue yang ditolak berdasarkan id pekerjaan
-    public function getTaskOverdue_Ditolak_ByIdPekerjaan($id_pekerjaan)
-    {
-        $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
-        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'tgl_planing <' => $today, 'id_status_task' => 4])
-            ->orderBy('tgl_planing', 'ASC')
-            ->findAll();
-    }
-    //Fungsi untuk mendapatkan data task overdue yang ditolak berdasarkan id pekerjaan, dan id user
-    public function getTaskOverdue_Ditolak_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
-    {
-        $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
-        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'id_user' => $id_user, 'deleted_at' => null, 'tgl_planing <' => $today, 'id_status_task' => 4])
-            ->orderBy('tgl_planing', 'ASC')
-            ->findAll();
-    }
-    //Fungsi untuk mendapatkan data task overdue yang ditolak berdasarkan id pekerjaan, id user, dan id_kategori_task
-    public function getFiltered_TaskOverdue_Ditolak_ByIdPekerjaanIdUserKategoriTask($id_pekerjaan, $id_user, $id_kategori_task)
-    {
-        $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
-        $query = $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'tgl_planing <' => $today, 'id_status_task' => 4]);
-        if ($id_user !== '') {
-            $query->where('id_user', $id_user);
-        }
-        if ($id_kategori_task !== '') {
-            $query->where('id_kategori_task', $id_kategori_task);
-        }
-        return $query->orderBy('tgl_planing', 'ASC')->findAll();
-    }
-    // Fungsi untuk menghitung jumlah task overdue yang ditolak berdasarkan id pekerjaan
-    public function countTaskOverdue_Ditolak_ByIdPekerjaan($id_pekerjaan)
-    {
-        return count($this->getTaskOverdue_Ditolak_ByIdPekerjaan($id_pekerjaan));
-    }
-    // Fungsi untuk menghitung jumlah task overdue yang ditolak berdasarkan id pekerjaan dan id user
-    public function countTaskOverdue_Ditolak_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
-    {
-        return count($this->getTaskOverdue_Ditolak_ByIdPekerjaanIdUser($id_pekerjaan, $id_user));
-    }
-
-
-
-    //Fungsi untuk mendapatkan data task selesai berdasarkan id pekerjaan
+    //Fungsi untuk mendapatkan data task selesai berdasarkan id pekerjaan (untuk staff pm, supervisi pm, hod, direksi, admin)
     public function getTaskSelesai_ByIdPekerjaan($id_pekerjaan)
     {
         return $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'id_status_task' => 3])
             ->orderBy('tgl_planing', 'ASC')
             ->findAll();
     }
-    //Fungsi untuk mendapatkan data task selesai berdasarkan id pekerjaan, dan id user
+    //Fungsi untuk mendapatkan data task selesai berdasarkan id pekerjaan, dan id user (untuk staff non pm, supervisi non pm)
     public function getTaskSelesai_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
     {
         return $this->where(['id_pekerjaan' => $id_pekerjaan, 'id_user' => $id_user, 'deleted_at' => null, 'id_status_task' => 3])
             ->orderBy('tgl_planing', 'ASC')
             ->findAll();
     }
-    //Fungsi untuk mendapatkan data task selesai berdasarkan id pekerjaan, id user, dan id_kategori_task
+    //Fungsi untuk mendapatkan data task selesai berdasarkan id pekerjaan, id user, dan id_kategori_task (untuk staff pm, staff non pm, supervisi pm, supervisi non pm, direksi, hod, admin)
     public function getFiltered_TaskSelesai_ByIdPekerjaanIdUserKategoriTask($id_pekerjaan, $id_user, $id_kategori_task)
     {
         $query = $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'id_status_task' => 3]);
@@ -429,12 +430,12 @@ class TaskModel extends Model
         }
         return $query->orderBy('tgl_planing', 'ASC')->findAll();
     }
-    // Fungsi untuk menghitung jumlah task selesai berdasarkan id pekerjaan
+    // Fungsi untuk menghitung jumlah task selesai berdasarkan id pekerjaan (untuk staff pm, supervisi pm, hod, direksi, admin)
     public function countTaskSelesai_ByIdPekerjaan($id_pekerjaan)
     {
         return count($this->getTaskSelesai_ByIdPekerjaan($id_pekerjaan));
     }
-    // Fungsi untuk menghitung jumlah task selesai berdasarkan id pekerjaan dan id user
+    // Fungsi untuk menghitung jumlah task selesai berdasarkan id pekerjaan dan id user (untuk staff non pm, supervisi non pm)
     public function countTaskSelesai_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
     {
         return count($this->getTaskSelesai_ByIdPekerjaanIdUser($id_pekerjaan, $id_user));

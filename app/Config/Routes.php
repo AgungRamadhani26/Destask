@@ -55,26 +55,28 @@ $routes->delete('/pekerjaan/delete_pekerjaan/(:num)', 'Pekerjaan::delete_pekerja
 
 //Rotes Task
 //Untuk menampilkan halaman daftar task
-$routes->get('/task/daftar_task/(:num)', 'Task::daftar_task/$1');
+$routes->get('/task/daftar_task/(:num)', 'Task::daftar_task/$1'); //Sudah beres masalah akses karena semua udah diatur di controller
 //Untuk menampilkan form tambah task
-$routes->get('/task/add_task/(:num)', 'Task::add_task/$1');
+$routes->get('/task/add_task/(:num)', 'Task::add_task/$1'); //Sudah beres masalah akses karena semua udah diatur di controller
 //Untuk menambah task
-$routes->post('/task/tambah_task', 'Task::tambah_task');
+$routes->post('/task/tambah_task', 'Task::tambah_task'); //Sudah beres masalah akses karena semua udah diatur di controller
 //Untuk menampilkan form edit task
-$routes->get('/task/edit_task/(:num)', 'Task::edit_task/$1');
-$routes->post('/task/update_task', 'Task::update_task');
+$routes->get('/task/edit_task/(:num)', 'Task::edit_task/$1'); //Sudah beres masalah akses karena semua udah diatur di controller
+$routes->post('/task/update_task', 'Task::update_task'); //Sudah beres masalah akses karena semua udah diatur di controller
 //Untuk menghapus task
-$routes->delete('/task/delete_task/(:num)', 'Task::delete_task/$1');
+$routes->delete('/task/delete_task/(:num)', 'Task::delete_task/$1'); //Sudah beres masalah akses karena semua udah diatur di controller
 //Untuk menampilkan form submit task
-$routes->get('/task/submit_task/(:num)', 'Task::submit_task/$1');
+$routes->get('/task/submit_task/(:num)', 'Task::submit_task/$1'); //Sudah beres masalah akses karena semua udah diatur di controller
 //Untuk submit task
-$routes->post('/task/save_submit_task', 'Task::save_submit_task');
+$routes->post('/task/save_submit_task', 'Task::save_submit_task'); //Sudah beres masalah akses karena semua udah diatur di controller
 //Untuk melihat detail task
-$routes->get('/task/detail_task/(:num)', 'Task::detail_task/$1');
+$routes->get('/task/detail_task/(:num)', 'Task::detail_task/$1'); //Sudah beres masalah akses karena semua udah diatur di controller
 //Untuk memfilter data yang ditampilkan
-$routes->get('/task/filter_task/(:num)', 'Task::filter_task/$1');
+$routes->get('/task/filter_task/(:num)', 'Task::filter_task/$1'); //Sudah beres masalah akses karena semua udah diatur di controller
 //Untuk menampilkan verifikasi task
-$routes->get('/task/verifikasi_task/(:num)', 'Task::verifikasi_task/$1');
+$routes->get('/task/verifikasi_task/(:num)', 'Task::verifikasi_task/$1'); //Sudah beres masalah akses karena semua udah diatur di controller
+//Untuk melihat alasan verifikasi task
+$routes->get('/task/alasan_verifikasi_task/(:num)', 'Task::alasan_verifikasi_task/$1'); //Sudah beres masalah akses karena semua udah diatur di controller
 
 //Routes Personil
 //Untuk edit personil pm
