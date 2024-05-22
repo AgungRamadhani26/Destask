@@ -634,6 +634,18 @@ class Task extends BaseController
             //Proses upload file
             $nama_bukti_selesai = $bukti_selesai->getRandomName();
             $bukti_selesai->move('assets/bukti_task', $nama_bukti_selesai);
+            //Hapus file lama jika ada file lama
+            if ($task['bukti_selesai'] != null) {
+                unlink('assets/bukti_task/' . $task['bukti_selesai']);
+            }
+            //Pengecekan siapakah yang login, kalau supervisi id_status_task 3, kalau staff id_status_task 2
+            if (session()->get('user_level') == 'staff') {
+                $id_status_task = 2;
+                $tgl_verifikasi_diterima = null;
+            } elseif (session()->get('user_level') == 'supervisi') {
+                $id_status_task = 3;
+                $tgl_verifikasi_diterima = date("Y-m-d");
+            }
             //Proses memasukkan data ke database
             $data_task = [
                 'id_task' => $id_task,
@@ -641,10 +653,10 @@ class Task extends BaseController
                 'id_user' => $task['id_user'],
                 'creator' => $task['creator'],
                 'id_kategori_task' => $task['id_kategori_task'],
-                'id_status_task' => 2,
+                'id_status_task' => $id_status_task,
                 'tgl_planing' => $task['tgl_planing'],
                 'tgl_selesai' => date("Y-m-d"),
-                'tgl_verifikasi_diterima' => null,
+                'tgl_verifikasi_diterima' => $tgl_verifikasi_diterima,
                 'persentase_selesai' => 100,
                 'deskripsi_task' => $task['deskripsi_task'],
                 'alasan_verifikasi' => null,
@@ -742,6 +754,79 @@ class Task extends BaseController
                     return view('task/verifikasi_task', $data);
                 }
             }
+        }
+    }
+
+    //Fungsi untuk menerima verifikasi task
+    public function terima_verifikasi_task()
+    {
+        //Mengambil data dari form
+        $id_task = $this->request->getPost('id_task_terima');
+        //Mendapatkan data task
+        $task = $this->taskModel->getTask($id_task);
+        //Melakukan verifikasi
+        $data_task = [
+            'id_task' => $id_task,
+            'id_pekerjaan' => $task['id_pekerjaan'],
+            'id_user' => $task['id_user'],
+            'creator' => $task['creator'],
+            'id_kategori_task' => $task['id_kategori_task'],
+            'id_status_task' => 3,
+            'tgl_planing' => $task['tgl_planing'],
+            'tgl_selesai' => $task['tgl_selesai'],
+            'tgl_verifikasi_diterima' => date("Y-m-d"),
+            'persentase_selesai' => $task['persentase_selesai'],
+            'deskripsi_task' => $task['deskripsi_task'],
+            'alasan_verifikasi' => null,
+            'bukti_selesai' => $task['bukti_selesai'],
+            'tautan_task' => $task['tautan_task']
+        ];
+        $this->taskModel->save($data_task);
+        Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil memverifikasi task (TERIMA).');
+        return redirect()->to('task/daftar_task/' . $task['id_pekerjaan']);
+    }
+
+    //Fungsi untuk menolak verifikasi task
+    public function tolak_verifikasi_task()
+    {
+        $validasi = \Config\Services::validation();
+        $aturan = [
+            'alasan_verifikasi' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Alasan penolakan harus diisi',
+                ]
+            ]
+        ];
+        $validasi->setRules($aturan);
+        if ($validasi->withRequest($this->request)->run()) {
+            $id_task = $this->request->getPost('id_task_tolak');
+            $alasan_tolak_verifikasi = preg_replace('/\s+/', ' ', trim(strval($this->request->getPost('alasan_verifikasi'))));
+            //Mendapatkan data task
+            $task = $this->taskModel->getTask($id_task);
+            //Melakukan penolakan verifikasi
+            $data_task = [
+                'id_task' => $id_task,
+                'id_pekerjaan' => $task['id_pekerjaan'],
+                'id_user' => $task['id_user'],
+                'creator' => $task['creator'],
+                'id_kategori_task' => $task['id_kategori_task'],
+                'id_status_task' => 4,
+                'tgl_planing' => $task['tgl_planing'],
+                'tgl_selesai' => null,
+                'tgl_verifikasi_diterima' => null,
+                'persentase_selesai' => 0,
+                'deskripsi_task' => $task['deskripsi_task'],
+                'alasan_verifikasi' => $alasan_tolak_verifikasi,
+                'bukti_selesai' => $task['bukti_selesai'],
+                'tautan_task' => $task['tautan_task']
+            ];
+            $this->taskModel->save($data_task);
+            Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil memverifikasi task (TOLAK).');
+            return redirect()->to('task/daftar_task/' . $task['id_pekerjaan']);
+        } else {
+            session()->setFlashdata('error', $validasi->listErrors());
+            return redirect()->withInput()->with('modal', 'modalalasan_verifikasi_ditolak')->back();
         }
     }
 }

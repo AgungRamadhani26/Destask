@@ -8,6 +8,7 @@ use App\Models\PekerjaanModel;
 use App\Models\PersonilModel;
 use App\Models\StatusPekerjaanModel;
 use App\Models\TargetPoinHarianModel;
+use App\Models\TaskModel;
 use App\Models\UserGroupModel;
 use App\Models\UserModel;
 use PhpParser\Node\Stmt\If_;
@@ -23,6 +24,7 @@ class Dashboard extends BaseController
     protected $statusPekerjaanModel;
     protected $hariliburModel;
     protected $targetpoinharianModel;
+    protected $taskModel;
     public function __construct()
     {
         $this->pekerjaanModel = new PekerjaanModel();
@@ -33,6 +35,7 @@ class Dashboard extends BaseController
         $this->statusPekerjaanModel = new StatusPekerjaanModel();
         $this->hariliburModel = new HariLiburModel();
         $this->targetpoinharianModel = new TargetPoinHarianModel();
+        $this->taskModel = new TaskModel();
         helper(['swal_helper', 'option_helper']);
     }
 
@@ -107,7 +110,7 @@ class Dashboard extends BaseController
             $usergroup_yang_tidak_ada_ditarget_poin_harian[] = null;
         }
 
-
+        //Dashboard target poin harian bulan ini
         $target_poin_harian_design = $this->targetpoinharianModel->getTargetPoinHarianByTahunBulanIdusergroup($tahun_ini, $bulan_ini, 1);
         if (!empty($target_poin_harian_design)) {
             $target_poin_harian_design1 = $target_poin_harian_design[0]['jumlah_target_poin_sebulan'];
@@ -144,6 +147,15 @@ class Dashboard extends BaseController
         } else {
             $target_poin_harian_helpdesk1 = 'Belum diset';
         }
+
+        //Dashboard task selesai bulan ini
+        $Tahun_sekarang = date("Y");
+        $Bulan_sekarang = date("n");
+        if (session()->get('user_level') == 'staff' || session()->get('user_level') == 'supervisi') {
+            $jumlah_task_selesai_bulan_ini = $this->taskModel->countTaskSelesai_TahunIni_BulanIni_ByIdUser($Tahun_sekarang, $Bulan_sekarang, session()->get('id_user'));
+        } else {
+            $jumlah_task_selesai_bulan_ini = $this->taskModel->countTaskSelesai_TahunIni_BulanIni($Tahun_sekarang, $Bulan_sekarang);
+        }
         $data = [
             'usergroup_yang_tidak_ada_ditarget_poin_harian' => $usergroup_yang_tidak_ada_ditarget_poin_harian,
             'target_poin_harian_tahun_bulan_ini_lengkap' => $target_poin_harian_tahun_bulan_ini_lengkap,
@@ -153,6 +165,7 @@ class Dashboard extends BaseController
             'target_poin_harian_tester' => $target_poin_harian_tester1,
             'target_poin_harian_admin' => $target_poin_harian_admin1,
             'target_poin_harian_helpdesk' => $target_poin_harian_helpdesk1,
+            'jumlah_task_selesai_bulan_ini' => $jumlah_task_selesai_bulan_ini,
             'jumlah_pekerjaan' => $jumlah_pekerjaan,
             'jumlah_pekerjaan_presales' => $jumlah_pekerjaan_presales,
             'jumlah_pekerjaan_onprogres' => $jumlah_pekerjaan_onprogres,

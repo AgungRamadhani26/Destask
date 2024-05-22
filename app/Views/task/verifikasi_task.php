@@ -87,8 +87,10 @@
                            <div class="col-md-4 mb-3">
                               <label for="tgl_selesai" class="form-label" style="font-weight: 600;">
                                  Waktu Selesai
-                                 <?php if ($task['tgl_selesai'] <= $task['tgl_planing']) : ?>
-                                    <span style="background-color:green" class="badge rounded-pill">Tepat Waktu</span>
+                                 <?php if ($task['tgl_selesai'] < $task['tgl_planing']) : ?>
+                                    <span style="background-color:green" class="badge rounded-pill">Lebih Awal</span>
+                                 <?php elseif ($task['tgl_selesai'] == $task['tgl_planing']) : ?>
+                                    <span style="background-color:blue" class="badge rounded-pill">Tepat Waktu</span>
                                  <?php else : ?>
                                     <span style="background-color:red" class="badge rounded-pill">Terlambat</span>
                                  <?php endif; ?>
@@ -104,11 +106,24 @@
                                  </div>
                               </div>
                            </div>
+                           <?php
+                           // Fungsi untuk memeriksa apakah string adalah URL yang valid
+                           function isValidUrl($url)
+                           {
+                              return filter_var($url, FILTER_VALIDATE_URL) !== false;
+                           }
+                           $isValidLink = isValidUrl($task['tautan_task']);
+                           ?>
                            <div class="col-md-8 mb-3">
-                              <label for="tautan_task" class="form-label" style="font-weight: 600;">Tautan Task<span style="color: blue;font-size: 13px;"> *klik tautan untuk melihat</span></label>
-                              <div class="form-control"><a href="<?= $task['tautan_task'] ?>" target="_blank"><?= $task['tautan_task'] ?></a></div>
+                              <label for="tautan_task" class="form-label" style="font-weight: 600;">
+                                 Tautan Task
+                                 <?= $isValidLink ? '<span style="color: blue;font-size: 13px;">*klik tautan untuk melihat</span>' : '' ?>
+                              </label>
+                              <div class="form-control">
+                                 <?= $isValidLink ? '<a href="' . $task['tautan_task'] . '" target="_blank">' . $task['tautan_task'] . '</a>' : $task['tautan_task'] ?>
+                              </div>
                            </div>
-                           <div class="col-md-12 mb-3">
+                           <div class="col-md-12">
                               <label for="bukti_selesai" class="form-label" style="font-weight: 600;">Bukti Selesai</label>
                               <div class="row">
                                  <div class="col-md-9">
@@ -133,14 +148,13 @@
                      <div class="col-md-12">
                         <div class="row">
                            <div class="col-md-12 mb-3">
-                              <div class="alert alert-primary d-flex align-items-center" role="alert">
-                                 <div>
-                                    <i class="bi bi-info-circle-fill"> Silahkan lakukan verifikasi, anda dapat menerima jika task sudah sesuai, selain itu anda juga dapat menolaknya.</i>
-                                 </div>
-                              </div>
                               <div class="text-center">
-                                 <a href="" class="btn btn-success"><i class="bi bi-check2-circle"></i> Terima</a>
-                                 <a href="" class="btn btn-danger"><i class="bi bi-x-circle"></i></i> Tolak</a>
+                                 <form action="/task/terima_verifikasi_task" method="post" class="d-inline">
+                                    <?= csrf_field() ?>
+                                    <input type="hidden" name="id_task_terima" value="<?= $task['id_task'] ?>">
+                                    <button type="submit" class="btn btn-success"><i class="bi bi-check2-circle"></i> Terima</button>
+                                 </form>
+                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalalasan_verifikasi_ditolak"><i class="bi bi-x-circle"></i> Tolak</button>
                               </div>
                            </div>
                         </div>
@@ -181,5 +195,8 @@
       }
    }
 </script>
+
+<!--include Modal untuk pengisian alasan penolakan-->
+<?= $this->include('task/modal_alasan_verifikasi_ditolak'); ?>
 
 <?= $this->endSection(); ?>

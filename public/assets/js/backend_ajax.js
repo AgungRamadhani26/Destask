@@ -188,6 +188,12 @@ function lihat_alasan_verifikasi(id) {
    });
 }
 
+//Proses membersikan form alasan verifikasi ditolak jika mengclose modal
+$('.tombol-alasan-penolakan').on('click', function() {
+   $('.alert').hide();
+   $('#alasan_verifikasi').val('');
+});
+
 
 
 

@@ -440,4 +440,17 @@ class TaskModel extends Model
     {
         return count($this->getTaskSelesai_ByIdPekerjaanIdUser($id_pekerjaan, $id_user));
     }
+
+
+
+    //Fungsi untuk menghitung task selesai tahun ini, dibulan ini, berdasarkan usergroup
+    public function countTaskSelesai_TahunIni_BulanIni($tahun, $bulan)
+    {
+        return count($this->where(['YEAR(tgl_selesai)' => $tahun, 'MONTH(tgl_selesai)' => $bulan, 'deleted_at' => null, 'id_status_task' => 3])->findAll());
+    }
+    //Fungsi untuk menghitung task selesai tahun ini, dibulan ini, berdasarkan id_user
+    public function countTaskSelesai_TahunIni_BulanIni_ByIdUser($tahun, $bulan, $id_user)
+    {
+        return count($this->where(['YEAR(tgl_selesai)' => $tahun, 'MONTH(tgl_selesai)' => $bulan, 'id_user' => $id_user, 'deleted_at' => null, 'id_status_task' => 3])->findAll());
+    }
 }

@@ -135,7 +135,7 @@
                                 </div>
                                 <div class="ps-3">
                                     <h5 class="judul_card">Task Selesai Bulan Ini</h5>
-                                    <span class="text-danger small fw-bold">26</span>
+                                    <span class="text-danger small fw-bold"><?= $jumlah_task_selesai_bulan_ini ?> Task</span>
                                 </div>
                             </div>
                         </div>

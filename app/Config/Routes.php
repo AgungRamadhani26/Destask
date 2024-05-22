@@ -77,6 +77,10 @@ $routes->get('/task/filter_task/(:num)', 'Task::filter_task/$1'); //Sudah beres 
 $routes->get('/task/verifikasi_task/(:num)', 'Task::verifikasi_task/$1'); //Sudah beres masalah akses karena semua udah diatur di controller
 //Untuk melihat alasan verifikasi task
 $routes->get('/task/alasan_verifikasi_task/(:num)', 'Task::alasan_verifikasi_task/$1'); //Sudah beres masalah akses karena semua udah diatur di controller
+//Untuk menerima verifikasi task
+$routes->post('/task/terima_verifikasi_task', 'Task::terima_verifikasi_task'); //Sudah beres masalah akses karena semua udah diatur di controller
+//Untuk menolak verifikasi task
+$routes->post('/task/tolak_verifikasi_task', 'Task::tolak_verifikasi_task'); //Sudah beres masalah akses karena semua udah diatur di controller
 
 //Routes Personil
 //Untuk edit personil pm

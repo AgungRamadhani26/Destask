@@ -136,15 +136,23 @@
                               </div>
                            </div>
 
-                           <div class="col-md-12">
+                           <?php if ($task['tgl_verifikasi_diterima'] !== null) : ?>
+                              <div class="col-md-4">
+                                 <label for="tgl_verifikasi_diterima" class="form-label" style="font-weight: 600;">Tanggal Verifikasi Diterima</label>
+                                 <?php $tgl_verifikasi_diterima = date('d-m-Y', strtotime($task['tgl_verifikasi_diterima'])) ?>
+                                 <div class="form-control"><?= $tgl_verifikasi_diterima ?></div>
+                              </div>
+                           <?php endif ?>
+
+                           <div class="<?= $task['tgl_verifikasi_diterima'] === null ? 'col-md-12' : 'col-md-8' ?>">
                               <label for="bukti_selesai" class="form-label" style="font-weight: 600;">Bukti Selesai</label>
                               <div class="row">
-                                 <div class="col-md-9">
+                                 <div class="<?= $task['tgl_verifikasi_diterima'] === null ? 'col-md-9' : 'col-md-7' ?>">
                                     <div class="form-control">
                                        <?= $task['bukti_selesai'] ?>
                                     </div>
                                  </div>
-                                 <div class="col-md-3">
+                                 <div class="<?= $task['tgl_verifikasi_diterima'] === null ? 'col-md-3' : 'col-md-5' ?>">
                                     <div class="mb-3">
                                        <a href="/assets/bukti_task/<?= $task['bukti_selesai'] ?>" class="btn btn-success" download><i class="bi bi-download"></i> Download</a>
                                        <button type="button" class="btn btn-primary" onclick="togglePreview()"><i id="previewIcon" class="bi bi-eye"></i> Preview</button>
