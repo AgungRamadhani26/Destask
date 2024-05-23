@@ -82,6 +82,12 @@ $routes->post('/task/terima_verifikasi_task', 'Task::terima_verifikasi_task'); /
 //Untuk menolak verifikasi task
 $routes->post('/task/tolak_verifikasi_task', 'Task::tolak_verifikasi_task'); //Sudah beres masalah akses karena semua udah diatur di controller
 
+//Routes Kinerja
+//Untuk menampilkan halaman daftar kinerja karyawan
+$routes->get('/kinerja/daftar_kinerja_karyawan', 'Kinerja::daftar_kinerja_karyawan');
+//Untuk melihat halaman daftar kinerja perkaryawan
+$routes->get('/kinerja/daftar_kinerja_karyawan/(:num)', 'Kinerja::daftar_kinerja_perkaryawan/$1');
+
 //Routes Personil
 //Untuk edit personil pm
 $routes->get('/personil/edit_personil/(:num)', 'Personil::edit_personil/$1');

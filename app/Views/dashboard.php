@@ -211,15 +211,7 @@
                             <button type="button" class="btn btn-warning"><i class="bi bi-download"></i> Download Pekerjaan</button>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-3">
-                                <select class="form-select" aria-label="Default select example">
-                                    <option value="">10</option>
-                                    <option value="">25</option>
-                                    <option value="">50</option>
-                                    <option value="">Semua</option>
-                                </select>
-                            </div>
-                            <div class="col-9">
+                            <div class="col-12">
                                 <div class="input-group">
                                     <div class="input-group-append">
                                         <span class="input-group-text" id="search-addon">
