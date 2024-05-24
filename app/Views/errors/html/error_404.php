@@ -24,6 +24,8 @@
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
             color: #777;
             font-weight: 300;
+            overflow: hidden;
+            /* Add this to prevent scroll bars */
         }
 
         h1 {
@@ -76,6 +78,20 @@
         a:visited {
             color: #dd4814;
         }
+
+        /* Animation styles */
+        .emoji {
+            position: absolute;
+            top: -50px;
+            font-size: 2rem;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
     </style>
 
     <!-- Favicons -->
@@ -103,7 +119,6 @@
     <main>
         <div class="container">
             <section class="section error-404 min-vh-100 d-flex flex-column align-items-center justify-content-center">
-                <!-- <div class="wrap"> -->
                 <h1>404</h1>
                 <h2>
                     <?php if (ENVIRONMENT !== 'production') : ?>
@@ -112,12 +127,10 @@
                         <?= lang('Errors.sorryCannotFind') ?>
                     <?php endif; ?>
                 </h2>
-                <h1 class="py-5">&#128511;&#128540;&#128511;</h1>
-                <!-- </div> -->
+                <div class="py-5" style="font-size: 3rem;">&#128511;&#128540;&#128511;</div>
             </section>
         </div>
     </main>
-
 
     <!-- Vendor JS Files -->
     <script src="/assets/library_fe/apexcharts/apexcharts.min.js"></script>
@@ -131,6 +144,25 @@
 
     <!-- Template Main JS File -->
     <script src="/assets/js/main.js"></script>
+
+    <!-- Custom JS for emoji rain -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const emojis = ['&#128511;', '&#128540;'];
+            const createEmoji = () => {
+                const emoji = document.createElement('div');
+                emoji.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+                emoji.classList.add('emoji');
+                emoji.style.left = Math.random() * 100 + 'vw';
+                emoji.style.animationDuration = Math.random() * 2 + 3 + 's';
+                document.body.appendChild(emoji);
+                setTimeout(() => {
+                    emoji.remove();
+                }, 5000); // remove emoji after it falls
+            }
+            setInterval(createEmoji, 150); // create emoji every 300ms
+        });
+    </script>
 </body>
 
 </html>

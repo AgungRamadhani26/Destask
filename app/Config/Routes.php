@@ -13,24 +13,24 @@ use CodeIgniter\Router\RouteCollection;
 
 //Routes autentikasi
 //Untuk menampilkan halaman login
-$routes->get('/', 'Autentikasi::index');
+$routes->get('/', 'Autentikasi::index', ['filter' => 'khususPengguna']); //Akses beres udah dibikin filter/middleware khususPengguna
 //Untuk melakukan login ke aplikasi Destask
-$routes->post('/login', 'Autentikasi::login');
+$routes->post('/login', 'Autentikasi::login'); //Akses beres udah dibikin filter/middleware PendukungAutentikasi
 //Untuk melakukan logout dari aplikasi Destask
-$routes->get('/logout', 'Autentikasi::logout');
+$routes->get('/logout', 'Autentikasi::logout'); //Akses beres tidak perlu diberi filter/middleware, session dihapus
 
 //Routes dashboard
 $routes->get('/dashboard', 'Dashboard::lihat_dashboard');
 //Untuk menampilkan halaman lupa password
-$routes->get('/lupa_password', 'Profile::lupa_password');
+$routes->get('/lupa_password', 'Profile::lupa_password'); //Akses beres udah dibikin filter/middleware PendukungAutentikasi
 //Untuk melakukan cek email
-$routes->post('/lupa_password/cek_email', 'Profile::cek_email');
+$routes->post('/lupa_password/cek_email', 'Profile::cek_email'); //Akses beres udah dibikin filter/middleware PendukungAutentikasi
 //Untuk menampilkan halaman reset password
-$routes->get('/lupa_password/reset_password/(:any)', 'Profile::reset_password/$1');
+$routes->get('/lupa_password/reset_password/(:any)', 'Profile::reset_password/$1'); //Akses beres udah dibikin filter/middleware PendukungAutentikasi
 //Untuk melakukan reset password
-$routes->post('/lupa_password/save_reset_password/(:num)', 'Profile::save_reset_password/$1');
+$routes->post('/lupa_password/save_reset_password/(:num)', 'Profile::save_reset_password/$1'); //Akses beres udah dibikin filter/middleware PendukungAutentikasi
 //Untuk menampilkan hasil reset password berhasil atau tidak
-$routes->get('/lupa_password/result_reset_password', 'Profile::result_reset_password');
+$routes->get('/lupa_password/result_reset_password', 'Profile::result_reset_password'); //Akses beres udah dibikin filter/middleware PendukungAutentikasi
 
 //Routes pekerjaan
 //Untuk menampilkan halaman daftar pekerjaan
@@ -40,7 +40,7 @@ $routes->get('/pekerjaan/add_pekerjaan', 'Pekerjaan::add_pekerjaan');
 //Untuk menambah pekerjaan
 $routes->post('/pekerjaan/tambah_pekerjaan', 'Pekerjaan::tambah_pekerjaan');
 //Untuk melihat detail pekerjaan
-$routes->get('/pekerjaan/detail_pekerjaan/(:num)', 'Pekerjaan::detail_pekerjaan/$1');
+$routes->get('/pekerjaan/detail_pekerjaan/(:num)', 'Pekerjaan::detail_pekerjaan/$1'); //Sudah beres masalah akses karena semua udah diatur di controller
 //Untuk menampilkan form edit pekerjaan
 $routes->get('/pekerjaan/edit_pekerjaan/(:num)', 'Pekerjaan::edit_pekerjaan/$1');
 $routes->post('/pekerjaan/update_pekerjaan', 'Pekerjaan::update_pekerjaaan');
@@ -113,82 +113,82 @@ $routes->delete('/personil/delete_personil/(:num)/(:num)', 'Personil::delete_per
 
 //Routes Status Pekerjaan
 //Untuk menampilkan halaman daftar status pekerjaan
-$routes->get('/status_pekerjaan/daftar_status_pekerjaan', 'StatusPekerjaan::daftar_status_pekerjaan');
+$routes->get('/status_pekerjaan/daftar_status_pekerjaan', 'StatusPekerjaan::daftar_status_pekerjaan'); //Akses beres udah dibikin filter/middleware khususAdmin
 //Untuk menambah status pekerjaan
 // $routes->post('/status_pekerjaan/tambah_status_pekerjaan', 'StatusPekerjaan::tambah_status_pekerjaan');
 //Untuk mengedit status pekerjaan
-$routes->get('/status_pekerjaan/edit_status_pekerjaan/(:num)', 'StatusPekerjaan::edit_status_pekerjaan/$1');
-$routes->post('/status_pekerjaan/update_status_pekerjaan', 'StatusPekerjaan::update_status_pekerjaan');
+$routes->get('/status_pekerjaan/edit_status_pekerjaan/(:num)', 'StatusPekerjaan::edit_status_pekerjaan/$1'); //Akses beres udah dibikin filter/middleware khususAdmin
+$routes->post('/status_pekerjaan/update_status_pekerjaan', 'StatusPekerjaan::update_status_pekerjaan'); //Akses beres udah dibikin filter/middleware khususAdmin
 //Untuk menghapus status pekerjaan
 // $routes->delete('/status_pekerjaan/delete_status_pekerjaan/(:num)', 'StatusPekerjaan::delete_status_pekerjaan/$1');
 
 //Routes Kategori Pekerjaan
 //Untuk menampilkan halaman daftar kategori pekerjaan
-$routes->get('/kategori_pekerjaan/daftar_kategori_pekerjaan', 'KategoriPekerjaan::daftar_kategori_pekerjaan');
+$routes->get('/kategori_pekerjaan/daftar_kategori_pekerjaan', 'KategoriPekerjaan::daftar_kategori_pekerjaan'); //Akses beres udah dibikin filter/middleware khususAdmin
 //Untuk menambah kategori pekerjaan
 // $routes->post('/kategori_pekerjaan/tambah_kategori_pekerjaan', 'KategoriPekerjaan::tambah_kategori_pekerjaan');
 //Untuk mengedit kategori pekerjaan
-$routes->get('/kategori_pekerjaan/edit_kategori_pekerjaan/(:num)', 'KategoriPekerjaan::edit_kategori_pekerjaan/$1');
-$routes->post('/kategori_pekerjaan/update_kategori_pekerjaan', 'KategoriPekerjaan::update_kategori_pekerjaan');
+$routes->get('/kategori_pekerjaan/edit_kategori_pekerjaan/(:num)', 'KategoriPekerjaan::edit_kategori_pekerjaan/$1'); //Akses beres udah dibikin filter/middleware khususAdmin
+$routes->post('/kategori_pekerjaan/update_kategori_pekerjaan', 'KategoriPekerjaan::update_kategori_pekerjaan'); //Akses beres udah dibikin filter/middleware khususAdmin
 //Untuk menghapus kategori pekerjaan
 // $routes->delete('/kategori_pekerjaan/delete_kategori_pekerjaan/(:num)', 'KategoriPekerjaan::delete_kategori_pekerjaan/$1');
 
 //Routes Status Task
 //Untuk menampilkan halaman daftar status task
-$routes->get('/status_task/daftar_status_task', 'StatusTask::daftar_status_task');
+$routes->get('/status_task/daftar_status_task', 'StatusTask::daftar_status_task'); //Akses beres udah dibikin filter/middleware khususAdmin
 //Untuk menambah status task
 // $routes->post('/status_task/tambah_status_task', 'StatusTask::tambah_status_task');
 //Untuk mengedit status task
-$routes->get('/status_task/edit_status_task/(:num)', 'StatusTask::edit_status_task/$1');
-$routes->post('/status_task/update_status_task', 'StatusTask::update_status_task');
+$routes->get('/status_task/edit_status_task/(:num)', 'StatusTask::edit_status_task/$1'); //Akses beres udah dibikin filter/middleware khususAdmin
+$routes->post('/status_task/update_status_task', 'StatusTask::update_status_task'); //Akses beres udah dibikin filter/middleware khususAdmin
 //Untuk menghapus status task
 // $routes->delete('/status_task/delete_status_task/(:num)', 'StatusTask::delete_status_task/$1');
 
 //Routes Kategori Task
 //Untuk menampilkan halaman daftar kategori task
-$routes->get('/kategori_task/daftar_kategori_task', 'KategoriTask::daftar_kategori_task');
+$routes->get('/kategori_task/daftar_kategori_task', 'KategoriTask::daftar_kategori_task'); //Akses beres udah dibikin filter/middleware khususAdmin
 //Untuk menambah kategori task
-$routes->post('/kategori_task/tambah_kategori_task', 'KategoriTask::tambah_kategori_task');
+$routes->post('/kategori_task/tambah_kategori_task', 'KategoriTask::tambah_kategori_task'); //Akses beres udah dibikin filter/middleware khususAdmin
 //Untuk mengedit kategori task
-$routes->get('/kategori_task/edit_kategori_task/(:num)', 'KategoriTask::edit_kategori_task/$1');
-$routes->post('/kategori_task/update_kategori_task', 'KategoriTask::update_kategori_task');
+$routes->get('/kategori_task/edit_kategori_task/(:num)', 'KategoriTask::edit_kategori_task/$1'); //Akses beres udah dibikin filter/middleware khususAdmin
+$routes->post('/kategori_task/update_kategori_task', 'KategoriTask::update_kategori_task'); //Akses beres udah dibikin filter/middleware khususAdmin
 //Untuk menghapus kategori task
-$routes->delete('/kategori_task/delete_kategori_task/(:num)', 'KategoriTask::delete_kategori_task/$1');
+$routes->delete('/kategori_task/delete_kategori_task/(:num)', 'KategoriTask::delete_kategori_task/$1'); //Akses beres udah dibikin filter/middleware khususAdmin
 
 //Routes Hari Libur
 //Untuk menampilkan halaman daftar hari libur
-$routes->get('/hari_libur/daftar_hari_libur', 'HariLibur::daftar_hari_libur');
+$routes->get('/hari_libur/daftar_hari_libur', 'HariLibur::daftar_hari_libur'); //Akses beres udah dibikin filter/middleware khususAdmin
 //Untuk menambah hari libur
-$routes->post('/hari_libur/tambah_hari_libur', 'HariLibur::tambah_hari_libur/$1');
+$routes->post('/hari_libur/tambah_hari_libur', 'HariLibur::tambah_hari_libur/$1'); //Akses beres udah dibikin filter/middleware khususAdmin
 //Untuk mengedit hari libur
-$routes->get('/hari_libur/edit_hari_libur/(:num)', 'HariLibur::edit_hari_libur/$1');
-$routes->post('/hari_libur/update_hari_libur', 'HariLibur::update_hari_libur');
+$routes->get('/hari_libur/edit_hari_libur/(:num)', 'HariLibur::edit_hari_libur/$1'); //Akses beres udah dibikin filter/middleware khususAdmin
+$routes->post('/hari_libur/update_hari_libur', 'HariLibur::update_hari_libur'); //Akses beres udah dibikin filter/middleware khususAdmin
 //Untuk menghapus hari libur
-$routes->delete('/hari_libur/delete_hari_libur/(:num)', 'HariLibur::delete_hari_libur/$1');
+$routes->delete('/hari_libur/delete_hari_libur/(:num)', 'HariLibur::delete_hari_libur/$1'); //Akses beres udah dibikin filter/middleware khususAdmin
 
 //Routes Usergroup
 //Untuk menampilkan halaman daftar usergroup
-$routes->get('/usergroup/daftar_usergroup', 'Usergroup::daftar_usergroup');
+$routes->get('/usergroup/daftar_usergroup', 'Usergroup::daftar_usergroup'); //Akses beres udah dibikin filter/middleware khususAdmin
 //Untuk menambah usergroup
 // $routes->post('/usergroup/tambah_usergroup', 'Usergroup::tambah_usergroup');
 //Untuk mengedit usergroup
-$routes->get('/usergroup/edit_usergroup/(:num)', 'Usergroup::edit_usergroup/$1');
-$routes->post('/usergroup/update_usergroup', 'Usergroup::update_usergroup');
+$routes->get('/usergroup/edit_usergroup/(:num)', 'Usergroup::edit_usergroup/$1'); //Akses beres udah dibikin filter/middleware khususAdmin
+$routes->post('/usergroup/update_usergroup', 'Usergroup::update_usergroup'); //Akses beres udah dibikin filter/middleware khususAdmin
 //Untuk menghapus usergroup
 // $routes->delete('/usergroup/delete_usergroup/(:num)', 'Usergroup::delete_usergroup/$1');
 //Untuk melihat detail usergroup
-$routes->get('/usergroup/detail_usergroup/(:num)', 'Usergroup::detail_usergroup/$1');
+$routes->get('/usergroup/detail_usergroup/(:num)', 'Usergroup::detail_usergroup/$1'); //Akses beres udah dibikin filter/middleware khususAdmin
 
 //Rotes User
 //Untuk menampilkan halaman user
-$routes->get('/user/daftar_user', 'User::daftar_user');
+$routes->get('/user/daftar_user', 'User::daftar_user'); //Akses beres udah dibikin filter/middleware khususAdmin
 //Untuk menambah user
-$routes->post('/user/tambah_user', 'User::tambah_user');
+$routes->post('/user/tambah_user', 'User::tambah_user'); //Akses beres udah dibikin filter/middleware khususAdmin
 //Untuk mengedit user
-$routes->get('/user/edit_user/(:num)', 'User::edit_user/$1');
-$routes->post('/user/update_user', 'User::update_user');
+$routes->get('/user/edit_user/(:num)', 'User::edit_user/$1'); //Akses beres udah dibikin filter/middleware khususAdmin
+$routes->post('/user/update_user', 'User::update_user'); //Akses beres udah dibikin filter/middleware khususAdmin
 //Untuk menghapus user
-$routes->delete('/user/delete_user/(:num)', 'User::delete_user/$1');
+$routes->delete('/user/delete_user/(:num)', 'User::delete_user/$1'); //Akses beres udah dibikin filter/middleware khususAdmin
 
 //Routes target poin harian
 //Untuk menampilkan halaman target poin harian
@@ -205,18 +205,18 @@ $routes->get('/target_poin_harian/filter_target_poin_harian', 'TargetPoinHarian:
 
 //Routes bobot kategori task
 //Untuk menampilkan halaman bobot kategori task
-$routes->get('/bobot_kategori_task/daftar_bobot_kategori_task', 'BobotKategoriTask::daftar_bobot_kategori_task');
+$routes->get('/bobot_kategori_task/daftar_bobot_kategori_task', 'BobotKategoriTask::daftar_bobot_kategori_task'); //Akses beres udah dibikin filter/middleware khususHOD
 //Untuk menambah bobot kategori task
-$routes->post('/bobot_kategori_task/tambah_bobot_kategori_task', 'BobotKategoriTask::tambah_bobot_kategori_task');
+$routes->post('/bobot_kategori_task/tambah_bobot_kategori_task', 'BobotKategoriTask::tambah_bobot_kategori_task'); //Akses beres udah dibikin filter/middleware khususHOD
 //Untuk mengedit bobot kategori task
-$routes->get('/bobot_kategori_task/edit_bobot_kategori_task/(:num)/(:num)', 'BobotKategoriTask::edit_bobot_kategori_task/$1/$2');
-$routes->post('/bobot_kategori_task/update_bobot_kategori_task', 'BobotKategoriTask::update_bobot_kategori_task');
+$routes->get('/bobot_kategori_task/edit_bobot_kategori_task/(:num)/(:num)', 'BobotKategoriTask::edit_bobot_kategori_task/$1/$2'); //Akses beres udah dibikin filter/middleware khususHOD
+$routes->post('/bobot_kategori_task/update_bobot_kategori_task', 'BobotKategoriTask::update_bobot_kategori_task'); //Akses beres udah dibikin filter/middleware khususHOD
 //Untuk menghapus bobot kategori task
-$routes->delete('/bobot_kategori_task/delete_bobot_kategori_task/(:num)/(:num)', 'BobotKategoriTask::delete_bobot_kategori_task/$1/$2');
+$routes->delete('/bobot_kategori_task/delete_bobot_kategori_task/(:num)/(:num)', 'BobotKategoriTask::delete_bobot_kategori_task/$1/$2'); //Akses beres udah dibikin filter/middleware khususHOD
 //Untuk memfilter data yang ditampilkan
-$routes->get('/bobot_kategori_task/filter_bobot_kategori_task', 'BobotKategoriTask::filter_bobot_kategori_task');
+$routes->get('/bobot_kategori_task/filter_bobot_kategori_task', 'BobotKategoriTask::filter_bobot_kategori_task'); //Akses beres udah dibikin filter/middleware khususHOD
 //Untuk melihat detail bobot kategori task
-$routes->get('/bobot_kategori_task/detail_bobot_kategori_task/(:num)/(:num)', 'BobotKategoriTask::detail_bobot_kategori_task/$1/$2');
+$routes->get('/bobot_kategori_task/detail_bobot_kategori_task/(:num)/(:num)', 'BobotKategoriTask::detail_bobot_kategori_task/$1/$2'); //Akses beres udah dibikin filter/middleware khususHOD
 
 
 //Routes Profile

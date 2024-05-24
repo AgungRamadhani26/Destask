@@ -89,6 +89,16 @@ class Pekerjaan extends BaseController
     //Fungsi detail_pekerjaan
     public function detail_pekerjaan($id_pekerjaan)
     {
+        //Pengecekan apakah yang login adalah staff jika staff maka akan di cek apakah terdaftar pada pekerjaan
+        //Jika tidak maka tidak boleh melihat halaman ini, karena data pekerjaan pada halaman hanya boleh dibuka
+        //oleh staff yang terdaftar sebagai personil. Jika yang login selain staff maka boleh membuka pekerjaan apapun
+        if (session()->get('user_level') == 'staff') {
+            $personil = $this->personilModel->getPersonilByIdPekerjaanIdUser($id_pekerjaan, session()->get('id_user'));
+            if (!$personil) {
+                Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Anda jangan nakal, anda tidak berhak melihat detail pekerjaan tersebut !');
+                return redirect()->to('/pekerjaan/daftar_pekerjaan');
+            }
+        }
         $data = [
             'pekerjaan' => $this->pekerjaanModel->getPekerjaan($id_pekerjaan),
             'personil' => $this->personilModel->getPersonilByIdPekerjaan($id_pekerjaan),
