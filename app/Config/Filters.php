@@ -12,6 +12,8 @@ use App\Filters\JwtFilter;
 use App\Filters\Cors;
 use App\Filters\KhususAdmin;
 use App\Filters\KhususHOD;
+use App\Filters\KhususHODandAdmin;
+use App\Filters\KhususHODandDireksi;
 use App\Filters\KhususPengguna;
 use App\Filters\PendukungAutentikasi;
 
@@ -37,6 +39,8 @@ class Filters extends BaseConfig
         'khususAdmin'          => KhususAdmin::class,
         'khususHOD'            => KhususHOD::class,
         'pendukungAutentikasi' => PendukungAutentikasi::class,
+        'khususHODandDireksi'  => KhususHODandDireksi::class,
+        'khususHODandAdmin'    => KhususHODandAdmin::class,
     ];
 
     /**
@@ -123,5 +127,19 @@ class Filters extends BaseConfig
                 '/bobot_kategori_task/detail_bobot_kategori_task/*'
             ]
         ],
+        'khususHODandDireksi' => [
+            'before' => [
+                '/target_poin_harian/daftar_target_poin_harian', '/target_poin_harian/tambah_target_poin_harian', '/target_poin_harian/edit_target_poin_harian/*',
+                '/target_poin_harian/update_target_poin_harian', '/target_poin_harian/delete_target_poin_harian/*', '/target_poin_harian/filter_target_poin_harian',
+            ]
+        ],
+        'khususHODandAdmin' => [
+            'before' => [
+                '/pekerjaan/add_pekerjaan', '/pekerjaan/tambah_pekerjaan', '/pekerjaan/edit_pekerjaan/*', '/pekerjaan/update_pekerjaan', '/pekerjaan/editpekerjaan_status_pekerjaan/*',
+                '/pekerjaan/updatepekerjaan_status_pekerjaan', '/pekerjaan/delete_pekerjaan/*', '/pekerjaan/edit_personil_pekerjaan/*', '/personil/edit_personil/*', '/personil/update_personil',
+                '/personil/tambah_personil_desainer', '/personil/tambah_personil_be_web', '/personil/tambah_personil_fe_web', '/personil/tambah_personil_be_mobile', '/personil/tambah_personil_fe_mobile',
+                '/personil/tambah_personil_tester', '/personil/tambah_personil_admin', '/personil/tambah_personil_helpdesk', '/personil/delete_personil/*'
+            ]
+        ]
     ];
 }

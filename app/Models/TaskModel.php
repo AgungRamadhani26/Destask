@@ -21,6 +21,16 @@ class TaskModel extends Model
     {
         return $this->where(['id_task' => $id_task])->first();
     }
+    //Fungsi untuk mendapatkan data task berdasarkan id_user dan id_pekerjaan
+    //ini untuk pengecekan apakah personil sudah membuat task atau belum, hal
+    //ini digunakan dalam pengeditan pm atau penghapusan personil, karena kalau
+    //mereka udah bikin task gabisa diedit atau dihapus.
+    public function getTaskByIdUserIdPekerjaan($id_user, $id_pekerjaan)
+    {
+        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'id_user' => $id_user])
+            ->orderBy('tgl_planing', 'ASC')
+            ->findAll();
+    }
 
 
 

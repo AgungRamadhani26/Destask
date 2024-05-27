@@ -20,7 +20,7 @@ $routes->post('/login', 'Autentikasi::login'); //Akses beres udah dibikin filter
 $routes->get('/logout', 'Autentikasi::logout'); //Akses beres tidak perlu diberi filter/middleware, session dihapus
 
 //Routes dashboard
-$routes->get('/dashboard', 'Dashboard::lihat_dashboard');
+$routes->get('/dashboard', 'Dashboard::lihat_dashboard'); //Akses beres tidak perlu diberi filter/middleware, hal ini karena semua orang bisa lihat dashboard tergantung session yang login
 //Untuk menampilkan halaman lupa password
 $routes->get('/lupa_password', 'Profile::lupa_password'); //Akses beres udah dibikin filter/middleware PendukungAutentikasi
 //Untuk melakukan cek email
@@ -34,24 +34,24 @@ $routes->get('/lupa_password/result_reset_password', 'Profile::result_reset_pass
 
 //Routes pekerjaan
 //Untuk menampilkan halaman daftar pekerjaan
-$routes->get('/pekerjaan/daftar_pekerjaan', 'Pekerjaan::daftar_pekerjaan');
+$routes->get('/pekerjaan/daftar_pekerjaan', 'Pekerjaan::daftar_pekerjaan'); //Akses beres tidak perlu diberi filter/middleware, hal ini karena semua orang bisa lihat daftar pekerjaan tergantung session yang login
 //Untuk menampilkan form tambah pekerjaan
-$routes->get('/pekerjaan/add_pekerjaan', 'Pekerjaan::add_pekerjaan');
+$routes->get('/pekerjaan/add_pekerjaan', 'Pekerjaan::add_pekerjaan'); //Akses beres udah dibikin filter/middleware KhususHODandAdmin
 //Untuk menambah pekerjaan
-$routes->post('/pekerjaan/tambah_pekerjaan', 'Pekerjaan::tambah_pekerjaan');
+$routes->post('/pekerjaan/tambah_pekerjaan', 'Pekerjaan::tambah_pekerjaan'); //Akses beres udah dibikin filter/middleware KhususHODandAdmin
 //Untuk melihat detail pekerjaan
 $routes->get('/pekerjaan/detail_pekerjaan/(:num)', 'Pekerjaan::detail_pekerjaan/$1'); //Sudah beres masalah akses karena semua udah diatur di controller
 //Untuk menampilkan form edit pekerjaan
-$routes->get('/pekerjaan/edit_pekerjaan/(:num)', 'Pekerjaan::edit_pekerjaan/$1');
-$routes->post('/pekerjaan/update_pekerjaan', 'Pekerjaan::update_pekerjaaan');
-$routes->get('/pekerjaan/edit_personil_pekerjaan/(:num)', 'Personil::edit_personil_pekerjaan/$1');
+$routes->get('/pekerjaan/edit_pekerjaan/(:num)', 'Pekerjaan::edit_pekerjaan/$1'); //Akses beres udah dibikin filter/middleware KhususHODandAdmin
+$routes->post('/pekerjaan/update_pekerjaan', 'Pekerjaan::update_pekerjaaan'); //Akses beres udah dibikin filter/middleware KhususHODandAdmin
+$routes->get('/pekerjaan/edit_personil_pekerjaan/(:num)', 'Personil::edit_personil_pekerjaan/$1'); //Akses beres udah dibikin filter/middleware KhususHODandAdmin
 //Untuk memfilter data yang ditampilkan
-$routes->get('/pekerjaan/filter_pekerjaan', 'Pekerjaan::filter_pekerjaan');
+$routes->get('/pekerjaan/filter_pekerjaan', 'Pekerjaan::filter_pekerjaan'); //Akses beres tidak perlu diberi filter/middleware, hal ini karena semua orang bisa memfilter daftar pekerjaan tergantung session yang login
 //Untuk mengedit status pekerjaan dari sebuah pekerjaan
-$routes->get('/pekerjaan/editpekerjaan_status_pekerjaan/(:num)', 'Pekerjaan::editpekerjaan_status_pekerjaan/$1');
-$routes->post('/pekerjaan/updatepekerjaan_status_pekerjaan', 'Pekerjaan::updatepekerjaan_status_pekerjaan');
+$routes->get('/pekerjaan/editpekerjaan_status_pekerjaan/(:num)', 'Pekerjaan::editpekerjaan_status_pekerjaan/$1'); //Akses beres udah dibikin filter/middleware KhususHODandAdmin
+$routes->post('/pekerjaan/updatepekerjaan_status_pekerjaan', 'Pekerjaan::updatepekerjaan_status_pekerjaan'); //Akses beres udah dibikin filter/middleware KhususHODandAdmin
 //Untuk menghapus pekerjaan
-$routes->delete('/pekerjaan/delete_pekerjaan/(:num)', 'Pekerjaan::delete_pekerjaan/$1');
+$routes->delete('/pekerjaan/delete_pekerjaan/(:num)', 'Pekerjaan::delete_pekerjaan/$1'); //Akses beres udah dibikin filter/middleware KhususHODandAdmin
 
 //Rotes Task
 //Untuk menampilkan halaman daftar task
@@ -90,26 +90,26 @@ $routes->get('/kinerja/daftar_kinerja_karyawan/(:num)', 'Kinerja::daftar_kinerja
 
 //Routes Personil
 //Untuk edit personil pm
-$routes->get('/personil/edit_personil/(:num)', 'Personil::edit_personil/$1');
-$routes->post('/personil/update_personil', 'Personil::update_personil');
+$routes->get('/personil/edit_personil/(:num)', 'Personil::edit_personil/$1'); //Akses beres udah dibikin filter/middleware KhususHODandAdmin
+$routes->post('/personil/update_personil', 'Personil::update_personil'); //Akses beres udah dibikin filter/middleware KhususHODandAdmin
 //Untuk tambah personil desainer
-$routes->post('/personil/tambah_personil_desainer', 'Personil::tambah_personil_desainer');
+$routes->post('/personil/tambah_personil_desainer', 'Personil::tambah_personil_desainer'); //Akses beres udah dibikin filter/middleware KhususHODandAdmin
 //Untuk tambah personil be web
-$routes->post('/personil/tambah_personil_be_web', 'Personil::tambah_personil_be_web');
+$routes->post('/personil/tambah_personil_be_web', 'Personil::tambah_personil_be_web'); //Akses beres udah dibikin filter/middleware KhususHODandAdmin
 //Untuk tambah personil fe web
-$routes->post('/personil/tambah_personil_fe_web', 'Personil::tambah_personil_fe_web');
+$routes->post('/personil/tambah_personil_fe_web', 'Personil::tambah_personil_fe_web'); //Akses beres udah dibikin filter/middleware KhususHODandAdmin
 //Untuk tambah personil be mobile
-$routes->post('/personil/tambah_personil_be_mobile', 'Personil::tambah_personil_be_mobile');
+$routes->post('/personil/tambah_personil_be_mobile', 'Personil::tambah_personil_be_mobile'); //Akses beres udah dibikin filter/middleware KhususHODandAdmin
 //Untuk tambah personil fe mobile
-$routes->post('/personil/tambah_personil_fe_mobile', 'Personil::tambah_personil_fe_mobile');
+$routes->post('/personil/tambah_personil_fe_mobile', 'Personil::tambah_personil_fe_mobile'); //Akses beres udah dibikin filter/middleware KhususHODandAdmin
 //Untuk tambah personil tester
-$routes->post('/personil/tambah_personil_tester', 'Personil::tambah_personil_tester');
+$routes->post('/personil/tambah_personil_tester', 'Personil::tambah_personil_tester'); //Akses beres udah dibikin filter/middleware KhususHODandAdmin
 //Untuk tambah personil admin
-$routes->post('/personil/tambah_personil_admin', 'Personil::tambah_personil_admin');
+$routes->post('/personil/tambah_personil_admin', 'Personil::tambah_personil_admin'); //Akses beres udah dibikin filter/middleware KhususHODandAdmin
 //Untuk tambah personil helpdesk
-$routes->post('/personil/tambah_personil_helpdesk', 'Personil::tambah_personil_helpdesk');
+$routes->post('/personil/tambah_personil_helpdesk', 'Personil::tambah_personil_helpdesk'); //Akses beres udah dibikin filter/middleware KhususHODandAdmin
 //Untuk menghapus personil
-$routes->delete('/personil/delete_personil/(:num)/(:num)', 'Personil::delete_personil/$1/$2');
+$routes->delete('/personil/delete_personil/(:num)/(:num)', 'Personil::delete_personil/$1/$2'); //Akses beres udah dibikin filter/middleware KhususHODandAdmin
 
 //Routes Status Pekerjaan
 //Untuk menampilkan halaman daftar status pekerjaan
@@ -192,16 +192,16 @@ $routes->delete('/user/delete_user/(:num)', 'User::delete_user/$1'); //Akses ber
 
 //Routes target poin harian
 //Untuk menampilkan halaman target poin harian
-$routes->get('/target_poin_harian/daftar_target_poin_harian', 'TargetPoinHarian::daftar_target_poin_harian');
+$routes->get('/target_poin_harian/daftar_target_poin_harian', 'TargetPoinHarian::daftar_target_poin_harian'); //Akses beres udah dibikin filter/middleware khususHODandDireksi
 //Untuk menambah target poin harian
-$routes->post('/target_poin_harian/tambah_target_poin_harian', 'TargetPoinHarian::tambah_target_poin_harian');
+$routes->post('/target_poin_harian/tambah_target_poin_harian', 'TargetPoinHarian::tambah_target_poin_harian'); //Akses beres udah dibikin filter/middleware khususHODandDireksi
 //Untuk mengedit target poin harian
-$routes->get('/target_poin_harian/edit_target_poin_harian/(:num)', 'TargetPoinHarian::edit_target_poin_harian/$1');
-$routes->post('/target_poin_harian/update_target_poin_harian', 'TargetPoinHarian::update_target_poin_harian');
+$routes->get('/target_poin_harian/edit_target_poin_harian/(:num)', 'TargetPoinHarian::edit_target_poin_harian/$1'); //Akses beres udah dibikin filter/middleware khususHODandDireksi
+$routes->post('/target_poin_harian/update_target_poin_harian', 'TargetPoinHarian::update_target_poin_harian'); //Akses beres udah dibikin filter/middleware khususHODandDireksi
 //Untuk menghapus target poin harian
-$routes->delete('/target_poin_harian/delete_target_poin_harian/(:num)', 'TargetPoinHarian::delete_target_poin_harian/$1');
+$routes->delete('/target_poin_harian/delete_target_poin_harian/(:num)', 'TargetPoinHarian::delete_target_poin_harian/$1'); //Akses beres udah dibikin filter/middleware khususHODandDireksi
 //Untuk memfilter data yang ditampilkan
-$routes->get('/target_poin_harian/filter_target_poin_harian', 'TargetPoinHarian::filter_target_poin_harian');
+$routes->get('/target_poin_harian/filter_target_poin_harian', 'TargetPoinHarian::filter_target_poin_harian'); //Akses beres udah dibikin filter/middleware khususHODandDireksi
 
 //Routes bobot kategori task
 //Untuk menampilkan halaman bobot kategori task
@@ -221,11 +221,11 @@ $routes->get('/bobot_kategori_task/detail_bobot_kategori_task/(:num)/(:num)', 'B
 
 //Routes Profile
 //Untuk menampilkan halaman profile
-$routes->get('/profile/lihat_profil', 'Profile::lihat_profile');
+$routes->get('/profile/lihat_profil', 'Profile::lihat_profile'); //Akses beres tidak perlu diberi filter/middleware, hal ini karena semua orang bisa lihat profile tergantung session yang login
 //Untuk mengupdate password
-$routes->post('/profile/update_password', 'Profile::update_password');
+$routes->post('/profile/update_password', 'Profile::update_password'); //Akses beres tidak perlu diberi filter/middleware, hal ini karena semua orang bisa update password tergantung session yang login
 //Untuk mengupdate profile
-$routes->post('/profile/update_profile', 'Profile::update_profile');
+$routes->post('/profile/update_profile', 'Profile::update_profile'); //Akses beres tidak perlu diberi filter/middleware, hal ini karena semua orang bisa update profile tergantung session yang login
 
 
 
