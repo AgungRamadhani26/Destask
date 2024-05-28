@@ -115,8 +115,8 @@
                                  </div>
                               </td>
                               <td>
-                                 <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="<?= $p['persentase_selesai'] ?>" aria-valuemin="0" aria-valuemax="100" style="height: 20px">
-                                    <div class="progress-bar progress-bar-striped progress-bar-animated overflow-visible text-dark" style="background-color: #73ff85; width: <?= $p['persentase_selesai'] ?>%"><b><?= $p['persentase_selesai'] ?>%</b></div>
+                                 <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="<?= persentase_pekerjaan_selesai($p['id_pekerjaan']) ?>" aria-valuemin="0" aria-valuemax="100" style="height: 25px">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated overflow-visible text-dark" style="background-color: #73ff85; width: <?= persentase_pekerjaan_selesai($p['id_pekerjaan']) ?>%"><b><?= persentase_pekerjaan_selesai($p['id_pekerjaan']) ?>%</b></div>
                                  </div>
                               </td>
                               <td><?= $p['nama_pekerjaan'] ?></td>

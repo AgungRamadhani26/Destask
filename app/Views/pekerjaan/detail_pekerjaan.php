@@ -75,8 +75,8 @@
                      <div class="col-md-4 mb-4">
                         <label for="persentase_selesai" class="form-label" style="font-weight: 600;">Persentase Selesai (%)</label>
                         <div class="form-control">
-                           <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="<?= $pekerjaan['persentase_selesai'] ?>" aria-valuemin="0" aria-valuemax="100" style="height: 25px">
-                              <div class="progress-bar progress-bar-striped progress-bar-animated overflow-visible text-dark" style="background-color: #73ff85; width: <?= $pekerjaan['persentase_selesai'] ?>%"><b><?= $pekerjaan['persentase_selesai'] ?>%</b></div>
+                           <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="<?= $persentase_pekerjaan_selesai ?>" aria-valuemin="0" aria-valuemax="100" style="height: 25px">
+                              <div class="progress-bar progress-bar-striped progress-bar-animated overflow-visible text-dark" style="background-color: #73ff85; width: <?= $persentase_pekerjaan_selesai ?>%"><b><?= $persentase_pekerjaan_selesai ?>%</b></div>
                            </div>
                         </div>
                      </div>

@@ -102,8 +102,18 @@ class Pekerjaan extends BaseController
                 return redirect()->to('/pekerjaan/daftar_pekerjaan');
             }
         }
+        $jumlah_semua_task_di_pekerjaan_ini = $this->taskModel->countTaskAll_ByIdPekerjaan($id_pekerjaan);
+        $jumlah_task_selesai_di_pekerjaan_ini = $this->taskModel->countTaskSelesai_ByIdPekerjaan($id_pekerjaan);
+        // Menghitung persentase task selesai
+        if ($jumlah_semua_task_di_pekerjaan_ini > 0) {
+            $persentase_selesai = ($jumlah_task_selesai_di_pekerjaan_ini / $jumlah_semua_task_di_pekerjaan_ini) * 100;
+        } else {
+            $persentase_selesai = 0; // Jika tidak ada task, persentasenya 0
+        }
+        $persentase_pekerjaan_selesai = number_format($persentase_selesai, 2);
         $data = [
             'pekerjaan' => $this->pekerjaanModel->getPekerjaan($id_pekerjaan),
+            'persentase_pekerjaan_selesai' => $persentase_pekerjaan_selesai,
             'personil' => $this->personilModel->getPersonilByIdPekerjaan($id_pekerjaan),
             'user' => $this->userModel->getUser(),
             'kategori_pekerjaan' => $this->kategoriPekerjaanModel->getKategoriPekerjaan(),
@@ -570,9 +580,10 @@ class Pekerjaan extends BaseController
             } else {
                 //Mengecek apakah masih ada task yang belum selesai
                 $kumpulan_task_belum_selesai = $this->taskModel->getTaskByIdPekerjaan_SelainSelesai($id_pekerjaan);
-                if (!empty($kumpulan_task_belum_selesai)) { //Artinya ada task yang belum selesai
+                $jumlah_seluruh_task_dipekerjaanini = $this->taskModel->countTaskAll_ByIdPekerjaan($id_pekerjaan);
+                if (!empty($kumpulan_task_belum_selesai) || $jumlah_seluruh_task_dipekerjaanini == 0) { //Artinya ada task yang belum selesai
                     if ($status_pekerjaan === '3') {
-                        Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'hal ini karena pada pekerjaan ' . $nama_pekerjaan . ' masih ada task yang belum selesai. Sehingga tidak dapat mengubah status pekerjaan menjadi BAST.');
+                        Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'hal ini karena pada pekerjaan ' . $nama_pekerjaan . ' masih ada task yang belum selesai ataupun belum ada task sama sekali. Sehingga tidak dapat mengubah status pekerjaan menjadi BAST.');
                         return redirect()->withInput()->back();
                     } else {
                         $data_pekerjaan = [
@@ -671,9 +682,10 @@ class Pekerjaan extends BaseController
             } else {
                 //Mengecek apakah masih ada task yang belum selesai
                 $kumpulan_task_belum_selesai = $this->taskModel->getTaskByIdPekerjaan_SelainSelesai($id_pekerjaan);
-                if (!empty($kumpulan_task_belum_selesai)) { //Artinya ada task yang belum selesai
+                $jumlah_seluruh_task_dipekerjaanini = $this->taskModel->countTaskAll_ByIdPekerjaan($id_pekerjaan);
+                if (!empty($kumpulan_task_belum_selesai) || $jumlah_seluruh_task_dipekerjaanini == 0) { //Artinya ada task yang belum selesai
                     if ($pekerjaan_status_pekerjaan === '3') {
-                        session()->setFlashdata('error', 'Gagal mengubah status pekerjaan, hal ini karena pada pekerjaan ' . '<b>' . $nama_pekerjaan . '</b>' . ' masih ada task yang belum selesai.');
+                        session()->setFlashdata('error', 'Gagal mengubah status pekerjaan, hal ini karena pada pekerjaan ' . '<b>' . $nama_pekerjaan . '</b>' . ' masih ada task yang belum selesai ataupun belum ada task sama sekali.');
                         return redirect()->withInput()->with('modal', 'modal_editpekerjaan_status_pekerjaan')->back();
                     } else {
                         $data_pekerjaan = [

@@ -42,6 +42,19 @@ class TaskModel extends Model
             ->orderBy('tgl_planing', 'ASC')
             ->findAll();
     }
+    //Fungsi untuk mendapatkan semua task di pekerjaan tertentu
+    public function getTaskAll_ByIdPekerjaan($id_pekerjaan)
+    {
+        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null])
+            ->orderBy('tgl_planing', 'ASC')
+            ->findAll();
+    }
+    //Fungsi menghitung jumlah task di pekerjaan tertentu
+    public function countTaskAll_ByIdPekerjaan($id_pekerjaan)
+    {
+        return count($this->getTaskAll_ByIdPekerjaan($id_pekerjaan));
+    }
+
 
 
 

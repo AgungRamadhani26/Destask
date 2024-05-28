@@ -74,12 +74,6 @@ class Pekerjaan extends Migration
                 'type'       => 'DATE',
                 'null'       => true
             ],
-            'persentase_selesai' => [
-                'type'           => 'INT',
-                'constraint'     => 3,
-                'unsigned'       => true,
-                'null'  => true
-            ],
             'waktu_selesai' => [
                 'type'       => 'DATE',
                 'null'       => true

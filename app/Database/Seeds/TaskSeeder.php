@@ -3026,6 +3026,51 @@ class TaskSeeder extends Seeder
                 'created_at'              => Time::now(),
                 'updated_at'              => Time::now(),
             ],
+
+
+
+
+            //DENGAN ID PEKERJAAN 1
+            //DESAINER TASK
+            //Task User Bima Satria pekerjaan Aplikasi Pembukuan PT Jaya Sukses
+            [
+                'id_task'                 => 158,
+                'id_pekerjaan'            => 1,
+                'id_user'                 => 4,
+                'creator'                 => 4,
+                'id_status_task'          => 3, //task selesai
+                'id_kategori_task'        => 5,
+                'tgl_planing'             => '2024-07-18',
+                'tgl_selesai'             => '2024-07-18',
+                'tgl_verifikasi_diterima' => '2024-07-18',
+                'persentase_selesai'      => 100,
+                'deskripsi_task'          => 'Dokumentasi proses pengadaan barang',
+                'alasan_verifikasi'       => null,
+                'bukti_selesai'           => 'dokumentasi_proses_pengadaan_barang.pdf',
+                'tautan_task'             => 'https://getbootstrap.com/docs/5.3/forms/select/',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+            //BACKEND WEB TASK
+            //Task User Jatmiko Adi Nugroho pekerjaan Website Recruitement Pegawai PT Agung Jaya Mineral
+            [
+                'id_task'                 => 159,
+                'id_pekerjaan'            => 1,
+                'id_user'                 => 4,
+                'creator'                 => 4,
+                'id_status_task'          => 3, //task selesai
+                'id_kategori_task'        => 5,
+                'tgl_planing'             => '2024-07-22',
+                'tgl_selesai'             => '2024-07-23',
+                'tgl_verifikasi_diterima' => '2024-07-25',
+                'persentase_selesai'      => 100,
+                'deskripsi_task'          => 'Dokumentasi halaman pembukuan bulanan dan tahunan',
+                'alasan_verifikasi'       => null,
+                'bukti_selesai'           => 'dokumentasi_halaman_pembukuan_bulanan_dan_tahunan.pdf',
+                'tautan_task'             => 'https://github.com/AgungRamadhani26/Destask/commit/38c6cfb7dd00f964767f31e8085fc4814f0fa918',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
         ];
         $this->db->table('task')->insertBatch($data);
     }

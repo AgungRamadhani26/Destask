@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\UserGroupModel;
 use App\Models\TaskModel;
 use App\Models\UserModel;
 
