@@ -31,6 +31,17 @@ class TaskModel extends Model
             ->orderBy('tgl_planing', 'ASC')
             ->findAll();
     }
+    //Fungsi untuk mendapatkan data task berdasarkan id_pekerjaan yang mana
+    //task tersebut belum selesai, ini untuk pengecekan fitur ubah status
+    //pekerjaan, dimana jika masih ada task yang belum selesai maka tidak
+    //dapat mengubah status task menjadi BAST namun masih bisa ke selain BAST
+    public function getTaskByIdPekerjaan_SelainSelesai($id_pekerjaan)
+    {
+        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null])
+            ->where('id_status_task !=', 3)
+            ->orderBy('tgl_planing', 'ASC')
+            ->findAll();
+    }
 
 
 

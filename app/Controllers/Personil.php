@@ -35,6 +35,12 @@ class Personil extends BaseController
 
     public function edit_personil_pekerjaan($id_pekerjaan)
     {
+        //Pengecekan apakah status pekerjaan adalah BAST atau Cancle jika iya gabisa edit personil
+        $pekerjaan = $this->pekerjaanModel->getPekerjaan($id_pekerjaan);
+        if ($pekerjaan['id_status_pekerjaan'] == 3 || $pekerjaan['id_status_pekerjaan'] == 5) {
+            Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Anda jangan nakal, pekerjaan dengan status BAST dan Cancle personilnya tidak dapat diedit.');
+            return redirect()->to('/dashboard');
+        }
         $data = [
             'personil_pm' => $this->personilModel->getPersonilByIdPekerjaanRolePersonil($id_pekerjaan, 'project_manager'),
             'personil_desainer' => $this->personilModel->getPersonilByIdPekerjaanRolePersonil($id_pekerjaan, 'desainer'),
@@ -451,6 +457,12 @@ class Personil extends BaseController
 
     public function delete_personil($id_personil, $id_pekerjaan)
     {
+        //Pengecekan apakah status pekerjaan adalah BAST atau Cancle jika iya gabisa hapus personil
+        $pekerjaan = $this->pekerjaanModel->getPekerjaan($id_pekerjaan);
+        if ($pekerjaan['id_status_pekerjaan'] == 3 || $pekerjaan['id_status_pekerjaan'] == 5) {
+            Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Anda jangan nakal, personil dari pekerjaan dengan status BAST dan Cancle tidak dapat dihapus.');
+            return redirect()->to('/pekerjaan/edit_personil_pekerjaan/' . $id_pekerjaan);
+        }
         $existingData = $this->personilModel->find($id_personil);
         // Mengecek apakah personil sudah membuat task atau belum, jika
         // belum bisa dihapus, namun jika sudah maka tidak bisa dihapus

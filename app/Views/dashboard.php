@@ -357,18 +357,8 @@
                         <div class="kanban-droppable" id="todo">
                             <?php foreach ($pekerjaan_bast as $pb) : ?>
                                 <div class="kanban-card">
-                                    <?php if (check_personil($pb['id_pekerjaan'], session()->get('id_user')) != null) : ?>
-                                        <a href="<?= ($target_poin_harian_tahun_bulan_ini_lengkap == false) ? 'javascript:void(0)' : '/task/add_task/' . $pb['id_pekerjaan'] ?>" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
-                                    <?php endif ?>
                                     <a href="/task/daftar_task/<?= $pb['id_pekerjaan'] ?>" class="badge btn bg-primary" title="Lihat daftar task atau verifikasi task"><i class="bi bi-clipboard-data"></i></a>
                                     <?php if (session()->get('user_level') == "hod" || session()->get('user_level') == "admin") : ?>
-                                        <a href="/pekerjaan/edit_pekerjaan/<?= $pb['id_pekerjaan'] ?>" class="badge btn bg-warning" title="Klik untuk mengedit data pekerjaan"><i class="bi bi-pencil"></i></a>
-                                        <a href="/pekerjaan/edit_personil_pekerjaan/<?= $pb['id_pekerjaan'] ?>" class="badge btn bg-warning bg-opacity-75" title="Klik untuk mengedit data personil"><i class="bi bi-person-fill-gear"></i></a>
-                                        <form action="/pekerjaan/delete_pekerjaan/<?= $pb['id_pekerjaan'] ?>" method="POST" class="d-inline">
-                                            <?= csrf_field(); ?>
-                                            <input type="hidden" name="_method" value="DELETE">
-                                            <button type="submit" class="badge btn bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?, jika iya maka data personil terkait pekerjaan juga akan terhapus.');"><i class="ri-delete-bin-5-line"></i></button>
-                                        </form>
                                         <button type="button" class="badge btn bg-warning" title="Klik untuk mengubah status pekerjaan ini" data-bs-toggle="modal" data-bs-target="#modal_editpekerjaan_status_pekerjaan" onclick="editpekerjaan_status_pekerjaan(<?php echo $pb['id_pekerjaan'] ?>)"><i class="bi bi-pencil-square"></i></button>
                                     <?php endif ?>
                                     <br>
@@ -478,13 +468,8 @@
                         <div class="kanban-droppable" id="todo">
                             <?php foreach ($pekerjaan_cancle as $pc) : ?>
                                 <div class="kanban-card">
-                                    <?php if (check_personil($pc['id_pekerjaan'], session()->get('id_user')) != null) : ?>
-                                        <a href="<?= ($target_poin_harian_tahun_bulan_ini_lengkap == false) ? 'javascript:void(0)' : '/task/add_task/' . $pc['id_pekerjaan'] ?>" class="badge btn bg-success" title="Tambah task"><i class="bi bi-file-earmark-plus"></i></a>
-                                    <?php endif ?>
                                     <a href="/task/daftar_task/<?= $pc['id_pekerjaan'] ?>" class="badge btn bg-primary" title="Lihat daftar task atau verifikasi task"><i class="bi bi-clipboard-data"></i></a>
                                     <?php if (session()->get('user_level') == "hod" || session()->get('user_level') == "admin") : ?>
-                                        <a href="/pekerjaan/edit_pekerjaan/<?= $pc['id_pekerjaan'] ?>" class="badge btn bg-warning" title="Klik untuk mengedit data pekerjaan"><i class="bi bi-pencil"></i></a>
-                                        <a href="/pekerjaan/edit_personil_pekerjaan/<?= $pc['id_pekerjaan'] ?>" class="badge btn bg-warning bg-opacity-75" title="Klik untuk mengedit data personil"><i class="bi bi-person-fill-gear"></i></a>
                                         <form action="/pekerjaan/delete_pekerjaan/<?= $pc['id_pekerjaan'] ?>" method="POST" class="d-inline">
                                             <?= csrf_field(); ?>
                                             <input type="hidden" name="_method" value="DELETE">

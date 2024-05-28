@@ -299,6 +299,12 @@ class Task extends BaseController
             Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Anda jangan nakal, anda bukan staff atau supervisi, sehingga tidak berhak menambah task pada pekerjaan tersebut !');
             return redirect()->to('/dashboard');
         }
+        //Pengecekan apakah status pekerjaan adalah BAST atau Cancle jika iya gabisa tambah task
+        $pekerjaan = $this->pekerjaanModel->getPekerjaan($id_pekerjaan);
+        if ($pekerjaan['id_status_pekerjaan'] == 3 || $pekerjaan['id_status_pekerjaan'] == 5) {
+            Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Anda jangan nakal, pekerjaan dengan status BAST dan Cancle tidak dapat ditambah task.');
+            return redirect()->to('/dashboard');
+        }
         $year_now = date("Y");
         $personil_pm = $this->personilModel->getPersonilByIdPekerjaanRolePersonil($id_pekerjaan, 'project_manager');
         $pekerjaan = $this->pekerjaanModel->getPekerjaan($id_pekerjaan);
@@ -430,6 +436,12 @@ class Task extends BaseController
         $id_pekerjaan = $task['id_pekerjaan'];
         $personil_pm = $this->personilModel->getPersonilByIdPekerjaanRolePersonil($id_pekerjaan, 'project_manager');
         $pm = $this->userModel->getUser($personil_pm[0]['id_user']);
+        //Cek apakah pekerjaan statusnya BAST atau Cancle, kalau iya tidak bisa mengedit task
+        $pekerjaan_dr_task = $this->pekerjaanModel->getPekerjaan($id_pekerjaan);
+        if ($pekerjaan_dr_task['id_status_pekerjaan'] == 3 || $pekerjaan_dr_task['id_status_pekerjaan'] == 5) {
+            Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Anda tidak dapat mengedit task dari pekerjaan dengan status BAST dan Cancle');
+            return redirect()->to('/dashboard');
+        }
         //Cek apakah yang login adalah pembuat/creator task ataupun pm yang terdaftar pada pekerjaan
         if ($task['creator'] == session()->get('id_user') || $pm['id_user'] == session()->get('id_user')) {
             //Cek apakah id status task on progress(1) ataupun cancle(4), jika ia bisa diedit namun kalau id status task menunggu verifikasi (2) atau selesai verifikasi (3) tidak bisa diedit
@@ -554,6 +566,12 @@ class Task extends BaseController
         $id_pekerjaan = $task['id_pekerjaan'];
         $personil_pm = $this->personilModel->getPersonilByIdPekerjaanRolePersonil($id_pekerjaan, 'project_manager');
         $pm = $this->userModel->getUser($personil_pm[0]['id_user']);
+        //Cek apakah pekerjaan statusnya BAST atau Cancle, kalau iya tidak bisa menghapus task
+        $pekerjaan_dr_task = $this->pekerjaanModel->getPekerjaan($id_pekerjaan);
+        if ($pekerjaan_dr_task['id_status_pekerjaan'] == 3 || $pekerjaan_dr_task['id_status_pekerjaan'] == 5) {
+            Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Anda tidak dapat menghapus task dari pekerjaan dengan status BAST dan Cancle');
+            return redirect()->to('/dashboard');
+        }
         //Cek apakah yang login adalah pembuat/creator task ataupun pm yang terdaftar pada pekerjaan
         if ($task['creator'] == session()->get('id_user') || $pm['id_user'] == session()->get('id_user')) {
             //Cek apakah id status task on progress(1) ataupun cancle(4), jika ia bisa dihapus namun kalau id status task menunggu verifikasi (2) atau selesai verifikasi (3) tidak bisa dihapus
@@ -577,12 +595,19 @@ class Task extends BaseController
         $task = $this->taskModel->getTask($id_task);
         $id_pekerjaan = $task['id_pekerjaan'];
         $personil_pm = $this->personilModel->getPersonilByIdPekerjaanRolePersonil($id_pekerjaan, 'project_manager');
+        //Cek apakah pekerjaan statusnya BAST atau Cancle, kalau iya tidak bisa mensubmit task
+        $pekerjaan_dr_task = $this->pekerjaanModel->getPekerjaan($id_pekerjaan);
+        if ($pekerjaan_dr_task['id_status_pekerjaan'] == 3 || $pekerjaan_dr_task['id_status_pekerjaan'] == 5) {
+            Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Anda tidak dapat mensubmit task dari pekerjaan dengan status BAST dan Cancle');
+            return redirect()->to('/dashboard');
+        }
+        // kalau bukan bast dan cancle
         if ($task['id_user'] != session()->get('id_user')) {
             Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Anda jangan nakal, anda tidak berhak submit task tersebut !');
             return redirect()->to('/dashboard');
         } else {
             if ($task['id_status_task'] == 2 || $task['id_status_task'] == 3) {
-                Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Task yang sudah diverifikasi atau sedang menunggu verifikasi tidak bisa di submit ulang!');
+                //Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Task yang sudah diverifikasi atau sedang menunggu verifikasi tidak bisa di submit ulang!');
                 return redirect()->to('/dashboard');
             } else {
                 $data = [
@@ -724,6 +749,12 @@ class Task extends BaseController
         $task = $this->taskModel->getTask($id_task);
         $id_pekerjaan = $task['id_pekerjaan'];
         $personil_pm = $this->personilModel->getPersonilByIdPekerjaanRolePersonil($id_pekerjaan, 'project_manager');
+        //Cek apakah pekerjaan statusnya BAST atau Cancle, kalau iya tidak bisa memverifikasi task
+        $pekerjaan_dr_task = $this->pekerjaanModel->getPekerjaan($id_pekerjaan);
+        if ($pekerjaan_dr_task['id_status_pekerjaan'] == 3 || $pekerjaan_dr_task['id_status_pekerjaan'] == 5) {
+            Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Anda tidak dapat memverifikasi task dari pekerjaan dengan status BAST dan Cancle');
+            return redirect()->to('/dashboard');
+        }
         //Cek apakah yang login adalah supervisi, jika ia maka akan dicek apakah task tersebut adalah task yang dikerjakan 
         //oleh personil yang terdaftar pada usergroup yang sama dengan supervisi, jika tidak maka tidak bisa melihat halaman ini
         if (session()->get('user_level') != 'supervisi') {
@@ -737,7 +768,7 @@ class Task extends BaseController
             } else {
                 //Cek apakah task memiliki id status task menunggu verifikasi (2), jika tidak maka tidak bisa melihat halaman ini
                 if ($task['id_status_task'] != 2) {
-                    Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Anda jangan nakal, selain task menunggu verifikasi, tidak bisa diverifikasi !');
+                    // Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Anda jangan nakal, selain task menunggu verifikasi, tidak bisa diverifikasi !');
                     return redirect()->to('/dashboard');
                 } else {
                     $data = [

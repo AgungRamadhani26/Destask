@@ -8,6 +8,7 @@ use App\Models\KategoriPekerjaanModel;
 use App\Models\PekerjaanModel;
 use App\Models\PersonilModel;
 use App\Models\StatusPekerjaanModel;
+use App\Models\TaskModel;
 use App\Models\UserModel;
 
 use CodeIgniter\I18n\Time;
@@ -21,6 +22,7 @@ class Pekerjaan extends BaseController
     protected $kategoriPekerjaanModel;
     protected $statusPekerjaanModel;
     protected $hariliburModel;
+    protected $taskModel;
     public function __construct()
     {
         $this->pekerjaanModel = new PekerjaanModel();
@@ -29,6 +31,7 @@ class Pekerjaan extends BaseController
         $this->kategoriPekerjaanModel = new KategoriPekerjaanModel();
         $this->statusPekerjaanModel = new StatusPekerjaanModel();
         $this->hariliburModel = new HariLiburModel();
+        $this->taskModel = new TaskModel();
         helper(['swal_helper', 'option_helper']);
     }
 
@@ -438,6 +441,12 @@ class Pekerjaan extends BaseController
     //Fungsi Untuk Mengedit Pekerjaan
     public function edit_pekerjaan($id_pekerjaan)
     {
+        //Pengecekan apakah status pekerjaan adalah BAST atau Cancle jika iya gabisa edit pekerjaan
+        $pekerjaan = $this->pekerjaanModel->getPekerjaan($id_pekerjaan);
+        if ($pekerjaan['id_status_pekerjaan'] == 3 || $pekerjaan['id_status_pekerjaan'] == 5) {
+            Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Anda jangan nakal, pekerjaan dengan status BAST dan Cancle tidak dapat diedit.');
+            return redirect()->to('/dashboard');
+        }
         $data = [
             'status_pekerjaan' => $this->statusPekerjaanModel->getStatusPekerjaan(),
             'kategori_pekerjaan' => $this->kategoriPekerjaanModel->getKategoriPekerjaan(),
@@ -559,31 +568,59 @@ class Pekerjaan extends BaseController
                 Set_notifikasi_swal_berhasil('info', 'Uppsss :|', 'Tidak ada data yang anda ubah, kembali ke form edit data pekerjaan jika ingin mengubah data');
                 return redirect()->withInput()->back();
             } else {
-                //Proses memasukkan data ke database
-                if ($status_pekerjaan === '3') {
-                    $waktu_selesai = date('Y-m-d');
-                } else {
-                    $waktu_selesai = null;
+                //Mengecek apakah masih ada task yang belum selesai
+                $kumpulan_task_belum_selesai = $this->taskModel->getTaskByIdPekerjaan_SelainSelesai($id_pekerjaan);
+                if (!empty($kumpulan_task_belum_selesai)) { //Artinya ada task yang belum selesai
+                    if ($status_pekerjaan === '3') {
+                        Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'hal ini karena pada pekerjaan ' . $nama_pekerjaan . ' masih ada task yang belum selesai. Sehingga tidak dapat mengubah status pekerjaan menjadi BAST.');
+                        return redirect()->withInput()->back();
+                    } else {
+                        $data_pekerjaan = [
+                            'id_pekerjaan' => $id_pekerjaan,
+                            'id_status_pekerjaan' => $status_pekerjaan,
+                            'id_kategori_pekerjaan' => $kategori_pekerjaan,
+                            'nama_pekerjaan' => $nama_pekerjaan,
+                            'pelanggan' => $pelanggan,
+                            'jenis_pelanggan' => $jenis_pelanggan,
+                            'nama_pic' => $nama_pic,
+                            'email_pic' => $email_pic,
+                            'nowa_pic' => $nowa_pic,
+                            'jenis_layanan' => $jenis_layanan,
+                            'nominal_harga' => $nominal_harga,
+                            'deskripsi_pekerjaan' => $deskripsi_pekerjaan,
+                            'target_waktu_selesai' => $target_waktu_selesai,
+                            'waktu_selesai' => null
+                        ];
+                        $this->pekerjaanModel->save($data_pekerjaan);
+                        Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil mengedit data Pekerjaan');
+                        return redirect()->to('/dashboard');
+                    }
+                } else { //Artinya task sudah selesai semua
+                    if ($status_pekerjaan === '3') {
+                        $waktu_selesai = date('Y-m-d');
+                    } else {
+                        $waktu_selesai = null;
+                    }
+                    $data_pekerjaan = [
+                        'id_pekerjaan' => $id_pekerjaan,
+                        'id_status_pekerjaan' => $status_pekerjaan,
+                        'id_kategori_pekerjaan' => $kategori_pekerjaan,
+                        'nama_pekerjaan' => $nama_pekerjaan,
+                        'pelanggan' => $pelanggan,
+                        'jenis_pelanggan' => $jenis_pelanggan,
+                        'nama_pic' => $nama_pic,
+                        'email_pic' => $email_pic,
+                        'nowa_pic' => $nowa_pic,
+                        'jenis_layanan' => $jenis_layanan,
+                        'nominal_harga' => $nominal_harga,
+                        'deskripsi_pekerjaan' => $deskripsi_pekerjaan,
+                        'target_waktu_selesai' => $target_waktu_selesai,
+                        'waktu_selesai' => $waktu_selesai
+                    ];
+                    $this->pekerjaanModel->save($data_pekerjaan);
+                    Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil mengedit data Pekerjaan');
+                    return redirect()->to('/dashboard');
                 }
-                $data_pekerjaan = [
-                    'id_pekerjaan' => $id_pekerjaan,
-                    'id_status_pekerjaan' => $status_pekerjaan,
-                    'id_kategori_pekerjaan' => $kategori_pekerjaan,
-                    'nama_pekerjaan' => $nama_pekerjaan,
-                    'pelanggan' => $pelanggan,
-                    'jenis_pelanggan' => $jenis_pelanggan,
-                    'nama_pic' => $nama_pic,
-                    'email_pic' => $email_pic,
-                    'nowa_pic' => $nowa_pic,
-                    'jenis_layanan' => $jenis_layanan,
-                    'nominal_harga' => $nominal_harga,
-                    'deskripsi_pekerjaan' => $deskripsi_pekerjaan,
-                    'target_waktu_selesai' => $target_waktu_selesai,
-                    'waktu_selesai' => $waktu_selesai
-                ];
-                $this->pekerjaanModel->save($data_pekerjaan);
-                Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil mengedit data Pekerjaan');
-                return redirect()->to('/dashboard');
             }
         } else {
             session()->setFlashdata('err_nama_pekerjaan_e', $validasi->getError('nama_pekerjaan_e'));
@@ -632,20 +669,37 @@ class Pekerjaan extends BaseController
                 session()->setFlashdata('info', 'Anda tidak merubah status dari pekerjaan ' . '<b>' . $nama_pekerjaan . '</b>');
                 return redirect()->withInput()->with('modal', 'modal_editpekerjaan_status_pekerjaan')->back();
             } else {
-                // Proses memasukkan data ke database
-                if ($pekerjaan_status_pekerjaan === '3') {
-                    $waktu_selesai = date('Y-m-d');
-                } else {
-                    $waktu_selesai = null;
+                //Mengecek apakah masih ada task yang belum selesai
+                $kumpulan_task_belum_selesai = $this->taskModel->getTaskByIdPekerjaan_SelainSelesai($id_pekerjaan);
+                if (!empty($kumpulan_task_belum_selesai)) { //Artinya ada task yang belum selesai
+                    if ($pekerjaan_status_pekerjaan === '3') {
+                        session()->setFlashdata('error', 'Gagal mengubah status pekerjaan, hal ini karena pada pekerjaan ' . '<b>' . $nama_pekerjaan . '</b>' . ' masih ada task yang belum selesai.');
+                        return redirect()->withInput()->with('modal', 'modal_editpekerjaan_status_pekerjaan')->back();
+                    } else {
+                        $data_pekerjaan = [
+                            'id_pekerjaan' => $id_pekerjaan,
+                            'id_status_pekerjaan' => $pekerjaan_status_pekerjaan,
+                            'waktu_selesai' => null
+                        ];
+                        $this->pekerjaanModel->save($data_pekerjaan);
+                        Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil mengubah status dari pekerjaan ' . $nama_pekerjaan);
+                        return redirect()->to('/dashboard');
+                    }
+                } else { //Artinya task sudah selesai semua
+                    if ($pekerjaan_status_pekerjaan === '3') {
+                        $waktu_selesai = date('Y-m-d');
+                    } else {
+                        $waktu_selesai = null;
+                    }
+                    $data_pekerjaan = [
+                        'id_pekerjaan' => $id_pekerjaan,
+                        'id_status_pekerjaan' => $pekerjaan_status_pekerjaan,
+                        'waktu_selesai' => $waktu_selesai
+                    ];
+                    $this->pekerjaanModel->save($data_pekerjaan);
+                    Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil mengubah status dari pekerjaan ' . $nama_pekerjaan);
+                    return redirect()->to('/dashboard');
                 }
-                $data_pekerjaan = [
-                    'id_pekerjaan' => $id_pekerjaan,
-                    'id_status_pekerjaan' => $pekerjaan_status_pekerjaan,
-                    'waktu_selesai' => $waktu_selesai
-                ];
-                $this->pekerjaanModel->save($data_pekerjaan);
-                Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil mengubah status dari pekerjaan ' . $nama_pekerjaan);
-                return redirect()->to('/dashboard');
             }
         } else {
             session()->setFlashdata('error', $validasi->listErrors());
@@ -655,17 +709,24 @@ class Pekerjaan extends BaseController
 
     public function delete_pekerjaan($id_pekerjaan)
     {
-        // Dapatkan semua personil terkait dengan pekerjaan yang akan dihapus
-        $personilTerkait = $this->personilModel->getPersonilByIdPekerjaan($id_pekerjaan);
-        // Hapus setiap entri personil yang terkait dengan pekerjaan yang akan dihapus
-        foreach ($personilTerkait as $personil) {
-            $this->personilModel->delete($personil['id_personil']);
+        //Kalau status pekerjaan adalah BAST gabisa dihapus
+        $pekerjaan = $this->pekerjaanModel->getPekerjaan($id_pekerjaan);
+        if ($pekerjaan['id_status_pekerjaan'] == 3) {
+            Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Anda jangan nakal, pekerjaan dengan status BAST tidak dapat dihapus.');
+            return redirect()->to('/dashboard');
+        } else {
+            // Dapatkan semua personil terkait dengan pekerjaan yang akan dihapus
+            $personilTerkait = $this->personilModel->getPersonilByIdPekerjaan($id_pekerjaan);
+            // Hapus setiap entri personil yang terkait dengan pekerjaan yang akan dihapus
+            foreach ($personilTerkait as $personil) {
+                $this->personilModel->delete($personil['id_personil']);
+            }
+            // Hapus pekerjaan
+            $this->pekerjaanModel->delete($id_pekerjaan);
+            // Berikan notifikasi bahwa pekerjaan berhasil dihapus
+            Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Data pekerjaan berhasil dihapus');
+            // Redirect ke dashboard
+            return redirect()->to('/dashboard');
         }
-        // Hapus pekerjaan
-        $this->pekerjaanModel->delete($id_pekerjaan);
-        // Berikan notifikasi bahwa pekerjaan berhasil dihapus
-        Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Data pekerjaan berhasil dihapus');
-        // Redirect ke dashboard
-        return redirect()->to('/dashboard');
     }
 }
