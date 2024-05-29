@@ -85,6 +85,8 @@ $routes->post('/task/tolak_verifikasi_task', 'Task::tolak_verifikasi_task'); //S
 //Routes Kinerja
 //Untuk menampilkan halaman daftar kinerja karyawan
 $routes->get('/kinerja/daftar_kinerja_karyawan', 'Kinerja::daftar_kinerja_karyawan');
+//Untuk memfilter halaman daftar kinerja karyawan
+$routes->get('/kinerja/filter_kinerja_karyawan', 'Kinerja::filter_kinerja_karyawan');
 //Untuk melihat halaman daftar kinerja perkaryawan
 $routes->get('/kinerja/daftar_kinerja_karyawan/(:num)', 'Kinerja::daftar_kinerja_perkaryawan/$1');
 

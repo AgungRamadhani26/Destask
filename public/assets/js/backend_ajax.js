@@ -400,6 +400,19 @@ function edit_usergroup($id){
 
 
 
+//                          //
+// PENGELOLAAN DATA KINERJA //
+//                          //
+//Proses reset filter
+function resetFilterKinerja() {
+   // Mengatur nilai elemen formulir menjadi kosong
+   document.getElementById('filter_kinerja_karyawan_usergroup').value = '';
+   // Mengarahkan pengguna kembali ke URL yang diinginkan
+   window.location.href = "/kinerja/daftar_kinerja_karyawan";
+}
+
+
+
 //                       //
 // PENGELOLAAN DATA USER //
 //                       //
