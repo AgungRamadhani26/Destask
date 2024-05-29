@@ -264,13 +264,14 @@ $routes->group('api', ['filter' => 'jwtfilter', 'namespace' => 'App\Controllers\
    $routes->get('pekerjaan/(:num)', 'PekerjaanController::show/$1');
    $routes->get('pekerjaanbyuser/(:num)', 'PekerjaanController::showPekerjaan/$1');
    $routes->put('pekerjaan/(:num)', 'PekerjaanController::update/$1'); //edit pekerjaan
+   $routes->get('pekerjaan/verifikasi/(:num)', 'PekerjaanController::showPekerjaanVerifikasi/$1'); //data task yang perlu diverifikasi
 
    //task
    $routes->get('task', 'TaskController::index');
    $routes->get('task/(:num)', 'TaskController::show/$1');
    $routes->get('taskbypekerjaan/(:num)', 'TaskController::showTaskByPekerjaan/$1'); //data task berdasarkan pekerjaan
    $routes->get('taskbyuser/(:num)', 'TaskController::showTaskByUser/$1'); //data task berdasarkan user
-   $routes->get('task/verifikasi/(:num)', 'TaskController::showTaskVerifikasi/$1'); //data task yang perlu diverifikasi
+   $routes->get('task/verifikasitask/(:num)', 'TaskController::showTaskVerifikasi/$1'); //data task yang perlu diverifikasi
    $routes->put('task/verifikasi/(:num)', 'TaskController::updateverifikasi/$1'); //data task yang perlu diverifikasi
    $routes->post('task', 'TaskController::create');
    $routes->put('task/(:num)', 'TaskController::update/$1'); //edit task
