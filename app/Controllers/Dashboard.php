@@ -8,6 +8,7 @@ use App\Models\PekerjaanModel;
 use App\Models\PersonilModel;
 use App\Models\StatusPekerjaanModel;
 use App\Models\TargetPoinHarianModel;
+use App\Models\TaskModel;
 use App\Models\UserGroupModel;
 use App\Models\UserModel;
 use PhpParser\Node\Stmt\If_;
@@ -23,6 +24,7 @@ class Dashboard extends BaseController
     protected $statusPekerjaanModel;
     protected $hariliburModel;
     protected $targetpoinharianModel;
+    protected $taskModel;
     public function __construct()
     {
         $this->pekerjaanModel = new PekerjaanModel();
@@ -33,23 +35,24 @@ class Dashboard extends BaseController
         $this->statusPekerjaanModel = new StatusPekerjaanModel();
         $this->hariliburModel = new HariLiburModel();
         $this->targetpoinharianModel = new TargetPoinHarianModel();
+        $this->taskModel = new TaskModel();
         helper(['swal_helper', 'option_helper']);
     }
 
     public function lihat_dashboard()
     {
-        if ((session()->get('user_level') == 'supervisi') || (session()->get('user_level') == 'staff')) {
+        if ((session()->get('user_level') == 'staff')) {
             $pekerjaan_presales = $this->pekerjaanModel->getPekerjaanByUserIdIdStatusPekerjaan(session()->get('id_user'), 1);
             $pekerjaan_onprogres = $this->pekerjaanModel->getPekerjaanByUserIdIdStatusPekerjaan(session()->get('id_user'), 2);
             $pekerjaan_bast = $this->pekerjaanModel->getPekerjaanByUserIdIdStatusPekerjaan(session()->get('id_user'), 3);
             $pekerjaan_support = $this->pekerjaanModel->getPekerjaanByUserIdIdStatusPekerjaan(session()->get('id_user'), 4);
             $pekerjaan_cancle = $this->pekerjaanModel->getPekerjaanByUserIdIdStatusPekerjaan(session()->get('id_user'), 5);
             $jumlah_pekerjaan = $this->pekerjaanModel->countPekerjaanByUserId(session()->get('id_user'));
-            $jumlah_pekerjaan_presales = $this->pekerjaanModel->countPekerjaanSupervisiStaff_ByUserIdStatusPekerjaan(session()->get('id_user'), 1);
-            $jumlah_pekerjaan_onprogres = $this->pekerjaanModel->countPekerjaanSupervisiStaff_ByUserIdStatusPekerjaan(session()->get('id_user'), 2);
-            $jumlah_pekerjaan_bast = $this->pekerjaanModel->countPekerjaanSupervisiStaff_ByUserIdStatusPekerjaan(session()->get('id_user'), 3);
-            $jumlah_pekerjaan_support = $this->pekerjaanModel->countPekerjaanSupervisiStaff_ByUserIdStatusPekerjaan(session()->get('id_user'), 4);
-            $jumlah_pekerjaan_cancle = $this->pekerjaanModel->countPekerjaanSupervisiStaff_ByUserIdStatusPekerjaan(session()->get('id_user'), 5);
+            $jumlah_pekerjaan_presales = $this->pekerjaanModel->countPekerjaanStaff_ByUserIdStatusPekerjaan(session()->get('id_user'), 1);
+            $jumlah_pekerjaan_onprogres = $this->pekerjaanModel->countPekerjaanStaff_ByUserIdStatusPekerjaan(session()->get('id_user'), 2);
+            $jumlah_pekerjaan_bast = $this->pekerjaanModel->countPekerjaanStaff_ByUserIdStatusPekerjaan(session()->get('id_user'), 3);
+            $jumlah_pekerjaan_support = $this->pekerjaanModel->countPekerjaanStaff_ByUserIdStatusPekerjaan(session()->get('id_user'), 4);
+            $jumlah_pekerjaan_cancle = $this->pekerjaanModel->countPekerjaanStaff_ByUserIdStatusPekerjaan(session()->get('id_user'), 5);
         } else {
             $pekerjaan_presales = $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(1);
             $pekerjaan_onprogres = $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(2);
@@ -57,11 +60,11 @@ class Dashboard extends BaseController
             $pekerjaan_support = $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(4);
             $pekerjaan_cancle = $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(5);
             $jumlah_pekerjaan = $this->pekerjaanModel->countPekerjaan();
-            $jumlah_pekerjaan_presales = $this->pekerjaanModel->countPekerjaanHodAdminDireksi_ByStatusPekerjaan(1);
-            $jumlah_pekerjaan_onprogres = $this->pekerjaanModel->countPekerjaanHodAdminDireksi_ByStatusPekerjaan(2);
-            $jumlah_pekerjaan_bast = $this->pekerjaanModel->countPekerjaanHodAdminDireksi_ByStatusPekerjaan(3);
-            $jumlah_pekerjaan_support = $this->pekerjaanModel->countPekerjaanHodAdminDireksi_ByStatusPekerjaan(4);
-            $jumlah_pekerjaan_cancle = $this->pekerjaanModel->countPekerjaanHodAdminDireksi_ByStatusPekerjaan(5);
+            $jumlah_pekerjaan_presales = $this->pekerjaanModel->countPekerjaanHodAdminDireksiSupervisi_ByStatusPekerjaan(1);
+            $jumlah_pekerjaan_onprogres = $this->pekerjaanModel->countPekerjaanHodAdminDireksiSupervisi_ByStatusPekerjaan(2);
+            $jumlah_pekerjaan_bast = $this->pekerjaanModel->countPekerjaanHodAdminDireksiSupervisi_ByStatusPekerjaan(3);
+            $jumlah_pekerjaan_support = $this->pekerjaanModel->countPekerjaanHodAdminDireksiSupervisi_ByStatusPekerjaan(4);
+            $jumlah_pekerjaan_cancle = $this->pekerjaanModel->countPekerjaanHodAdminDireksiSupervisi_ByStatusPekerjaan(5);
         }
         $tahun_ini = date("Y");
         $bulan_ini = date("n");
@@ -107,7 +110,7 @@ class Dashboard extends BaseController
             $usergroup_yang_tidak_ada_ditarget_poin_harian[] = null;
         }
 
-
+        //Dashboard target poin harian bulan ini
         $target_poin_harian_design = $this->targetpoinharianModel->getTargetPoinHarianByTahunBulanIdusergroup($tahun_ini, $bulan_ini, 1);
         if (!empty($target_poin_harian_design)) {
             $target_poin_harian_design1 = $target_poin_harian_design[0]['jumlah_target_poin_sebulan'];
@@ -144,6 +147,15 @@ class Dashboard extends BaseController
         } else {
             $target_poin_harian_helpdesk1 = 'Belum diset';
         }
+
+        //Dashboard task selesai bulan ini
+        $Tahun_sekarang = date("Y");
+        $Bulan_sekarang = date("n");
+        if (session()->get('user_level') == 'staff' || session()->get('user_level') == 'supervisi') {
+            $jumlah_task_selesai_bulan_ini = $this->taskModel->countTaskSelesai_TahunIni_BulanIni_ByIdUser($Tahun_sekarang, $Bulan_sekarang, session()->get('id_user'));
+        } else {
+            $jumlah_task_selesai_bulan_ini = $this->taskModel->countTaskSelesai_TahunIni_BulanIni($Tahun_sekarang, $Bulan_sekarang);
+        }
         $data = [
             'usergroup_yang_tidak_ada_ditarget_poin_harian' => $usergroup_yang_tidak_ada_ditarget_poin_harian,
             'target_poin_harian_tahun_bulan_ini_lengkap' => $target_poin_harian_tahun_bulan_ini_lengkap,
@@ -153,6 +165,7 @@ class Dashboard extends BaseController
             'target_poin_harian_tester' => $target_poin_harian_tester1,
             'target_poin_harian_admin' => $target_poin_harian_admin1,
             'target_poin_harian_helpdesk' => $target_poin_harian_helpdesk1,
+            'jumlah_task_selesai_bulan_ini' => $jumlah_task_selesai_bulan_ini,
             'jumlah_pekerjaan' => $jumlah_pekerjaan,
             'jumlah_pekerjaan_presales' => $jumlah_pekerjaan_presales,
             'jumlah_pekerjaan_onprogres' => $jumlah_pekerjaan_onprogres,

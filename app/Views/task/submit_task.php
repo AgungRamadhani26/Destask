@@ -78,7 +78,7 @@
                               </div>
                            </div>
                            <div class="col-md-12">
-                              <label for="bukti_selesai_submit_task" class="form-label" style="font-weight: 600;">Bukti Selesai<span style="color: red;font-size: 13px;"> *Ukuran maksimal 3 mb, jenis file Doc, Docx, Xls, Xlsx, Png, Jpg, Jpeg</span></label>
+                              <label for="bukti_selesai_submit_task" class="form-label" style="font-weight: 600;">Bukti Selesai<span style="color: red;font-size: 13px;"> *Ukuran maksimal 5 mb, jenis file Doc, Docx, Xls, Xlsx, Ppt, Pptx, Png, Jpg, Jpeg</span></label>
                               <input type="file" class="form-control <?= (session()->getFlashdata('err_bukti_selesai_submit_task')) ? 'is-invalid' : ''; ?>" name="bukti_selesai_submit_task" id="bukti_selesai_submit_task" value="<?= old('bukti_selesai_submit_task') ?>" accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png,.ppt,.pptx" onchange="previewFile()">
                               <div class="invalid-feedback">
                                  <?= session()->getFlashdata('err_bukti_selesai_submit_task') ?>

@@ -24,6 +24,42 @@ class UserModel extends Model
         return $this->where(['id_user' => $id_user])->first();
     }
 
+    //Fungsi untuk mendapatkan data user staff
+    public function getUserStaff()
+    {
+        return $this->where(['user_level' => 'staff', 'deleted_at' => null])
+            ->orderBy('id_user', 'DESC')
+            ->findAll();
+    }
+
+    //Fungsi untuk mendapatkan data user supervisi
+    public function getUserSupervisi()
+    {
+        return $this->where(['user_level' => 'supervisi', 'deleted_at' => null])
+            ->orderBy('id_user', 'DESC')
+            ->findAll();
+    }
+
+    //Fungsi untuk filter data user staff berdasarkan id usergroup
+    public function filter_getUserStaff_ByIdUsergroup($id_usergroup)
+    {
+        $query = $this->where(['user_level' => 'staff', 'deleted_at' => null]);
+        if ($id_usergroup != '') {
+            $query->where('id_usergroup', $id_usergroup);
+        }
+        return $query->orderBy('id_user', 'DESC')->findAll();
+    }
+
+    //Fungsi untuk filter data user supervisi berdasarkan id usergroup
+    public function filter_getUserSupervisi_ByIdUsergroup($id_usergroup)
+    {
+        $query = $this->where(['user_level' => 'supervisi', 'deleted_at' => null]);
+        if ($id_usergroup != '') {
+            $query->where('id_usergroup', $id_usergroup);
+        }
+        return $query->orderBy('id_user', 'DESC')->findAll();
+    }
+
     //Fungsi untuk mendapatkan data user berdasarkan usergroup
     public function getUserByUserGroup($id_usergroup)
     {
@@ -42,7 +78,6 @@ class UserModel extends Model
             ->findAll();
     }
 
-
     //Fungsi untuk menghitung jumlah user aktif dengan user level staff berdasarkan usergroup
     public function countUserStaffByUserGroup($id_usergroup)
     {
@@ -55,7 +90,38 @@ class UserModel extends Model
         return $this->where(['deleted_at' => null, 'user_level' => 'supervisi', 'id_usergroup' => $id_usergroup])->countAllResults();
     }
 
-        
+    //Fungsi mendapatkan user sesuai personil suatu pekerjaan
+    public function getPersonilDistinctByIdPekerjaan($id_pekerjaan)
+    {
+        return $this->distinct()
+            ->select('user.*')
+            ->join('personil', 'personil.id_user = user.id_user')
+            ->where('personil.id_pekerjaan', $id_pekerjaan)
+            ->where('personil.deleted_at IS NULL') //perubahan
+            ->where('user.deleted_at IS NULL') //perubahan
+            ->findAll();
+    }
+
+    //Fungsi mendapatkan user sesuai personil suatu pekerjaan
+    public function getPersonilDistinctByIdPekerjaanIdUser($id_pekerjaan, $id_user)
+    {
+        return $this->distinct()
+            ->select('user.*')
+            ->join('personil', 'personil.id_user = user.id_user')
+            ->where('personil.id_pekerjaan', $id_pekerjaan)
+            ->where('personil.id_user', $id_user)
+            ->where('personil.deleted_at IS NULL') //perubahan
+            ->where('user.deleted_at IS NULL') //perubahan
+            ->findAll();
+    }
+
+
+
+
+
+
+
+
     //MOBILE
     function getUserById($id)
     {
@@ -67,7 +133,7 @@ class UserModel extends Model
             return null;
         }
     }
-    
+
     //MOBILE
     function getIdentitas($identitas)
     {

@@ -451,7 +451,7 @@ class UserSeeder extends Seeder
                 'password'         => md5('123456'),
                 'user_level'       => 'staff',
                 'nama'             => 'Rijal',
-                'foto_profil'      => 'user.png',
+                'foto_profil'      => 'rijal.jpeg',
                 'created_at'       => Time::now(),
                 'updated_at'       => Time::now()
             ],
@@ -463,7 +463,7 @@ class UserSeeder extends Seeder
                 'password'         => md5('123456'),
                 'user_level'       => 'supervisi',
                 'nama'             => 'kurniawan',
-                'foto_profil'      => 'user.png',
+                'foto_profil'      => 'kurniawan.jpeg',
                 'created_at'       => Time::now(),
                 'updated_at'       => Time::now()
             ],

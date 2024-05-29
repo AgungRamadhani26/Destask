@@ -16,14 +16,7 @@
       </li>
 
       <li class="nav-item">
-         <a class="nav-link collapsed" href="">
-            <i class="bi bi-check2-square"></i>
-            <span>Verifikasi Task</span>
-         </a>
-      </li>
-
-      <li class="nav-item">
-         <a class="nav-link collapsed" href="">
+         <a class="nav-link <?= $url1 == '/kinerja/daftar_kinerja_karyawan' ? '' : 'collapsed' ?>" href="/kinerja/daftar_kinerja_karyawan">
             <i class="bi bi-hourglass-top"></i>
             <span>Kinerja Karyawan</span>
          </a>

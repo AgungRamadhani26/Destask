@@ -441,7 +441,7 @@ class PersonilSeeder extends Seeder
             [
                 'id_personil' => 54,
                 'id_pekerjaan' => 4,
-                'id_user' => 36,
+                'id_user' => 34,
                 'role_personil' => 'helpdesk',
                 'created_at'       => Time::now(),
                 'updated_at'       => Time::now()

@@ -121,7 +121,6 @@
                      <div class="text-center">
                         <button type="submit" class="btn btn-primary" <?= ($dapat_tambah_task == false) ? 'disabled' : '' ?>>Simpan</button>
                      </div>
-
                   </div>
                </form>
             </div>

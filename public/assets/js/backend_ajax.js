@@ -139,6 +139,8 @@ function edit_personil_pm($id){
    });
 }
 
+
+
 //                              //
 // PENGELOLAAN DATA STATUS TASK //
 //                              //
@@ -171,6 +173,28 @@ function edit_status_task($id){
       }
    });
 }
+
+//Proses melihat alasan verifikasi task
+function lihat_alasan_verifikasi(id) {
+   $.ajax({
+      url: "/task/alasan_verifikasi_task/" + id,
+      type: "GET",
+      success: function(hasil) {
+         var obj = JSON.parse(hasil);
+         if (obj.id_task != '') {
+            $('#alasan_verifikasi_text').text(obj.alasan_verifikasi);
+         }
+      }
+   });
+}
+
+//Proses membersikan form alasan verifikasi ditolak jika mengclose modal
+$('.tombol-alasan-penolakan').on('click', function() {
+   $('.alert').hide();
+   $('#alasan_verifikasi').val('');
+});
+
+
 
 
 
@@ -372,6 +396,19 @@ function edit_usergroup($id){
          }
       }
    });
+}
+
+
+
+//                          //
+// PENGELOLAAN DATA KINERJA //
+//                          //
+//Proses reset filter
+function resetFilterKinerja() {
+   // Mengatur nilai elemen formulir menjadi kosong
+   document.getElementById('filter_kinerja_karyawan_usergroup').value = '';
+   // Mengarahkan pengguna kembali ke URL yang diinginkan
+   window.location.href = "/kinerja/daftar_kinerja_karyawan";
 }
 
 

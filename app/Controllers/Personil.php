@@ -8,6 +8,7 @@ use App\Models\KategoriPekerjaanModel;
 use App\Models\PekerjaanModel;
 use App\Models\PersonilModel;
 use App\Models\StatusPekerjaanModel;
+use App\Models\TaskModel;
 use App\Models\UserModel;
 
 class Personil extends BaseController
@@ -19,6 +20,7 @@ class Personil extends BaseController
     protected $kategoriPekerjaanModel;
     protected $statusPekerjaanModel;
     protected $hariliburModel;
+    protected $taskModel;
     public function __construct()
     {
         $this->pekerjaanModel = new PekerjaanModel();
@@ -27,11 +29,18 @@ class Personil extends BaseController
         $this->kategoriPekerjaanModel = new KategoriPekerjaanModel();
         $this->statusPekerjaanModel = new StatusPekerjaanModel();
         $this->hariliburModel = new HariLiburModel();
+        $this->taskModel = new TaskModel();
         helper(['swal_helper', 'option_helper']);
     }
 
     public function edit_personil_pekerjaan($id_pekerjaan)
     {
+        //Pengecekan apakah status pekerjaan adalah BAST atau Cancle jika iya gabisa edit personil
+        $pekerjaan = $this->pekerjaanModel->getPekerjaan($id_pekerjaan);
+        if ($pekerjaan['id_status_pekerjaan'] == 3 || $pekerjaan['id_status_pekerjaan'] == 5) {
+            Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Anda jangan nakal, pekerjaan dengan status BAST dan Cancle personilnya tidak dapat diedit.');
+            return redirect()->to('/dashboard');
+        }
         $data = [
             'personil_pm' => $this->personilModel->getPersonilByIdPekerjaanRolePersonil($id_pekerjaan, 'project_manager'),
             'personil_desainer' => $this->personilModel->getPersonilByIdPekerjaanRolePersonil($id_pekerjaan, 'desainer'),
@@ -78,19 +87,31 @@ class Personil extends BaseController
             //Mengambil data dari ajax
             $id_personil = $this->request->getPost('id_personil_pm_e');
             $id_user = $this->request->getPost('id_user_pm_e');
-            // Memeriksa apakah data baru sama dengan data yang sudah ada
             $existingData = $this->personilModel->find($id_personil);
+            // Memeriksa apakah data baru sama dengan data yang sudah ada
             if ($existingData['id_user'] === $id_user) {
                 session()->setFlashdata('info', 'Anda tidak mengubah personil project manager');
                 return redirect()->withInput()->with('modal', 'modal_edit_personil_pm')->back();
             } else {
-                $data_personil = [
-                    'id_personil' => $id_personil,
-                    'id_user' => $id_user,
-                ];
-                $this->personilModel->save($data_personil);
-                Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil mengubah personil project manager');
-                return redirect()->back();
+                // Mengecek apakah personil (pm) sudah membuat task atau belum, jika
+                // belum bisa diganti, jika sudah maka tidak bisa diganti
+                $id_user_lama = $existingData['id_user'];
+                $id_pekerjaan_lama = $existingData['id_pekerjaan'];
+                $pekerjaan_lama = $this->pekerjaanModel->getPekerjaan($id_pekerjaan_lama);
+                $user_lama = $this->userModel->getUser($id_user_lama);
+                $task = $this->taskModel->getTaskByIdUserIdPekerjaan($id_user_lama, $id_pekerjaan_lama);
+                if (!empty($task)) { //kalau udah bikin task
+                    session()->setFlashdata('error', 'Gagal mengubah personil project manager, hal ini karena ' . $user_lama['nama'] . ' yang terdaftar sebagai personil pada pekerjaan ' . $pekerjaan_lama['nama_pekerjaan'] . ' sudah membuat task sebelumnya.');
+                    return redirect()->withInput()->with('modal', 'modal_edit_personil_pm')->back();
+                } else {
+                    $data_personil = [
+                        'id_personil' => $id_personil,
+                        'id_user' => $id_user,
+                    ];
+                    $this->personilModel->save($data_personil);
+                    Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil mengubah personil project manager');
+                    return redirect()->back();
+                }
             }
         } else {
             session()->setFlashdata('error', $validasi->listErrors());
@@ -436,6 +457,24 @@ class Personil extends BaseController
 
     public function delete_personil($id_personil, $id_pekerjaan)
     {
+        //Pengecekan apakah status pekerjaan adalah BAST atau Cancle jika iya gabisa hapus personil
+        $pekerjaan = $this->pekerjaanModel->getPekerjaan($id_pekerjaan);
+        if ($pekerjaan['id_status_pekerjaan'] == 3 || $pekerjaan['id_status_pekerjaan'] == 5) {
+            Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Anda jangan nakal, personil dari pekerjaan dengan status BAST dan Cancle tidak dapat dihapus.');
+            return redirect()->to('/pekerjaan/edit_personil_pekerjaan/' . $id_pekerjaan);
+        }
+        $existingData = $this->personilModel->find($id_personil);
+        // Mengecek apakah personil sudah membuat task atau belum, jika
+        // belum bisa dihapus, namun jika sudah maka tidak bisa dihapus
+        $id_user_lama = $existingData['id_user'];
+        $id_pekerjaan_lama = $existingData['id_pekerjaan'];
+        $pekerjaan_lama = $this->pekerjaanModel->getPekerjaan($id_pekerjaan_lama);
+        $user_lama = $this->userModel->getUser($id_user_lama);
+        $task = $this->taskModel->getTaskByIdUserIdPekerjaan($id_user_lama, $id_pekerjaan_lama);
+        if (!empty($task)) { //kalau udah bikin task
+            Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Data personil gagal dihapus, hal ini karena ' . $user_lama['nama'] . ' yang terdaftar sebagai personil pada pekerjaan ' . $pekerjaan_lama['nama_pekerjaan'] . ' sudah membuat task sebelumnya.');
+            return redirect()->to('/pekerjaan/edit_personil_pekerjaan/' . $id_pekerjaan);
+        }
         $this->personilModel->delete($id_personil);
         Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Data personil berhasil dihapus');
         return redirect()->to('/pekerjaan/edit_personil_pekerjaan/' . $id_pekerjaan);
