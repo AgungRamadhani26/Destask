@@ -669,7 +669,7 @@ class Task extends BaseController
                 $tgl_verifikasi_diterima = null;
             } elseif (session()->get('user_level') == 'supervisi') {
                 $id_status_task = 3;
-                $tgl_verifikasi_diterima = date("Y-m-d");
+                $tgl_verifikasi_diterima = date("Y-m-d H:i:s");
             }
             //Proses memasukkan data ke database
             $data_task = [
@@ -805,7 +805,7 @@ class Task extends BaseController
             'id_status_task' => 3,
             'tgl_planing' => $task['tgl_planing'],
             'tgl_selesai' => $task['tgl_selesai'],
-            'tgl_verifikasi_diterima' => date("Y-m-d"),
+            'tgl_verifikasi_diterima' => date("Y-m-d H:i:s"),
             'persentase_selesai' => $task['persentase_selesai'],
             'deskripsi_task' => $task['deskripsi_task'],
             'alasan_verifikasi' => null,

@@ -49,7 +49,7 @@ class Task extends Migration
                 'null'       => true
             ],
             'tgl_verifikasi_diterima' => [
-                'type'       => 'DATE',
+                'type'       => 'DATETIME',
                 'null'       => true
             ],
             'persentase_selesai' => [

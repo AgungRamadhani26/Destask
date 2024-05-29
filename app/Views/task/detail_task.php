@@ -139,7 +139,7 @@
                            <?php if ($task['tgl_verifikasi_diterima'] !== null) : ?>
                               <div class="col-md-4">
                                  <label for="tgl_verifikasi_diterima" class="form-label" style="font-weight: 600;">Tanggal Verifikasi Diterima</label>
-                                 <?php $tgl_verifikasi_diterima = date('d-m-Y', strtotime($task['tgl_verifikasi_diterima'])) ?>
+                                 <?php $tgl_verifikasi_diterima = date('d-m-Y H:i:s', strtotime($task['tgl_verifikasi_diterima'])); ?>
                                  <div class="form-control"><?= $tgl_verifikasi_diterima ?></div>
                               </div>
                            <?php endif ?>
