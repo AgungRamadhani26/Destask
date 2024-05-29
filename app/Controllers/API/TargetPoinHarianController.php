@@ -39,7 +39,7 @@ class TargetPoinHarianController extends ResourceController {
         $modeluser = new $this->modelUser();
         //cek id user group
         $user = $modeluser->getWhere(['id_user' => $iduser, 'deleted_at' => null])->getRow();
-        $bulan = date('m');
+        $bulan = ltrim(date('m'), '0');
         $tahun = date('Y');
         if ($user) {
             //cek target poin harian by usergroup
@@ -71,7 +71,7 @@ class TargetPoinHarianController extends ResourceController {
         $modelbobot = new $this->modelName();
         $modelusergroup = new $this->modelUserGroup();
         $tahun = date('Y');
-        $bulan = date('m');
+        $bulan = ltrim(date('m'), '0');
         $id_usergroups = $modelusergroup->select('id_usergroup')->findAll();
         //jika id usergroup dan tahun sudah ada di tabel bobot_kategori_task dan memiliki bobot poin maka masuk data
         $data = [];

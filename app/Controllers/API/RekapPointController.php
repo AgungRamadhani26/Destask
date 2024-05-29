@@ -16,7 +16,7 @@ class RekapPointController extends ResourceController {
         $kategoriTaskModel = new $this->modelKategoriTask();
         $bobotKategoriTaskModel = new $this->modelBobotKategoriTask();
     
-        $tasks = $taskModel->getTaskByUser($idUser);
+        $tasks = $taskModel->getTaskByUserId($idUser);
         $result = [];
         foreach ($tasks as $taskItem) {
             // Check if tgl_selesai is not null and less than tgl_planing
