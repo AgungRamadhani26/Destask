@@ -73,4 +73,14 @@ class Kinerja extends BaseController
         ];
         return view('kinerja_karyawan/daftar_kinerja_perkaryawan', $data);
     }
+
+    //Fungsi untuk menambah kinerja karyawan
+    public function add_kinerja_karyawan($id_user)
+    {
+        $data = [
+            'url1' => '/kinerja/daftar_kinerja_karyawan',
+            'url'  => '/kinerja/daftar_kinerja_karyawan',
+        ];
+        return view('kinerja_karyawan/add_kinerja_karyawan', $data);
+    }
 }

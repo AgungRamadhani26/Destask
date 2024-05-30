@@ -89,6 +89,8 @@ $routes->get('/kinerja/daftar_kinerja_karyawan', 'Kinerja::daftar_kinerja_karyaw
 $routes->get('/kinerja/filter_kinerja_karyawan', 'Kinerja::filter_kinerja_karyawan');
 //Untuk melihat halaman daftar kinerja perkaryawan
 $routes->get('/kinerja/daftar_kinerja_karyawan/(:num)', 'Kinerja::daftar_kinerja_perkaryawan/$1');
+//Untuk menampilkan form tambah kinerja
+$routes->get('/kinerja/add_kinerja_karyawan/(:num)', 'Kinerja::add_kinerja_karyawan/$1');
 
 //Routes Personil
 //Untuk edit personil pm
