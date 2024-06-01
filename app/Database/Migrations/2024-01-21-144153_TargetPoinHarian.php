@@ -22,7 +22,7 @@ class TargetPoinHarian extends Migration
             ],
             'tahun' => [
                 'type'       => 'VARCHAR',
-                'constraint' => 10,
+                'constraint' => 4,
                 'null'       => true
             ],
             'bulan' => [

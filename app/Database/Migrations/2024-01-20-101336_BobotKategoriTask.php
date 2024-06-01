@@ -27,7 +27,7 @@ class BobotKategoriTask extends Migration
             ],
             'tahun' => [
                 'type'       => 'VARCHAR',
-                'constraint' => 10,
+                'constraint' => 4,
                 'null'       => true
             ],
             'bobot_poin' => [

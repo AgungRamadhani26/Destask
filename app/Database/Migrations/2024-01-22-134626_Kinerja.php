@@ -20,6 +20,16 @@ class Kinerja extends Migration
                 'constraint'     => 11,
                 'unsigned'       => true,
             ],
+            'tahun' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 4,
+                'null'       => true
+            ],
+            'bulan' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 2,
+                'null'       => true
+            ],
             'jumlah_kehadiran' => [
                 'type'           => 'INT',
                 'constraint'     => 11,
@@ -39,6 +49,12 @@ class Kinerja extends Migration
                 'null'  => true
             ],
             'jumlah_mangkir' => [
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => true,
+                'null'  => true
+            ],
+            'jumlah_terlambat' => [
                 'type'           => 'INT',
                 'constraint'     => 11,
                 'unsigned'       => true,
@@ -214,7 +230,6 @@ class Kinerja extends Migration
             ],
             'score_kpi' => [
                 'type'           => 'FLOAT',
-                'constraint'     => 11,
                 'unsigned'       => true,
                 'null'  => true
             ],

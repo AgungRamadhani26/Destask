@@ -15,7 +15,7 @@ class TargetPoinHarianSeeder extends Seeder
                 'id_target_poin_harian'      => 1,
                 'id_usergroup'               => 1,
                 'tahun'                      => '2023',
-                'bulan'                      => '2',
+                'bulan'                      => '12',
                 'jumlah_target_poin_harian'  => 32,
                 'jumlah_hari_kerja'          => 24,
                 'jumlah_hari_libur'          => 6,

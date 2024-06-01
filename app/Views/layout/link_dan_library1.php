@@ -47,6 +47,18 @@
    });
 
    $(document).ready(function() {
+      $('#jumlah_kehadiran_kinerja_karyawan, #jumlah_izin_kinerja_karyawan, #jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawan, #jumlah_mangkir_kinerja_karyawan, #jumlah_terlambat_kinerja_karyawan').inputmask("numeric", {
+         digits: 0,
+         rightAlign: false, // Memastikan input diarahkan ke kiri
+         min: 0, // Nilai minimum adalah 0
+         max: 30, // Nilai maksimum 30
+         allowMinus: false, // Tidak mengizinkan input negatif
+         placeholder: ''
+      });
+   });
+
+
+   $(document).ready(function() {
       $('#persentase_selesai').inputmask("numeric", {
          suffix: ' %', // Sufikskan dengan simbol persen
          allowMinus: false, // Tidak mengizinkan tanda minus
