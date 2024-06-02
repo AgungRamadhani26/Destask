@@ -125,7 +125,7 @@
                   <div class="card-body">
                      <div class="table-responsive">
                         <h5 class="card-title">Daftar Kinerja&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                           <a href="/kinerja/add_kinerja_karyawan/1" class="btn btn-success" title="Klik untuk menambah data kinerja"><i class="ri-add-fill"></i></a>
+                           <a href="/kinerja/add_kinerja_karyawan/4" class="btn btn-success" title="Klik untuk menambah data kinerja"><i class="ri-add-fill"></i></a>
                         </h5>
                         <table class="table table-striped table-bordered" id="myTable">
                            <thead>
@@ -146,7 +146,7 @@
                                  <td>
                                     <div class="btn-group" role="group">
                                        <div>
-                                          <button type="button" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></button>
+                                          <a href="/kinerja/detail_kinerja_karyawan/4" class="btn btn-info" title="Klik untuk melihat detail kinerja"><i class="ri-information-line"></i></a>
                                        </div>
                                        <div>
                                           <button type="button" class="btn btn-warning" title="Klik untuk mengedit"><i class="ri-edit-2-line"></i></button>

@@ -77,10 +77,26 @@ class Kinerja extends BaseController
     //Fungsi untuk menambah kinerja karyawan
     public function add_kinerja_karyawan($id_user)
     {
+        $user = $this->userModel->getUser($id_user);
         $data = [
             'url1' => '/kinerja/daftar_kinerja_karyawan',
             'url'  => '/kinerja/daftar_kinerja_karyawan',
+            'user' => $user,
+            'usergroup' => $this->usergroupModel->getUserGroup($user['id_usergroup']),
         ];
         return view('kinerja_karyawan/add_kinerja_karyawan', $data);
+    }
+
+    //Fungsi untuk menampilkan detail kinerja karyawan
+    public function detail_kinerja_karyawan($id_kinerja)
+    {
+        $user = $this->userModel->getUser($id_kinerja);
+        $data = [
+            'url1' => '/kinerja/daftar_kinerja_karyawan',
+            'url'  => '/kinerja/daftar_kinerja_karyawan',
+            'user' => $user,
+            'usergroup' => $this->usergroupModel->getUserGroup($user['id_usergroup']),
+        ];
+        return view('Kinerja_karyawan/detail_kinerja_karyawan', $data);
     }
 }

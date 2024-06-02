@@ -37,7 +37,7 @@ class StatusTaskSeeder extends Seeder
             ],
             [
                 'id_status_task' => 4,
-                'nama_status_task'      => 'Cancle',
+                'nama_status_task'      => 'Cancel',
                 'deskripsi_status_task' => 'Task ditolak atau tidak lolos verifikasi, disini pengguna harus melakukan submit ulang task sesuai kriteria dan masukan yang diberikan supervisi.',
                 'color'               => '#dc3545',
                 'created_at'          => Time::now(),

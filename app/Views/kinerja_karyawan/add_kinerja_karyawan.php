@@ -12,11 +12,32 @@
             <div class="card-body">
                <form action="/kinerja/tambah_kinerja_karyawan" method="post">
                   <?= csrf_field(); ?>
-                  <h5 class="card-title">PERIODE</h5>
+                  <h5 class="card-title">PERIODE DAN DATA <?= strtoupper($user['user_level']); ?></h5>
                   <hr style="border-top: 3px solid black;">
                   <div class="row">
+                     <div class=" col-md-4 mb-3">
+                        <label for="nama_user_kinerja_karyawan" class="form-label" style="font-weight: 600;">Nama</label>
+                        <input type="text" class="form-control <?= (session()->getFlashdata('err_nama_user_kinerja_karyawan')) ? 'is-invalid' : ''; ?>" name="nama_user_kinerja_karyawan" id="nama_user_kinerja_karyawan" value="<?= $user['nama'] ?>" disabled>
+                        <div class="invalid-feedback">
+                           <?= session()->getFlashdata('err_nama_user_kinerja_karyawan') ?>
+                        </div>
+                     </div>
+                     <div class=" col-md-4 mb-3">
+                        <label for="email_user_kinerja_karyawan" class="form-label" style="font-weight: 600;">Email</label>
+                        <input type="text" class="form-control <?= (session()->getFlashdata('err_email_user_kinerja_karyawan')) ? 'is-invalid' : ''; ?>" name="email_user_kinerja_karyawan" id="email_user_kinerja_karyawan" value="<?= $user['email'] ?>" disabled>
+                        <div class="invalid-feedback">
+                           <?= session()->getFlashdata('err_email_user_kinerja_karyawan') ?>
+                        </div>
+                     </div>
+                     <div class=" col-md-4 mb-3">
+                        <label for="usergroup_user_kinerja_karyawan" class="form-label" style="font-weight: 600;">Usergroup</label>
+                        <input type="text" class="form-control <?= (session()->getFlashdata('err_usergroup_user_kinerja_karyawan')) ? 'is-invalid' : ''; ?>" name="usergroup_user_kinerja_karyawan" id="usergroup_user_kinerja_karyawan" value="<?= $usergroup['nama_usergroup'] ?>" disabled>
+                        <div class="invalid-feedback">
+                           <?= session()->getFlashdata('err_usergroup_user_kinerja_karyawan') ?>
+                        </div>
+                     </div>
                      <div class="col-md-6 mb-3">
-                        <label for="tahun_kinerja_karyawan" style="font-weight: 600;">Tahun</label>
+                        <label for="tahun_kinerja_karyawan" class="form-label" style="font-weight: 600;">Tahun</label>
                         <select class="form-control <?= (session()->getFlashdata('err_tahun_kinerja_karyawan')) ? 'is-invalid' : ''; ?>" name="tahun_kinerja_karyawan" id="tahun_kinerja_karyawan">
                            <option value="">-- Pilih Tahun --</option>
                            <option value="2023" <?= (old('tahun_kinerja_karyawan') == '2023') ? 'selected' : '' ?>>2023</option>
@@ -31,7 +52,7 @@
                      </div>
                      <div class=" col-md-6 mb-3">
                         <?php $bulanini = 12 ?>
-                        <label for="bulan_kinerja_karyawan" style="font-weight: 600;">Bulan</label>
+                        <label for="bulan_kinerja_karyawan" class="form-label" style="font-weight: 600;">Bulan</label>
                         <select class="form-control <?= (session()->getFlashdata('err_bulan_kinerja_karyawan')) ? 'is-invalid' : ''; ?>" name="bulan_kinerja_karyawan" id="bulan_kinerja_karyawan">
                            <option value="">-- Pilih Bulan --</option>
                            <option value="1" <?= (old('bulan_kinerja_karyawan') == '1') ? 'selected' : '' ?>>Januari</option>
@@ -89,7 +110,7 @@
                               <td>A.</td>
                               <td>Jumlah kehadiran</td>
                               <td>
-                                 <input type="text" class="form-control <?= (session()->getFlashdata('err_jumlah_kehadiran_kinerja_karyawan')) ? 'is-invalid' : ''; ?>" name="jumlah_kehadiran_kinerja_karyawan" id="jumlah_kehadiran_kinerja_karyawan" placeholder="Masukkan Jumlah">
+                                 <input type="text" class="form-control <?= (session()->getFlashdata('err_jumlah_kehadiran_kinerja_karyawan')) ? 'is-invalid' : ''; ?>" name="jumlah_kehadiran_kinerja_karyawan" id="jumlah_kehadiran_kinerja_karyawan">
                                  <div class="invalid-feedback">
                                     <?= session()->getFlashdata('err_jumlah_kehadiran_kinerja_karyawan') ?>
                                  </div>
@@ -99,7 +120,7 @@
                               <td>B.</td>
                               <td>Jumlah izin</td>
                               <td>
-                                 <input type="text" class="form-control <?= (session()->getFlashdata('err_jumlah_izin_kinerja_karyawan')) ? 'is-invalid' : ''; ?>" name="jumlah_izin_kinerja_karyawan" id="jumlah_izin_kinerja_karyawan" placeholder="Masukkan Jumlah">
+                                 <input type="text" class="form-control <?= (session()->getFlashdata('err_jumlah_izin_kinerja_karyawan')) ? 'is-invalid' : ''; ?>" name="jumlah_izin_kinerja_karyawan" id="jumlah_izin_kinerja_karyawan">
                                  <div class="invalid-feedback">
                                     <?= session()->getFlashdata('err_jumlah_izin_kinerja_karyawan') ?>
                                  </div>
@@ -109,7 +130,7 @@
                               <td>C.</td>
                               <td>Jumlah sakit tanpa keterangan Dokter</td>
                               <td>
-                                 <input type="text" class="form-control <?= (session()->getFlashdata('err_jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawan')) ? 'is-invalid' : ''; ?>" name="jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawan" id="jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawan" placeholder="Masukkan Jumlah">
+                                 <input type="text" class="form-control <?= (session()->getFlashdata('err_jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawan')) ? 'is-invalid' : ''; ?>" name="jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawan" id="jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawan">
                                  <div class="invalid-feedback">
                                     <?= session()->getFlashdata('err_jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawan') ?>
                                  </div>
@@ -119,7 +140,7 @@
                               <td>D.</td>
                               <td>Jumlah mangkir</td>
                               <td>
-                                 <input type="text" class="form-control <?= (session()->getFlashdata('err_jumlah_mangkir_kinerja_karyawan')) ? 'is-invalid' : ''; ?>" name="jumlah_mangkir_kinerja_karyawan" id="jumlah_mangkir_kinerja_karyawan" placeholder="Masukkan Jumlah">
+                                 <input type="text" class="form-control <?= (session()->getFlashdata('err_jumlah_mangkir_kinerja_karyawan')) ? 'is-invalid' : ''; ?>" name="jumlah_mangkir_kinerja_karyawan" id="jumlah_mangkir_kinerja_karyawan">
                                  <div class="invalid-feedback">
                                     <?= session()->getFlashdata('err_jumlah_mangkir_kinerja_karyawan') ?>
                                  </div>
@@ -129,7 +150,7 @@
                               <td>E.</td>
                               <td>Jumlah terlambat</td>
                               <td>
-                                 <input type="text" class="form-control <?= (session()->getFlashdata('err_jumlah_terlambat_kinerja_karyawan')) ? 'is-invalid' : ''; ?>" name="jumlah_terlambat_kinerja_karyawan" id="jumlah_terlambat_kinerja_karyawan" placeholder="Masukkan Jumlah">
+                                 <input type="text" class="form-control <?= (session()->getFlashdata('err_jumlah_terlambat_kinerja_karyawan')) ? 'is-invalid' : ''; ?>" name="jumlah_terlambat_kinerja_karyawan" id="jumlah_terlambat_kinerja_karyawan">
                                  <div class="invalid-feedback">
                                     <?= session()->getFlashdata('err_jumlah_terlambat_kinerja_karyawan') ?>
                                  </div>

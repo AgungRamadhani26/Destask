@@ -14,7 +14,6 @@
                   <h5 class="card-title">Data Pekerjaan</h5>
                   <hr style="border-top: 3px solid black;">
                   <div class="row g-3">
-                     <?= csrf_field(); ?>
                      <div class="col-md-4 mb-3">
                         <label for="nama_pekerjaan" class="form-label" style="font-weight: 600;">Nama Pekerjaan</label>
                         <div class="form-control"><?= $pekerjaan['nama_pekerjaan'] ?></div>

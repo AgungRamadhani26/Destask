@@ -462,7 +462,7 @@
                 </div>
                 <div class="col-4">
                     <div class="kanban-column-header" style="background-color: <?= $status_pekerjaan_cancle['color'] ?>;">
-                        <h5 style="font-weight: bold;">Cancle <span class="badge bg-white text-primary"><?= $jumlah_pekerjaan_cancle ?></span></h5>
+                        <h5 style="font-weight: bold;">Cancel <span class="badge bg-white text-primary"><?= $jumlah_pekerjaan_cancle ?></span></h5>
                     </div>
                     <div class="kanban-column">
                         <div class="kanban-droppable" id="todo">
