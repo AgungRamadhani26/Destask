@@ -17,6 +17,8 @@
 <link href="/assets/library_fe/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="/assets/library_fe/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
 <link href="/assets/library_fe/boxicons/css/boxicons.min.css" rel="stylesheet">
+<link href="/assets/library_fe/quill/quill.snow.css" rel="stylesheet">
+<link href="/assets/library_fe/quill/quill.bubble.css" rel="stylesheet">
 <link href="/assets/library_fe/remixicon/remixicon.css" rel="stylesheet">
 <link href="/assets/library_fe/simple-datatables/style.css" rel="stylesheet">
 
