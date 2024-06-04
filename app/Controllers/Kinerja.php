@@ -65,14 +65,81 @@ class Kinerja extends BaseController
     //Fungsi untuk melihat daftar kinerja perkaryawan
     public function daftar_kinerja_perkaryawan($id_user)
     {
+        $tahun_sekarang = date('Y');
+        $kinerja = $this->kinerjaModel->getKinerjaByIdUserTahun($id_user, $tahun_sekarang);
+        $kinerja_kpi = array();
+        $bulan_kpi = array();
+        // Pemetaan angka bulan ke nama bulan dalam bahasa Indonesia
+        $bulanIndonesia = [
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 => 'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember'
+        ];
+        foreach ($kinerja as $k) {
+            $kinerja_kpi[] = floatval($k['score_kpi']); // Pastikan ini diubah menjadi angka
+            $bulan_kpi[] = $bulanIndonesia[intval($k['bulan'])]; // Konversi bulan ke nama bulan
+        }
         $data = [
             'user' => $this->userModel->getUser($id_user),
             'usergroup' => $this->usergroupModel->getUserGroup(),
+            'kinerja' => $kinerja,
+            'kinerja_kpi' => $kinerja_kpi,
+            'bulan_kpi' => $bulan_kpi,
             'url1' => '/kinerja/daftar_kinerja_karyawan',
-            'url'  => '/kinerja/daftar_kinerja_karyawan',
+            'url' => '/kinerja/daftar_kinerja_karyawan',
+            'filter_tahun' => $tahun_sekarang,
         ];
         return view('kinerja_karyawan/daftar_kinerja_perkaryawan', $data);
     }
+
+    //Fungsi untuk melihat filter kinerja perkaryawan
+    public function filter_kinerja_perkaryawan($id_user)
+    {
+        $tahun = $this->request->getGet('filter_kinerja_tahun');
+        $kinerja = $this->kinerjaModel->getKinerjaByIdUserTahun($id_user, $tahun);
+        $kinerja_kpi = array();
+        $bulan_kpi = array();
+        // Pemetaan angka bulan ke nama bulan dalam bahasa Indonesia
+        $bulanIndonesia = [
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 => 'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember'
+        ];
+        foreach ($kinerja as $k) {
+            $kinerja_kpi[] = floatval($k['score_kpi']); // Pastikan ini diubah menjadi angka
+            $bulan_kpi[] = $bulanIndonesia[intval($k['bulan'])]; // Konversi bulan ke nama bulan
+        }
+        $data = [
+            'user' => $this->userModel->getUser($id_user),
+            'usergroup' => $this->usergroupModel->getUserGroup(),
+            'kinerja' => $kinerja,
+            'kinerja_kpi' => $kinerja_kpi,
+            'bulan_kpi' => $bulan_kpi,
+            'url1' => '/kinerja/daftar_kinerja_karyawan',
+            'url' => '/kinerja/daftar_kinerja_karyawan',
+            'filter_tahun' => $tahun,
+        ];
+        return view('kinerja_karyawan/daftar_kinerja_perkaryawan', $data);
+    }
+
 
     //Fungsi untuk menambah kinerja karyawan
     public function add_kinerja_karyawan($id_user)
@@ -90,7 +157,8 @@ class Kinerja extends BaseController
     //Fungsi untuk menampilkan detail kinerja karyawan
     public function detail_kinerja_karyawan($id_kinerja)
     {
-        $user = $this->userModel->getUser($id_kinerja);
+        $kinerja = $this->kinerjaModel->getKinerja($id_kinerja);
+        $user = $this->userModel->getUser($kinerja['id_user']);
         $data = [
             'url1' => '/kinerja/daftar_kinerja_karyawan',
             'url'  => '/kinerja/daftar_kinerja_karyawan',

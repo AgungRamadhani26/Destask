@@ -20,4 +20,32 @@ class KinerjaModel extends Model
         'professionalisme_a', 'professionalisme_b', 'professionalisme_c', 'professionalisme_d',
         'organizational_awareness_a', 'organizational_awareness_b', 'organizational_awareness_c', 'score_kpi'
     ];
+
+
+    //Fungsi untuk mendapatkan data kinerja berdasarkan id_kinerja
+    public function getKinerja($id_kinerja = false)
+    {
+        if ($id_kinerja === false) {
+            return $this->orderBy('id_kinerja', 'DESC')->findAll();
+        }
+        return $this->where(['id_kinerja' => $id_kinerja])->first();
+    }
+
+    //Fungsi untuk mendapatkan data kinerja berdasarkan id_user
+    public function getKinerjaByIdUser($id_user)
+    {
+        return $this->where(['id_user' => $id_user])
+            ->orderBy('tahun', 'ASC')
+            ->orderBy('bulan', 'ASC')
+            ->findAll();
+    }
+
+    //Fungsi untuk mendapatkan data kinerja berdasarkan id_user, tahun, dan bulan
+    public function getKinerjaByIdUserTahun($id_user, $tahun)
+    {
+        return $this->where(['id_user' => $id_user, 'tahun' => $tahun])
+            ->orderBy('tahun', 'ASC')
+            ->orderBy('bulan', 'ASC')
+            ->findAll();
+    }
 }
