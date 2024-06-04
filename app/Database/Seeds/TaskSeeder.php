@@ -2712,7 +2712,7 @@ class TaskSeeder extends Seeder
                 'persentase_selesai'      => 100,
                 'deskripsi_task'          => 'Memberikan penjelasan terkait rekap cuti hari libur dan izin pada aplikasi kepada stakeholder',
                 'alasan_verifikasi'       => null,
-                'bukti_selesai'           => 'memberikan_penjelasan_terkait_rekap_cuti_hari_libur_dan_izin_pada_aplikasi_kepada_stakeholder.png',
+                'bukti_selesai'           => 'memberikan_penjelasan_terkait_rekap_cuti_hari_libur_dan_izin_pada_aplikasi_kepada_stakeholder.docx',
                 'tautan_task'             => 'Tidak ada karena semua hal sudah terlampir pada manual book.',
                 'created_at'              => Time::now(),
                 'updated_at'              => Time::now(),
