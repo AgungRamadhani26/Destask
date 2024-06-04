@@ -1,6 +1,7 @@
 <!-- Vendor JS Files -->
 <script src="/assets/library_fe/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="/assets/library_fe/simple-datatables/simple-datatables.js"></script>
+<script src="/assets/library_fe/tinymce/tinymce.min.js"></script>
 <!-- Sweet Alert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- Template Main JS File -->
