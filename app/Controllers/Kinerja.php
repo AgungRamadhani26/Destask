@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\KinerjaModel;
+use App\Models\TargetPoinHarianModel;
 use App\Models\UserGroupModel;
 use App\Models\UserModel;
 
@@ -13,11 +14,13 @@ class Kinerja extends BaseController
     protected $kinerjaModel;
     protected $userModel;
     protected $usergroupModel;
+    protected $targetpoinharianModel;
     public function __construct()
     {
         $this->kinerjaModel = new KinerjaModel();
         $this->userModel = new UserModel();
         $this->usergroupModel = new UserGroupModel();
+        $this->targetpoinharianModel = new TargetPoinHarianModel();
         helper(['swal_helper', 'option_helper']);
     }
 
@@ -159,11 +162,35 @@ class Kinerja extends BaseController
     {
         $kinerja = $this->kinerjaModel->getKinerja($id_kinerja);
         $user = $this->userModel->getUser($kinerja['id_user']);
+        $target_poin_harian = $this->targetpoinharianModel->getTargetPoinHarianByTahunBulanIdusergroup($kinerja['tahun'], $kinerja['bulan'], $user['id_usergroup']);
+
+        // Pemetaan angka bulan ke nama bulan dalam bahasa Indonesia
+        $bulanIndonesia = [
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 => 'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember'
+        ];
+
+        // Konversi bulan ke nama bulan
+        $nama_bulan = $bulanIndonesia[intval($kinerja['bulan'])];
+
         $data = [
             'url1' => '/kinerja/daftar_kinerja_karyawan',
-            'url'  => '/kinerja/daftar_kinerja_karyawan',
+            'url' => '/kinerja/daftar_kinerja_karyawan',
             'user' => $user,
             'usergroup' => $this->usergroupModel->getUserGroup($user['id_usergroup']),
+            'kinerja' => $kinerja,
+            'nama_bulan' => $nama_bulan,
+            'jumlah_hari_kerja_1periode' => $target_poin_harian[0]['jumlah_hari_kerja'],
         ];
         return view('Kinerja_karyawan/detail_kinerja_karyawan', $data);
     }
