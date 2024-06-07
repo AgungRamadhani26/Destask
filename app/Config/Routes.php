@@ -91,8 +91,13 @@ $routes->get('/kinerja/filter_kinerja_karyawan', 'Kinerja::filter_kinerja_karyaw
 $routes->get('/kinerja/daftar_kinerja_karyawan/(:num)', 'Kinerja::daftar_kinerja_perkaryawan/$1');
 //Untuk memfilter kinerja perkaryawan
 $routes->get('/kinerja/filter_kinerja_karyawan/(:num)', 'Kinerja::filter_kinerja_perkaryawan/$1');
+//Untuk menampilkan form periode kinerja karyawan
+$routes->get('/kinerja/cek_periode_kinerja_karyawan/(:num)', 'Kinerja::cek_periode_kinerja_karyawan/$1');
+$routes->post('/kinerja/pengecekan_periode_kinerja_karyawan', 'Kinerja::pengecekan_periode_kinerja_karyawan');
 //Untuk menampilkan form tambah kinerja
-$routes->get('/kinerja/add_kinerja_karyawan/(:num)', 'Kinerja::add_kinerja_karyawan/$1');
+$routes->get('/kinerja/add_kinerja_karyawan/(:num)/(:num)/(:num)', 'Kinerja::add_kinerja_karyawan/$1/$2/$3');
+//Untuk menambah kinerja karyawan
+$routes->post('/kinerja/tambah_kinerja_karyawan', 'Kinerja::tambah_kinerja_karyawan');
 //Untuk melihat detai kinerja
 $routes->get('/kinerja/detail_kinerja_karyawan/(:num)', 'Kinerja::detail_kinerja_karyawan/$1');
 

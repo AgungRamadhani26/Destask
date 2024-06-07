@@ -11,7 +11,7 @@ class KinerjaModel extends Model
     protected $useSoftDeletes   = true;
     protected $useTimestamps    = true;
     protected $allowedFields    = [
-        'id_user', 'tahun', 'bulan', 'jumlah_kehadiran', 'jumlah_izin', 'jumlah_sakit_tnp_ket_dokter', 'jumlah_mangkir',
+        'id_user', 'tahun', 'bulan', 'jumlah_hari_kerja', 'jumlah_kehadiran', 'jumlah_izin', 'jumlah_sakit_tnp_ket_dokter', 'jumlah_mangkir',
         'jumlah_terlambat', 'kebersihan_diri', 'kerapihan_penampilan', 'integritas_a', 'integritas_b', 'integritas_c',
         'kerjasama_a', 'kerjasama_b', 'kerjasama_c', 'kerjasama_d', 'orientasi_thd_konsumen_a',
         'orientasi_thd_konsumen_b', 'orientasi_thd_konsumen_c', 'orientasi_thd_konsumen_d',
@@ -44,6 +44,15 @@ class KinerjaModel extends Model
     public function getKinerjaByIdUserTahun($id_user, $tahun)
     {
         return $this->where(['id_user' => $id_user, 'tahun' => $tahun])
+            ->orderBy('tahun', 'ASC')
+            ->orderBy('bulan', 'ASC')
+            ->findAll();
+    }
+
+    //Fungsi untuk mendapatkan data kinerja berdasarkan id_user, tahun, dan bulan
+    public function getKinerjaByIdUserTahunBulan($id_user, $tahun, $bulan)
+    {
+        return $this->where(['id_user' => $id_user, 'tahun' => $tahun, 'bulan' => $bulan])
             ->orderBy('tahun', 'ASC')
             ->orderBy('bulan', 'ASC')
             ->findAll();

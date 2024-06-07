@@ -54,6 +54,26 @@ class TaskModel extends Model
     {
         return count($this->getTaskAll_ByIdPekerjaan($id_pekerjaan));
     }
+    //Fungsi untuk mendapatkan data task berdasarkan id_user, tahun planing, dan bulan planing
+    public function getTaskByIdUserTahunBulan($id_user, $tahun, $bulan)
+    {
+        return $this->where(['id_user' => $id_user, 'YEAR(tgl_planing)' => $tahun, 'MONTH(tgl_planing)' => $bulan])
+            ->orderBy('tgl_planing', 'ASC')
+            ->findAll();
+    }
+    //Fungsi untuk menghitung jumlah task berdasarkan id_user, tahun planing, dan bulan planing
+    public function countTaskByIdUserTahunBulan($id_user, $tahun, $bulan)
+    {
+        return count($this->getTaskByIdUserTahunBulan($id_user, $tahun, $bulan));
+    }
+    //Fungdi untuk mendapatkan task selesai yang tidak terlambat
+    public function getTaskSelesaiTidakTerlambat($id_user, $tahun, $bulan)
+    {
+        return $this->where(['id_user' => $id_user, 'YEAR(tgl_selesai)' => $tahun, 'MONTH(tgl_selesai)' => $bulan, 'id_status_task' => 3])
+            ->where('tgl_selesai <= tgl_planing')
+            ->orderBy('tgl_selesai', 'ASC')
+            ->findAll();
+    }
 
 
 

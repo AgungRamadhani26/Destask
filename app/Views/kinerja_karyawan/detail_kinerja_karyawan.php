@@ -96,7 +96,7 @@
                         <tr>
                            <td>A.</td>
                            <td>Jumlah hari kerja 1 periode</td>
-                           <td><?= $jumlah_hari_kerja_1periode ?> Hari</td>
+                           <td><?= $kinerja['jumlah_hari_kerja'] ?> Hari</td>
                         </tr>
                         <tr>
                            <td>B.</td>

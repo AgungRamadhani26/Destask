@@ -3071,6 +3071,82 @@ class TaskSeeder extends Seeder
                 'created_at'              => Time::now(),
                 'updated_at'              => Time::now(),
             ],
+
+
+            //PROJECT MANAGER
+            //Task User Amsari Kurniadi pekerjaan Aplikasi Absensi SMAN 1 Bandar
+            [
+                'id_task'                 => 160,
+                'id_pekerjaan'            => 2,
+                'id_user'                 => 12,
+                'creator'                 => 12,
+                'id_status_task'          => 3, //task selesai
+                'id_kategori_task'        => 3,
+                'tgl_planing'             => '2024-06-07',
+                'tgl_selesai'             => '2024-06-07',
+                'tgl_verifikasi_diterima' => '2024-06-07 10:59:00',
+                'persentase_selesai'      => 100,
+                'deskripsi_task'          => 'Integrasi backend dan frontend menu daftar hari libur dan cuti tahap 1',
+                'alasan_verifikasi'       => null,
+                'bukti_selesai'           => 'integrasi_backend_dan_frontend_menu_daftar_hari_libur_dan_cuti_tahap1.jpg',
+                'tautan_task'             => 'Tidak ada karena semuanya sudah terlampir pada laporan evaluasi.',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+            [
+                'id_task'                 => 161,
+                'id_pekerjaan'            => 2,
+                'id_user'                 => 12,
+                'creator'                 => 12,
+                'id_status_task'          => 3, //task selesai
+                'id_kategori_task'        => 1,
+                'tgl_planing'             => '2024-06-06',
+                'tgl_selesai'             => '2024-06-06',
+                'tgl_verifikasi_diterima' => '2024-06-06 10:59:00',
+                'persentase_selesai'      => 100,
+                'deskripsi_task'          => 'Support penyusunan laporan dokumentasi desain',
+                'alasan_verifikasi'       => null,
+                'bukti_selesai'           => 'support_penyusunan_laporan_dokumentasi_desain.pdf',
+                'tautan_task'             => 'Tidak ada karena semuanya sudah terlampir pada laporan evaluasi.',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+            [
+                'id_task'                 => 162,
+                'id_pekerjaan'            => 2,
+                'id_user'                 => 12,
+                'creator'                 => 12,
+                'id_status_task'          => 3, //task selesai
+                'id_kategori_task'        => 1,
+                'tgl_planing'             => '2024-06-07',
+                'tgl_selesai'             => '2024-06-07',
+                'tgl_verifikasi_diterima' => '2024-06-07 10:59:00',
+                'persentase_selesai'      => 100,
+                'deskripsi_task'          => 'Support penyusunan laporan dokumentasi testing',
+                'alasan_verifikasi'       => null,
+                'bukti_selesai'           => 'support_penyusunan_laporan_dokumentasi_testing.jpg',
+                'tautan_task'             => 'Tidak ada karena semuanya sudah terlampir pada laporan evaluasi.',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+            [
+                'id_task'                 => 163,
+                'id_pekerjaan'            => 2,
+                'id_user'                 => 12,
+                'creator'                 => 12,
+                'id_status_task'          => 3, //task selesai
+                'id_kategori_task'        => 4,
+                'tgl_planing'             => '2024-06-11',
+                'tgl_selesai'             => '2024-06-11',
+                'tgl_verifikasi_diterima' => '2024-06-11 10:59:00',
+                'persentase_selesai'      => 100,
+                'deskripsi_task'          => 'Membantu tim testing dalam automation testing autentikasi',
+                'alasan_verifikasi'       => null,
+                'bukti_selesai'           => 'membantu_tim_testing_dalam_automation_testing_autentikasi.jpg',
+                'tautan_task'             => 'Tidak ada karena semuanya sudah terlampir pada laporan evaluasi.',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
         ];
         $this->db->table('task')->insertBatch($data);
     }

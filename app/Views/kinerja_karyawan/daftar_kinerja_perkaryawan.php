@@ -109,7 +109,7 @@
                   <div class="card-body">
                      <div class="table-responsive">
                         <h5 class="card-title">Daftar Kinerja&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                           <a href="/kinerja/add_kinerja_karyawan/4" class="btn btn-success" title="Klik untuk menambah data kinerja"><i class="ri-add-fill"></i></a>
+                           <a href="/kinerja/cek_periode_kinerja_karyawan/<?= $user['id_user'] ?>" class="btn btn-success" title="Klik untuk menambah data kinerja"><i class="ri-add-fill"></i></a>
                         </h5>
                         <table class="table table-striped table-bordered" id="myTable">
                            <thead>
