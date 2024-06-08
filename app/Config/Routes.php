@@ -98,6 +98,8 @@ $routes->post('/kinerja/pengecekan_periode_kinerja_karyawan', 'Kinerja::pengecek
 $routes->get('/kinerja/add_kinerja_karyawan/(:num)/(:num)/(:num)', 'Kinerja::add_kinerja_karyawan/$1/$2/$3');
 //Untuk menambah kinerja karyawan
 $routes->post('/kinerja/tambah_kinerja_karyawan', 'Kinerja::tambah_kinerja_karyawan');
+//Untuk mengedit kinerja karyawan
+$routes->get('/kinerja/edit_kinerja_karyawan/(:num)', 'Kinerja::edit_kinerja_karyawan/$1');
 //Untuk melihat detai kinerja
 $routes->get('/kinerja/detail_kinerja_karyawan/(:num)', 'Kinerja::detail_kinerja_karyawan/$1');
 
