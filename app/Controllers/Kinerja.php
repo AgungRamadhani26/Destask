@@ -696,6 +696,443 @@ class Kinerja extends BaseController
         ];
         return view('kinerja_karyawan/edit_kinerja_karyawan', $data);
     }
+    public function update_kinerja_karyawan()
+    {
+        $validasi = \Config\Services::validation();
+        $kinerja_lama = $this->kinerjaModel->getKinerja($this->request->getPost('id_kinerja'));
+        $user = $this->userModel->getUser($kinerja_lama['id_user']);
+        $aturan = [
+            'periode_tahun_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Periode tahun harus dipilih',
+                ]
+            ],
+            'periode_bulan_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Periode bulan harus dipilih',
+                ]
+            ],
+            'jumlah_hari_kerja_1_periode_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Jumlah hari kerja 1 periode harus diisi',
+                ]
+            ],
+            'jumlah_kehadiran_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Jumlah kehadiran harus diisi',
+                ]
+            ],
+            'jumlah_izin_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Jumlah izin harus diisi',
+                ]
+            ],
+            'jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Jumlah sakit tanpa keterangan dokter harus diisi',
+                ]
+            ],
+            'jumlah_mangkir_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Jumlah mangkir harus diisi',
+                ]
+            ],
+            'jumlah_terlambat_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Jumlah terlambat harus diisi',
+                ]
+            ],
+            'kebersihan_diri_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nilai kebersihan diri harus dipilih',
+                ]
+            ],
+            'kerapihan_penampilan_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nilai kerapihan penampilan harus dipilih',
+                ]
+            ],
+            'integritas_a_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nilai integritas poin a harus dipilih',
+                ]
+            ],
+            'integritas_b_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nilai integritas poin b harus dipilih',
+                ]
+            ],
+            'integritas_c_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nilai integritas poin c harus dipilih',
+                ]
+            ],
+            'kerjasama_a_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nilai kerjasama poin a harus dipilih',
+                ]
+            ],
+            'kerjasama_b_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nilai kerjasama poin b harus dipilih',
+                ]
+            ],
+            'kerjasama_c_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nilai kerjasama poin c harus dipilih',
+                ]
+            ],
+            'kerjasama_d_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nilai kerjasama poin d harus dipilih',
+                ]
+            ],
+            'orientasi_thd_konsumen_a_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nilai orientasi terhadap pelayanan konsumen / rekan kerja poin a harus dipilih',
+                ]
+            ],
+            'orientasi_thd_konsumen_b_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nilai orientasi terhadap pelayanan konsumen / rekan kerja poin b harus dipilih',
+                ]
+            ],
+            'orientasi_thd_konsumen_c_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nilai orientasi terhadap pelayanan konsumen / rekan kerja poin c harus dipilih',
+                ]
+            ],
+            'orientasi_thd_konsumen_d_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nilai orientasi terhadap pelayanan konsumen / rekan kerja poin d harus dipilih',
+                ]
+            ],
+            'orientasi_thd_target_a_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nilai orientasi terhadap pencapaian target poin a harus dipilih',
+                ]
+            ],
+            'orientasi_thd_target_b_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nilai orientasi terhadap pencapaian target poin b harus dipilih',
+                ]
+            ],
+            'orientasi_thd_target_c_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nilai orientasi terhadap pencapaian target poin c harus dipilih',
+                ]
+            ],
+            'orientasi_thd_target_d_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nilai orientasi terhadap pencapaian target poin d harus dipilih',
+                ]
+            ],
+            'inisiatif_inovasi_a_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nilai inisiatif & inovasi poin a harus dipilih',
+                ]
+            ],
+            'inisiatif_inovasi_b_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nilai inisiatif & inovasi poin b harus dipilih',
+                ]
+            ],
+            'inisiatif_inovasi_c_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nilai inisiatif & inovasi poin c harus dipilih',
+                ]
+            ],
+            'inisiatif_inovasi_d_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nilai inisiatif & inovasi poin d harus dipilih',
+                ]
+            ],
+            'professionalisme_a_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nilai professionalisme poin a harus dipilih',
+                ]
+            ],
+            'professionalisme_b_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nilai professionalisme poin b harus dipilih',
+                ]
+            ],
+            'professionalisme_c_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nilai professionalisme poin c harus dipilih',
+                ]
+            ],
+            'professionalisme_d_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nilai professionalisme poin d harus dipilih',
+                ]
+            ],
+            'organizational_awareness_a_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nilai organizational awareness poin a harus dipilih',
+                ]
+            ],
+            'organizational_awareness_b_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nilai organizational awareness poin b harus dipilih',
+                ]
+            ],
+            'organizational_awareness_c_kinerja_karyawan_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Nilai organizational awareness poin c harus dipilih',
+                ]
+            ]
+        ];
+        $validasi->setRules($aturan);
+        //Jika inputan valid
+        if ($validasi->withRequest($this->request)->run()) {
+            //Mengambil data untuk tabel kinerja
+            $id_kinerja = $this->request->getPost('id_kinerja');
+            $id_user = $user['id_user'];
+            $tahun_kinerja_karyawan = $this->request->getPost('periode_tahun_kinerja_karyawan_e');
+            $bulan_kinerja_karyawan = $this->request->getPost('periode_bulan_kinerja_karyawan_e');
+            $jumlah_hari_kerja_1periode_kinerja_karyawan = str_replace(' Hari', '', $this->request->getPost('jumlah_hari_kerja_1_periode_kinerja_karyawan_e'));
+            $jumlah_kehadiran_kinerja_karyawan = str_replace(' Hari', '', $this->request->getPost('jumlah_kehadiran_kinerja_karyawan_e'));
+            $jumlah_izin_kinerja_karyawan = str_replace(' Kali', '', $this->request->getPost('jumlah_izin_kinerja_karyawan_e'));
+            $jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawan = str_replace(' Kali', '', $this->request->getPost('jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawan_e'));
+            $jumlah_mangkir_kinerja_karyawan = str_replace(' Kali', '', $this->request->getPost('jumlah_mangkir_kinerja_karyawan_e'));
+            $jumlah_terlambat_kinerja_karyawan = str_replace(' Kali', '', $this->request->getPost('jumlah_terlambat_kinerja_karyawan_e'));
+            $kebersihan_diri_kinerja_karyawan = $this->request->getPost('kebersihan_diri_kinerja_karyawan_e');
+            $kerapihan_penampilan_kinerja_karyawan = $this->request->getPost('kerapihan_penampilan_kinerja_karyawan_e');
+            $integritas_a_kinerja_karyawan = $this->request->getPost('integritas_a_kinerja_karyawan_e');
+            $integritas_b_kinerja_karyawan = $this->request->getPost('integritas_b_kinerja_karyawan_e');
+            $integritas_c_kinerja_karyawan = $this->request->getPost('integritas_c_kinerja_karyawan_e');
+            $kerjasama_a_kinerja_karyawan = $this->request->getPost('kerjasama_a_kinerja_karyawan_e');
+            $kerjasama_b_kinerja_karyawan = $this->request->getPost('kerjasama_b_kinerja_karyawan_e');
+            $kerjasama_c_kinerja_karyawan = $this->request->getPost('kerjasama_c_kinerja_karyawan_e');
+            $kerjasama_d_kinerja_karyawan = $this->request->getPost('kerjasama_d_kinerja_karyawan_e');
+            $orientasi_thd_konsumen_a_kinerja_karyawan = $this->request->getPost('orientasi_thd_konsumen_a_kinerja_karyawan_e');
+            $orientasi_thd_konsumen_b_kinerja_karyawan = $this->request->getPost('orientasi_thd_konsumen_b_kinerja_karyawan_e');
+            $orientasi_thd_konsumen_c_kinerja_karyawan = $this->request->getPost('orientasi_thd_konsumen_c_kinerja_karyawan_e');
+            $orientasi_thd_konsumen_d_kinerja_karyawan = $this->request->getPost('orientasi_thd_konsumen_d_kinerja_karyawan_e');
+            $orientasi_thd_target_a_kinerja_karyawan = $this->request->getPost('orientasi_thd_target_a_kinerja_karyawan_e');
+            $orientasi_thd_target_b_kinerja_karyawan = $this->request->getPost('orientasi_thd_target_b_kinerja_karyawan_e');
+            $orientasi_thd_target_c_kinerja_karyawan = $this->request->getPost('orientasi_thd_target_c_kinerja_karyawan_e');
+            $orientasi_thd_target_d_kinerja_karyawan = $this->request->getPost('orientasi_thd_target_d_kinerja_karyawan_e');
+            $inisiatif_inovasi_a_kinerja_karyawan = $this->request->getPost('inisiatif_inovasi_a_kinerja_karyawan_e');
+            $inisiatif_inovasi_b_kinerja_karyawan = $this->request->getPost('inisiatif_inovasi_b_kinerja_karyawan_e');
+            $inisiatif_inovasi_c_kinerja_karyawan = $this->request->getPost('inisiatif_inovasi_c_kinerja_karyawan_e');
+            $inisiatif_inovasi_d_kinerja_karyawan = $this->request->getPost('inisiatif_inovasi_d_kinerja_karyawan_e');
+            $professionalisme_a_kinerja_karyawan = $this->request->getPost('professionalisme_a_kinerja_karyawan_e');
+            $professionalisme_b_kinerja_karyawan = $this->request->getPost('professionalisme_b_kinerja_karyawan_e');
+            $professionalisme_c_kinerja_karyawan = $this->request->getPost('professionalisme_c_kinerja_karyawan_e');
+            $professionalisme_d_kinerja_karyawan = $this->request->getPost('professionalisme_d_kinerja_karyawan_e');
+            $organizational_awareness_a_kinerja_karyawan = $this->request->getPost('organizational_awareness_a_kinerja_karyawan_e');
+            $organizational_awareness_b_kinerja_karyawan = $this->request->getPost('organizational_awareness_b_kinerja_karyawan_e');
+            $organizational_awareness_c_kinerja_karyawan = $this->request->getPost('organizational_awareness_c_kinerja_karyawan_e');
+            //Memeriksa apakah ada perubahan pada data kinerja
+            if (
+                $kinerja_lama['id_user'] === $id_user && $kinerja_lama['tahun'] === $tahun_kinerja_karyawan && $kinerja_lama['bulan'] === $bulan_kinerja_karyawan && $kinerja_lama['jumlah_hari_kerja'] ===
+                $jumlah_hari_kerja_1periode_kinerja_karyawan && $kinerja_lama['jumlah_kehadiran'] === $jumlah_kehadiran_kinerja_karyawan && $kinerja_lama['jumlah_izin'] === $jumlah_izin_kinerja_karyawan
+                && $kinerja_lama['jumlah_sakit_tnp_ket_dokter'] === $jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawan && $kinerja_lama['jumlah_mangkir'] === $jumlah_mangkir_kinerja_karyawan &&
+                $kinerja_lama['jumlah_terlambat'] === $jumlah_terlambat_kinerja_karyawan && $kinerja_lama['kebersihan_diri'] === $kebersihan_diri_kinerja_karyawan && $kinerja_lama['kerapihan_penampilan']
+                === $kerapihan_penampilan_kinerja_karyawan && $kinerja_lama['integritas_a'] === $integritas_a_kinerja_karyawan && $kinerja_lama['integritas_b'] === $integritas_b_kinerja_karyawan &&
+                $kinerja_lama['integritas_c'] === $integritas_c_kinerja_karyawan && $kinerja_lama['kerjasama_a'] === $kerjasama_a_kinerja_karyawan && $kinerja_lama['kerjasama_b'] === $kerjasama_b_kinerja_karyawan
+                && $kinerja_lama['kerjasama_c'] === $kerjasama_c_kinerja_karyawan && $kinerja_lama['kerjasama_d'] === $kerjasama_d_kinerja_karyawan && $kinerja_lama['orientasi_thd_konsumen_a']
+                === $orientasi_thd_konsumen_a_kinerja_karyawan && $kinerja_lama['orientasi_thd_konsumen_b'] === $orientasi_thd_konsumen_b_kinerja_karyawan && $kinerja_lama['orientasi_thd_konsumen_c']
+                === $orientasi_thd_konsumen_c_kinerja_karyawan && $kinerja_lama['orientasi_thd_konsumen_d'] === $orientasi_thd_konsumen_d_kinerja_karyawan && $kinerja_lama['orientasi_thd_target_a']
+                === $orientasi_thd_target_a_kinerja_karyawan && $kinerja_lama['orientasi_thd_target_b'] === $orientasi_thd_target_b_kinerja_karyawan && $kinerja_lama['orientasi_thd_target_c']
+                === $orientasi_thd_target_c_kinerja_karyawan && $kinerja_lama['orientasi_thd_target_d'] === $orientasi_thd_target_d_kinerja_karyawan && $kinerja_lama['inisiatif_inovasi_a']
+                === $inisiatif_inovasi_a_kinerja_karyawan && $kinerja_lama['inisiatif_inovasi_b'] === $inisiatif_inovasi_b_kinerja_karyawan && $kinerja_lama['inisiatif_inovasi_c']
+                === $inisiatif_inovasi_c_kinerja_karyawan && $kinerja_lama['inisiatif_inovasi_d'] === $inisiatif_inovasi_d_kinerja_karyawan && $kinerja_lama['professionalisme_a'] ===
+                $professionalisme_a_kinerja_karyawan && $kinerja_lama['professionalisme_b'] === $professionalisme_b_kinerja_karyawan && $kinerja_lama['professionalisme_c'] ===
+                $professionalisme_c_kinerja_karyawan && $kinerja_lama['professionalisme_d'] === $professionalisme_d_kinerja_karyawan && $kinerja_lama['organizational_awareness_a'] ===
+                $organizational_awareness_a_kinerja_karyawan && $kinerja_lama['organizational_awareness_b'] === $organizational_awareness_b_kinerja_karyawan && $kinerja_lama['organizational_awareness_c']
+                === $organizational_awareness_c_kinerja_karyawan
+            ) {
+                Set_notifikasi_swal_berhasil('info', 'Uppsss :|', 'Tidak ada data yang anda ubah, kembali ke form edit kinerja jika ingin mengubah data');
+                return redirect()->withInput()->back();
+            } else {
+                //---------------------------------//
+                //---MENGHITUNG KINERJA DISIPLIN---//
+                //---------------------------------//
+                //KEHADIRAN
+                $poin_jumlah_kehadiran = $jumlah_kehadiran_kinerja_karyawan * 2;
+                $poin_izin  = $jumlah_izin_kinerja_karyawan * -1;
+                $poin_sakit_tanpa_keterangan_dokter = $jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawan * -1;
+                $poin_mangkir = $jumlah_mangkir_kinerja_karyawan * -3;
+                //Sub total poin kehadiran
+                $sub_total_poin_kehadiran = $poin_jumlah_kehadiran + $poin_izin + $poin_sakit_tanpa_keterangan_dokter + $poin_mangkir;
+                $poin_terlambat = $jumlah_terlambat_kinerja_karyawan * -0.5;
+                //Total poin kehadiran
+                $total_poin_kehadiran_X = $sub_total_poin_kehadiran + $poin_terlambat;
+                $poin_hari_kerja_1periode_Y = $jumlah_hari_kerja_1periode_kinerja_karyawan * 2;
+                //Persentase kehadiran
+                $persentase_kehadiran = ($total_poin_kehadiran_X / $poin_hari_kerja_1periode_Y) * 100;
+                //Score persentase kehadiran
+                if ($persentase_kehadiran == 100) {
+                    $score_persentase_kehadiran = 10;
+                } elseif ($persentase_kehadiran >= 90 && $persentase_kehadiran <= 99) {
+                    $score_persentase_kehadiran = 8;
+                } elseif ($persentase_kehadiran >= 80 && $persentase_kehadiran <= 89) {
+                    $score_persentase_kehadiran = 6;
+                } elseif ($persentase_kehadiran >= 65 && $persentase_kehadiran <= 79) {
+                    $score_persentase_kehadiran = 5;
+                } elseif ($persentase_kehadiran >= 50 && $persentase_kehadiran <= 64) {
+                    $score_persentase_kehadiran = 2;
+                } else {
+                    $score_persentase_kehadiran = 0;
+                }
+                //Score disiplin kehadiran
+                $score_disiplin_kehadiran = $score_persentase_kehadiran * 0.25;
+                //SERAGAM DAN PENAMPILAN
+                //Score seragam dan penampilan
+                $score_seragam_dan_penampilan = ($kebersihan_diri_kinerja_karyawan + $kerapihan_penampilan_kinerja_karyawan) / 2;
+                //Score disiplin seragam dan penampilan
+                $score_disiplin_seragam_dan_penampilan = $score_seragam_dan_penampilan * 0.05;
+                //SCORE DISIPLIN
+                $score_disiplin = $score_disiplin_kehadiran + $score_disiplin_seragam_dan_penampilan;
+                //-------------------------------------------//
+                //---MENGHITUNG KINERJA GENERAL COMPETENCY---//
+                //-------------------------------------------//
+                //INTEGRITAS
+                $score_integritas = (($integritas_a_kinerja_karyawan + $integritas_b_kinerja_karyawan + $integritas_c_kinerja_karyawan) / 3) * 0.17;
+                //KERJASAMA
+                $score_kerjasama = (($kerjasama_a_kinerja_karyawan + $kerjasama_b_kinerja_karyawan + $kerjasama_c_kinerja_karyawan + $kerjasama_d_kinerja_karyawan) / 4) * 0.05;
+                //ORIENTASI TERHADAP PELAYANAN KONSUMEN / REKAN KERJA
+                $score_orientasi_thd_konsumen = (($orientasi_thd_konsumen_a_kinerja_karyawan + $orientasi_thd_konsumen_b_kinerja_karyawan + $orientasi_thd_konsumen_c_kinerja_karyawan + $orientasi_thd_konsumen_d_kinerja_karyawan) / 4) * 0.1;
+                //ORIENTASI TERHADAP PENCAPAIAN TARGET
+                $score_orientasi_thd_target = (($orientasi_thd_target_a_kinerja_karyawan + $orientasi_thd_target_b_kinerja_karyawan + $orientasi_thd_target_c_kinerja_karyawan + $orientasi_thd_target_d_kinerja_karyawan) / 4) * 0.17;
+                //INISIATIF & INOVASI
+                $score_inisiatif_inovasi = (($inisiatif_inovasi_a_kinerja_karyawan + $inisiatif_inovasi_b_kinerja_karyawan + $inisiatif_inovasi_c_kinerja_karyawan + $inisiatif_inovasi_d_kinerja_karyawan) / 4) * 0.08;
+                //PROFESSIONALISME
+                $score_professionalisme = (($professionalisme_a_kinerja_karyawan + $professionalisme_b_kinerja_karyawan + $professionalisme_c_kinerja_karyawan + $professionalisme_d_kinerja_karyawan) / 4) * 0.05;
+                //ORGANIZATION AWARENESS
+                $score_organization_awareness = (($organizational_awareness_a_kinerja_karyawan + $organizational_awareness_b_kinerja_karyawan + $organizational_awareness_c_kinerja_karyawan) / 3) * 0.08;
+                //SCORE GENERAL COMPETENCY
+                $score_general_competency = $score_integritas + $score_kerjasama + $score_orientasi_thd_konsumen + $score_orientasi_thd_target + $score_inisiatif_inovasi + $score_professionalisme + $score_organization_awareness;
+                //--------------------------//
+                //---MENGHITUNG SCORE KPI---//
+                //--------------------------//
+                $score_kpi = round($score_disiplin + $score_general_competency, 2);
+                //Memasukkan data ke database
+                $data_kinerja = [
+                    'id_kinerja' => $id_kinerja,
+                    'id_user' => $id_user,
+                    'tahun' => $tahun_kinerja_karyawan,
+                    'bulan' => $bulan_kinerja_karyawan,
+                    'jumlah_hari_kerja' => $jumlah_hari_kerja_1periode_kinerja_karyawan,
+                    'jumlah_kehadiran' => $jumlah_kehadiran_kinerja_karyawan,
+                    'jumlah_izin' => $jumlah_izin_kinerja_karyawan,
+                    'jumlah_sakit_tnp_ket_dokter' => $jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawan,
+                    'jumlah_mangkir' => $jumlah_mangkir_kinerja_karyawan,
+                    'jumlah_terlambat' => $jumlah_terlambat_kinerja_karyawan,
+                    'kebersihan_diri' => $kebersihan_diri_kinerja_karyawan,
+                    'kerapihan_penampilan' => $kerapihan_penampilan_kinerja_karyawan,
+                    'integritas_a' => $integritas_a_kinerja_karyawan,
+                    'integritas_b' => $integritas_b_kinerja_karyawan,
+                    'integritas_c' => $integritas_c_kinerja_karyawan,
+                    'kerjasama_a' => $kerjasama_a_kinerja_karyawan,
+                    'kerjasama_b' => $kerjasama_b_kinerja_karyawan,
+                    'kerjasama_c' => $kerjasama_c_kinerja_karyawan,
+                    'kerjasama_d' => $kerjasama_d_kinerja_karyawan,
+                    'orientasi_thd_konsumen_a' => $orientasi_thd_konsumen_a_kinerja_karyawan,
+                    'orientasi_thd_konsumen_b' => $orientasi_thd_konsumen_b_kinerja_karyawan,
+                    'orientasi_thd_konsumen_c' => $orientasi_thd_konsumen_c_kinerja_karyawan,
+                    'orientasi_thd_konsumen_d' => $orientasi_thd_konsumen_d_kinerja_karyawan,
+                    'orientasi_thd_target_a' => $orientasi_thd_target_a_kinerja_karyawan,
+                    'orientasi_thd_target_b' => $orientasi_thd_target_b_kinerja_karyawan,
+                    'orientasi_thd_target_c' => $orientasi_thd_target_c_kinerja_karyawan,
+                    'orientasi_thd_target_d' => $orientasi_thd_target_d_kinerja_karyawan,
+                    'inisiatif_inovasi_a' => $inisiatif_inovasi_a_kinerja_karyawan,
+                    'inisiatif_inovasi_b' => $inisiatif_inovasi_b_kinerja_karyawan,
+                    'inisiatif_inovasi_c' => $inisiatif_inovasi_c_kinerja_karyawan,
+                    'inisiatif_inovasi_d' => $inisiatif_inovasi_d_kinerja_karyawan,
+                    'professionalisme_a' => $professionalisme_a_kinerja_karyawan,
+                    'professionalisme_b' => $professionalisme_b_kinerja_karyawan,
+                    'professionalisme_c' => $professionalisme_c_kinerja_karyawan,
+                    'professionalisme_d' => $professionalisme_d_kinerja_karyawan,
+                    'organizational_awareness_a' => $organizational_awareness_a_kinerja_karyawan,
+                    'organizational_awareness_b' => $organizational_awareness_b_kinerja_karyawan,
+                    'organizational_awareness_c' => $organizational_awareness_c_kinerja_karyawan,
+                    'score_kpi' => $score_kpi
+                ];
+                $this->kinerjaModel->save($data_kinerja);
+                Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil mengedit data kinerja untuk ' . $user['nama'] . ' pada periode bulan ' . $bulan_kinerja_karyawan . ', tahun ' . $tahun_kinerja_karyawan . ' dengan score KPI ' . $score_kpi);
+                return redirect()->to('/kinerja/daftar_kinerja_karyawan/' . $id_user);
+            }
+        } else {
+            session()->setFlashdata('err_periode_tahun_kinerja_karyawan_e', $validasi->getError('periode_tahun_kinerja_karyawan_e'));
+            session()->setFlashdata('err_periode_bulan_kinerja_karyawan_e', $validasi->getError('periode_bulan_kinerja_karyawan_e'));
+            session()->setFlashdata('err_jumlah_hari_kerja_1_periode_kinerja_karyawan_e', $validasi->getError('jumlah_hari_kerja_1_periode_kinerja_karyawan_e'));
+            session()->setFlashdata('err_jumlah_kehadiran_kinerja_karyawan_e', $validasi->getError('jumlah_kehadiran_kinerja_karyawan_e'));
+            session()->setFlashdata('err_jumlah_izin_kinerja_karyawan_e', $validasi->getError('jumlah_izin_kinerja_karyawan_e'));
+            session()->setFlashdata('err_jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawan_e', $validasi->getError('jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawan_e'));
+            session()->setFlashdata('err_jumlah_mangkir_kinerja_karyawan_e', $validasi->getError('jumlah_mangkir_kinerja_karyawan_e'));
+            session()->setFlashdata('err_jumlah_terlambat_kinerja_karyawan_e', $validasi->getError('jumlah_terlambat_kinerja_karyawan_e'));
+            session()->setFlashdata('err_kebersihan_diri_kinerja_karyawan_e', $validasi->getError('kebersihan_diri_kinerja_karyawan_e'));
+            session()->setFlashdata('err_kerapihan_penampilan_kinerja_karyawan_e', $validasi->getError('kerapihan_penampilan_kinerja_karyawan_e'));
+            session()->setFlashdata('err_integritas_a_kinerja_karyawan_e', $validasi->getError('integritas_a_kinerja_karyawan_e'));
+            session()->setFlashdata('err_integritas_b_kinerja_karyawan_e', $validasi->getError('integritas_b_kinerja_karyawan_e'));
+            session()->setFlashdata('err_integritas_c_kinerja_karyawan_e', $validasi->getError('integritas_c_kinerja_karyawan_e'));
+            session()->setFlashdata('err_kerjasama_a_kinerja_karyawan_e', $validasi->getError('kerjasama_a_kinerja_karyawan_e'));
+            session()->setFlashdata('err_kerjasama_b_kinerja_karyawan_e', $validasi->getError('kerjasama_b_kinerja_karyawan_e'));
+            session()->setFlashdata('err_kerjasama_c_kinerja_karyawan_e', $validasi->getError('kerjasama_c_kinerja_karyawan_e'));
+            session()->setFlashdata('err_kerjasama_d_kinerja_karyawan_e', $validasi->getError('kerjasama_d_kinerja_karyawan_e'));
+            session()->setFlashdata('err_orientasi_thd_konsumen_a_kinerja_karyawan_e', $validasi->getError('orientasi_thd_konsumen_a_kinerja_karyawan_e'));
+            session()->setFlashdata('err_orientasi_thd_konsumen_b_kinerja_karyawan_e', $validasi->getError('orientasi_thd_konsumen_b_kinerja_karyawan_e'));
+            session()->setFlashdata('err_orientasi_thd_konsumen_c_kinerja_karyawan_e', $validasi->getError('orientasi_thd_konsumen_c_kinerja_karyawan_e'));
+            session()->setFlashdata('err_orientasi_thd_konsumen_d_kinerja_karyawan_e', $validasi->getError('orientasi_thd_konsumen_d_kinerja_karyawan_e'));
+            session()->setFlashdata('err_orientasi_thd_target_a_kinerja_karyawan_e', $validasi->getError('orientasi_thd_target_a_kinerja_karyawan_e'));
+            session()->setFlashdata('err_orientasi_thd_target_b_kinerja_karyawan_e', $validasi->getError('orientasi_thd_target_b_kinerja_karyawan_e'));
+            session()->setFlashdata('err_orientasi_thd_target_c_kinerja_karyawan_e', $validasi->getError('orientasi_thd_target_c_kinerja_karyawan_e'));
+            session()->setFlashdata('err_orientasi_thd_target_d_kinerja_karyawan_e', $validasi->getError('orientasi_thd_target_d_kinerja_karyawan_e'));
+            session()->setFlashdata('err_inisiatif_inovasi_a_kinerja_karyawan_e', $validasi->getError('inisiatif_inovasi_a_kinerja_karyawan_e'));
+            session()->setFlashdata('err_inisiatif_inovasi_b_kinerja_karyawan_e', $validasi->getError('inisiatif_inovasi_b_kinerja_karyawan_e'));
+            session()->setFlashdata('err_inisiatif_inovasi_c_kinerja_karyawan_e', $validasi->getError('inisiatif_inovasi_c_kinerja_karyawan_e'));
+            session()->setFlashdata('err_inisiatif_inovasi_d_kinerja_karyawan_e', $validasi->getError('inisiatif_inovasi_d_kinerja_karyawan_e'));
+            session()->setFlashdata('err_professionalisme_a_kinerja_karyawan_e', $validasi->getError('professionalisme_a_kinerja_karyawan_e'));
+            session()->setFlashdata('err_professionalisme_b_kinerja_karyawan_e', $validasi->getError('professionalisme_b_kinerja_karyawan_e'));
+            session()->setFlashdata('err_professionalisme_c_kinerja_karyawan_e', $validasi->getError('professionalisme_c_kinerja_karyawan_e'));
+            session()->setFlashdata('err_professionalisme_d_kinerja_karyawan_e', $validasi->getError('professionalisme_d_kinerja_karyawan_e'));
+            session()->setFlashdata('err_organizational_awareness_a_kinerja_karyawan_e', $validasi->getError('organizational_awareness_a_kinerja_karyawan_e'));
+            session()->setFlashdata('err_organizational_awareness_b_kinerja_karyawan_e', $validasi->getError('organizational_awareness_b_kinerja_karyawan_e'));
+            session()->setFlashdata('err_organizational_awareness_c_kinerja_karyawan_e', $validasi->getError('organizational_awareness_c_kinerja_karyawan_e'));
+            Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Terdapat inputan yang kurang sesuai, periksa form edit kinerja');
+            return redirect()->withInput()->back();
+        }
+    }
 
 
     //Fungsi untuk menampilkan detail kinerja karyawan

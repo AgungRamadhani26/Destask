@@ -100,6 +100,7 @@ $routes->get('/kinerja/add_kinerja_karyawan/(:num)/(:num)/(:num)', 'Kinerja::add
 $routes->post('/kinerja/tambah_kinerja_karyawan', 'Kinerja::tambah_kinerja_karyawan');
 //Untuk mengedit kinerja karyawan
 $routes->get('/kinerja/edit_kinerja_karyawan/(:num)', 'Kinerja::edit_kinerja_karyawan/$1');
+$routes->post('/kinerja/update_kinerja_karyawan', 'Kinerja::update_kinerja_karyawan');
 //Untuk melihat detai kinerja
 $routes->get('/kinerja/detail_kinerja_karyawan/(:num)', 'Kinerja::detail_kinerja_karyawan/$1');
 
