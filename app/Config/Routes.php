@@ -103,6 +103,8 @@ $routes->get('/kinerja/edit_kinerja_karyawan/(:num)', 'Kinerja::edit_kinerja_kar
 $routes->post('/kinerja/update_kinerja_karyawan', 'Kinerja::update_kinerja_karyawan');
 //Untuk melihat detai kinerja
 $routes->get('/kinerja/detail_kinerja_karyawan/(:num)', 'Kinerja::detail_kinerja_karyawan/$1');
+//Untuk menghapus kinerja karyawan
+$routes->delete('/kinerja/delete_kinerja_karyawan/(:num)/(:num)', 'Kinerja::delete_kinerja_karyawan/$1/$2');
 
 //Routes Personil
 //Untuk edit personil pm

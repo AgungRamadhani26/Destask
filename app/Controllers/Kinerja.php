@@ -1159,7 +1159,6 @@ class Kinerja extends BaseController
 
         // Konversi bulan ke nama bulan
         $nama_bulan = $bulanIndonesia[intval($kinerja['bulan'])];
-        $target_poin_harian = $this->targetpoinharianModel->getTargetPoinHarianByTahunBulanIdusergroup($kinerja['tahun'], $kinerja['bulan'], $user['id_usergroup']);
         $data = [
             'url1' => '/kinerja/daftar_kinerja_karyawan',
             'url' => '/kinerja/daftar_kinerja_karyawan',
@@ -1169,5 +1168,14 @@ class Kinerja extends BaseController
             'nama_bulan' => $nama_bulan,
         ];
         return view('Kinerja_karyawan/detail_kinerja_karyawan', $data);
+    }
+
+
+    //Untuk menghapus kinerja karyawan
+    public function delete_kinerja_karyawan($id_kinerja, $id_user)
+    {
+        $this->kinerjaModel->delete($id_kinerja);
+        Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Data kinerja berhasil dihapus');
+        return redirect()->to('/kinerja/daftar_kinerja_karyawan/' . $id_user);
     }
 }

@@ -153,7 +153,7 @@
                                           <div>
                                              <a href="/kinerja/edit_kinerja_karyawan/<?= $k['id_kinerja'] ?>" class="btn btn-warning" title="Klik untuk mengedit kinerja"><i class=" ri-edit-2-line"></i></a>
                                           </div>
-                                          <form action="/kinerja/delete_kinerja_karyawan/<?= $k['id_kinerja'] ?>" method="POST" class="d-inline">
+                                          <form action="/kinerja/delete_kinerja_karyawan/<?= $k['id_kinerja'] ?>/<?= $user['id_user'] ?>" method="POST" class="d-inline">
                                              <?= csrf_field(); ?>
                                              <input type="hidden" name="_method" value="DELETE">
                                              <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data kinerja');"><i class="ri-delete-bin-5-line"></i></button>
