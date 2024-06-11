@@ -109,7 +109,9 @@
                   <div class="card-body">
                      <div class="table-responsive">
                         <h5 class="card-title">Daftar Kinerja&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                           <a href="/kinerja/cek_periode_kinerja_karyawan/<?= $user['id_user'] ?>" class="btn btn-success" title="Klik untuk menambah data kinerja"><i class="ri-add-fill"></i></a>
+                           <?php if (session()->get('user_level') == 'hod') : ?>
+                              <a href="/kinerja/cek_periode_kinerja_karyawan/<?= $user['id_user'] ?>" class="btn btn-success" title="Klik untuk menambah data kinerja"><i class="ri-add-fill"></i></a>
+                           <?php endif ?>
                         </h5>
                         <table class="table table-striped table-bordered" id="myTable">
                            <thead>
@@ -150,14 +152,16 @@
                                           <div>
                                              <a href="/kinerja/detail_kinerja_karyawan/<?= $k['id_kinerja'] ?>" class="btn btn-info" title="Klik untuk melihat detail kinerja"><i class="ri-information-line"></i></a>
                                           </div>
-                                          <div>
-                                             <a href="/kinerja/edit_kinerja_karyawan/<?= $k['id_kinerja'] ?>" class="btn btn-warning" title="Klik untuk mengedit kinerja"><i class=" ri-edit-2-line"></i></a>
-                                          </div>
-                                          <form action="/kinerja/delete_kinerja_karyawan/<?= $k['id_kinerja'] ?>/<?= $user['id_user'] ?>" method="POST" class="d-inline">
-                                             <?= csrf_field(); ?>
-                                             <input type="hidden" name="_method" value="DELETE">
-                                             <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data kinerja');"><i class="ri-delete-bin-5-line"></i></button>
-                                          </form>
+                                          <?php if (session()->get('user_level') == 'hod') : ?>
+                                             <div>
+                                                <a href="/kinerja/edit_kinerja_karyawan/<?= $k['id_kinerja'] ?>" class="btn btn-warning" title="Klik untuk mengedit kinerja"><i class=" ri-edit-2-line"></i></a>
+                                             </div>
+                                             <form action="/kinerja/delete_kinerja_karyawan/<?= $k['id_kinerja'] ?>/<?= $user['id_user'] ?>" method="POST" class="d-inline">
+                                                <?= csrf_field(); ?>
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data kinerja');"><i class="ri-delete-bin-5-line"></i></button>
+                                             </form>
+                                          <?php endif ?>
                                        </div>
                                     </td>
                                  </tr>
@@ -178,7 +182,7 @@
    Highcharts.chart('container', {
 
       title: {
-         text: 'Pertumbuhan Kinerja Karyawan',
+         text: 'Pertumbuhan Kinerja Karyawan Tahun <?= $filter_tahun ?>',
          align: 'center'
       },
 

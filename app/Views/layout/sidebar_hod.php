@@ -37,7 +37,7 @@
       </li>
 
       <li class="nav-item">
-         <a class="nav-link collapsed" href="">
+         <a class="nav-link <?= $url1 == '/realisasi_vs_target/daftar_realisasi_vs_target' ? '' : 'collapsed' ?>" href="/realisasi_vs_target/daftar_realisasi_vs_target">
             <i class="bi bi-bar-chart-line"></i>
             <span>Realisasi VS Target</span>
          </a>

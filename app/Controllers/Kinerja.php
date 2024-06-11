@@ -27,7 +27,7 @@ class Kinerja extends BaseController
         $this->targetpoinharianModel = new TargetPoinHarianModel();
         $this->taskModel = new TaskModel();
         $this->bobotkategoritaskModel = new BobotKategoriTaskModel();
-        helper(['swal_helper', 'option_helper']);
+        helper(['swal_helper', 'option_helper', 'kinerja_helper']);
     }
 
     //Fungsi untuk melihat daftar kinerja karyawan
@@ -193,15 +193,11 @@ class Kinerja extends BaseController
                 //Pengecekan apakah kinerja periode tersebut sudah ada atau belum
                 $kinerja = $this->kinerjaModel->getKinerjaByIdUserTahunBulan($id_user, $tahun, $bulan);
                 if ($kinerja) {
-                    session()->setFlashdata('err_tahun_kinerja_karyawan', $validasi->getError('tahun_kinerja_karyawan'));
-                    session()->setFlashdata('err_bulan_kinerja_karyawan', $validasi->getError('bulan_kinerja_karyawan'));
                     Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Kinerja karyawan pada periode tersebut sudah ada, silahkan pilih periode lain.');
                     return redirect()->withInput()->back();
                 }
                 return redirect()->to('/kinerja/add_kinerja_karyawan/' . $id_user . '/' . $tahun . '/' . $bulan);
             } else {
-                session()->setFlashdata('err_tahun_kinerja_karyawan', $validasi->getError('tahun_kinerja_karyawan'));
-                session()->setFlashdata('err_bulan_kinerja_karyawan', $validasi->getError('bulan_kinerja_karyawan'));
                 Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Target poin harian untuk bulan dan tahun tersebut belum dibuat, sehingga anda tidak dapat menambahkan kinerja karyawan pada periode tersebut.');
                 return redirect()->withInput()->back();
             }
@@ -217,58 +213,77 @@ class Kinerja extends BaseController
     //Fungsi untuk menambah kinerja karyawan
     public function add_kinerja_karyawan($id_user, $tahun, $bulan)
     {
-        // $bulan = 6; //ini utk testing doang
         $user = $this->userModel->getUser($id_user);
         $target_poin_harian = $this->targetpoinharianModel->getTargetPoinHarianByTahunBulanIdusergroup($tahun, $bulan, $user['id_usergroup']);
-        //Penentuan nilai ORIENTASI TERHADAP PENCAPAIAN TARGET poin a by system
-        $jumlah_hari_kerja = (int) $target_poin_harian[0]['jumlah_hari_kerja'];
-        $jumlah_daily_task = $this->taskModel->countTaskByIdUserTahunBulan($id_user, $tahun, $bulan);
-        $persentase_daily_task1 = ($jumlah_daily_task / $jumlah_hari_kerja) * 100;
-        $persentase_daily_task = round($persentase_daily_task1, 2);
-        if ($persentase_daily_task == 100) {
-            $nilai_orientasi_thd_target_poin_a = 10;
-        } elseif ($persentase_daily_task >= 50 && $persentase_daily_task < 100) {
-            $nilai_orientasi_thd_target_poin_a = 5;
-        } else {
-            $nilai_orientasi_thd_target_poin_a = 1;
-        }
-        //Penentuan nilai ORIENTASI TERHADAP PENCAPAIAN TARGET poin b by system
-        $task_selesai_tidak_terlambat = $this->taskModel->getTaskSelesaiTidakTerlambat($id_user, $tahun, $bulan);
-        $bobot_kategori_task = $this->bobotkategoritaskModel->getBobotKategoriTaskByUsergroupTahun($tahun, $user['id_usergroup']);
-        //melakukan looping untuk mendapatkan target poin yang dicapai
-        $total_bobot_poin = 0;
-        foreach ($task_selesai_tidak_terlambat as $t) {
-            foreach ($bobot_kategori_task as $b) {
-                if ($t['id_kategori_task'] == $b['id_kategori_task']) {
-                    $total_bobot_poin += $b['bobot_poin'];
+        //Cek apakah target poin harian sudah dibuat atau belum
+        if ($target_poin_harian) {
+            //Pengecekan apakah kinerja periode tersebut sudah ada atau belum
+            $kinerja = $this->kinerjaModel->getKinerjaByIdUserTahunBulan($id_user, $tahun, $bulan);
+            if ($kinerja) {
+                Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Kinerja karyawan pada periode tersebut sudah ada, silahkan pilih periode lain.');
+                return redirect()->to('/kinerja/daftar_kinerja_karyawan/' . $id_user);
+            } else {
+                if ($tahun > date('Y') || ($tahun == date('Y') && $bulan >= date('n'))) {
+                    Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Tidak dapat menambahkan kinerja karyawan pada periode yang belum selesai.');
+                    return redirect()->to('/kinerja/daftar_kinerja_karyawan/' . $id_user);
+                } else {
+                    $user = $this->userModel->getUser($id_user);
+                    $target_poin_harian = $this->targetpoinharianModel->getTargetPoinHarianByTahunBulanIdusergroup($tahun, $bulan, $user['id_usergroup']);
+                    //Penentuan nilai ORIENTASI TERHADAP PENCAPAIAN TARGET poin a by system
+                    $jumlah_hari_kerja = (int) $target_poin_harian[0]['jumlah_hari_kerja'];
+                    $jumlah_daily_task = $this->taskModel->countTaskByIdUserTahunBulan($id_user, $tahun, $bulan);
+                    $persentase_daily_task1 = ($jumlah_daily_task / $jumlah_hari_kerja) * 100;
+                    $persentase_daily_task = round($persentase_daily_task1, 2);
+                    if ($persentase_daily_task == 100) {
+                        $nilai_orientasi_thd_target_poin_a = 10;
+                    } elseif ($persentase_daily_task >= 50 && $persentase_daily_task < 100) {
+                        $nilai_orientasi_thd_target_poin_a = 5;
+                    } else {
+                        $nilai_orientasi_thd_target_poin_a = 1;
+                    }
+                    //Penentuan nilai ORIENTASI TERHADAP PENCAPAIAN TARGET poin b by system
+                    $task_selesai_tidak_terlambat = $this->taskModel->getTaskSelesaiTidakTerlambat($id_user, $tahun, $bulan);
+                    $bobot_kategori_task = $this->bobotkategoritaskModel->getBobotKategoriTaskByUsergroupTahun($tahun, $user['id_usergroup']);
+                    //melakukan looping untuk mendapatkan target poin yang dicapai
+                    $total_bobot_poin = 0;
+                    foreach ($task_selesai_tidak_terlambat as $t) {
+                        foreach ($bobot_kategori_task as $b) {
+                            if ($t['id_kategori_task'] == $b['id_kategori_task']) {
+                                $total_bobot_poin += $b['bobot_poin'];
+                            }
+                        }
+                    }
+                    //Mendapatkan target poin pada bulan terkait
+                    $target_poin_bulan_terkait = (int) $target_poin_harian[0]['jumlah_target_poin_sebulan'];
+                    if ($total_bobot_poin > $target_poin_bulan_terkait) {
+                        $nilai_orientasi_thd_target_poin_b = 10;
+                        $nilai_professionalisme_poin_b = 10;
+                    } elseif ($total_bobot_poin == $target_poin_bulan_terkait) {
+                        $nilai_orientasi_thd_target_poin_b = 5;
+                        $nilai_professionalisme_poin_b = 5;
+                    } else {
+                        $nilai_orientasi_thd_target_poin_b = 1;
+                        $nilai_professionalisme_poin_b = 1;
+                    }
+                    $data = [
+                        'url1' => '/kinerja/daftar_kinerja_karyawan',
+                        'url'  => '/kinerja/daftar_kinerja_karyawan',
+                        'user' => $user,
+                        'tahun' => $tahun,
+                        'bulan' => $bulan,
+                        'nilai_orientasi_thd_target_poin_a' => $nilai_orientasi_thd_target_poin_a,
+                        'nilai_orientasi_thd_target_poin_b' => $nilai_orientasi_thd_target_poin_b,
+                        'nilai_professionalisme_poin_b' => $nilai_professionalisme_poin_b,
+                        'jumlah_hari_kerja' => $jumlah_hari_kerja,
+                        'usergroup' => $this->usergroupModel->getUserGroup($user['id_usergroup']),
+                    ];
+                    return view('kinerja_karyawan/add_kinerja_karyawan', $data);
                 }
             }
-        }
-        //Mendapatkan target poin pada bulan terkait
-        $target_poin_bulan_terkait = (int) $target_poin_harian[0]['jumlah_target_poin_sebulan'];
-        if ($total_bobot_poin > $target_poin_bulan_terkait) {
-            $nilai_orientasi_thd_target_poin_b = 10;
-            $nilai_professionalisme_poin_b = 10;
-        } elseif ($total_bobot_poin == $target_poin_bulan_terkait) {
-            $nilai_orientasi_thd_target_poin_b = 5;
-            $nilai_professionalisme_poin_b = 5;
         } else {
-            $nilai_orientasi_thd_target_poin_b = 1;
-            $nilai_professionalisme_poin_b = 1;
+            Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Target poin harian untuk bulan dan tahun tersebut belum dibuat, sehingga anda tidak dapat menambahkan kinerja karyawan pada periode tersebut.');
+            return redirect()->to('/kinerja/daftar_kinerja_karyawan/' . $id_user);
         }
-        $data = [
-            'url1' => '/kinerja/daftar_kinerja_karyawan',
-            'url'  => '/kinerja/daftar_kinerja_karyawan',
-            'user' => $user,
-            'tahun' => $tahun,
-            'bulan' => $bulan,
-            'nilai_orientasi_thd_target_poin_a' => $nilai_orientasi_thd_target_poin_a,
-            'nilai_orientasi_thd_target_poin_b' => $nilai_orientasi_thd_target_poin_b,
-            'nilai_professionalisme_poin_b' => $nilai_professionalisme_poin_b,
-            'jumlah_hari_kerja' => $jumlah_hari_kerja,
-            'usergroup' => $this->usergroupModel->getUserGroup($user['id_usergroup']),
-        ];
-        return view('kinerja_karyawan/add_kinerja_karyawan', $data);
     }
 
     public function tambah_kinerja_karyawan()
@@ -501,6 +516,10 @@ class Kinerja extends BaseController
             $tahun_kinerja_karyawan = $this->request->getPost('periode_tahun_kinerja_karyawan');
             $bulan_kinerja_karyawan = $this->request->getPost('periode_bulan_kinerja_karyawan');
             $jumlah_hari_kerja_1periode_kinerja_karyawan = (int) str_replace(' Hari', '', $this->request->getPost('jumlah_hari_kerja_1_periode_kinerja_karyawan'));
+            if ($jumlah_hari_kerja_1periode_kinerja_karyawan != check_hari_kerja($tahun_kinerja_karyawan, $bulan_kinerja_karyawan, $this->userModel->getUser($id_user)['id_usergroup'])) {
+                Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Jangan memanipulasi jumlah hari kerja');
+                return redirect()->to('/kinerja/daftar_kinerja_karyawan/' . $id_user);
+            }
             $jumlah_kehadiran_kinerja_karyawan = (int) str_replace(' Hari', '', $this->request->getPost('jumlah_kehadiran_kinerja_karyawan'));
             $jumlah_izin_kinerja_karyawan = (int) str_replace(' Kali', '', $this->request->getPost('jumlah_izin_kinerja_karyawan'));
             $jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawan = (int) str_replace(' Kali', '', $this->request->getPost('jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawan'));
@@ -534,112 +553,133 @@ class Kinerja extends BaseController
             $organizational_awareness_a_kinerja_karyawan = $this->request->getPost('organizational_awareness_a_kinerja_karyawan');
             $organizational_awareness_b_kinerja_karyawan = $this->request->getPost('organizational_awareness_b_kinerja_karyawan');
             $organizational_awareness_c_kinerja_karyawan = $this->request->getPost('organizational_awareness_c_kinerja_karyawan');
-            //---------------------------------//
-            //---MENGHITUNG KINERJA DISIPLIN---//
-            //---------------------------------//
-            //KEHADIRAN
-            $poin_jumlah_kehadiran = $jumlah_kehadiran_kinerja_karyawan * 2;
-            $poin_izin  = $jumlah_izin_kinerja_karyawan * -1;
-            $poin_sakit_tanpa_keterangan_dokter = $jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawan * -1;
-            $poin_mangkir = $jumlah_mangkir_kinerja_karyawan * -3;
-            //Sub total poin kehadiran
-            $sub_total_poin_kehadiran = $poin_jumlah_kehadiran + $poin_izin + $poin_sakit_tanpa_keterangan_dokter + $poin_mangkir;
-            $poin_terlambat = $jumlah_terlambat_kinerja_karyawan * -0.5;
-            //Total poin kehadiran
-            $total_poin_kehadiran_X = $sub_total_poin_kehadiran + $poin_terlambat;
-            $poin_hari_kerja_1periode_Y = $jumlah_hari_kerja_1periode_kinerja_karyawan * 2;
-            //Persentase kehadiran
-            $persentase_kehadiran = ($total_poin_kehadiran_X / $poin_hari_kerja_1periode_Y) * 100;
-            //Score persentase kehadiran
-            if ($persentase_kehadiran == 100) {
-                $score_persentase_kehadiran = 10;
-            } elseif ($persentase_kehadiran >= 90 && $persentase_kehadiran <= 99) {
-                $score_persentase_kehadiran = 8;
-            } elseif ($persentase_kehadiran >= 80 && $persentase_kehadiran <= 89) {
-                $score_persentase_kehadiran = 6;
-            } elseif ($persentase_kehadiran >= 65 && $persentase_kehadiran <= 79) {
-                $score_persentase_kehadiran = 5;
-            } elseif ($persentase_kehadiran >= 50 && $persentase_kehadiran <= 64) {
-                $score_persentase_kehadiran = 2;
+            //Melakukan pengecekan akses
+            $user = $this->userModel->getUser($id_user);
+            $target_poin_harian = $this->targetpoinharianModel->getTargetPoinHarianByTahunBulanIdusergroup($tahun_kinerja_karyawan, $bulan_kinerja_karyawan, $user['id_usergroup']);
+            //Cek apakah target poin harian sudah dibuat atau belum
+            if ($target_poin_harian) {
+                //Pengecekan apakah kinerja periode tersebut sudah ada atau belum
+                $kinerja = $this->kinerjaModel->getKinerjaByIdUserTahunBulan($id_user, $tahun_kinerja_karyawan, $bulan_kinerja_karyawan);
+                if ($kinerja) {
+                    Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Kinerja karyawan pada periode tersebut sudah ada, silahkan pilih periode lain.');
+                    return redirect()->to('/kinerja/daftar_kinerja_karyawan/' . $id_user);
+                } else {
+                    if ($tahun_kinerja_karyawan > date('Y') || ($tahun_kinerja_karyawan == date('Y') && $bulan_kinerja_karyawan >= date('n'))) {
+                        Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Tidak dapat menambahkan kinerja karyawan pada periode yang belum selesai.');
+                        return redirect()->to('/kinerja/daftar_kinerja_karyawan/' . $id_user);
+                    } else {
+                        //---------------------------------//
+                        //---MENGHITUNG KINERJA DISIPLIN---//
+                        //---------------------------------//
+                        //KEHADIRAN
+                        $poin_jumlah_kehadiran = $jumlah_kehadiran_kinerja_karyawan * 2;
+                        $poin_izin  = $jumlah_izin_kinerja_karyawan * -1;
+                        $poin_sakit_tanpa_keterangan_dokter = $jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawan * -1;
+                        $poin_mangkir = $jumlah_mangkir_kinerja_karyawan * -3;
+                        //Sub total poin kehadiran
+                        $sub_total_poin_kehadiran = $poin_jumlah_kehadiran + $poin_izin + $poin_sakit_tanpa_keterangan_dokter + $poin_mangkir;
+                        $poin_terlambat = $jumlah_terlambat_kinerja_karyawan * -0.5;
+                        //Total poin kehadiran
+                        $total_poin_kehadiran_X = $sub_total_poin_kehadiran + $poin_terlambat;
+                        $poin_hari_kerja_1periode_Y = $jumlah_hari_kerja_1periode_kinerja_karyawan * 2;
+                        //Persentase kehadiran
+                        $persentase_kehadiran = ($total_poin_kehadiran_X / $poin_hari_kerja_1periode_Y) * 100;
+                        //Score persentase kehadiran
+                        if ($persentase_kehadiran == 100) {
+                            $score_persentase_kehadiran = 10;
+                        } elseif ($persentase_kehadiran >= 90 && $persentase_kehadiran <= 99) {
+                            $score_persentase_kehadiran = 8;
+                        } elseif ($persentase_kehadiran >= 80 && $persentase_kehadiran <= 89) {
+                            $score_persentase_kehadiran = 6;
+                        } elseif ($persentase_kehadiran >= 65 && $persentase_kehadiran <= 79) {
+                            $score_persentase_kehadiran = 5;
+                        } elseif ($persentase_kehadiran >= 50 && $persentase_kehadiran <= 64) {
+                            $score_persentase_kehadiran = 2;
+                        } else {
+                            $score_persentase_kehadiran = 0;
+                        }
+                        //Score disiplin kehadiran
+                        $score_disiplin_kehadiran = $score_persentase_kehadiran * 0.25;
+                        //SERAGAM DAN PENAMPILAN
+                        //Score seragam dan penampilan
+                        $score_seragam_dan_penampilan = ($kebersihan_diri_kinerja_karyawan + $kerapihan_penampilan_kinerja_karyawan) / 2;
+                        //Score disiplin seragam dan penampilan
+                        $score_disiplin_seragam_dan_penampilan = $score_seragam_dan_penampilan * 0.05;
+                        //SCORE DISIPLIN
+                        $score_disiplin = $score_disiplin_kehadiran + $score_disiplin_seragam_dan_penampilan;
+                        //-------------------------------------------//
+                        //---MENGHITUNG KINERJA GENERAL COMPETENCY---//
+                        //-------------------------------------------//
+                        //INTEGRITAS
+                        $score_integritas = (($integritas_a_kinerja_karyawan + $integritas_b_kinerja_karyawan + $integritas_c_kinerja_karyawan) / 3) * 0.17;
+                        //KERJASAMA
+                        $score_kerjasama = (($kerjasama_a_kinerja_karyawan + $kerjasama_b_kinerja_karyawan + $kerjasama_c_kinerja_karyawan + $kerjasama_d_kinerja_karyawan) / 4) * 0.05;
+                        //ORIENTASI TERHADAP PELAYANAN KONSUMEN / REKAN KERJA
+                        $score_orientasi_thd_konsumen = (($orientasi_thd_konsumen_a_kinerja_karyawan + $orientasi_thd_konsumen_b_kinerja_karyawan + $orientasi_thd_konsumen_c_kinerja_karyawan + $orientasi_thd_konsumen_d_kinerja_karyawan) / 4) * 0.1;
+                        //ORIENTASI TERHADAP PENCAPAIAN TARGET
+                        $score_orientasi_thd_target = (($orientasi_thd_target_a_kinerja_karyawan + $orientasi_thd_target_b_kinerja_karyawan + $orientasi_thd_target_c_kinerja_karyawan + $orientasi_thd_target_d_kinerja_karyawan) / 4) * 0.17;
+                        //INISIATIF & INOVASI
+                        $score_inisiatif_inovasi = (($inisiatif_inovasi_a_kinerja_karyawan + $inisiatif_inovasi_b_kinerja_karyawan + $inisiatif_inovasi_c_kinerja_karyawan + $inisiatif_inovasi_d_kinerja_karyawan) / 4) * 0.08;
+                        //PROFESSIONALISME
+                        $score_professionalisme = (($professionalisme_a_kinerja_karyawan + $professionalisme_b_kinerja_karyawan + $professionalisme_c_kinerja_karyawan + $professionalisme_d_kinerja_karyawan) / 4) * 0.05;
+                        //ORGANIZATION AWARENESS
+                        $score_organization_awareness = (($organizational_awareness_a_kinerja_karyawan + $organizational_awareness_b_kinerja_karyawan + $organizational_awareness_c_kinerja_karyawan) / 3) * 0.08;
+                        //SCORE GENERAL COMPETENCY
+                        $score_general_competency = $score_integritas + $score_kerjasama + $score_orientasi_thd_konsumen + $score_orientasi_thd_target + $score_inisiatif_inovasi + $score_professionalisme + $score_organization_awareness;
+                        //--------------------------//
+                        //---MENGHITUNG SCORE KPI---//
+                        //--------------------------//
+                        $score_kpi = round($score_disiplin + $score_general_competency, 2);
+                        //Memasukkan data ke database
+                        $data_kinerja = [
+                            'id_user' => $id_user,
+                            'tahun' => $tahun_kinerja_karyawan,
+                            'bulan' => $bulan_kinerja_karyawan,
+                            'jumlah_hari_kerja' => $jumlah_hari_kerja_1periode_kinerja_karyawan,
+                            'jumlah_kehadiran' => $jumlah_kehadiran_kinerja_karyawan,
+                            'jumlah_izin' => $jumlah_izin_kinerja_karyawan,
+                            'jumlah_sakit_tnp_ket_dokter' => $jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawan,
+                            'jumlah_mangkir' => $jumlah_mangkir_kinerja_karyawan,
+                            'jumlah_terlambat' => $jumlah_terlambat_kinerja_karyawan,
+                            'kebersihan_diri' => $kebersihan_diri_kinerja_karyawan,
+                            'kerapihan_penampilan' => $kerapihan_penampilan_kinerja_karyawan,
+                            'integritas_a' => $integritas_a_kinerja_karyawan,
+                            'integritas_b' => $integritas_b_kinerja_karyawan,
+                            'integritas_c' => $integritas_c_kinerja_karyawan,
+                            'kerjasama_a' => $kerjasama_a_kinerja_karyawan,
+                            'kerjasama_b' => $kerjasama_b_kinerja_karyawan,
+                            'kerjasama_c' => $kerjasama_c_kinerja_karyawan,
+                            'kerjasama_d' => $kerjasama_d_kinerja_karyawan,
+                            'orientasi_thd_konsumen_a' => $orientasi_thd_konsumen_a_kinerja_karyawan,
+                            'orientasi_thd_konsumen_b' => $orientasi_thd_konsumen_b_kinerja_karyawan,
+                            'orientasi_thd_konsumen_c' => $orientasi_thd_konsumen_c_kinerja_karyawan,
+                            'orientasi_thd_konsumen_d' => $orientasi_thd_konsumen_d_kinerja_karyawan,
+                            'orientasi_thd_target_a' => $orientasi_thd_target_a_kinerja_karyawan,
+                            'orientasi_thd_target_b' => $orientasi_thd_target_b_kinerja_karyawan,
+                            'orientasi_thd_target_c' => $orientasi_thd_target_c_kinerja_karyawan,
+                            'orientasi_thd_target_d' => $orientasi_thd_target_d_kinerja_karyawan,
+                            'inisiatif_inovasi_a' => $inisiatif_inovasi_a_kinerja_karyawan,
+                            'inisiatif_inovasi_b' => $inisiatif_inovasi_b_kinerja_karyawan,
+                            'inisiatif_inovasi_c' => $inisiatif_inovasi_c_kinerja_karyawan,
+                            'inisiatif_inovasi_d' => $inisiatif_inovasi_d_kinerja_karyawan,
+                            'professionalisme_a' => $professionalisme_a_kinerja_karyawan,
+                            'professionalisme_b' => $professionalisme_b_kinerja_karyawan,
+                            'professionalisme_c' => $professionalisme_c_kinerja_karyawan,
+                            'professionalisme_d' => $professionalisme_d_kinerja_karyawan,
+                            'organizational_awareness_a' => $organizational_awareness_a_kinerja_karyawan,
+                            'organizational_awareness_b' => $organizational_awareness_b_kinerja_karyawan,
+                            'organizational_awareness_c' => $organizational_awareness_c_kinerja_karyawan,
+                            'score_kpi' => $score_kpi
+                        ];
+                        $this->kinerjaModel->save($data_kinerja);
+                        Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil menambah data kinerja untuk ' . $nama_user . ' pada periode bulan ' . $bulan_kinerja_karyawan . ', tahun ' . $tahun_kinerja_karyawan . ' dengan score KPI ' . $score_kpi);
+                        return redirect()->to('/kinerja/daftar_kinerja_karyawan/' . $id_user);
+                    }
+                }
             } else {
-                $score_persentase_kehadiran = 0;
+                Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Target poin harian untuk bulan dan tahun tersebut belum dibuat, sehingga anda tidak dapat menambahkan kinerja karyawan pada periode tersebut.');
+                return redirect()->to('/kinerja/daftar_kinerja_karyawan/' . $id_user);
             }
-            //Score disiplin kehadiran
-            $score_disiplin_kehadiran = $score_persentase_kehadiran * 0.25;
-            //SERAGAM DAN PENAMPILAN
-            //Score seragam dan penampilan
-            $score_seragam_dan_penampilan = ($kebersihan_diri_kinerja_karyawan + $kerapihan_penampilan_kinerja_karyawan) / 2;
-            //Score disiplin seragam dan penampilan
-            $score_disiplin_seragam_dan_penampilan = $score_seragam_dan_penampilan * 0.05;
-            //SCORE DISIPLIN
-            $score_disiplin = $score_disiplin_kehadiran + $score_disiplin_seragam_dan_penampilan;
-            //-------------------------------------------//
-            //---MENGHITUNG KINERJA GENERAL COMPETENCY---//
-            //-------------------------------------------//
-            //INTEGRITAS
-            $score_integritas = (($integritas_a_kinerja_karyawan + $integritas_b_kinerja_karyawan + $integritas_c_kinerja_karyawan) / 3) * 0.17;
-            //KERJASAMA
-            $score_kerjasama = (($kerjasama_a_kinerja_karyawan + $kerjasama_b_kinerja_karyawan + $kerjasama_c_kinerja_karyawan + $kerjasama_d_kinerja_karyawan) / 4) * 0.05;
-            //ORIENTASI TERHADAP PELAYANAN KONSUMEN / REKAN KERJA
-            $score_orientasi_thd_konsumen = (($orientasi_thd_konsumen_a_kinerja_karyawan + $orientasi_thd_konsumen_b_kinerja_karyawan + $orientasi_thd_konsumen_c_kinerja_karyawan + $orientasi_thd_konsumen_d_kinerja_karyawan) / 4) * 0.1;
-            //ORIENTASI TERHADAP PENCAPAIAN TARGET
-            $score_orientasi_thd_target = (($orientasi_thd_target_a_kinerja_karyawan + $orientasi_thd_target_b_kinerja_karyawan + $orientasi_thd_target_c_kinerja_karyawan + $orientasi_thd_target_d_kinerja_karyawan) / 4) * 0.17;
-            //INISIATIF & INOVASI
-            $score_inisiatif_inovasi = (($inisiatif_inovasi_a_kinerja_karyawan + $inisiatif_inovasi_b_kinerja_karyawan + $inisiatif_inovasi_c_kinerja_karyawan + $inisiatif_inovasi_d_kinerja_karyawan) / 4) * 0.08;
-            //PROFESSIONALISME
-            $score_professionalisme = (($professionalisme_a_kinerja_karyawan + $professionalisme_b_kinerja_karyawan + $professionalisme_c_kinerja_karyawan + $professionalisme_d_kinerja_karyawan) / 4) * 0.05;
-            //ORGANIZATION AWARENESS
-            $score_organization_awareness = (($organizational_awareness_a_kinerja_karyawan + $organizational_awareness_b_kinerja_karyawan + $organizational_awareness_c_kinerja_karyawan) / 3) * 0.08;
-            //SCORE GENERAL COMPETENCY
-            $score_general_competency = $score_integritas + $score_kerjasama + $score_orientasi_thd_konsumen + $score_orientasi_thd_target + $score_inisiatif_inovasi + $score_professionalisme + $score_organization_awareness;
-            //--------------------------//
-            //---MENGHITUNG SCORE KPI---//
-            //--------------------------//
-            $score_kpi = round($score_disiplin + $score_general_competency, 2);
-            //Memasukkan data ke database
-            $data_kinerja = [
-                'id_user' => $id_user,
-                'tahun' => $tahun_kinerja_karyawan,
-                'bulan' => $bulan_kinerja_karyawan,
-                'jumlah_hari_kerja' => $jumlah_hari_kerja_1periode_kinerja_karyawan,
-                'jumlah_kehadiran' => $jumlah_kehadiran_kinerja_karyawan,
-                'jumlah_izin' => $jumlah_izin_kinerja_karyawan,
-                'jumlah_sakit_tnp_ket_dokter' => $jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawan,
-                'jumlah_mangkir' => $jumlah_mangkir_kinerja_karyawan,
-                'jumlah_terlambat' => $jumlah_terlambat_kinerja_karyawan,
-                'kebersihan_diri' => $kebersihan_diri_kinerja_karyawan,
-                'kerapihan_penampilan' => $kerapihan_penampilan_kinerja_karyawan,
-                'integritas_a' => $integritas_a_kinerja_karyawan,
-                'integritas_b' => $integritas_b_kinerja_karyawan,
-                'integritas_c' => $integritas_c_kinerja_karyawan,
-                'kerjasama_a' => $kerjasama_a_kinerja_karyawan,
-                'kerjasama_b' => $kerjasama_b_kinerja_karyawan,
-                'kerjasama_c' => $kerjasama_c_kinerja_karyawan,
-                'kerjasama_d' => $kerjasama_d_kinerja_karyawan,
-                'orientasi_thd_konsumen_a' => $orientasi_thd_konsumen_a_kinerja_karyawan,
-                'orientasi_thd_konsumen_b' => $orientasi_thd_konsumen_b_kinerja_karyawan,
-                'orientasi_thd_konsumen_c' => $orientasi_thd_konsumen_c_kinerja_karyawan,
-                'orientasi_thd_konsumen_d' => $orientasi_thd_konsumen_d_kinerja_karyawan,
-                'orientasi_thd_target_a' => $orientasi_thd_target_a_kinerja_karyawan,
-                'orientasi_thd_target_b' => $orientasi_thd_target_b_kinerja_karyawan,
-                'orientasi_thd_target_c' => $orientasi_thd_target_c_kinerja_karyawan,
-                'orientasi_thd_target_d' => $orientasi_thd_target_d_kinerja_karyawan,
-                'inisiatif_inovasi_a' => $inisiatif_inovasi_a_kinerja_karyawan,
-                'inisiatif_inovasi_b' => $inisiatif_inovasi_b_kinerja_karyawan,
-                'inisiatif_inovasi_c' => $inisiatif_inovasi_c_kinerja_karyawan,
-                'inisiatif_inovasi_d' => $inisiatif_inovasi_d_kinerja_karyawan,
-                'professionalisme_a' => $professionalisme_a_kinerja_karyawan,
-                'professionalisme_b' => $professionalisme_b_kinerja_karyawan,
-                'professionalisme_c' => $professionalisme_c_kinerja_karyawan,
-                'professionalisme_d' => $professionalisme_d_kinerja_karyawan,
-                'organizational_awareness_a' => $organizational_awareness_a_kinerja_karyawan,
-                'organizational_awareness_b' => $organizational_awareness_b_kinerja_karyawan,
-                'organizational_awareness_c' => $organizational_awareness_c_kinerja_karyawan,
-                'score_kpi' => $score_kpi
-            ];
-            $this->kinerjaModel->save($data_kinerja);
-            Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil menambah data kinerja untuk ' . $nama_user . ' pada periode bulan ' . $bulan_kinerja_karyawan . ', tahun ' . $tahun_kinerja_karyawan . ' dengan score KPI ' . $score_kpi);
-            return redirect()->to('/kinerja/daftar_kinerja_karyawan/' . $id_user);
         } else {
             session()->setFlashdata('err_periode_tahun_kinerja_karyawan', $validasi->getError('periode_tahun_kinerja_karyawan'));
             session()->setFlashdata('err_periode_bulan_kinerja_karyawan', $validasi->getError('periode_bulan_kinerja_karyawan'));
@@ -984,113 +1024,134 @@ class Kinerja extends BaseController
                 Set_notifikasi_swal_berhasil('info', 'Uppsss :|', 'Tidak ada data yang anda ubah, kembali ke form edit kinerja jika ingin mengubah data');
                 return redirect()->withInput()->back();
             } else {
-                //---------------------------------//
-                //---MENGHITUNG KINERJA DISIPLIN---//
-                //---------------------------------//
-                //KEHADIRAN
-                $poin_jumlah_kehadiran = $jumlah_kehadiran_kinerja_karyawan * 2;
-                $poin_izin  = $jumlah_izin_kinerja_karyawan * -1;
-                $poin_sakit_tanpa_keterangan_dokter = $jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawan * -1;
-                $poin_mangkir = $jumlah_mangkir_kinerja_karyawan * -3;
-                //Sub total poin kehadiran
-                $sub_total_poin_kehadiran = $poin_jumlah_kehadiran + $poin_izin + $poin_sakit_tanpa_keterangan_dokter + $poin_mangkir;
-                $poin_terlambat = $jumlah_terlambat_kinerja_karyawan * -0.5;
-                //Total poin kehadiran
-                $total_poin_kehadiran_X = $sub_total_poin_kehadiran + $poin_terlambat;
-                $poin_hari_kerja_1periode_Y = $jumlah_hari_kerja_1periode_kinerja_karyawan * 2;
-                //Persentase kehadiran
-                $persentase_kehadiran = ($total_poin_kehadiran_X / $poin_hari_kerja_1periode_Y) * 100;
-                //Score persentase kehadiran
-                if ($persentase_kehadiran == 100) {
-                    $score_persentase_kehadiran = 10;
-                } elseif ($persentase_kehadiran >= 90 && $persentase_kehadiran <= 99) {
-                    $score_persentase_kehadiran = 8;
-                } elseif ($persentase_kehadiran >= 80 && $persentase_kehadiran <= 89) {
-                    $score_persentase_kehadiran = 6;
-                } elseif ($persentase_kehadiran >= 65 && $persentase_kehadiran <= 79) {
-                    $score_persentase_kehadiran = 5;
-                } elseif ($persentase_kehadiran >= 50 && $persentase_kehadiran <= 64) {
-                    $score_persentase_kehadiran = 2;
+                //Melakukan pengecekan akses
+                $user = $this->userModel->getUser($id_user);
+                $target_poin_harian = $this->targetpoinharianModel->getTargetPoinHarianByTahunBulanIdusergroup($tahun_kinerja_karyawan, $bulan_kinerja_karyawan, $user['id_usergroup']);
+                //Cek apakah target poin harian sudah dibuat atau belum
+                if ($target_poin_harian) {
+                    //Pengecekan apakah kinerja periode tersebut sudah ada atau belum
+                    $kinerja = $this->kinerjaModel->getKinerjaByIdUserTahunBulan($id_user, $tahun_kinerja_karyawan, $bulan_kinerja_karyawan);
+                    if ($kinerja != null && $kinerja[0]['id_kinerja'] != $id_kinerja) {
+                        Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Kinerja karyawan pada periode tersebut sudah ada, silahkan pilih periode lain.');
+                        return redirect()->to('/kinerja/daftar_kinerja_karyawan/' . $id_user);
+                    } else {
+                        if ($tahun_kinerja_karyawan > date('Y') || ($tahun_kinerja_karyawan == date('Y') && $bulan_kinerja_karyawan >= date('n'))) {
+                            Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Tidak dapat menambahkan kinerja karyawan pada periode yang belum selesai.');
+                            return redirect()->to('/kinerja/daftar_kinerja_karyawan/' . $id_user);
+                        } else {
+                            //---------------------------------//
+                            //---MENGHITUNG KINERJA DISIPLIN---//
+                            //---------------------------------//
+                            //KEHADIRAN
+                            $poin_jumlah_kehadiran = $jumlah_kehadiran_kinerja_karyawan * 2;
+                            $poin_izin  = $jumlah_izin_kinerja_karyawan * -1;
+                            $poin_sakit_tanpa_keterangan_dokter = $jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawan * -1;
+                            $poin_mangkir = $jumlah_mangkir_kinerja_karyawan * -3;
+                            //Sub total poin kehadiran
+                            $sub_total_poin_kehadiran = $poin_jumlah_kehadiran + $poin_izin + $poin_sakit_tanpa_keterangan_dokter + $poin_mangkir;
+                            $poin_terlambat = $jumlah_terlambat_kinerja_karyawan * -0.5;
+                            //Total poin kehadiran
+                            $total_poin_kehadiran_X = $sub_total_poin_kehadiran + $poin_terlambat;
+                            $poin_hari_kerja_1periode_Y = $jumlah_hari_kerja_1periode_kinerja_karyawan * 2;
+                            //Persentase kehadiran
+                            $persentase_kehadiran = ($total_poin_kehadiran_X / $poin_hari_kerja_1periode_Y) * 100;
+                            //Score persentase kehadiran
+                            if ($persentase_kehadiran == 100) {
+                                $score_persentase_kehadiran = 10;
+                            } elseif ($persentase_kehadiran >= 90 && $persentase_kehadiran <= 99) {
+                                $score_persentase_kehadiran = 8;
+                            } elseif ($persentase_kehadiran >= 80 && $persentase_kehadiran <= 89) {
+                                $score_persentase_kehadiran = 6;
+                            } elseif ($persentase_kehadiran >= 65 && $persentase_kehadiran <= 79) {
+                                $score_persentase_kehadiran = 5;
+                            } elseif ($persentase_kehadiran >= 50 && $persentase_kehadiran <= 64) {
+                                $score_persentase_kehadiran = 2;
+                            } else {
+                                $score_persentase_kehadiran = 0;
+                            }
+                            //Score disiplin kehadiran
+                            $score_disiplin_kehadiran = $score_persentase_kehadiran * 0.25;
+                            //SERAGAM DAN PENAMPILAN
+                            //Score seragam dan penampilan
+                            $score_seragam_dan_penampilan = ($kebersihan_diri_kinerja_karyawan + $kerapihan_penampilan_kinerja_karyawan) / 2;
+                            //Score disiplin seragam dan penampilan
+                            $score_disiplin_seragam_dan_penampilan = $score_seragam_dan_penampilan * 0.05;
+                            //SCORE DISIPLIN
+                            $score_disiplin = $score_disiplin_kehadiran + $score_disiplin_seragam_dan_penampilan;
+                            //-------------------------------------------//
+                            //---MENGHITUNG KINERJA GENERAL COMPETENCY---//
+                            //-------------------------------------------//
+                            //INTEGRITAS
+                            $score_integritas = (($integritas_a_kinerja_karyawan + $integritas_b_kinerja_karyawan + $integritas_c_kinerja_karyawan) / 3) * 0.17;
+                            //KERJASAMA
+                            $score_kerjasama = (($kerjasama_a_kinerja_karyawan + $kerjasama_b_kinerja_karyawan + $kerjasama_c_kinerja_karyawan + $kerjasama_d_kinerja_karyawan) / 4) * 0.05;
+                            //ORIENTASI TERHADAP PELAYANAN KONSUMEN / REKAN KERJA
+                            $score_orientasi_thd_konsumen = (($orientasi_thd_konsumen_a_kinerja_karyawan + $orientasi_thd_konsumen_b_kinerja_karyawan + $orientasi_thd_konsumen_c_kinerja_karyawan + $orientasi_thd_konsumen_d_kinerja_karyawan) / 4) * 0.1;
+                            //ORIENTASI TERHADAP PENCAPAIAN TARGET
+                            $score_orientasi_thd_target = (($orientasi_thd_target_a_kinerja_karyawan + $orientasi_thd_target_b_kinerja_karyawan + $orientasi_thd_target_c_kinerja_karyawan + $orientasi_thd_target_d_kinerja_karyawan) / 4) * 0.17;
+                            //INISIATIF & INOVASI
+                            $score_inisiatif_inovasi = (($inisiatif_inovasi_a_kinerja_karyawan + $inisiatif_inovasi_b_kinerja_karyawan + $inisiatif_inovasi_c_kinerja_karyawan + $inisiatif_inovasi_d_kinerja_karyawan) / 4) * 0.08;
+                            //PROFESSIONALISME
+                            $score_professionalisme = (($professionalisme_a_kinerja_karyawan + $professionalisme_b_kinerja_karyawan + $professionalisme_c_kinerja_karyawan + $professionalisme_d_kinerja_karyawan) / 4) * 0.05;
+                            //ORGANIZATION AWARENESS
+                            $score_organization_awareness = (($organizational_awareness_a_kinerja_karyawan + $organizational_awareness_b_kinerja_karyawan + $organizational_awareness_c_kinerja_karyawan) / 3) * 0.08;
+                            //SCORE GENERAL COMPETENCY
+                            $score_general_competency = $score_integritas + $score_kerjasama + $score_orientasi_thd_konsumen + $score_orientasi_thd_target + $score_inisiatif_inovasi + $score_professionalisme + $score_organization_awareness;
+                            //--------------------------//
+                            //---MENGHITUNG SCORE KPI---//
+                            //--------------------------//
+                            $score_kpi = round($score_disiplin + $score_general_competency, 2);
+                            //Memasukkan data ke database
+                            $data_kinerja = [
+                                'id_kinerja' => $id_kinerja,
+                                'id_user' => $id_user,
+                                'tahun' => $tahun_kinerja_karyawan,
+                                'bulan' => $bulan_kinerja_karyawan,
+                                'jumlah_hari_kerja' => $jumlah_hari_kerja_1periode_kinerja_karyawan,
+                                'jumlah_kehadiran' => $jumlah_kehadiran_kinerja_karyawan,
+                                'jumlah_izin' => $jumlah_izin_kinerja_karyawan,
+                                'jumlah_sakit_tnp_ket_dokter' => $jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawan,
+                                'jumlah_mangkir' => $jumlah_mangkir_kinerja_karyawan,
+                                'jumlah_terlambat' => $jumlah_terlambat_kinerja_karyawan,
+                                'kebersihan_diri' => $kebersihan_diri_kinerja_karyawan,
+                                'kerapihan_penampilan' => $kerapihan_penampilan_kinerja_karyawan,
+                                'integritas_a' => $integritas_a_kinerja_karyawan,
+                                'integritas_b' => $integritas_b_kinerja_karyawan,
+                                'integritas_c' => $integritas_c_kinerja_karyawan,
+                                'kerjasama_a' => $kerjasama_a_kinerja_karyawan,
+                                'kerjasama_b' => $kerjasama_b_kinerja_karyawan,
+                                'kerjasama_c' => $kerjasama_c_kinerja_karyawan,
+                                'kerjasama_d' => $kerjasama_d_kinerja_karyawan,
+                                'orientasi_thd_konsumen_a' => $orientasi_thd_konsumen_a_kinerja_karyawan,
+                                'orientasi_thd_konsumen_b' => $orientasi_thd_konsumen_b_kinerja_karyawan,
+                                'orientasi_thd_konsumen_c' => $orientasi_thd_konsumen_c_kinerja_karyawan,
+                                'orientasi_thd_konsumen_d' => $orientasi_thd_konsumen_d_kinerja_karyawan,
+                                'orientasi_thd_target_a' => $orientasi_thd_target_a_kinerja_karyawan,
+                                'orientasi_thd_target_b' => $orientasi_thd_target_b_kinerja_karyawan,
+                                'orientasi_thd_target_c' => $orientasi_thd_target_c_kinerja_karyawan,
+                                'orientasi_thd_target_d' => $orientasi_thd_target_d_kinerja_karyawan,
+                                'inisiatif_inovasi_a' => $inisiatif_inovasi_a_kinerja_karyawan,
+                                'inisiatif_inovasi_b' => $inisiatif_inovasi_b_kinerja_karyawan,
+                                'inisiatif_inovasi_c' => $inisiatif_inovasi_c_kinerja_karyawan,
+                                'inisiatif_inovasi_d' => $inisiatif_inovasi_d_kinerja_karyawan,
+                                'professionalisme_a' => $professionalisme_a_kinerja_karyawan,
+                                'professionalisme_b' => $professionalisme_b_kinerja_karyawan,
+                                'professionalisme_c' => $professionalisme_c_kinerja_karyawan,
+                                'professionalisme_d' => $professionalisme_d_kinerja_karyawan,
+                                'organizational_awareness_a' => $organizational_awareness_a_kinerja_karyawan,
+                                'organizational_awareness_b' => $organizational_awareness_b_kinerja_karyawan,
+                                'organizational_awareness_c' => $organizational_awareness_c_kinerja_karyawan,
+                                'score_kpi' => $score_kpi
+                            ];
+                            $this->kinerjaModel->save($data_kinerja);
+                            Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil mengedit data kinerja untuk ' . $user['nama'] . ' pada periode bulan ' . $bulan_kinerja_karyawan . ', tahun ' . $tahun_kinerja_karyawan . ' dengan score KPI ' . $score_kpi);
+                            return redirect()->to('/kinerja/daftar_kinerja_karyawan/' . $id_user);
+                        }
+                    }
                 } else {
-                    $score_persentase_kehadiran = 0;
+                    Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Target poin harian untuk bulan dan tahun tersebut belum dibuat, sehingga anda tidak dapat menambahkan kinerja karyawan pada periode tersebut.');
+                    return redirect()->to('/kinerja/daftar_kinerja_karyawan/' . $id_user);
                 }
-                //Score disiplin kehadiran
-                $score_disiplin_kehadiran = $score_persentase_kehadiran * 0.25;
-                //SERAGAM DAN PENAMPILAN
-                //Score seragam dan penampilan
-                $score_seragam_dan_penampilan = ($kebersihan_diri_kinerja_karyawan + $kerapihan_penampilan_kinerja_karyawan) / 2;
-                //Score disiplin seragam dan penampilan
-                $score_disiplin_seragam_dan_penampilan = $score_seragam_dan_penampilan * 0.05;
-                //SCORE DISIPLIN
-                $score_disiplin = $score_disiplin_kehadiran + $score_disiplin_seragam_dan_penampilan;
-                //-------------------------------------------//
-                //---MENGHITUNG KINERJA GENERAL COMPETENCY---//
-                //-------------------------------------------//
-                //INTEGRITAS
-                $score_integritas = (($integritas_a_kinerja_karyawan + $integritas_b_kinerja_karyawan + $integritas_c_kinerja_karyawan) / 3) * 0.17;
-                //KERJASAMA
-                $score_kerjasama = (($kerjasama_a_kinerja_karyawan + $kerjasama_b_kinerja_karyawan + $kerjasama_c_kinerja_karyawan + $kerjasama_d_kinerja_karyawan) / 4) * 0.05;
-                //ORIENTASI TERHADAP PELAYANAN KONSUMEN / REKAN KERJA
-                $score_orientasi_thd_konsumen = (($orientasi_thd_konsumen_a_kinerja_karyawan + $orientasi_thd_konsumen_b_kinerja_karyawan + $orientasi_thd_konsumen_c_kinerja_karyawan + $orientasi_thd_konsumen_d_kinerja_karyawan) / 4) * 0.1;
-                //ORIENTASI TERHADAP PENCAPAIAN TARGET
-                $score_orientasi_thd_target = (($orientasi_thd_target_a_kinerja_karyawan + $orientasi_thd_target_b_kinerja_karyawan + $orientasi_thd_target_c_kinerja_karyawan + $orientasi_thd_target_d_kinerja_karyawan) / 4) * 0.17;
-                //INISIATIF & INOVASI
-                $score_inisiatif_inovasi = (($inisiatif_inovasi_a_kinerja_karyawan + $inisiatif_inovasi_b_kinerja_karyawan + $inisiatif_inovasi_c_kinerja_karyawan + $inisiatif_inovasi_d_kinerja_karyawan) / 4) * 0.08;
-                //PROFESSIONALISME
-                $score_professionalisme = (($professionalisme_a_kinerja_karyawan + $professionalisme_b_kinerja_karyawan + $professionalisme_c_kinerja_karyawan + $professionalisme_d_kinerja_karyawan) / 4) * 0.05;
-                //ORGANIZATION AWARENESS
-                $score_organization_awareness = (($organizational_awareness_a_kinerja_karyawan + $organizational_awareness_b_kinerja_karyawan + $organizational_awareness_c_kinerja_karyawan) / 3) * 0.08;
-                //SCORE GENERAL COMPETENCY
-                $score_general_competency = $score_integritas + $score_kerjasama + $score_orientasi_thd_konsumen + $score_orientasi_thd_target + $score_inisiatif_inovasi + $score_professionalisme + $score_organization_awareness;
-                //--------------------------//
-                //---MENGHITUNG SCORE KPI---//
-                //--------------------------//
-                $score_kpi = round($score_disiplin + $score_general_competency, 2);
-                //Memasukkan data ke database
-                $data_kinerja = [
-                    'id_kinerja' => $id_kinerja,
-                    'id_user' => $id_user,
-                    'tahun' => $tahun_kinerja_karyawan,
-                    'bulan' => $bulan_kinerja_karyawan,
-                    'jumlah_hari_kerja' => $jumlah_hari_kerja_1periode_kinerja_karyawan,
-                    'jumlah_kehadiran' => $jumlah_kehadiran_kinerja_karyawan,
-                    'jumlah_izin' => $jumlah_izin_kinerja_karyawan,
-                    'jumlah_sakit_tnp_ket_dokter' => $jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawan,
-                    'jumlah_mangkir' => $jumlah_mangkir_kinerja_karyawan,
-                    'jumlah_terlambat' => $jumlah_terlambat_kinerja_karyawan,
-                    'kebersihan_diri' => $kebersihan_diri_kinerja_karyawan,
-                    'kerapihan_penampilan' => $kerapihan_penampilan_kinerja_karyawan,
-                    'integritas_a' => $integritas_a_kinerja_karyawan,
-                    'integritas_b' => $integritas_b_kinerja_karyawan,
-                    'integritas_c' => $integritas_c_kinerja_karyawan,
-                    'kerjasama_a' => $kerjasama_a_kinerja_karyawan,
-                    'kerjasama_b' => $kerjasama_b_kinerja_karyawan,
-                    'kerjasama_c' => $kerjasama_c_kinerja_karyawan,
-                    'kerjasama_d' => $kerjasama_d_kinerja_karyawan,
-                    'orientasi_thd_konsumen_a' => $orientasi_thd_konsumen_a_kinerja_karyawan,
-                    'orientasi_thd_konsumen_b' => $orientasi_thd_konsumen_b_kinerja_karyawan,
-                    'orientasi_thd_konsumen_c' => $orientasi_thd_konsumen_c_kinerja_karyawan,
-                    'orientasi_thd_konsumen_d' => $orientasi_thd_konsumen_d_kinerja_karyawan,
-                    'orientasi_thd_target_a' => $orientasi_thd_target_a_kinerja_karyawan,
-                    'orientasi_thd_target_b' => $orientasi_thd_target_b_kinerja_karyawan,
-                    'orientasi_thd_target_c' => $orientasi_thd_target_c_kinerja_karyawan,
-                    'orientasi_thd_target_d' => $orientasi_thd_target_d_kinerja_karyawan,
-                    'inisiatif_inovasi_a' => $inisiatif_inovasi_a_kinerja_karyawan,
-                    'inisiatif_inovasi_b' => $inisiatif_inovasi_b_kinerja_karyawan,
-                    'inisiatif_inovasi_c' => $inisiatif_inovasi_c_kinerja_karyawan,
-                    'inisiatif_inovasi_d' => $inisiatif_inovasi_d_kinerja_karyawan,
-                    'professionalisme_a' => $professionalisme_a_kinerja_karyawan,
-                    'professionalisme_b' => $professionalisme_b_kinerja_karyawan,
-                    'professionalisme_c' => $professionalisme_c_kinerja_karyawan,
-                    'professionalisme_d' => $professionalisme_d_kinerja_karyawan,
-                    'organizational_awareness_a' => $organizational_awareness_a_kinerja_karyawan,
-                    'organizational_awareness_b' => $organizational_awareness_b_kinerja_karyawan,
-                    'organizational_awareness_c' => $organizational_awareness_c_kinerja_karyawan,
-                    'score_kpi' => $score_kpi
-                ];
-                $this->kinerjaModel->save($data_kinerja);
-                Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil mengedit data kinerja untuk ' . $user['nama'] . ' pada periode bulan ' . $bulan_kinerja_karyawan . ', tahun ' . $tahun_kinerja_karyawan . ' dengan score KPI ' . $score_kpi);
-                return redirect()->to('/kinerja/daftar_kinerja_karyawan/' . $id_user);
             }
         } else {
             session()->setFlashdata('err_periode_tahun_kinerja_karyawan_e', $validasi->getError('periode_tahun_kinerja_karyawan_e'));
@@ -1140,7 +1201,12 @@ class Kinerja extends BaseController
     {
         $kinerja = $this->kinerjaModel->getKinerja($id_kinerja);
         $user = $this->userModel->getUser($kinerja['id_user']);
-
+        if (session()->get('user_level') != 'hod' && session()->get('user_level') != 'direksi') {
+            if ($user['id_user'] != session()->get('id_user')) {
+                Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Anda jangan nakal, anda tidak berhak melihat detail kinerja tersebut !');
+                return redirect()->to('/kinerja/daftar_kinerja_karyawan/' . session()->get('id_user'));
+            }
+        }
         // Pemetaan angka bulan ke nama bulan dalam bahasa Indonesia
         $bulanIndonesia = [
             1 => 'Januari',
@@ -1156,7 +1222,6 @@ class Kinerja extends BaseController
             11 => 'November',
             12 => 'Desember'
         ];
-
         // Konversi bulan ke nama bulan
         $nama_bulan = $bulanIndonesia[intval($kinerja['bulan'])];
         $data = [

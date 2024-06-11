@@ -84,27 +84,30 @@ $routes->post('/task/tolak_verifikasi_task', 'Task::tolak_verifikasi_task'); //S
 
 //Routes Kinerja
 //Untuk menampilkan halaman daftar kinerja karyawan
-$routes->get('/kinerja/daftar_kinerja_karyawan', 'Kinerja::daftar_kinerja_karyawan');
+$routes->get('/kinerja/daftar_kinerja_karyawan', 'Kinerja::daftar_kinerja_karyawan'); //Akses beres udah dibikin filter/middleware ExceptAdmin
 //Untuk memfilter halaman daftar kinerja karyawan
-$routes->get('/kinerja/filter_kinerja_karyawan', 'Kinerja::filter_kinerja_karyawan');
+$routes->get('/kinerja/filter_kinerja_karyawan', 'Kinerja::filter_kinerja_karyawan'); //Akses beres udah dibikin filter/middleware ExceptAdmin
 //Untuk melihat halaman daftar kinerja perkaryawan
-$routes->get('/kinerja/daftar_kinerja_karyawan/(:num)', 'Kinerja::daftar_kinerja_perkaryawan/$1');
+$routes->get('/kinerja/daftar_kinerja_karyawan/(:num)', 'Kinerja::daftar_kinerja_perkaryawan/$1'); //Akses beres udah dibikin filter/middleware ExceptAdmin
 //Untuk memfilter kinerja perkaryawan
-$routes->get('/kinerja/filter_kinerja_karyawan/(:num)', 'Kinerja::filter_kinerja_perkaryawan/$1');
+$routes->get('/kinerja/filter_kinerja_karyawan/(:num)', 'Kinerja::filter_kinerja_perkaryawan/$1'); //Akses beres udah dibikin filter/middleware ExceptAdmin
 //Untuk menampilkan form periode kinerja karyawan
-$routes->get('/kinerja/cek_periode_kinerja_karyawan/(:num)', 'Kinerja::cek_periode_kinerja_karyawan/$1');
-$routes->post('/kinerja/pengecekan_periode_kinerja_karyawan', 'Kinerja::pengecekan_periode_kinerja_karyawan');
+$routes->get('/kinerja/cek_periode_kinerja_karyawan/(:num)', 'Kinerja::cek_periode_kinerja_karyawan/$1'); //Akses beres udah dibikin filter/middleware KhususHOD
+$routes->post('/kinerja/pengecekan_periode_kinerja_karyawan', 'Kinerja::pengecekan_periode_kinerja_karyawan'); //Akses beres udah dibikin filter/middleware KhususHOD
 //Untuk menampilkan form tambah kinerja
-$routes->get('/kinerja/add_kinerja_karyawan/(:num)/(:num)/(:num)', 'Kinerja::add_kinerja_karyawan/$1/$2/$3');
+$routes->get('/kinerja/add_kinerja_karyawan/(:num)/(:num)/(:num)', 'Kinerja::add_kinerja_karyawan/$1/$2/$3'); //Akses beres udah dibikin filter/middleware KhususHOD
 //Untuk menambah kinerja karyawan
-$routes->post('/kinerja/tambah_kinerja_karyawan', 'Kinerja::tambah_kinerja_karyawan');
+$routes->post('/kinerja/tambah_kinerja_karyawan', 'Kinerja::tambah_kinerja_karyawan'); //Akses beres udah dibikin filter/middleware KhususHOD
 //Untuk mengedit kinerja karyawan
-$routes->get('/kinerja/edit_kinerja_karyawan/(:num)', 'Kinerja::edit_kinerja_karyawan/$1');
-$routes->post('/kinerja/update_kinerja_karyawan', 'Kinerja::update_kinerja_karyawan');
+$routes->get('/kinerja/edit_kinerja_karyawan/(:num)', 'Kinerja::edit_kinerja_karyawan/$1'); //Akses beres udah dibikin filter/middleware KhususHOD
+$routes->post('/kinerja/update_kinerja_karyawan', 'Kinerja::update_kinerja_karyawan'); //Akses beres udah dibikin filter/middleware KhususHOD
 //Untuk melihat detai kinerja
-$routes->get('/kinerja/detail_kinerja_karyawan/(:num)', 'Kinerja::detail_kinerja_karyawan/$1');
+$routes->get('/kinerja/detail_kinerja_karyawan/(:num)', 'Kinerja::detail_kinerja_karyawan/$1'); //Sudah beres masalah akses karena semua udah diatur di controller
 //Untuk menghapus kinerja karyawan
-$routes->delete('/kinerja/delete_kinerja_karyawan/(:num)/(:num)', 'Kinerja::delete_kinerja_karyawan/$1/$2');
+$routes->delete('/kinerja/delete_kinerja_karyawan/(:num)/(:num)', 'Kinerja::delete_kinerja_karyawan/$1/$2'); //Akses beres udah dibikin filter/middleware KhususHOD
+
+//Routes Realisasi VS Target
+$routes->get('/realisasi_vs_target/daftar_realisasi_vs_target', 'RealisasiVsTarget::daftar_realisasi_vs_target');
 
 //Routes Personil
 //Untuk edit personil pm

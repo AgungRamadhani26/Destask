@@ -10,6 +10,7 @@ use CodeIgniter\Filters\InvalidChars;
 use CodeIgniter\Filters\SecureHeaders;
 use App\Filters\JwtFilter;
 use App\Filters\Cors;
+use App\Filters\ExceptAdmin;
 use App\Filters\KhususAdmin;
 use App\Filters\KhususHOD;
 use App\Filters\KhususHODandAdmin;
@@ -41,6 +42,7 @@ class Filters extends BaseConfig
         'pendukungAutentikasi' => PendukungAutentikasi::class,
         'khususHODandDireksi'  => KhususHODandDireksi::class,
         'khususHODandAdmin'    => KhususHODandAdmin::class,
+        'exceptAdmin'          => ExceptAdmin::class,
     ];
 
     /**
@@ -124,7 +126,9 @@ class Filters extends BaseConfig
             'before' => [
                 '/bobot_kategori_task/daftar_bobot_kategori_task', '/bobot_kategori_task/tambah_bobot_kategori_task', '/bobot_kategori_task/edit_bobot_kategori_task/*',
                 '/bobot_kategori_task/update_bobot_kategori_task', '/bobot_kategori_task/delete_bobot_kategori_task/*', '/bobot_kategori_task/filter_bobot_kategori_task',
-                '/bobot_kategori_task/detail_bobot_kategori_task/*'
+                '/bobot_kategori_task/detail_bobot_kategori_task/*', '/kinerja/cek_periode_kinerja_karyawan/*', '/kinerja/pengecekan_periode_kinerja_karyawan',
+                '/kinerja/add_kinerja_karyawan/*/*/*', '/kinerja/tambah_kinerja_karyawan', '/kinerja/edit_kinerja_karyawan/*', '/kinerja/update_kinerja_karyawan',
+                '/kinerja/delete_kinerja_karyawan/*/*',
             ]
         ],
         'khususHODandDireksi' => [
@@ -139,6 +143,11 @@ class Filters extends BaseConfig
                 '/pekerjaan/updatepekerjaan_status_pekerjaan', '/pekerjaan/delete_pekerjaan/*', '/pekerjaan/edit_personil_pekerjaan/*', '/personil/edit_personil/*', '/personil/update_personil',
                 '/personil/tambah_personil_desainer', '/personil/tambah_personil_be_web', '/personil/tambah_personil_fe_web', '/personil/tambah_personil_be_mobile', '/personil/tambah_personil_fe_mobile',
                 '/personil/tambah_personil_tester', '/personil/tambah_personil_admin', '/personil/tambah_personil_helpdesk', '/personil/delete_personil/*'
+            ]
+        ],
+        'exceptAdmin' => [
+            'before' => [
+                '/kinerja/daftar_kinerja_karyawan', '/kinerja/filter_kinerja_karyawan', '/kinerja/daftar_kinerja_karyawan/*', '/kinerja/filter_kinerja_karyawan/*',
             ]
         ]
     ];
