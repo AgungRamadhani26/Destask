@@ -205,6 +205,8 @@ class Kinerja extends BaseController
     //Fungsi untuk melihat filter kinerja perkaryawan
     public function filter_kinerja_perkaryawan($id_user)
     {
+        $tahun_sekarang = date('Y');
+        $bulan_sekarang = date('n');
         $tahun = $this->request->getGet('filter_kinerja_tahun');
         $kinerja = $this->kinerjaModel->getKinerjaByIdUserTahun($id_user, $tahun);
         $kinerja_kpi = array();
@@ -228,12 +230,29 @@ class Kinerja extends BaseController
             $kinerja_kpi[] = floatval($k['score_kpi']); // Pastikan ini diubah menjadi angka
             $bulan_kpi[] = $bulanIndonesia[intval($k['bulan'])]; // Konversi bulan ke nama bulan
         }
+        //Melakukan pengecekan apakah kinerja pada periode bulan lalu sudah dibuat atau belum
+        if ($bulan_sekarang == 1) {
+            $bulan_terkait = 12;
+            $tahun_terkait = $tahun_sekarang - 1;
+        } else {
+            $bulan_terkait = $bulan_sekarang - 1;
+            $tahun_terkait = $tahun_sekarang;
+        }
+        $kinerja_periode_lalu = $this->kinerjaModel->getKinerjaByIdUserTahunBulan($id_user, $tahun_terkait, $bulan_terkait);
+        if (empty($kinerja_periode_lalu)) {
+            $kinerja_pada_periode_terkait_lengkap = false;
+        } else {
+            $kinerja_pada_periode_terkait_lengkap = true;
+        }
         $data = [
             'user' => $this->userModel->getUser($id_user),
             'usergroup' => $this->usergroupModel->getUserGroup(),
             'kinerja' => $kinerja,
             'kinerja_kpi' => $kinerja_kpi,
             'bulan_kpi' => $bulan_kpi,
+            'kinerja_pada_periode_terkait_lengkap' => $kinerja_pada_periode_terkait_lengkap,
+            'tahun_terkait' => $tahun_terkait,
+            'bulan_terkait' => $bulan_terkait,
             'url1' => '/kinerja/daftar_kinerja_karyawan',
             'url' => '/kinerja/daftar_kinerja_karyawan',
             'filter_tahun' => $tahun,
