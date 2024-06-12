@@ -38,10 +38,47 @@ class Kinerja extends BaseController
         }
         $user_staff = $this->userModel->getUserStaff();
         $user_supervisi = $this->userModel->getUserSupervisi();
+        //Melakukan pengecekan apakah kinerja pada periode bulan lalu sudah dibuat atau belum
+        $user = $this->userModel->getUser();
+        $jumlah_user = count($user);
+        // Inisialisasi array sebelum loop
+        $id_user_yang_memiliki_kinerja_di_periode_terkait = array();
+        $id_user_yang_tidak_memiliki_kinerja_di_periode_terkait = array();
+        $tahun_sekarang = date('Y');
+        $bulan_sekarang = date('n');
+        if ($bulan_sekarang == 1) {
+            $bulan_terkait = 12;
+            $tahun_terkait = $tahun_sekarang - 1;
+        } else {
+            $bulan_terkait = $bulan_sekarang - 1;
+            $tahun_terkait = $tahun_sekarang;
+        }
+        foreach ($user as $u) {
+            $kinerja = $this->kinerjaModel->getKinerjaByIdUserTahunBulan($u['id_user'], $tahun_terkait, $bulan_terkait);
+            if (empty($kinerja)) {
+                $id_user_yang_tidak_memiliki_kinerja_di_periode_terkait[] = $u['id_user'];
+            } else {
+                $id_user_yang_memiliki_kinerja_di_periode_terkait[] = $u['id_user'];
+            }
+        }
+        $jumlah_user_yang_memiliki_kinerja_di_periode_terkait = count($id_user_yang_memiliki_kinerja_di_periode_terkait);
+        if ($jumlah_user != $jumlah_user_yang_memiliki_kinerja_di_periode_terkait) {
+            $kinerja_pada_periode_terkait_lengkap = false;
+            foreach ($id_user_yang_tidak_memiliki_kinerja_di_periode_terkait as $id_user_tidak_memiliki_kinerja) {
+                $user_tidak_memiliki_kinerja_terkait[] = $this->userModel->getUser($id_user_tidak_memiliki_kinerja);
+            }
+        } else {
+            $kinerja_pada_periode_terkait_lengkap = true;
+            $user_tidak_memiliki_kinerja_terkait[] = null;
+        }
         $usergroup = $this->usergroupModel->getUserGroup();
         $data = [
             'user_staff' => $user_staff,
             'user_supervisi' => $user_supervisi,
+            'user_tidak_memiliki_kinerja_terkait' => $user_tidak_memiliki_kinerja_terkait,
+            'kinerja_pada_periode_terkait_lengkap' => $kinerja_pada_periode_terkait_lengkap,
+            'tahun_terkait' => $tahun_terkait,
+            'bulan_terkait' => $bulan_terkait,
             'usergroup' => $usergroup,
             'url1' => '/kinerja/daftar_kinerja_karyawan',
             'url' => '/kinerja/daftar_kinerja_karyawan',
@@ -59,10 +96,47 @@ class Kinerja extends BaseController
         $filter_kinerja_karyawan_usergroup = $this->request->getGet('filter_kinerja_karyawan_usergroup');
         $user_staff = $this->userModel->filter_getUserStaff_ByIdUsergroup($filter_kinerja_karyawan_usergroup);
         $user_supervisi = $this->userModel->filter_getUserSupervisi_ByIdUsergroup($filter_kinerja_karyawan_usergroup);
+        //Melakukan pengecekan apakah kinerja pada periode bulan lalu sudah dibuat atau belum
+        $user = $this->userModel->getUser();
+        $jumlah_user = count($user);
+        // Inisialisasi array sebelum loop
+        $id_user_yang_memiliki_kinerja_di_periode_terkait = array();
+        $id_user_yang_tidak_memiliki_kinerja_di_periode_terkait = array();
+        $tahun_sekarang = date('Y');
+        $bulan_sekarang = date('n');
+        if ($bulan_sekarang == 1) {
+            $bulan_terkait = 12;
+            $tahun_terkait = $tahun_sekarang - 1;
+        } else {
+            $bulan_terkait = $bulan_sekarang - 1;
+            $tahun_terkait = $tahun_sekarang;
+        }
+        foreach ($user as $u) {
+            $kinerja = $this->kinerjaModel->getKinerjaByIdUserTahunBulan($u['id_user'], $tahun_terkait, $bulan_terkait);
+            if (empty($kinerja)) {
+                $id_user_yang_tidak_memiliki_kinerja_di_periode_terkait[] = $u['id_user'];
+            } else {
+                $id_user_yang_memiliki_kinerja_di_periode_terkait[] = $u['id_user'];
+            }
+        }
+        $jumlah_user_yang_memiliki_kinerja_di_periode_terkait = count($id_user_yang_memiliki_kinerja_di_periode_terkait);
+        if ($jumlah_user != $jumlah_user_yang_memiliki_kinerja_di_periode_terkait) {
+            $kinerja_pada_periode_terkait_lengkap = false;
+            foreach ($id_user_yang_tidak_memiliki_kinerja_di_periode_terkait as $id_user_tidak_memiliki_kinerja) {
+                $user_tidak_memiliki_kinerja_terkait[] = $this->userModel->getUser($id_user_tidak_memiliki_kinerja);
+            }
+        } else {
+            $kinerja_pada_periode_terkait_lengkap = true;
+            $user_tidak_memiliki_kinerja_terkait[] = null;
+        }
         $usergroup = $this->usergroupModel->getUserGroup();
         $data = [
             'user_staff' => $user_staff,
             'user_supervisi' => $user_supervisi,
+            'user_tidak_memiliki_kinerja_terkait' => $user_tidak_memiliki_kinerja_terkait,
+            'kinerja_pada_periode_terkait_lengkap' => $kinerja_pada_periode_terkait_lengkap,
+            'tahun_terkait' => $tahun_terkait,
+            'bulan_terkait' => $bulan_terkait,
             'usergroup' => $usergroup,
             'url1' => '/kinerja/daftar_kinerja_karyawan',
             'url' => '/kinerja/daftar_kinerja_karyawan',
@@ -75,6 +149,7 @@ class Kinerja extends BaseController
     public function daftar_kinerja_perkaryawan($id_user)
     {
         $tahun_sekarang = date('Y');
+        $bulan_sekarang = date('n');
         $kinerja = $this->kinerjaModel->getKinerjaByIdUserTahun($id_user, $tahun_sekarang);
         $kinerja_kpi = array();
         $bulan_kpi = array();
@@ -97,12 +172,29 @@ class Kinerja extends BaseController
             $kinerja_kpi[] = floatval($k['score_kpi']); // Pastikan ini diubah menjadi angka
             $bulan_kpi[] = $bulanIndonesia[intval($k['bulan'])]; // Konversi bulan ke nama bulan
         }
+        //Melakukan pengecekan apakah kinerja pada periode bulan lalu sudah dibuat atau belum
+        if ($bulan_sekarang == 1) {
+            $bulan_terkait = 12;
+            $tahun_terkait = $tahun_sekarang - 1;
+        } else {
+            $bulan_terkait = $bulan_sekarang - 1;
+            $tahun_terkait = $tahun_sekarang;
+        }
+        $kinerja_periode_lalu = $this->kinerjaModel->getKinerjaByIdUserTahunBulan($id_user, $tahun_terkait, $bulan_terkait);
+        if (empty($kinerja_periode_lalu)) {
+            $kinerja_pada_periode_terkait_lengkap = false;
+        } else {
+            $kinerja_pada_periode_terkait_lengkap = true;
+        }
         $data = [
             'user' => $this->userModel->getUser($id_user),
             'usergroup' => $this->usergroupModel->getUserGroup(),
             'kinerja' => $kinerja,
             'kinerja_kpi' => $kinerja_kpi,
             'bulan_kpi' => $bulan_kpi,
+            'kinerja_pada_periode_terkait_lengkap' => $kinerja_pada_periode_terkait_lengkap,
+            'tahun_terkait' => $tahun_terkait,
+            'bulan_terkait' => $bulan_terkait,
             'url1' => '/kinerja/daftar_kinerja_karyawan',
             'url' => '/kinerja/daftar_kinerja_karyawan',
             'filter_tahun' => $tahun_sekarang,

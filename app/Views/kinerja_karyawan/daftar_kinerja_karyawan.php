@@ -8,6 +8,46 @@
 <section class="section">
    <div class="row">
       <div class="col-lg-12">
+         <?php if ($kinerja_pada_periode_terkait_lengkap == false) : ?>
+            <div class="alert alert-danger d-flex align-items-center" role="alert">
+               <div>
+                  <i class="bi bi-exclamation-triangle-fill"> <b>Perhatian : </b></i> <?= (session()->get('user_level') == 'hod') ? 'Anda' : 'HOD'; ?> masih belum menambahkan data kinerja untuk user
+                  <?php foreach ($user_tidak_memiliki_kinerja_terkait as $utm) : ?>
+                     <b><?= $utm['nama'] ?></b>,
+                  <?php endforeach; ?>
+                  pada periode tahun <b><?= $tahun_terkait ?></b> bulan <b>
+                     <?php if ($bulan_terkait == 1) : ?>
+                        Januari
+                     <?php elseif ($bulan_terkait == 2) : ?>
+                        Februari
+                     <?php elseif ($bulan_terkait == 3) : ?>
+                        Maret
+                     <?php elseif ($bulan_terkait == 4) : ?>
+                        April
+                     <?php elseif ($bulan_terkait == 5) : ?>
+                        Mei
+                     <?php elseif ($bulan_terkait == 6) : ?>
+                        Juni
+                     <?php elseif ($bulan_terkait == 7) : ?>
+                        Juli
+                     <?php elseif ($bulan_terkait == 8) : ?>
+                        Agustus
+                     <?php elseif ($bulan_terkait == 9) : ?>
+                        September
+                     <?php elseif ($bulan_terkait == 10) : ?>
+                        Oktober
+                     <?php elseif ($bulan_terkait == 11) : ?>
+                        November
+                     <?php elseif ($bulan_terkait == 12) : ?>
+                        Desember
+                     <?php else : ?>
+                        Bulan tidak valid
+                     <?php endif ?></b>
+                  . Sehingga <b>Supervisi</b> dan <b>Staff</b> tidak dapat melihat kinerja mereka pada periode tersebut.
+                  Segera <?= (session()->get('user_level') == 'hod') ? 'tambahkan' : 'hubungi HOD untuk menambahkan'; ?> kinerja tersebut secepatnya !!!.
+               </div>
+            </div>
+         <?php endif ?>
          <div class="card">
             <div class="card-body">
                <div class="row">
