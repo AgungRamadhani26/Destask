@@ -107,7 +107,10 @@ $routes->get('/kinerja/detail_kinerja_karyawan/(:num)', 'Kinerja::detail_kinerja
 $routes->delete('/kinerja/delete_kinerja_karyawan/(:num)/(:num)', 'Kinerja::delete_kinerja_karyawan/$1/$2'); //Akses beres udah dibikin filter/middleware KhususHOD
 
 //Routes Realisasi VS Target
+//Untuk menampilkan halaman realisasi vs target
 $routes->get('/realisasi_vs_target/daftar_realisasi_vs_target', 'RealisasiVsTarget::daftar_realisasi_vs_target');
+//Untuk memfilter data yang ditampilkan
+$routes->get('/realisasi_vs_target/filter_realisasi_vs_target', 'RealisasiVsTarget::filter_realisasi_vs_target');
 
 //Routes Personil
 //Untuk edit personil pm

@@ -11,6 +11,7 @@ use CodeIgniter\Filters\SecureHeaders;
 use App\Filters\JwtFilter;
 use App\Filters\Cors;
 use App\Filters\ExceptAdmin;
+use App\Filters\ExceptAdminandStaff;
 use App\Filters\KhususAdmin;
 use App\Filters\KhususHOD;
 use App\Filters\KhususHODandAdmin;
@@ -43,6 +44,7 @@ class Filters extends BaseConfig
         'khususHODandDireksi'  => KhususHODandDireksi::class,
         'khususHODandAdmin'    => KhususHODandAdmin::class,
         'exceptAdmin'          => ExceptAdmin::class,
+        'exceptAdminandStaff'  => ExceptAdminandStaff::class,
     ];
 
     /**
@@ -148,6 +150,11 @@ class Filters extends BaseConfig
         'exceptAdmin' => [
             'before' => [
                 '/kinerja/daftar_kinerja_karyawan', '/kinerja/filter_kinerja_karyawan', '/kinerja/daftar_kinerja_karyawan/*', '/kinerja/filter_kinerja_karyawan/*',
+            ]
+        ],
+        'exceptAdminandStaff' => [
+            'before' => [
+                '/realisasi_vs_target/daftar_realisasi_vs_target', '/realisasi_vs_target/filter_realisasi_vs_target',
             ]
         ]
     ];

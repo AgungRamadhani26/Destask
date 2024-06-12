@@ -655,7 +655,31 @@ class PersonilSeeder extends Seeder
                 'role_personil' => 'helpdesk',
                 'created_at'       => Time::now(),
                 'updated_at'       => Time::now()
-            ]
+            ],
+            [
+                'id_personil' => 81,
+                'id_pekerjaan' => 7,
+                'id_user' => 4,
+                'role_personil' => 'project_manager',
+                'created_at'       => Time::now(),
+                'updated_at'       => Time::now()
+            ],
+            [
+                'id_personil' => 82,
+                'id_pekerjaan' => 8,
+                'id_user' => 12,
+                'role_personil' => 'project_manager',
+                'created_at'       => Time::now(),
+                'updated_at'       => Time::now()
+            ],
+            [
+                'id_personil' => 83,
+                'id_pekerjaan' => 9,
+                'id_user' => 27,
+                'role_personil' => 'project_manager',
+                'created_at'       => Time::now(),
+                'updated_at'       => Time::now()
+            ],
         ];
         $this->db->table('personil')->insertBatch($data);
     }

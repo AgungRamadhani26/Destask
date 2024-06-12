@@ -12,7 +12,7 @@
             <h4 class="card-title" style="color: white;">Fiter Realisasi VS Target</h4>
          </div>
          <div class="card-body">
-            <form action="/pekerjaan/filter_pekerjaan" method="GET" id=filter_daftar_pekerjaan>
+            <form action="/realisasi_vs_target/filter_realisasi_vs_target" method="GET" id=filter_realisasi_vs_target>
                <div class="row">
                   <div class="col-md-5">
                      Pilihlah tahun dimana pekerjaan ditargetkan selesai
@@ -20,8 +20,12 @@
                   <div class="col-md-3">
                      <div class="input-group">
                         <label class="input-group-text" for="">Tahun</label>
-                        <select class="form-select" id="filter_pekerjaan_jenislayanan" name="filter_pekerjaan_jenislayanan">
-                           <option value="">2024</option>
+                        <select class="form-select" id="filter_tahun_realisasi_vs_target" name="filter_tahun_realisasi_vs_target">
+                           <option value="2023" <?= ($filter_tahun_realisasi_vs_target == "2023") ? 'selected' : '' ?>>2023</option>
+                           <option value="2024" <?= ($filter_tahun_realisasi_vs_target == "2024") ? 'selected' : '' ?>>2024</option>
+                           <option value="2025" <?= ($filter_tahun_realisasi_vs_target == "2025") ? 'selected' : '' ?>>2025</option>
+                           <option value="2026" <?= ($filter_tahun_realisasi_vs_target == "2026") ? 'selected' : '' ?>>2026</option>
+                           <option value="2027" <?= ($filter_tahun_realisasi_vs_target == "2027") ? 'selected' : '' ?>>2027</option>
                         </select>
                      </div>
                   </div>
@@ -30,7 +34,7 @@
                         <button type="submit" class="btn btn-primary">
                            <i class="bi bi-filter"></i> Filter
                         </button>
-                        <button type="button" class="btn btn-secondary" onclick="resetFilterKinerjaPerkaryawan()">
+                        <button type="button" class="btn btn-secondary" onclick="resetFilterRealisasiVsTarget()">
                            <i class="bx bx-reset"></i> Reset
                         </button>
                      </center>
@@ -65,7 +69,7 @@
 <script>
    Highcharts.chart('container', {
       title: {
-         text: 'Perbandingan tanggal target waktu selesai dengan tanggal selesai pekerjaan dengan status BAST',
+         text: 'Perbandingan tanggal target waktu selesai dengan tanggal selesai pada pekerjaan berstatus BAST',
          align: 'left'
       },
       subtitle: {
@@ -89,7 +93,7 @@
          }
       },
       xAxis: {
-         categories: ['Aplikasi Pembukuan PT Jaya Sukses', 'Aplikasi Absensi SMAN 1 Bandar', 'Web Profile Dinkes Kota Semarang', 'Website Recruitement Pegawai PT Agung Jaya Mineral', 'Sistem Informasi Monitoring Kompetensi Guru', 'Sistem Informasi Aset Kantor PT Kunia Lestari', 'Pekerjaan A', 'Pekerjaan B', 'Pekerjaan C', 'Pekerjaan D', 'Pekerjaan E', 'Pekerjaan F', 'Pekerjaan G', 'Pekerjaan H', 'Pekerjaan I', 'Pekerjaan J'],
+         categories: <?= json_encode($nama_pekerjaan) ?>
       },
       legend: {
          layout: 'vertical',
@@ -119,18 +123,10 @@
       },
       series: [{
          name: 'Target Waktu Selesai',
-         data: [
-            Date.UTC(2024, 1, 5), Date.UTC(2024, 3, 15), Date.UTC(2024, 5, 30), Date.UTC(2024, 3, 3), Date.UTC(2024, 1, 30),
-            Date.UTC(2024, 6, 19), Date.UTC(2024, 6, 17), Date.UTC(2024, 1, 15), Date.UTC(2024, 1, 22), Date.UTC(2024, 5, 11),
-            Date.UTC(2024, 1, 5), Date.UTC(2024, 3, 15), Date.UTC(2024, 5, 30), Date.UTC(2024, 3, 3), Date.UTC(2024, 1, 30), Date.UTC(2024, 5, 11)
-         ]
+         data: [<?= implode(', ', $target_waktu_selesai) ?>]
       }, {
          name: 'Waktu Selesai',
-         data: [
-            Date.UTC(2024, 0, 5), Date.UTC(2024, 1, 25), Date.UTC(2024, 2, 30), Date.UTC(2024, 2, 30), Date.UTC(2024, 1, 30),
-            Date.UTC(2024, 6, 17), Date.UTC(2024, 7, 19), Date.UTC(2024, 1, 15), Date.UTC(2024, 3, 22), Date.UTC(2024, 5, 15),
-            Date.UTC(2024, 0, 5), Date.UTC(2024, 1, 25), Date.UTC(2024, 2, 30), Date.UTC(2024, 2, 30), Date.UTC(2024, 1, 30), Date.UTC(2024, 5, 15)
-         ]
+         data: [<?= implode(', ', $waktu_selesai) ?>]
       }],
       responsive: {
          rules: [{
@@ -147,6 +143,13 @@
          }]
       }
    });
+
+   function resetFilterRealisasiVsTarget() {
+      // Mengatur nilai elemen formulir menjadi kosong
+      document.getElementById('filter_tahun_realisasi_vs_target').value = '';
+      // Mengarahkan pengguna kembali ke URL yang diinginkan
+      window.location.href = "/realisasi_vs_target/daftar_realisasi_vs_target";
+   }
 </script>
 
 <?= $this->endSection(); ?>

@@ -157,4 +157,13 @@ class PekerjaanModel extends Model
         $pekerjaan = $this->getFilteredPekerjaan('', $status_pekerjaan, '', '');
         return count($pekerjaan);
     }
+
+    //Fungsi untuk mendapatkan data pekerjaan bast
+    public function getPekerjaanBast_by_tahun_target_waktu_selesai($tahun_target_waktu_selesai)
+    {
+        return $this->where('YEAR(target_waktu_selesai)', $tahun_target_waktu_selesai)
+            ->where('waktu_selesai IS NOT NULL')
+            ->where('id_status_pekerjaan', 3)
+            ->findAll();
+    }
 }
