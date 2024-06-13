@@ -741,4 +741,14 @@ class Pekerjaan extends BaseController
             return redirect()->to('/dashboard');
         }
     }
+
+    //Untuk menampilkan halama download pekerjaan
+    public function download_pekerjaan()
+    {
+        $data = [
+            'url1' => '/dashboard',
+            'url' => '/dashboard',
+        ];
+        return view('pekerjaan/download_pekerjaan', $data);
+    }
 }

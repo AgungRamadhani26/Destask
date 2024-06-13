@@ -52,6 +52,8 @@ $routes->get('/pekerjaan/editpekerjaan_status_pekerjaan/(:num)', 'Pekerjaan::edi
 $routes->post('/pekerjaan/updatepekerjaan_status_pekerjaan', 'Pekerjaan::updatepekerjaan_status_pekerjaan'); //Akses beres udah dibikin filter/middleware KhususHODandAdmin
 //Untuk menghapus pekerjaan
 $routes->delete('/pekerjaan/delete_pekerjaan/(:num)', 'Pekerjaan::delete_pekerjaan/$1'); //Akses beres udah dibikin filter/middleware KhususHODandAdmin
+//Untuk mendownload pekerjaan
+$routes->get('/pekerjaan/download_pekerjaan', 'Pekerjaan::download_pekerjaan');
 
 //Rotes Task
 //Untuk menampilkan halaman daftar task
@@ -108,9 +110,9 @@ $routes->delete('/kinerja/delete_kinerja_karyawan/(:num)/(:num)', 'Kinerja::dele
 
 //Routes Realisasi VS Target
 //Untuk menampilkan halaman realisasi vs target
-$routes->get('/realisasi_vs_target/daftar_realisasi_vs_target', 'RealisasiVsTarget::daftar_realisasi_vs_target');
+$routes->get('/realisasi_vs_target/daftar_realisasi_vs_target', 'RealisasiVsTarget::daftar_realisasi_vs_target'); //Akses sudah beres udah dibikin filter/middleware ExceptAdminandStaff
 //Untuk memfilter data yang ditampilkan
-$routes->get('/realisasi_vs_target/filter_realisasi_vs_target', 'RealisasiVsTarget::filter_realisasi_vs_target');
+$routes->get('/realisasi_vs_target/filter_realisasi_vs_target', 'RealisasiVsTarget::filter_realisasi_vs_target'); //Akses sudah beres udah dibikin filter/middleware ExceptAdminandStaff
 
 //Routes Personil
 //Untuk edit personil pm

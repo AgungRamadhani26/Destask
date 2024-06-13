@@ -208,7 +208,7 @@
                                 <a href="/pekerjaan/add_pekerjaan" class="btn btn-primary"><i class="bi bi-journal-plus"></i> Pekerjaan Baru</a>
                             <?php endif ?>
                             <a href="/pekerjaan/daftar_pekerjaan" class="btn btn-info"><i class="bi bi-question-diamond"></i> Detail Pekerjaan</a>
-                            <button type="button" class="btn btn-warning"><i class="bi bi-download"></i> Download Pekerjaan</button>
+                            <a href="/pekerjaan/download_pekerjaan" class="btn btn-warning"><i class="bi bi-download"></i> Download Pekerjaan</a>
                         </div>
                         <div class="row mt-2">
                             <div class="col-12">
