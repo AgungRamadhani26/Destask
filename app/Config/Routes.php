@@ -52,14 +52,20 @@ $routes->get('/pekerjaan/editpekerjaan_status_pekerjaan/(:num)', 'Pekerjaan::edi
 $routes->post('/pekerjaan/updatepekerjaan_status_pekerjaan', 'Pekerjaan::updatepekerjaan_status_pekerjaan'); //Akses beres udah dibikin filter/middleware KhususHODandAdmin
 //Untuk menghapus pekerjaan
 $routes->delete('/pekerjaan/delete_pekerjaan/(:num)', 'Pekerjaan::delete_pekerjaan/$1'); //Akses beres udah dibikin filter/middleware KhususHODandAdmin
+
+//Untuk download pekerjaan
 //Untuk menampilkan halaman download pekerjaan
 $routes->get('/pekerjaan/download_pekerjaan', 'Pekerjaan::download_pekerjaan');
-//Untuk mendownload pekerjaan presales file excel
+//Untuk mendownload pekerjaan presales file excel dan pdf
 $routes->get('/pekerjaan/download_pekerjaan_presales_excel', 'Pekerjaan::download_pekerjaan_presales_excel');
 $routes->get('/pekerjaan/download_pekerjaan_presales_excel/(:num)', 'Pekerjaan::download_pekerjaan_presales_excel_by_year/$1');
-//Untuk mendownload pekerjaan on progress file excel
+$routes->get('/pekerjaan/download_pekerjaan_presales_pdf', 'Pekerjaan::download_pekerjaan_presales_pdf');
+$routes->get('/pekerjaan/download_pekerjaan_presales_pdf/(:num)', 'Pekerjaan::download_pekerjaan_presales_pdf_by_year/$1');
+//Untuk mendownload pekerjaan on progress file excel dan pdf
 $routes->get('/pekerjaan/download_pekerjaan_onprogress_excel', 'Pekerjaan::download_pekerjaan_onprogress_excel');
 $routes->get('/pekerjaan/download_pekerjaan_onprogress_excel/(:num)', 'Pekerjaan::download_pekerjaan_onprogress_excel_by_year/$1');
+$routes->get('/pekerjaan/download_pekerjaan_onprogress_pdf', 'Pekerjaan::download_pekerjaan_onprogress_pdf');
+$routes->get('/pekerjaan/download_pekerjaan_onprogress_pdf/(:num)', 'Pekerjaan::download_pekerjaan_onprogress_pdf_by_year/$1');
 //Untuk mendownload pekerjaan bast file excel
 $routes->get('/pekerjaan/download_pekerjaan_bast_excel', 'Pekerjaan::download_pekerjaan_bast_excel');
 $routes->get('/pekerjaan/download_pekerjaan_bast_excel/(:num)', 'Pekerjaan::download_pekerjaan_bast_excel_by_year/$1');

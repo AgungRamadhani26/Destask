@@ -110,3 +110,15 @@ function export_pekerjaan_excel($pekerjaan, $nama_file, $status_pekerjaan, $kate
    $writer->save('php://output');
    exit();
 }
+
+function export_pekerjaan_pdf($view, $data, $filename)
+{
+   $dompdf = new Dompdf();
+   $dompdf->loadHtml(view($view, $data));
+   // (optional) setup the paper size and orientation
+   $dompdf->setPaper('A3', 'landscape');
+   // render html as PDF
+   $dompdf->render();
+   // output the generated pdf
+   $dompdf->stream($filename);
+}
