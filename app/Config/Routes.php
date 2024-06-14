@@ -66,18 +66,26 @@ $routes->get('/pekerjaan/download_pekerjaan_onprogress_excel', 'Pekerjaan::downl
 $routes->get('/pekerjaan/download_pekerjaan_onprogress_excel/(:num)', 'Pekerjaan::download_pekerjaan_onprogress_excel_by_year/$1');
 $routes->get('/pekerjaan/download_pekerjaan_onprogress_pdf', 'Pekerjaan::download_pekerjaan_onprogress_pdf');
 $routes->get('/pekerjaan/download_pekerjaan_onprogress_pdf/(:num)', 'Pekerjaan::download_pekerjaan_onprogress_pdf_by_year/$1');
-//Untuk mendownload pekerjaan bast file excel
+//Untuk mendownload pekerjaan bast file excel dan pdf
 $routes->get('/pekerjaan/download_pekerjaan_bast_excel', 'Pekerjaan::download_pekerjaan_bast_excel');
 $routes->get('/pekerjaan/download_pekerjaan_bast_excel/(:num)', 'Pekerjaan::download_pekerjaan_bast_excel_by_year/$1');
-//Untuk mendownload pekerjaan support file excel
+$routes->get('/pekerjaan/download_pekerjaan_bast_pdf', 'Pekerjaan::download_pekerjaan_bast_pdf');
+$routes->get('/pekerjaan/download_pekerjaan_bast_pdf/(:num)', 'Pekerjaan::download_pekerjaan_bast_pdf_by_year/$1');
+//Untuk mendownload pekerjaan support file excel dan pdf
 $routes->get('/pekerjaan/download_pekerjaan_support_excel', 'Pekerjaan::download_pekerjaan_support_excel');
 $routes->get('/pekerjaan/download_pekerjaan_support_excel/(:num)', 'Pekerjaan::download_pekerjaan_support_excel_by_year/$1');
-//Untuk mendownload pekerjaaan cancel file excel
+$routes->get('/pekerjaan/download_pekerjaan_support_pdf', 'Pekerjaan::download_pekerjaan_support_pdf');
+$routes->get('/pekerjaan/download_pekerjaan_support_pdf/(:num)', 'Pekerjaan::download_pekerjaan_support_pdf_by_year/$1');
+//Untuk mendownload pekerjaaan cancel file excel dan pdf
 $routes->get('/pekerjaan/download_pekerjaan_cancel_excel', 'Pekerjaan::download_pekerjaan_cancel_excel');
 $routes->get('/pekerjaan/download_pekerjaan_cancel_excel/(:num)', 'Pekerjaan::download_pekerjaan_cancel_excel_by_year/$1');
-//Untuk mendownload pekerjaan semua pekerjaan file excel
+$routes->get('/pekerjaan/download_pekerjaan_cancel_pdf', 'Pekerjaan::download_pekerjaan_cancel_pdf');
+$routes->get('/pekerjaan/download_pekerjaan_cancel_pdf/(:num)', 'Pekerjaan::download_pekerjaan_cancel_pdf_by_year/$1');
+//Untuk mendownload pekerjaan semua pekerjaan file excel dan pdf
 $routes->get('/pekerjaan/download_pekerjaan_semua_pekerjaan_excel', 'Pekerjaan::download_pekerjaan_semua_pekerjaan_excel');
 $routes->get('/pekerjaan/download_pekerjaan_semua_pekerjaan_excel/(:num)', 'Pekerjaan::download_pekerjaan_semua_pekerjaan_excel_by_year/$1');
+$routes->get('/pekerjaan/download_pekerjaan_semua_pekerjaan_pdf', 'Pekerjaan::download_pekerjaan_semua_pekerjaan_pdf');
+$routes->get('/pekerjaan/download_pekerjaan_semua_pekerjaan_pdf/(:num)', 'Pekerjaan::download_pekerjaan_semua_pekerjaan_pdf_by_year/$1');
 
 //Rotes Task
 //Untuk menampilkan halaman daftar task
