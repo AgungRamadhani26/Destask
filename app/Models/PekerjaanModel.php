@@ -166,6 +166,14 @@ class PekerjaanModel extends Model
             ->where('id_status_pekerjaan', 1)
             ->findAll();
     }
+    //Fungsi untuk mendapatkan data pekerjaan on progress berdasarkan tahun target waktu selesai
+    public function getPekerjaanOnProgress_by_tahun_target_waktu_selesai($tahun_target_waktu_selesai)
+    {
+        return $this->where('YEAR(target_waktu_selesai)', $tahun_target_waktu_selesai)
+            ->where('waktu_selesai IS NULL')
+            ->where('id_status_pekerjaan', 2)
+            ->findAll();
+    }
     //Fungsi untuk mendapatkan data pekerjaan berdasarkan id_user dan id_status_pekerjaan dan target waktu selesai
     public function getPekerjaanByUserIdIdStatusPekerjaan_tahun($id_user, $id_status_pekerjaan, $tahun_target_waktu_selesai)
     {

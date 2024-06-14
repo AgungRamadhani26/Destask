@@ -23,7 +23,7 @@ function idr_export($nominal)
 }
 
 
-function export_pekerjaan_excel($pekerjaan_presales, $nama_file, $status_pekerjaan, $kategori_pekerjaan)
+function export_pekerjaan_excel($pekerjaan, $nama_file, $status_pekerjaan, $kategori_pekerjaan)
 {
    $spreadsheet = new Spreadsheet();
    $sheet = $spreadsheet->getActiveSheet();
@@ -43,7 +43,7 @@ function export_pekerjaan_excel($pekerjaan_presales, $nama_file, $status_pekerja
    //index kolom
    $column = 2;
    //Looping untuk memuat data
-   foreach ($pekerjaan_presales as $ps) {
+   foreach ($pekerjaan as $ps) {
       //Untuk status pekerjaan
       foreach ($status_pekerjaan as $sp) {
          if ($sp['id_status_pekerjaan'] == $ps['id_status_pekerjaan']) {
