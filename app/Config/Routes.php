@@ -52,8 +52,11 @@ $routes->get('/pekerjaan/editpekerjaan_status_pekerjaan/(:num)', 'Pekerjaan::edi
 $routes->post('/pekerjaan/updatepekerjaan_status_pekerjaan', 'Pekerjaan::updatepekerjaan_status_pekerjaan'); //Akses beres udah dibikin filter/middleware KhususHODandAdmin
 //Untuk menghapus pekerjaan
 $routes->delete('/pekerjaan/delete_pekerjaan/(:num)', 'Pekerjaan::delete_pekerjaan/$1'); //Akses beres udah dibikin filter/middleware KhususHODandAdmin
-//Untuk mendownload pekerjaan
+//Untuk menampilkan halaman download pekerjaan
 $routes->get('/pekerjaan/download_pekerjaan', 'Pekerjaan::download_pekerjaan');
+//Untuk mendownload pekerjaan presales file excel
+$routes->get('/pekerjaan/download_pekerjaan_presales_excel', 'Pekerjaan::download_pekerjaan_presales_excel');
+$routes->get('/pekerjaan/download_pekerjaan_presales_excel/(:num)', 'Pekerjaan::download_pekerjaan_presales_excel_by_year/$1');
 
 //Rotes Task
 //Untuk menampilkan halaman daftar task

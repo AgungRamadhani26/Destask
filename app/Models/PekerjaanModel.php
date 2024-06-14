@@ -158,6 +158,32 @@ class PekerjaanModel extends Model
         return count($pekerjaan);
     }
 
+    //Fungsi untuk mendapatkan data pekerjaan presales berdasarkan tahun target waktu selesai
+    public function getPekerjaanPresales_by_tahun_target_waktu_selesai($tahun_target_waktu_selesai)
+    {
+        return $this->where('YEAR(target_waktu_selesai)', $tahun_target_waktu_selesai)
+            ->where('waktu_selesai IS NULL')
+            ->where('id_status_pekerjaan', 1)
+            ->findAll();
+    }
+    //Fungsi untuk mendapatkan data pekerjaan berdasarkan id_user dan id_status_pekerjaan dan target waktu selesai
+    public function getPekerjaanByUserIdIdStatusPekerjaan_tahun($id_user, $id_status_pekerjaan, $tahun_target_waktu_selesai)
+    {
+        return $this->distinct()
+            ->select('pekerjaan.*')
+            ->join('personil', 'pekerjaan.id_pekerjaan = personil.id_pekerjaan')
+            ->join('user', 'personil.id_user = user.id_user')
+            ->where('personil.id_user', $id_user)
+            ->where('pekerjaan.id_status_pekerjaan', $id_status_pekerjaan)
+            ->where('YEAR(pekerjaan.target_waktu_selesai)', $tahun_target_waktu_selesai)
+            ->where('pekerjaan.deleted_at IS NULL') //perubahan
+            ->where('personil.deleted_at IS NULL') //perubahan
+            ->where('user.deleted_at IS NULL') //perubahan
+            ->orderBy('pekerjaan.id_pekerjaan', 'DESC')
+            ->findAll();
+    }
+
+
     //Fungsi untuk mendapatkan data pekerjaan bast
     public function getPekerjaanBast_by_tahun_target_waktu_selesai($tahun_target_waktu_selesai)
     {

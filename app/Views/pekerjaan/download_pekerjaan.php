@@ -14,7 +14,7 @@
                <p><span style="font-weight: bold; color:red;">Noted : </span>Pilihlah tahun dimana pekerjaan ditargetkan selesai, selanjutnya pilih jenis file yang akan di download.</p>
                <div class="row">
                   <div class="col-4">
-                     <div class="kanban-column-header" style="background-color: #fd7e14;">
+                     <div class="kanban-column-header" style="background-color: <?= $status_pekerjaan_presales['color'] ?>;">
                         <h5 style="font-weight: bold;">Pekerjaan Presales</h5>
                         <div class="input-group">
                            <label class="input-group-text" for="tahun_presales_download">Tahun</label>
@@ -35,7 +35,7 @@
                   </div>
 
                   <div class="col-4">
-                     <div class="kanban-column-header" style="background-color: #ffc107;">
+                     <div class="kanban-column-header" style="background-color: <?= $status_pekerjaan_onprogres['color'] ?>;">
                         <h5 style="font-weight: bold;">Pekerjaan On Progress</h5>
                         <div class="input-group">
                            <label class="input-group-text" for="tahun_onprogress_download">Tahun</label>
@@ -56,7 +56,7 @@
                   </div>
 
                   <div class="col-4">
-                     <div class="kanban-column-header" style="background-color: #198754;">
+                     <div class="kanban-column-header" style="background-color: <?= $status_pekerjaan_bast['color'] ?>;">
                         <h5 style="font-weight: bold;">Pekerjaan Bast</h5>
                         <div class="input-group">
                            <label class="input-group-text" for="tahun_bast_download">Tahun</label>
@@ -79,7 +79,7 @@
 
                <div class="row mt-4">
                   <div class="col-4">
-                     <div class="kanban-column-header" style="background-color: #0d6efd;">
+                     <div class="kanban-column-header" style="background-color: <?= $status_pekerjaan_support['color'] ?>;">
                         <h5 style="font-weight: bold;">Pekerjaan Support</h5>
                         <div class="input-group">
                            <label class="input-group-text" for="tahun_support_download">Tahun</label>
@@ -100,7 +100,7 @@
                   </div>
 
                   <div class="col-4">
-                     <div class="kanban-column-header" style="background-color: #dc3545;">
+                     <div class="kanban-column-header" style="background-color: <?= $status_pekerjaan_cancel['color'] ?>;">
                         <h5 style="font-weight: bold;">Pekerjaan Cancel</h5>
                         <div class="input-group">
                            <label class="input-group-text" for="tahun_cancel_download">Tahun</label>
