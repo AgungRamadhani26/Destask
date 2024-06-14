@@ -816,4 +816,34 @@ class Pekerjaan extends BaseController
         $data_kategori_pekerjaan = $this->kategoriPekerjaanModel->getKategoriPekerjaan(); //Untuk menampilkan nama kategori pekerjaan di excel
         export_pekerjaan_excel($data_pekerjaan_onprogres, $file_name, $data_status_pekerjaan, $data_kategori_pekerjaan);
     }
+
+    //Untuk mendownload data pekerjaan support
+    public function download_pekerjaan_support_excel()
+    {
+        if (session()->get('user_level') != 'staff') {
+            $data_pekerjaan_support = $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(4);
+            $file_name = 'Data_Pekerjaan_Support_All.xlsx';
+        } else {
+            $data_pekerjaan_support = $this->pekerjaanModel->getPekerjaanByUserIdIdStatusPekerjaan(session()->get('id_user'), 4);
+            $file_name = 'Data_Pekerjaan_Support_' . session()->get('nama') . '.xlsx';
+        }
+        $data_status_pekerjaan = $this->statusPekerjaanModel->getStatusPekerjaan(); //Untuk menampilkan nama status pekerjaan di excel
+        $data_kategori_pekerjaan = $this->kategoriPekerjaanModel->getKategoriPekerjaan(); //Untuk menampilkan nama kategori pekerjaan di excel
+        export_pekerjaan_excel($data_pekerjaan_support, $file_name, $data_status_pekerjaan, $data_kategori_pekerjaan);
+    }
+
+    //Untuk mendownload data pekerjaan support berdasarkan tahun
+    public function download_pekerjaan_support_excel_by_year($tahun)
+    {
+        if (session()->get('user_level') != 'staff') {
+            $data_pekerjaan_support = $this->pekerjaanModel->getPekerjaanSupport_by_tahun_target_waktu_selesai($tahun);
+            $file_name = 'Data_Pekerjaan_Support_' . $tahun . '_All.xlsx';
+        } else {
+            $data_pekerjaan_support = $this->pekerjaanModel->getPekerjaanByUserIdIdStatusPekerjaan_tahun(session()->get('id_user'), 4, $tahun);
+            $file_name = 'Data_Pekerjaan_Support_' . session()->get('nama') . '_' . $tahun . '.xlsx';
+        }
+        $data_status_pekerjaan = $this->statusPekerjaanModel->getStatusPekerjaan(); //Untuk menampilkan nama status pekerjaan di excel
+        $data_kategori_pekerjaan = $this->kategoriPekerjaanModel->getKategoriPekerjaan(); //Untuk menampilkan nama kategori pekerjaan di excel
+        export_pekerjaan_excel($data_pekerjaan_support, $file_name, $data_status_pekerjaan, $data_kategori_pekerjaan);
+    }
 }

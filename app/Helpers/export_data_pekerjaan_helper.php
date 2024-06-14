@@ -40,6 +40,7 @@ function export_pekerjaan_excel($pekerjaan, $nama_file, $status_pekerjaan, $kate
    $sheet->setCellValue('K1', 'Nominal Harga');
    $sheet->setCellValue('L1', 'Deskripsi Pekerjaan');
    $sheet->setCellValue('M1', 'Target Waktu Selesai');
+   $sheet->setCellValue('N1', 'Waktu Selesai');
    //index kolom
    $column = 2;
    //Looping untuk memuat data
@@ -58,6 +59,12 @@ function export_pekerjaan_excel($pekerjaan, $nama_file, $status_pekerjaan, $kate
       }
       //Untuk target waktu selesai
       $target_waktu_selesai = date('d-m-Y', strtotime($ps['target_waktu_selesai']));
+      //Untuk waktu selesai
+      if ($ps['waktu_selesai'] == NULL) {
+         $waktu_selesai = '';
+      } else {
+         $waktu_selesai = date('d-m-Y', strtotime($ps['waktu_selesai']));
+      }
       //Pemuatan data ke excel
       $sheet->setCellValue('A' . $column, ($column - 1));
       $sheet->setCellValue('B' . $column, $status_pekerjaan_excel);
@@ -72,12 +79,13 @@ function export_pekerjaan_excel($pekerjaan, $nama_file, $status_pekerjaan, $kate
       $sheet->setCellValue('K' . $column, idr_export($ps['nominal_harga']));
       $sheet->setCellValue('L' . $column, $ps['deskripsi_pekerjaan']);
       $sheet->setCellValue('M' . $column, $target_waktu_selesai);
+      $sheet->setCellValue('N' . $column, $waktu_selesai);
       $column++;
    }
    //biar title file excelnya jadi bold
-   $sheet->getStyle('A1:M1')->getFont()->setBold(true);
+   $sheet->getStyle('A1:N1')->getFont()->setBold(true);
    //Biar title excelnya berwarna kuning
-   $sheet->getStyle('A1:M1')->getFill()
+   $sheet->getStyle('A1:N1')->getFill()
       ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
       ->getStartColor()->setARGB('FFFFFF00');
    //Biar file excelnya punya border
@@ -89,9 +97,9 @@ function export_pekerjaan_excel($pekerjaan, $nama_file, $status_pekerjaan, $kate
          ],
       ],
    ];
-   $sheet->getStyle('A1:M' . ($column - 1))->applyFromArray($styleArray);
+   $sheet->getStyle('A1:N' . ($column - 1))->applyFromArray($styleArray);
    //Auto size kolom
-   foreach (range('A', 'M') as $columnID) {
+   foreach (range('A', 'N') as $columnID) {
       $sheet->getColumnDimension($columnID)->setAutoSize(true);
    }
    //Buat file excel

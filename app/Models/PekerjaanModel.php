@@ -174,6 +174,22 @@ class PekerjaanModel extends Model
             ->where('id_status_pekerjaan', 2)
             ->findAll();
     }
+    //Fungsi untuk mendapatkan data pekerjaan bast
+    public function getPekerjaanBast_by_tahun_target_waktu_selesai($tahun_target_waktu_selesai)
+    {
+        return $this->where('YEAR(target_waktu_selesai)', $tahun_target_waktu_selesai)
+            ->where('waktu_selesai IS NOT NULL')
+            ->where('id_status_pekerjaan', 3)
+            ->findAll();
+    }
+    //Fungsi untuk mendapatkan data pekerjaan support
+    public function getPekerjaanSupport_by_tahun_target_waktu_selesai($tahun_target_waktu_selesai)
+    {
+        return $this->where('YEAR(target_waktu_selesai)', $tahun_target_waktu_selesai)
+            ->where('waktu_selesai IS NULL')
+            ->where('id_status_pekerjaan', 4)
+            ->findAll();
+    }
     //Fungsi untuk mendapatkan data pekerjaan berdasarkan id_user dan id_status_pekerjaan dan target waktu selesai
     public function getPekerjaanByUserIdIdStatusPekerjaan_tahun($id_user, $id_status_pekerjaan, $tahun_target_waktu_selesai)
     {
@@ -188,16 +204,6 @@ class PekerjaanModel extends Model
             ->where('personil.deleted_at IS NULL') //perubahan
             ->where('user.deleted_at IS NULL') //perubahan
             ->orderBy('pekerjaan.id_pekerjaan', 'DESC')
-            ->findAll();
-    }
-
-
-    //Fungsi untuk mendapatkan data pekerjaan bast
-    public function getPekerjaanBast_by_tahun_target_waktu_selesai($tahun_target_waktu_selesai)
-    {
-        return $this->where('YEAR(target_waktu_selesai)', $tahun_target_waktu_selesai)
-            ->where('waktu_selesai IS NOT NULL')
-            ->where('id_status_pekerjaan', 3)
             ->findAll();
     }
 }
