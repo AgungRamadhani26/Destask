@@ -342,7 +342,7 @@ class Kinerja extends BaseController
                     $target_poin_harian = $this->targetpoinharianModel->getTargetPoinHarianByTahunBulanIdusergroup($tahun, $bulan, $user['id_usergroup']);
                     //Penentuan nilai ORIENTASI TERHADAP PENCAPAIAN TARGET poin a by system
                     $jumlah_hari_kerja = (int) $target_poin_harian[0]['jumlah_hari_kerja'];
-                    $jumlah_daily_task = $this->taskModel->countTaskByIdUserTahunBulan($id_user, $tahun, $bulan);
+                    $jumlah_daily_task = $this->taskModel->countDailyTask_Selesai_By_IdUser_Tahun_Bulan($id_user, $tahun, $bulan);
                     $persentase_daily_task1 = ($jumlah_daily_task / $jumlah_hari_kerja) * 100;
                     $persentase_daily_task = round($persentase_daily_task1, 2);
                     if ($persentase_daily_task == 100) {
