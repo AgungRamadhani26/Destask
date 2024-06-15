@@ -507,4 +507,10 @@ class TaskModel extends Model
     {
         return count($this->where(['YEAR(tgl_selesai)' => $tahun, 'MONTH(tgl_selesai)' => $bulan, 'id_user' => $id_user, 'deleted_at' => null, 'id_status_task' => 3])->findAll());
     }
+
+    //mobile
+    public function getTaskByUserId($id_user)
+    {
+        return $this->where(['id_user' => $id_user])->findAll();
+    }
 }

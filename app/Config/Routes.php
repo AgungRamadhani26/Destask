@@ -318,6 +318,7 @@ $routes->group('api', ['filter' => 'jwtfilter', 'namespace' => 'App\Controllers\
    //pekerjaan
    $routes->get('pekerjaan', 'PekerjaanController::index');
    $routes->get('pekerjaan/(:num)', 'PekerjaanController::show/$1');
+   $routes->get('pekerjaanpersonil/(:num)', 'PekerjaanController::personil/$1');
    $routes->get('pekerjaanbyuser/(:num)', 'PekerjaanController::showPekerjaan/$1');
    $routes->put('pekerjaan/(:num)', 'PekerjaanController::update/$1'); //edit pekerjaan
    $routes->get('pekerjaan/verifikasi/(:num)', 'PekerjaanController::showPekerjaanVerifikasi/$1'); //data task yang perlu diverifikasi
@@ -354,6 +355,7 @@ $routes->group('api', ['filter' => 'jwtfilter', 'namespace' => 'App\Controllers\
    //kinerja
    $routes->get('kinerja', 'KinerjaController::index');
    $routes->get('kinerja/(:num)', 'KinerjaController::show/$1');
+   $routes->get('kinerjauser/(:num)', 'KinerjaController::getKinerjaUser/$1');
 
    //notifikasi
    $routes->get('notifikasi', 'NotifikasiController::index');
