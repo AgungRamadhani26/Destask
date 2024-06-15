@@ -118,7 +118,61 @@ class PekerjaanSeeder extends Seeder
                 'waktu_selesai' => null,
                 'created_at'       => Time::now(),
                 'updated_at'       => Time::now()
-            ]
+            ],
+            [
+                'id_pekerjaan' => 7,
+                'id_status_pekerjaan' => 3,
+                'id_kategori_pekerjaan' => 3,
+                'nama_pekerjaan' => 'Web Profile PT Shosu Jaya Abadi',
+                'pelanggan' => 'PT Shosu Jaya Abadi',
+                'jenis_pelanggan' => 'swasta',
+                'nama_pic' => 'Putra Wijaya Kusuma',
+                'email_pic' => 'putwija@gmail.com',
+                'nowa_pic' => '082295301704',
+                'jenis_layanan' => 'produk',
+                'nominal_harga' => 25000000,
+                'deskripsi_pekerjaan' => 'Web Profile PT Shosu Jaya Abadi adalah website yang berisi informasi tentang perusahaan dan produk yang dihasilkan oleh PT Shosu Jaya Abadi.',
+                'target_waktu_selesai' => '2024-02-28',
+                'waktu_selesai' => '2024-02-19',
+                'created_at'       => Time::now(),
+                'updated_at'       => Time::now()
+            ],
+            [
+                'id_pekerjaan' => 8,
+                'id_status_pekerjaan' => 3,
+                'id_kategori_pekerjaan' => 2,
+                'nama_pekerjaan' => 'Aplikasi Scan Kalori Makanan',
+                'pelanggan' => 'Klinik Dokter Jayadi',
+                'jenis_pelanggan' => 'swasta',
+                'nama_pic' => 'Jayadi Jaya Perkasa',
+                'email_pic' => 'jayadijaya@gmail.com',
+                'nowa_pic' => '085800679047',
+                'jenis_layanan' => 'produk',
+                'nominal_harga' => 30000000,
+                'deskripsi_pekerjaan' => 'Aplikasi Scan Kalori Makanan adalah aplikasi berbasis android yang dapat menghitung kalori makanan yang dikonsumsi oleh pengguna.',
+                'target_waktu_selesai' => '2024-03-22',
+                'waktu_selesai' => '2024-03-29',
+                'created_at'       => Time::now(),
+                'updated_at'       => Time::now()
+            ],
+            [
+                'id_pekerjaan' => 9,
+                'id_status_pekerjaan' => 3,
+                'id_kategori_pekerjaan' => 2,
+                'nama_pekerjaan' => 'Aplikasi Deteksi Nomor Kendaraan',
+                'pelanggan' => 'Samsat Kota Semarang',
+                'jenis_pelanggan' => 'negeri',
+                'nama_pic' => 'Marzuki Ahmad',
+                'email_pic' => 'marzukyyy123@gmail.com',
+                'nowa_pic' => '085811679047',
+                'jenis_layanan' => 'produk',
+                'nominal_harga' => 33000000,
+                'deskripsi_pekerjaan' => 'Aplikasi Deteksi Nomor Kendaraan adalah aplikasi berbasis android yang dapat mendeteksi nomor kendaraan yang melanggar aturan lalu lintas.',
+                'target_waktu_selesai' => '2023-12-28',
+                'waktu_selesai' => '2023-12-15',
+                'created_at'       => Time::now(),
+                'updated_at'       => Time::now()
+            ],
         ];
         $this->db->table('pekerjaan')->insertBatch($data);
     }

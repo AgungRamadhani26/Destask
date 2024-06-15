@@ -32,7 +32,7 @@ class Pekerjaan extends BaseController
         $this->statusPekerjaanModel = new StatusPekerjaanModel();
         $this->hariliburModel = new HariLiburModel();
         $this->taskModel = new TaskModel();
-        helper(['swal_helper', 'option_helper']);
+        helper(['swal_helper', 'option_helper', 'export_data_pekerjaan_helper']);
     }
 
     //Fungsi daftar_pekerjaan
@@ -740,5 +740,449 @@ class Pekerjaan extends BaseController
             // Redirect ke dashboard
             return redirect()->to('/dashboard');
         }
+    }
+
+
+
+
+    //Untuk menampilkan halama download pekerjaan
+    public function download_pekerjaan()
+    {
+        $data = [
+            'status_pekerjaan_presales' => $this->statusPekerjaanModel->getStatusPekerjaan(1),
+            'status_pekerjaan_onprogres' => $this->statusPekerjaanModel->getStatusPekerjaan(2),
+            'status_pekerjaan_bast' => $this->statusPekerjaanModel->getStatusPekerjaan(3),
+            'status_pekerjaan_support' => $this->statusPekerjaanModel->getStatusPekerjaan(4),
+            'status_pekerjaan_cancel' => $this->statusPekerjaanModel->getStatusPekerjaan(5),
+            'url1' => '/dashboard',
+            'url' => '/dashboard',
+        ];
+        return view('pekerjaan/download_pekerjaan', $data);
+    }
+
+
+
+    //Untuk mendownload data pekerjaan presales
+    public function download_pekerjaan_presales_excel()
+    {
+        if (session()->get('user_level') != 'staff') {
+            $data_pekerjaan_presales = $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(1);
+            $file_name = 'Data_Pekerjaan_Presales_All.xlsx';
+        } else {
+            $data_pekerjaan_presales = $this->pekerjaanModel->getPekerjaanByUserIdIdStatusPekerjaan(session()->get('id_user'), 1);
+            $file_name = 'Data_Pekerjaan_Presales_' . session()->get('nama') . '.xlsx';
+        }
+        $data_status_pekerjaan = $this->statusPekerjaanModel->getStatusPekerjaan(); //Untuk menampilkan nama status pekerjaan di excel
+        $data_kategori_pekerjaan = $this->kategoriPekerjaanModel->getKategoriPekerjaan(); //Untuk menampilkan nama kategori pekerjaan di excel
+        export_pekerjaan_excel($data_pekerjaan_presales, $file_name, $data_status_pekerjaan, $data_kategori_pekerjaan);
+    }
+    //Untuk mendownload data pekerjaan presales pdf
+    public function download_pekerjaan_presales_pdf()
+    {
+        if (session()->get('user_level') != 'staff') {
+            $data_pekerjaan_presales = $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(1);
+            $file_name = 'Data_Pekerjaan_Presales_All.pdf';
+        } else {
+            $data_pekerjaan_presales = $this->pekerjaanModel->getPekerjaanByUserIdIdStatusPekerjaan(session()->get('id_user'), 1);
+            $file_name = 'Data_Pekerjaan_Presales_' . session()->get('nama') . '.pdf';
+        }
+        $data = [
+            'data_pekerjaan' => $data_pekerjaan_presales,
+            'file_name' => $file_name,
+            'judul' => 'Data Pekerjaan Presales',
+            'data_status_pekerjaan' => $this->statusPekerjaanModel->getStatusPekerjaan(), //Untuk menampilkan nama status pekerjaan di excel
+            'data_kategori_pekerjaan' => $this->kategoriPekerjaanModel->getKategoriPekerjaan() //Untuk menampilkan nama kategori pekerjaan di excel
+        ];
+        $view = 'pekerjaan/pdf/download_pekerjaan_pdf';
+        export_pekerjaan_pdf($view, $data, $file_name);
+    }
+    //Untuk mendownload data pekerjaan presales berdasarkan tahun
+    public function download_pekerjaan_presales_excel_by_year($tahun)
+    {
+        if (session()->get('user_level') != 'staff') {
+            $data_pekerjaan_presales = $this->pekerjaanModel->getPekerjaanPresales_by_tahun_target_waktu_selesai($tahun);
+            $file_name = 'Data_Pekerjaan_Presales_' . $tahun . '_All.xlsx';
+        } else {
+            $data_pekerjaan_presales = $this->pekerjaanModel->getPekerjaanByUserIdIdStatusPekerjaan_tahun(session()->get('id_user'), 1, $tahun);
+            $file_name = 'Data_Pekerjaan_Presales_' . session()->get('nama') . '_' . $tahun . '.xlsx';
+        }
+        $data_status_pekerjaan = $this->statusPekerjaanModel->getStatusPekerjaan(); //Untuk menampilkan nama status pekerjaan di excel
+        $data_kategori_pekerjaan = $this->kategoriPekerjaanModel->getKategoriPekerjaan(); //Untuk menampilkan nama kategori pekerjaan di excel
+        export_pekerjaan_excel($data_pekerjaan_presales, $file_name, $data_status_pekerjaan, $data_kategori_pekerjaan);
+    }
+    //Untuk mendownload data pekerjaan presales berdasarkan tahun berformat pdf
+    public function download_pekerjaan_presales_pdf_by_year($tahun)
+    {
+        if (session()->get('user_level') != 'staff') {
+            $data_pekerjaan_presales = $this->pekerjaanModel->getPekerjaanPresales_by_tahun_target_waktu_selesai($tahun);
+            $file_name = 'Data_Pekerjaan_Presales_' . $tahun . '_All.pdf';
+        } else {
+            $data_pekerjaan_presales = $this->pekerjaanModel->getPekerjaanByUserIdIdStatusPekerjaan_tahun(session()->get('id_user'), 1, $tahun);
+            $file_name = 'Data_Pekerjaan_Presales_' . session()->get('nama') . '_' . $tahun . '.pdf';
+        }
+        $data = [
+            'data_pekerjaan' => $data_pekerjaan_presales,
+            'file_name' => $file_name,
+            'judul' => 'Data Pekerjaan Presales ' . $tahun,
+            'data_status_pekerjaan' => $this->statusPekerjaanModel->getStatusPekerjaan(), //Untuk menampilkan nama status pekerjaan di excel
+            'data_kategori_pekerjaan' => $this->kategoriPekerjaanModel->getKategoriPekerjaan() //Untuk menampilkan nama kategori pekerjaan di excel
+        ];
+        $view = 'pekerjaan/pdf/download_pekerjaan_pdf';
+        export_pekerjaan_pdf($view, $data, $file_name);
+    }
+
+
+
+    //Untuk mendownload data pekerjaan onprogress
+    public function download_pekerjaan_onprogress_excel()
+    {
+        if (session()->get('user_level') != 'staff') {
+            $data_pekerjaan_onprogres = $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(2);
+            $file_name = 'Data_Pekerjaan_Onprogres_All.xlsx';
+        } else {
+            $data_pekerjaan_onprogres = $this->pekerjaanModel->getPekerjaanByUserIdIdStatusPekerjaan(session()->get('id_user'), 2);
+            $file_name = 'Data_Pekerjaan_Onprogres_' . session()->get('nama') . '.xlsx';
+        }
+        $data_status_pekerjaan = $this->statusPekerjaanModel->getStatusPekerjaan(); //Untuk menampilkan nama status pekerjaan di excel
+        $data_kategori_pekerjaan = $this->kategoriPekerjaanModel->getKategoriPekerjaan(); //Untuk menampilkan nama kategori pekerjaan di excel
+        export_pekerjaan_excel($data_pekerjaan_onprogres, $file_name, $data_status_pekerjaan, $data_kategori_pekerjaan);
+    }
+    //Untuk mendownload data pekerjaan onprogress pdf
+    public function download_pekerjaan_onprogress_pdf()
+    {
+        if (session()->get('user_level') != 'staff') {
+            $data_pekerjaan_onprogres = $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(2);
+            $file_name = 'Data_Pekerjaan_Onprogres_All.pdf';
+        } else {
+            $data_pekerjaan_onprogres = $this->pekerjaanModel->getPekerjaanByUserIdIdStatusPekerjaan(session()->get('id_user'), 2);
+            $file_name = 'Data_Pekerjaan_Onprogres_' . session()->get('nama') . '.pdf';
+        }
+        $data = [
+            'data_pekerjaan' => $data_pekerjaan_onprogres,
+            'file_name' => $file_name,
+            'judul' => 'Data Pekerjaan Onprogress',
+            'data_status_pekerjaan' => $this->statusPekerjaanModel->getStatusPekerjaan(), //Untuk menampilkan nama status pekerjaan di excel
+            'data_kategori_pekerjaan' => $this->kategoriPekerjaanModel->getKategoriPekerjaan() //Untuk menampilkan nama kategori pekerjaan di excel
+        ];
+        $view = 'pekerjaan/pdf/download_pekerjaan_pdf';
+        export_pekerjaan_pdf($view, $data, $file_name);
+    }
+    //Untuk mendownload data pekerjaan onprogres berdasarkan tahun
+    public function download_pekerjaan_onprogress_excel_by_year($tahun)
+    {
+        if (session()->get('user_level') != 'staff') {
+            $data_pekerjaan_onprogres = $this->pekerjaanModel->getPekerjaanOnprogress_by_tahun_target_waktu_selesai($tahun);
+            $file_name = 'Data_Pekerjaan_Onprogres_' . $tahun . '_All.xlsx';
+        } else {
+            $data_pekerjaan_onprogres = $this->pekerjaanModel->getPekerjaanByUserIdIdStatusPekerjaan_tahun(session()->get('id_user'), 2, $tahun);
+            $file_name = 'Data_Pekerjaan_Onprogres_' . session()->get('nama') . '_' . $tahun . '.xlsx';
+        }
+        $data_status_pekerjaan = $this->statusPekerjaanModel->getStatusPekerjaan(); //Untuk menampilkan nama status pekerjaan di excel
+        $data_kategori_pekerjaan = $this->kategoriPekerjaanModel->getKategoriPekerjaan(); //Untuk menampilkan nama kategori pekerjaan di excel
+        export_pekerjaan_excel($data_pekerjaan_onprogres, $file_name, $data_status_pekerjaan, $data_kategori_pekerjaan);
+    }
+    //Untuk mendownload data pekerjaan onprogres berdasarkan tahun berformat pdf
+    public function download_pekerjaan_onprogress_pdf_by_year($tahun)
+    {
+        if (session()->get('user_level') != 'staff') {
+            $data_pekerjaan_onprogres = $this->pekerjaanModel->getPekerjaanOnprogress_by_tahun_target_waktu_selesai($tahun);
+            $file_name = 'Data_Pekerjaan_Onprogres_' . $tahun . '_All.pdf';
+        } else {
+            $data_pekerjaan_onprogres = $this->pekerjaanModel->getPekerjaanByUserIdIdStatusPekerjaan_tahun(session()->get('id_user'), 2, $tahun);
+            $file_name = 'Data_Pekerjaan_Onprogres_' . session()->get('nama') . '_' . $tahun . '.pdf';
+        }
+        $data = [
+            'data_pekerjaan' => $data_pekerjaan_onprogres,
+            'file_name' => $file_name,
+            'judul' => 'Data Pekerjaan Onprogress ' . $tahun,
+            'data_status_pekerjaan' => $this->statusPekerjaanModel->getStatusPekerjaan(), //Untuk menampilkan nama status pekerjaan di excel
+            'data_kategori_pekerjaan' => $this->kategoriPekerjaanModel->getKategoriPekerjaan() //Untuk menampilkan nama kategori pekerjaan di excel
+        ];
+        $view = 'pekerjaan/pdf/download_pekerjaan_pdf';
+        export_pekerjaan_pdf($view, $data, $file_name);
+    }
+
+
+
+    //Untuk mendownload data pekerjaan bast
+    public function download_pekerjaan_bast_excel()
+    {
+        if (session()->get('user_level') != 'staff') {
+            $data_pekerjaan_bast = $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(3);
+            $file_name = 'Data_Pekerjaan_BAST_All.xlsx';
+        } else {
+            $data_pekerjaan_bast = $this->pekerjaanModel->getPekerjaanByUserIdIdStatusPekerjaan(session()->get('id_user'), 3);
+            $file_name = 'Data_Pekerjaan_BAST_' . session()->get('nama') . '.xlsx';
+        }
+        $data_status_pekerjaan = $this->statusPekerjaanModel->getStatusPekerjaan(); //Untuk menampilkan nama status pekerjaan di excel
+        $data_kategori_pekerjaan = $this->kategoriPekerjaanModel->getKategoriPekerjaan(); //Untuk menampilkan nama kategori pekerjaan di excel
+        export_pekerjaan_excel($data_pekerjaan_bast, $file_name, $data_status_pekerjaan, $data_kategori_pekerjaan);
+    }
+    //Untuk mendownload data pekerjaan bast pdf
+    public function download_pekerjaan_bast_pdf()
+    {
+        if (session()->get('user_level') != 'staff') {
+            $data_pekerjaan_bast = $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(3);
+            $file_name = 'Data_Pekerjaan_BAST_All.pdf';
+        } else {
+            $data_pekerjaan_bast = $this->pekerjaanModel->getPekerjaanByUserIdIdStatusPekerjaan(session()->get('id_user'), 3);
+            $file_name = 'Data_Pekerjaan_BAST_' . session()->get('nama') . '.pdf';
+        }
+        $data = [
+            'data_pekerjaan' => $data_pekerjaan_bast,
+            'file_name' => $file_name,
+            'judul' => 'Data Pekerjaan BAST',
+            'data_status_pekerjaan' => $this->statusPekerjaanModel->getStatusPekerjaan(), //Untuk menampilkan nama status pekerjaan di excel
+            'data_kategori_pekerjaan' => $this->kategoriPekerjaanModel->getKategoriPekerjaan() //Untuk menampilkan nama kategori pekerjaan di excel
+        ];
+        $view = 'pekerjaan/pdf/download_pekerjaan_pdf';
+        export_pekerjaan_pdf($view, $data, $file_name);
+    }
+    //Untuk mendownload data pekerjaan bast berdasarkan tahun
+    public function download_pekerjaan_bast_excel_by_year($tahun)
+    {
+        if (session()->get('user_level') != 'staff') {
+            $data_pekerjaan_bast = $this->pekerjaanModel->getPekerjaanBast_by_tahun_target_waktu_selesai($tahun);
+            $file_name = 'Data_Pekerjaan_BAST_' . $tahun . '_All.xlsx';
+        } else {
+            $data_pekerjaan_bast = $this->pekerjaanModel->getPekerjaanByUserIdIdStatusPekerjaan_tahun(session()->get('id_user'), 3, $tahun);
+            $file_name = 'Data_Pekerjaan_BAST_' . session()->get('nama') . '_' . $tahun . '.xlsx';
+        }
+        $data_status_pekerjaan = $this->statusPekerjaanModel->getStatusPekerjaan(); //Untuk menampilkan nama status pekerjaan di excel
+        $data_kategori_pekerjaan = $this->kategoriPekerjaanModel->getKategoriPekerjaan(); //Untuk menampilkan nama kategori pekerjaan di excel
+        export_pekerjaan_excel($data_pekerjaan_bast, $file_name, $data_status_pekerjaan, $data_kategori_pekerjaan);
+    }
+    //Untuk mendownload data pekerjaan bast berdasarkan tahun berformat pdf
+    public function download_pekerjaan_bast_pdf_by_year($tahun)
+    {
+        if (session()->get('user_level') != 'staff') {
+            $data_pekerjaan_bast = $this->pekerjaanModel->getPekerjaanBast_by_tahun_target_waktu_selesai($tahun);
+            $file_name = 'Data_Pekerjaan_BAST_' . $tahun . '_All.pdf';
+        } else {
+            $data_pekerjaan_bast = $this->pekerjaanModel->getPekerjaanByUserIdIdStatusPekerjaan_tahun(session()->get('id_user'), 3, $tahun);
+            $file_name = 'Data_Pekerjaan_BAST_' . session()->get('nama') . '_' . $tahun . '.pdf';
+        }
+        $data = [
+            'data_pekerjaan' => $data_pekerjaan_bast,
+            'file_name' => $file_name,
+            'judul' => 'Data Pekerjaan BAST ' . $tahun,
+            'data_status_pekerjaan' => $this->statusPekerjaanModel->getStatusPekerjaan(), //Untuk menampilkan nama status pekerjaan di excel
+            'data_kategori_pekerjaan' => $this->kategoriPekerjaanModel->getKategoriPekerjaan() //Untuk menampilkan nama kategori pekerjaan di excel
+        ];
+        $view = 'pekerjaan/pdf/download_pekerjaan_pdf';
+        export_pekerjaan_pdf($view, $data, $file_name);
+    }
+
+
+
+    //Untuk mendownload data pekerjaan support
+    public function download_pekerjaan_support_excel()
+    {
+        if (session()->get('user_level') != 'staff') {
+            $data_pekerjaan_support = $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(4);
+            $file_name = 'Data_Pekerjaan_Support_All.xlsx';
+        } else {
+            $data_pekerjaan_support = $this->pekerjaanModel->getPekerjaanByUserIdIdStatusPekerjaan(session()->get('id_user'), 4);
+            $file_name = 'Data_Pekerjaan_Support_' . session()->get('nama') . '.xlsx';
+        }
+        $data_status_pekerjaan = $this->statusPekerjaanModel->getStatusPekerjaan(); //Untuk menampilkan nama status pekerjaan di excel
+        $data_kategori_pekerjaan = $this->kategoriPekerjaanModel->getKategoriPekerjaan(); //Untuk menampilkan nama kategori pekerjaan di excel
+        export_pekerjaan_excel($data_pekerjaan_support, $file_name, $data_status_pekerjaan, $data_kategori_pekerjaan);
+    }
+    //Untuk mendownload data pekerjaan support pdf
+    public function download_pekerjaan_support_pdf()
+    {
+        if (session()->get('user_level') != 'staff') {
+            $data_pekerjaan_support = $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(4);
+            $file_name = 'Data_Pekerjaan_Support_All.pdf';
+        } else {
+            $data_pekerjaan_support = $this->pekerjaanModel->getPekerjaanByUserIdIdStatusPekerjaan(session()->get('id_user'), 4);
+            $file_name = 'Data_Pekerjaan_Support_' . session()->get('nama') . '.pdf';
+        }
+        $data = [
+            'data_pekerjaan' => $data_pekerjaan_support,
+            'file_name' => $file_name,
+            'judul' => 'Data Pekerjaan Support',
+            'data_status_pekerjaan' => $this->statusPekerjaanModel->getStatusPekerjaan(), //Untuk menampilkan nama status pekerjaan di excel
+            'data_kategori_pekerjaan' => $this->kategoriPekerjaanModel->getKategoriPekerjaan() //Untuk menampilkan nama kategori pekerjaan di excel
+        ];
+        $view = 'pekerjaan/pdf/download_pekerjaan_pdf';
+        export_pekerjaan_pdf($view, $data, $file_name);
+    }
+    //Untuk mendownload data pekerjaan support berdasarkan tahun
+    public function download_pekerjaan_support_excel_by_year($tahun)
+    {
+        if (session()->get('user_level') != 'staff') {
+            $data_pekerjaan_support = $this->pekerjaanModel->getPekerjaanSupport_by_tahun_target_waktu_selesai($tahun);
+            $file_name = 'Data_Pekerjaan_Support_' . $tahun . '_All.xlsx';
+        } else {
+            $data_pekerjaan_support = $this->pekerjaanModel->getPekerjaanByUserIdIdStatusPekerjaan_tahun(session()->get('id_user'), 4, $tahun);
+            $file_name = 'Data_Pekerjaan_Support_' . session()->get('nama') . '_' . $tahun . '.xlsx';
+        }
+        $data_status_pekerjaan = $this->statusPekerjaanModel->getStatusPekerjaan(); //Untuk menampilkan nama status pekerjaan di excel
+        $data_kategori_pekerjaan = $this->kategoriPekerjaanModel->getKategoriPekerjaan(); //Untuk menampilkan nama kategori pekerjaan di excel
+        export_pekerjaan_excel($data_pekerjaan_support, $file_name, $data_status_pekerjaan, $data_kategori_pekerjaan);
+    }
+    //Untuk mendownload data pekerjaan support berdasarkan tahun berformat pdf
+    public function download_pekerjaan_support_pdf_by_year($tahun)
+    {
+        if (session()->get('user_level') != 'staff') {
+            $data_pekerjaan_support = $this->pekerjaanModel->getPekerjaanSupport_by_tahun_target_waktu_selesai($tahun);
+            $file_name = 'Data_Pekerjaan_Support_' . $tahun . '_All.pdf';
+        } else {
+            $data_pekerjaan_support = $this->pekerjaanModel->getPekerjaanByUserIdIdStatusPekerjaan_tahun(session()->get('id_user'), 4, $tahun);
+            $file_name = 'Data_Pekerjaan_Support_' . session()->get('nama') . '_' . $tahun . '.pdf';
+        }
+        $data = [
+            'data_pekerjaan' => $data_pekerjaan_support,
+            'file_name' => $file_name,
+            'judul' => 'Data Pekerjaan Support ' . $tahun,
+            'data_status_pekerjaan' => $this->statusPekerjaanModel->getStatusPekerjaan(), //Untuk menampilkan nama status pekerjaan di excel
+            'data_kategori_pekerjaan' => $this->kategoriPekerjaanModel->getKategoriPekerjaan() //Untuk menampilkan nama kategori pekerjaan di excel
+        ];
+        $view = 'pekerjaan/pdf/download_pekerjaan_pdf';
+        export_pekerjaan_pdf($view, $data, $file_name);
+    }
+
+
+
+    //Untuk mendownload data pekerjaan cancel
+    public function download_pekerjaan_cancel_excel()
+    {
+        if (session()->get('user_level') != 'staff') {
+            $data_pekerjaan_cancel = $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(5);
+            $file_name = 'Data_Pekerjaan_Cancel_All.xlsx';
+        } else {
+            $data_pekerjaan_cancel = $this->pekerjaanModel->getPekerjaanByUserIdIdStatusPekerjaan(session()->get('id_user'), 5);
+            $file_name = 'Data_Pekerjaan_Cancel_' . session()->get('nama') . '.xlsx';
+        }
+        $data_status_pekerjaan = $this->statusPekerjaanModel->getStatusPekerjaan(); //Untuk menampilkan nama status pekerjaan di excel
+        $data_kategori_pekerjaan = $this->kategoriPekerjaanModel->getKategoriPekerjaan(); //Untuk menampilkan nama kategori pekerjaan di excel
+        export_pekerjaan_excel($data_pekerjaan_cancel, $file_name, $data_status_pekerjaan, $data_kategori_pekerjaan);
+    }
+    //Untuk mendownload data pekerjaan cancel pdf
+    public function download_pekerjaan_cancel_pdf()
+    {
+        if (session()->get('user_level') != 'staff') {
+            $data_pekerjaan_cancel = $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(5);
+            $file_name = 'Data_Pekerjaan_Cancel_All.pdf';
+        } else {
+            $data_pekerjaan_cancel = $this->pekerjaanModel->getPekerjaanByUserIdIdStatusPekerjaan(session()->get('id_user'), 5);
+            $file_name = 'Data_Pekerjaan_Cancel_' . session()->get('nama') . '.pdf';
+        }
+        $data = [
+            'data_pekerjaan' => $data_pekerjaan_cancel,
+            'file_name' => $file_name,
+            'judul' => 'Data Pekerjaan Cancel',
+            'data_status_pekerjaan' => $this->statusPekerjaanModel->getStatusPekerjaan(), //Untuk menampilkan nama status pekerjaan di excel
+            'data_kategori_pekerjaan' => $this->kategoriPekerjaanModel->getKategoriPekerjaan() //Untuk menampilkan nama kategori pekerjaan di excel
+        ];
+        $view = 'pekerjaan/pdf/download_pekerjaan_pdf';
+        export_pekerjaan_pdf($view, $data, $file_name);
+    }
+    //Untuk mendownload data pekerjaan cancel berdasarkan tahun
+    public function download_pekerjaan_cancel_excel_by_year($tahun)
+    {
+        if (session()->get('user_level') != 'staff') {
+            $data_pekerjaan_cancel = $this->pekerjaanModel->getPekerjaanCancel_by_tahun_target_waktu_selesai($tahun);
+            $file_name = 'Data_Pekerjaan_Cancel_' . $tahun . '_All.xlsx';
+        } else {
+            $data_pekerjaan_cancel = $this->pekerjaanModel->getPekerjaanByUserIdIdStatusPekerjaan_tahun(session()->get('id_user'), 5, $tahun);
+            $file_name = 'Data_Pekerjaan_Cancel_' . session()->get('nama') . '_' . $tahun . '.xlsx';
+        }
+        $data_status_pekerjaan = $this->statusPekerjaanModel->getStatusPekerjaan(); //Untuk menampilkan nama status pekerjaan di excel
+        $data_kategori_pekerjaan = $this->kategoriPekerjaanModel->getKategoriPekerjaan(); //Untuk menampilkan nama kategori pekerjaan di excel
+        export_pekerjaan_excel($data_pekerjaan_cancel, $file_name, $data_status_pekerjaan, $data_kategori_pekerjaan);
+    }
+    //Untuk mendownload data pekerjaan cancel berdasarkan tahun berformat pdf
+    public function download_pekerjaan_cancel_pdf_by_year($tahun)
+    {
+        if (session()->get('user_level') != 'staff') {
+            $data_pekerjaan_cancel = $this->pekerjaanModel->getPekerjaanCancel_by_tahun_target_waktu_selesai($tahun);
+            $file_name = 'Data_Pekerjaan_Cancel_' . $tahun . '_All.pdf';
+        } else {
+            $data_pekerjaan_cancel = $this->pekerjaanModel->getPekerjaanByUserIdIdStatusPekerjaan_tahun(session()->get('id_user'), 5, $tahun);
+            $file_name = 'Data_Pekerjaan_Cancel_' . session()->get('nama') . '_' . $tahun . '.pdf';
+        }
+        $data = [
+            'data_pekerjaan' => $data_pekerjaan_cancel,
+            'file_name' => $file_name,
+            'judul' => 'Data Pekerjaan Cancel ' . $tahun,
+            'data_status_pekerjaan' => $this->statusPekerjaanModel->getStatusPekerjaan(), //Untuk menampilkan nama status pekerjaan di excel
+            'data_kategori_pekerjaan' => $this->kategoriPekerjaanModel->getKategoriPekerjaan() //Untuk menampilkan nama kategori pekerjaan di excel
+        ];
+        $view = 'pekerjaan/pdf/download_pekerjaan_pdf';
+        export_pekerjaan_pdf($view, $data, $file_name);
+    }
+
+
+
+    //Untuk mendownload data semua pekerjaan
+    public function download_pekerjaan_semua_pekerjaan_excel()
+    {
+        if (session()->get('user_level') != 'staff') {
+            $data_pekerjaan_all = $this->pekerjaanModel->getPekerjaan();
+            $file_name = 'Data_Pekerjaan_All.xlsx';
+        } else {
+            $data_pekerjaan_all = $this->pekerjaanModel->getPekerjaanByUserId(session()->get('id_user'));
+            $file_name = 'Data_Pekerjaan_' . session()->get('nama') . '.xlsx';
+        }
+        $data_status_pekerjaan = $this->statusPekerjaanModel->getStatusPekerjaan(); //Untuk menampilkan nama status pekerjaan di excel
+        $data_kategori_pekerjaan = $this->kategoriPekerjaanModel->getKategoriPekerjaan(); //Untuk menampilkan nama kategori pekerjaan di excel
+        export_pekerjaan_excel($data_pekerjaan_all, $file_name, $data_status_pekerjaan, $data_kategori_pekerjaan);
+    }
+    //Untuk mendownload data semua pekerjaan berformat pdf
+    public function download_pekerjaan_semua_pekerjaan_pdf()
+    {
+        if (session()->get('user_level') != 'staff') {
+            $data_pekerjaan_all = $this->pekerjaanModel->getPekerjaan();
+            $file_name = 'Data_Pekerjaan_All.pdf';
+        } else {
+            $data_pekerjaan_all = $this->pekerjaanModel->getPekerjaanByUserId(session()->get('id_user'));
+            $file_name = 'Data_Pekerjaan_' . session()->get('nama') . '.pdf';
+        }
+        $data = [
+            'data_pekerjaan' => $data_pekerjaan_all,
+            'file_name' => $file_name,
+            'judul' => 'Data Pekerjaan',
+            'data_status_pekerjaan' => $this->statusPekerjaanModel->getStatusPekerjaan(), //Untuk menampilkan nama status pekerjaan di excel
+            'data_kategori_pekerjaan' => $this->kategoriPekerjaanModel->getKategoriPekerjaan() //Untuk menampilkan nama kategori pekerjaan di excel
+        ];
+        $view = 'pekerjaan/pdf/download_pekerjaan_pdf';
+        export_pekerjaan_pdf($view, $data, $file_name);
+    }
+    //Untuk mendownload data semua pekerjaan berdasarkan tahun
+    public function download_pekerjaan_semua_pekerjaan_excel_by_year($tahun)
+    {
+        if (session()->get('user_level') != 'staff') {
+            $data_pekerjaan_all = $this->pekerjaanModel->getAllPekerjaan_by_tahun_target_waktu_selesai($tahun);
+            $file_name = 'Data_Pekerjaan_' . $tahun . '_All.xlsx';
+        } else {
+            $data_pekerjaan_all = $this->pekerjaanModel->getAllPekerjaanByUserId_tahun(session()->get('id_user'), $tahun);
+            $file_name = 'Data_Pekerjaan_' . session()->get('nama') . '_' . $tahun . '.xlsx';
+        }
+        $data_status_pekerjaan = $this->statusPekerjaanModel->getStatusPekerjaan(); //Untuk menampilkan nama status pekerjaan di excel
+        $data_kategori_pekerjaan = $this->kategoriPekerjaanModel->getKategoriPekerjaan(); //Untuk menampilkan nama kategori pekerjaan di excel
+        export_pekerjaan_excel($data_pekerjaan_all, $file_name, $data_status_pekerjaan, $data_kategori_pekerjaan);
+    }
+    //Untuk mendownload data semua pekerjaan berdasarkan tahun berformat pdf
+    public function download_pekerjaan_semua_pekerjaan_pdf_by_year($tahun)
+    {
+        if (session()->get('user_level') != 'staff') {
+            $data_pekerjaan_all = $this->pekerjaanModel->getAllPekerjaan_by_tahun_target_waktu_selesai($tahun);
+            $file_name = 'Data_Pekerjaan_' . $tahun . '_All.pdf';
+        } else {
+            $data_pekerjaan_all = $this->pekerjaanModel->getAllPekerjaanByUserId_tahun(session()->get('id_user'), $tahun);
+            $file_name = 'Data_Pekerjaan_' . session()->get('nama') . '_' . $tahun . '.pdf';
+        }
+        $data = [
+            'data_pekerjaan' => $data_pekerjaan_all,
+            'file_name' => $file_name,
+            'judul' => 'Data Pekerjaan ' . $tahun,
+            'data_status_pekerjaan' => $this->statusPekerjaanModel->getStatusPekerjaan(), //Untuk menampilkan nama status pekerjaan di excel
+            'data_kategori_pekerjaan' => $this->kategoriPekerjaanModel->getKategoriPekerjaan() //Untuk menampilkan nama kategori pekerjaan di excel
+        ];
+        $view = 'pekerjaan/pdf/download_pekerjaan_pdf';
+        export_pekerjaan_pdf($view, $data, $file_name);
     }
 }

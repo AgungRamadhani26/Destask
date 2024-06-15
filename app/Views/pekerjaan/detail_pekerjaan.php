@@ -80,7 +80,17 @@
                         </div>
                      </div>
                      <div class="col-md-4 mb-4">
-                        <label for="waktu_selesai" class="form-label" style="font-weight: 600;">Waktu Selesai</label>
+                        <label for="waktu_selesai" class="form-label" style="font-weight: 600;">Waktu Selesai
+                           <?php if ($pekerjaan['waktu_selesai'] != null) : ?>
+                              <?php if ($pekerjaan['waktu_selesai'] < $pekerjaan['target_waktu_selesai']) : ?>
+                                 <span style="background-color:green" class="badge rounded-pill">Lebih Awal</span>
+                              <?php elseif ($pekerjaan['waktu_selesai'] == $pekerjaan['target_waktu_selesai']) : ?>
+                                 <span style="background-color:blue" class="badge rounded-pill">Tepat Waktu</span>
+                              <?php else : ?>
+                                 <span style="background-color:red" class="badge rounded-pill">Terlambat</span>
+                              <?php endif; ?>
+                           <?php endif; ?>
+                        </label>
                         <?php $waktu_selesai = date('d-m-Y', strtotime($pekerjaan['waktu_selesai'])) ?>
                         <div class="form-control"><?= $pekerjaan['waktu_selesai'] != null ? $waktu_selesai  : '__-__-____ (Belum selesai)'; ?></div>
                      </div>

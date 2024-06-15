@@ -3040,9 +3040,9 @@ class TaskSeeder extends Seeder
                 'creator'                 => 4,
                 'id_status_task'          => 3, //task selesai
                 'id_kategori_task'        => 5,
-                'tgl_planing'             => '2024-07-18',
-                'tgl_selesai'             => '2024-07-18',
-                'tgl_verifikasi_diterima' => '2024-07-18 09:37:16',
+                'tgl_planing'             => '2024-01-03',
+                'tgl_selesai'             => '2024-01-02',
+                'tgl_verifikasi_diterima' => '2024-01-04 09:37:16',
                 'persentase_selesai'      => 100,
                 'deskripsi_task'          => 'Dokumentasi proses pengadaan barang',
                 'alasan_verifikasi'       => null,
@@ -3051,8 +3051,8 @@ class TaskSeeder extends Seeder
                 'created_at'              => Time::now(),
                 'updated_at'              => Time::now(),
             ],
-            //BACKEND WEB TASK
-            //Task User Jatmiko Adi Nugroho pekerjaan Website Recruitement Pegawai PT Agung Jaya Mineral
+            //DESAINER TASK
+            //Task User Bima Satria pekerjaan Aplikasi Pembukuan PT Jaya Sukses
             [
                 'id_task'                 => 159,
                 'id_pekerjaan'            => 1,
@@ -3060,13 +3060,221 @@ class TaskSeeder extends Seeder
                 'creator'                 => 4,
                 'id_status_task'          => 3, //task selesai
                 'id_kategori_task'        => 5,
-                'tgl_planing'             => '2024-07-22',
-                'tgl_selesai'             => '2024-07-23',
-                'tgl_verifikasi_diterima' => '2024-07-25 11:39:46',
+                'tgl_planing'             => '2024-01-03',
+                'tgl_selesai'             => '2024-01-03',
+                'tgl_verifikasi_diterima' => '2024-01-03 09:37:16',
                 'persentase_selesai'      => 100,
                 'deskripsi_task'          => 'Dokumentasi halaman pembukuan bulanan dan tahunan',
                 'alasan_verifikasi'       => null,
                 'bukti_selesai'           => 'dokumentasi_halaman_pembukuan_bulanan_dan_tahunan.pdf',
+                'tautan_task'             => 'https://github.com/AgungRamadhani26/Destask/commit/38c6cfb7dd00f964767f31e8085fc4814f0fa918',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+
+
+            //PROJECT MANAGER
+            //Task User Amsari Kurniadi pekerjaan Aplikasi Absensi SMAN 1 Bandar
+            [
+                'id_task'                 => 160,
+                'id_pekerjaan'            => 2,
+                'id_user'                 => 12,
+                'creator'                 => 12,
+                'id_status_task'          => 3, //task selesai
+                'id_kategori_task'        => 3,
+                'tgl_planing'             => '2024-06-07',
+                'tgl_selesai'             => '2024-06-07',
+                'tgl_verifikasi_diterima' => '2024-06-07 10:59:00',
+                'persentase_selesai'      => 100,
+                'deskripsi_task'          => 'Integrasi backend dan frontend menu daftar hari libur dan cuti tahap 1',
+                'alasan_verifikasi'       => null,
+                'bukti_selesai'           => 'integrasi_backend_dan_frontend_menu_daftar_hari_libur_dan_cuti_tahap1.jpg',
+                'tautan_task'             => 'Tidak ada karena semuanya sudah terlampir pada laporan evaluasi.',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+            [
+                'id_task'                 => 161,
+                'id_pekerjaan'            => 2,
+                'id_user'                 => 12,
+                'creator'                 => 12,
+                'id_status_task'          => 3, //task selesai
+                'id_kategori_task'        => 1,
+                'tgl_planing'             => '2024-06-06',
+                'tgl_selesai'             => '2024-06-06',
+                'tgl_verifikasi_diterima' => '2024-06-06 10:59:00',
+                'persentase_selesai'      => 100,
+                'deskripsi_task'          => 'Support penyusunan laporan dokumentasi desain',
+                'alasan_verifikasi'       => null,
+                'bukti_selesai'           => 'support_penyusunan_laporan_dokumentasi_desain.pdf',
+                'tautan_task'             => 'Tidak ada karena semuanya sudah terlampir pada laporan evaluasi.',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+            [
+                'id_task'                 => 162,
+                'id_pekerjaan'            => 2,
+                'id_user'                 => 12,
+                'creator'                 => 12,
+                'id_status_task'          => 3, //task selesai
+                'id_kategori_task'        => 1,
+                'tgl_planing'             => '2024-06-07',
+                'tgl_selesai'             => '2024-06-07',
+                'tgl_verifikasi_diterima' => '2024-06-07 10:59:00',
+                'persentase_selesai'      => 100,
+                'deskripsi_task'          => 'Support penyusunan laporan dokumentasi testing',
+                'alasan_verifikasi'       => null,
+                'bukti_selesai'           => 'support_penyusunan_laporan_dokumentasi_testing.jpg',
+                'tautan_task'             => 'Tidak ada karena semuanya sudah terlampir pada laporan evaluasi.',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+            [
+                'id_task'                 => 163,
+                'id_pekerjaan'            => 2,
+                'id_user'                 => 12,
+                'creator'                 => 12,
+                'id_status_task'          => 3, //task selesai
+                'id_kategori_task'        => 4,
+                'tgl_planing'             => '2024-06-11',
+                'tgl_selesai'             => '2024-06-11',
+                'tgl_verifikasi_diterima' => '2024-06-11 10:59:00',
+                'persentase_selesai'      => 100,
+                'deskripsi_task'          => 'Membantu tim testing dalam automation testing autentikasi',
+                'alasan_verifikasi'       => null,
+                'bukti_selesai'           => 'membantu_tim_testing_dalam_automation_testing_autentikasi.jpg',
+                'tautan_task'             => 'Tidak ada karena semuanya sudah terlampir pada laporan evaluasi.',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+
+
+
+            //DENGAN ID PEKERJAAN 7
+            //PROJECT MANAGER TASK
+            //Task User Bima Satria pekerjaan Web Profile PT Shosu Jaya Abadi
+            [
+                'id_task'                 => 164,
+                'id_pekerjaan'            => 7,
+                'id_user'                 => 4,
+                'creator'                 => 4,
+                'id_status_task'          => 3, //task selesai
+                'id_kategori_task'        => 5,
+                'tgl_planing'             => '2024-02-19',
+                'tgl_selesai'             => '2024-02-19',
+                'tgl_verifikasi_diterima' => '2024-02-19 09:37:16',
+                'persentase_selesai'      => 100,
+                'deskripsi_task'          => 'Dokumentasi halaman layanan dan produk',
+                'alasan_verifikasi'       => null,
+                'bukti_selesai'           => 'dokumentasi_halaman_layanan_dan_produk.png',
+                'tautan_task'             => 'https://getbootstrap.com/docs/5.3/forms/select/',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+            //PROJECT MANAGER TASK
+            //Task User Bima Satria pekerjaan Web Profile PT Shosu Jaya Abadi
+            [
+                'id_task'                 => 165,
+                'id_pekerjaan'            => 7,
+                'id_user'                 => 4,
+                'creator'                 => 4,
+                'id_status_task'          => 3, //task selesai
+                'id_kategori_task'        => 5,
+                'tgl_planing'             => '2024-02-19',
+                'tgl_selesai'             => '2024-02-19',
+                'tgl_verifikasi_diterima' => '2024-02-19 09:37:16',
+                'persentase_selesai'      => 100,
+                'deskripsi_task'          => 'Dokumentasi halaman kontak dan lokasi cabang perusahaan',
+                'alasan_verifikasi'       => null,
+                'bukti_selesai'           => 'dokumentasi_halaman_kontak_dan_lokasi_cabang_perusahaan.png',
+                'tautan_task'             => 'https://github.com/AgungRamadhani26/Destask/commit/38c6cfb7dd00f964767f31e8085fc4814f0fa918',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+
+
+
+            //DENGAN ID PEKERJAAN 8
+            //PROJECT MANAGER TASK
+            //Task User Amsari Kurniadi pekerjaan Aplikasi Scan Kalori Makanan
+            [
+                'id_task'                 => 166,
+                'id_pekerjaan'            => 8,
+                'id_user'                 => 12,
+                'creator'                 => 12,
+                'id_status_task'          => 3, //task selesai
+                'id_kategori_task'        => 5,
+                'tgl_planing'             => '2024-03-13',
+                'tgl_selesai'             => '2024-03-12',
+                'tgl_verifikasi_diterima' => '2024-03-13 09:37:16',
+                'persentase_selesai'      => 100,
+                'deskripsi_task'          => 'Dokumentasi laporan aplikasi dan tutorial penggunaan',
+                'alasan_verifikasi'       => null,
+                'bukti_selesai'           => 'dokumentasi_laporan_aplikasi_dan_tutorial_penggunaan.png',
+                'tautan_task'             => 'https://getbootstrap.com/docs/5.3/forms/select/',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+            //PROJECT MANAGER TASK
+            //Task User Amsari Kurniadi pekerjaan Aplikasi Scan Kalori Makanan
+            [
+                'id_task'                 => 167,
+                'id_pekerjaan'            => 8,
+                'id_user'                 => 12,
+                'creator'                 => 12,
+                'id_status_task'          => 3, //task selesai
+                'id_kategori_task'        => 5,
+                'tgl_planing'             => '2024-03-12',
+                'tgl_selesai'             => '2024-03-12',
+                'tgl_verifikasi_diterima' => '2024-03-14 09:37:16',
+                'persentase_selesai'      => 100,
+                'deskripsi_task'          => 'Dokumentasi hasil testing aplikasi',
+                'alasan_verifikasi'       => null,
+                'bukti_selesai'           => 'dokumentasi_hasil_testing_aplikasi.png',
+                'tautan_task'             => 'https://github.com/AgungRamadhani26/Destask/commit/38c6cfb7dd00f964767f31e8085fc4814f0fa918',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+
+
+
+            //DENGAN ID PEKERJAAN 9
+            //PROJECT MANAGER TASK
+            //Task User Agus Adi Kurnia pekerjaan Aplikasi Deteksi Nomor Kendaraan
+            [
+                'id_task'                 => 168,
+                'id_pekerjaan'            => 9,
+                'id_user'                 => 5,
+                'creator'                 => 5,
+                'id_status_task'          => 3, //task selesai
+                'id_kategori_task'        => 5,
+                'tgl_planing'             => '2024-12-15',
+                'tgl_selesai'             => '2024-12-15',
+                'tgl_verifikasi_diterima' => '2024-12-15 09:37:16',
+                'persentase_selesai'      => 100,
+                'deskripsi_task'          => 'Dokumentasi desain halaman utama aplikasi',
+                'alasan_verifikasi'       => null,
+                'bukti_selesai'           => 'dokumentasi_desain_halaman_utama_aplikasi.png',
+                'tautan_task'             => 'https://getbootstrap.com/docs/5.3/forms/select/',
+                'created_at'              => Time::now(),
+                'updated_at'              => Time::now(),
+            ],
+            //PROJECT MANAGER TASK
+            //Task User Agus Adi Kurnia pekerjaan Aplikasi Deteksi Nomor Kendaraan
+            [
+                'id_task'                 => 169,
+                'id_pekerjaan'            => 9,
+                'id_user'                 => 5,
+                'creator'                 => 5,
+                'id_status_task'          => 3, //task selesai
+                'id_kategori_task'        => 5,
+                'tgl_planing'             => '2024-12-08',
+                'tgl_selesai'             => '2024-12-07',
+                'tgl_verifikasi_diterima' => '2024-12-11 09:37:16',
+                'persentase_selesai'      => 100,
+                'deskripsi_task'          => 'Dokumentasi fitur deteksi nomor kendaraan dan integrasi dengan sistem cerdas',
+                'alasan_verifikasi'       => null,
+                'bukti_selesai'           => 'dokumentasi_fitur_deteksi_nomor_kendaraan_dan_integrasi_dengan_sistem_cerdas.png',
                 'tautan_task'             => 'https://github.com/AgungRamadhani26/Destask/commit/38c6cfb7dd00f964767f31e8085fc4814f0fa918',
                 'created_at'              => Time::now(),
                 'updated_at'              => Time::now(),

@@ -14,8 +14,8 @@
                <hr style="border-top: 3px solid black;">
                <div class="row">
                   <div class="col-lg-12">
-                     <div class="card">
-                        <div class="card-body mt-3 pt-1 me-2">
+                     <div class="card mb-0">
+                        <div class="card-body mt-3 pt-1">
                            <div class="row">
                               <div class="col-2">
                                  <img src="/assets/file_pengguna/foto_user/<?= $user['foto_profil'] ?>" height="165px" class="d-block w-100" style="border-radius: 8px;" alt="...">
@@ -23,7 +23,7 @@
                                     <strong><?= $user['user_level'] ?></strong>
                                  </center>
                               </div>
-                              <div class="col-10">
+                              <div class="col-7">
                                  <div class="row">
                                     <div class="col-12" style="background-color: #e9ecef; border-radius: 8px;">
                                        <table class="table">
@@ -47,17 +47,24 @@
                                              <td style="background-color: #e9ecef;">:</td>
                                              <td style="background-color: #e9ecef;"><?= $usergroup['nama_usergroup'] ?></td>
                                           </tr>
-                                          <tr style="border-bottom: 2px solid black;">
-                                             <td style="background-color: #e9ecef;"><span class="fw-bold">Score KPI</span></td>
-                                             <td style="background-color: #e9ecef;">:</td>
-                                             <td style="background-color: #e9ecef;">8.33</td>
-                                          </tr>
-                                          <tr style="border-bottom: 2px solid black;">
-                                             <td style="background-color: #e9ecef;"><span class="fw-bold">Periode</span></td>
-                                             <td style="background-color: #e9ecef;">:</td>
-                                             <td style="background-color: #e9ecef;">2023 / Desember</td>
-                                          </tr>
                                        </table>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="col-3">
+                                 <div class="card mb-0">
+                                    <div class="card_title_firter_poin_harian bg-primary">
+                                       <h4 class="card-title" style="color: white;">Score KPI</h4>
+                                    </div>
+                                    <div class="card-body mb-0">
+                                       <div class="row">
+                                          <div class="col-md-12">
+                                             <center>
+                                                <h2><strong><?= $kinerja['score_kpi'] ?></strong></h2>
+                                                <strong>Periode : </strong><?= $kinerja['tahun'] ?> / <?= $nama_bulan ?>
+                                             </center>
+                                          </div>
+                                       </div>
                                     </div>
                                  </div>
                               </div>
@@ -81,35 +88,40 @@
                      </thead>
                      <tbody>
                         <tr>
-                           <td rowspan="6">1</td>
+                           <td rowspan="7">1</td>
                            <td style="text-align: center; color:white" colspan="2" class="bg-info">
                               <b>KEHADIRAN (25%)</b>
                            </td>
                         </tr>
                         <tr>
                            <td>A.</td>
-                           <td>Jumlah kehadiran</td>
-                           <td>22 Hari</td>
+                           <td>Jumlah hari kerja 1 periode</td>
+                           <td><?= $kinerja['jumlah_hari_kerja'] ?> Hari</td>
                         </tr>
                         <tr>
                            <td>B.</td>
-                           <td>Jumlah izin</td>
-                           <td>2 Hari</td>
+                           <td>Jumlah kehadiran</td>
+                           <td><?= $kinerja['jumlah_kehadiran'] ?> Hari</td>
                         </tr>
                         <tr>
                            <td>C.</td>
-                           <td>Jumlah sakit tanpa keterangan Dokter</td>
-                           <td>0 Hari</td>
+                           <td>Jumlah izin</td>
+                           <td><?= $kinerja['jumlah_izin'] ?> Hari</td>
                         </tr>
                         <tr>
                            <td>D.</td>
-                           <td>Jumlah mangkir</td>
-                           <td>0 Hari</td>
+                           <td>Jumlah sakit tanpa keterangan Dokter</td>
+                           <td><?= $kinerja['jumlah_sakit_tnp_ket_dokter'] ?> Hari</td>
                         </tr>
                         <tr>
                            <td>E.</td>
+                           <td>Jumlah mangkir</td>
+                           <td><?= $kinerja['jumlah_mangkir'] ?> Hari</td>
+                        </tr>
+                        <tr>
+                           <td>F.</td>
                            <td>Jumlah terlambat</td>
-                           <td>0 Hari</td>
+                           <td><?= $kinerja['jumlah_terlambat'] ?> Kali</td>
                         </tr>
 
                         <tr>
@@ -121,12 +133,12 @@
                         <tr>
                            <td>A.</td>
                            <td>Kebersihan diri</td>
-                           <td>8 - Sering sesuai standar</td>
+                           <td><?= konversi_nilai_seragam_dan_penampilan($kinerja['kebersihan_diri']); ?></td>
                         </tr>
                         <tr>
                            <td>B.</td>
                            <td>Kerapihan penampilan</td>
-                           <td>5 - Kadang-kadang sesuai standar</td>
+                           <td><?= konversi_nilai_seragam_dan_penampilan($kinerja['kerapihan_penampilan']); ?></td>
                         </tr>
                      </tbody>
                   </table>
@@ -135,7 +147,7 @@
 
                <div class="table-responsive">
                   <hr style="border-top: 3px solid black;">
-                  <h5 class="card-title mt-4">GENERAL COMPETENCY (70%) </h5>
+                  <h5 class="card-title">GENERAL COMPETENCY (70%) </h5>
                   <hr style="border-top: 3px solid black;">
                   <table class="table table-bordered">
                      <thead>
@@ -160,17 +172,17 @@
                         <tr>
                            <td>A.</td>
                            <td>Mampu bertindak secara konsisten sesuai standard minimal aturan dan target perusahaan yang berlaku</td>
-                           <td>5 - Meets / Sesuai</td>
+                           <td><?= konversi_nilai_general_competency($kinerja['integritas_a']) ?></td>
                         </tr>
                         <tr>
                            <td>B.</td>
                            <td>Kejujuran dalam menyampaikan alasan/kendala Ketika ada kendala yang mempengaruhi kinerja perusahaan</td>
-                           <td>1 - Develop / Perlu Dikembangkan</td>
+                           <td><?= konversi_nilai_general_competency($kinerja['integritas_b']) ?></td>
                         </tr>
                         <tr>
                            <td>C.</td>
                            <td>Mampu mempertanggungjawabkan kesalahan yang telah dilakukan</td>
-                           <td>10 - Exceeds / Melebihi</td>
+                           <td><?= konversi_nilai_general_competency($kinerja['integritas_c']) ?></td>
                         </tr>
 
                         <tr>
@@ -187,22 +199,22 @@
                         <tr>
                            <td>A.</td>
                            <td>Mampu memberikan feedback (masukan) kepada team kerjanya</td>
-                           <td>5 - Meets / Sesuai</td>
+                           <td><?= konversi_nilai_general_competency($kinerja['kerjasama_a']) ?></td>
                         </tr>
                         <tr>
                            <td>B.</td>
                            <td>Mampu mengekspresikan gagasannya secara konstruktif</td>
-                           <td>5 - Meets / Sesuai</td>
+                           <td><?= konversi_nilai_general_competency($kinerja['kerjasama_b']) ?></td>
                         </tr>
                         <tr>
                            <td>C.</td>
                            <td>Mampu menunjukkan partisipasi aktif dalam kerja team</td>
-                           <td>10 - Exceeds / Melebihi</td>
+                           <td><?= konversi_nilai_general_competency($kinerja['kerjasama_c']) ?></td>
                         </tr>
                         <tr>
                            <td>D.</td>
                            <td>Mampu menjalin silaturahim serta menciptakan hubungan yang baik dengan orang lain di luar kelompoknya</td>
-                           <td>10 - Exceeds / Melebihi</td>
+                           <td><?= konversi_nilai_general_competency($kinerja['kerjasama_d']) ?></td>
                         </tr>
 
                         <tr>
@@ -218,22 +230,22 @@
                         <tr>
                            <td>A.</td>
                            <td>Mampu memberikan pelayanan yang baik kepada konsumen / calon konsumen melebihi standart minimal</td>
-                           <td>5 - Meets / Sesuai</td>
+                           <td><?= konversi_nilai_general_competency($kinerja['orientasi_thd_konsumen_a']) ?></td>
                         </tr>
                         <tr>
                            <td>B.</td>
                            <td>Mampu menunjukkan keinginan untuk menggali dan mengidentifikasi kebutuhan konsumen / calon konsumen </td>
-                           <td>5 - Meets / Sesuai</td>
+                           <td><?= konversi_nilai_general_competency($kinerja['orientasi_thd_konsumen_b']) ?></td>
                         </tr>
                         <tr>
                            <td>C.</td>
                            <td>Mampu menunjukkan kesungguhan dalam menanggapi pertanyaan atau permintaan konsumen / calon konsumen</td>
-                           <td>5 - Meets / Sesuai</td>
+                           <td><?= konversi_nilai_general_competency($kinerja['orientasi_thd_konsumen_c']) ?></td>
                         </tr>
                         <tr>
                            <td>D.</td>
                            <td>Mampu memberikan tanggapan yang relevan dan mudah dimengerti atas permintaan konsumen / calon konsumen</td>
-                           <td>10 - Exceeds / Melebihi</td>
+                           <td><?= konversi_nilai_general_competency($kinerja['orientasi_thd_konsumen_d']) ?></td>
                         </tr>
 
                         <tr>
@@ -253,22 +265,22 @@
                         <tr>
                            <td>A.</td>
                            <td>Mampu menetapkan target kerjanya secara pribadi</td>
-                           <td>1 - Develop / Perlu Dikembangkan</td>
+                           <td><?= konversi_nilai_general_competency($kinerja['orientasi_thd_target_a']) ?></td>
                         </tr>
                         <tr>
                            <td>B.</td>
                            <td>Mampu berusaha memenuhi target kerja pribadi yang telah ditetapkan</td>
-                           <td>5 - Meets / Sesuai</td>
+                           <td><?= konversi_nilai_general_competency($kinerja['orientasi_thd_target_b']) ?></td>
                         </tr>
                         <tr>
                            <td>C.</td>
                            <td>Mampu aktif mencari masukan untuk untuk mengembangkan performa kerja dirinya</td>
-                           <td>5 - Meets / Sesuai</td>
+                           <td><?= konversi_nilai_general_competency($kinerja['orientasi_thd_target_c']) ?></td>
                         </tr>
                         <tr>
                            <td>D.</td>
                            <td>Mampu memanfaatkan pengalaman masa lalunya untuk meningkatkan kualitas kerjanya</td>
-                           <td>10 - Exceeds / Melebihi</td>
+                           <td><?= konversi_nilai_general_competency($kinerja['orientasi_thd_target_d']) ?></td>
                         </tr>
 
                         <tr>
@@ -287,22 +299,22 @@
                         <tr>
                            <td>A.</td>
                            <td>Mampu memahami standar kerja yang telah ditentukan oleh perusahaan atau unit kerjanya</td>
-                           <td>5 - Meets / Sesuai</td>
+                           <td><?= konversi_nilai_general_competency($kinerja['inisiatif_inovasi_a']) ?></td>
                         </tr>
                         <tr>
                            <td>B.</td>
                            <td>Mampu menunjukkan keingintahuan yang tinggi terhadap pekerjaan yang belum dikuasainya</td>
-                           <td>5 - Meets / Sesuai</td>
+                           <td><?= konversi_nilai_general_competency($kinerja['inisiatif_inovasi_b']) ?></td>
                         </tr>
                         <tr>
                            <td>C.</td>
                            <td>Mampu mengaplikasikan pengetahuan yang didapat untuk meningkatkan performa kerja</td>
-                           <td>5 - Meets / Sesuai</td>
+                           <td><?= konversi_nilai_general_competency($kinerja['inisiatif_inovasi_c']) ?></td>
                         </tr>
                         <tr>
                            <td>D.</td>
                            <td>Mampu menunjukkan usaha yang konsisten untuk mengatasi masalah yang muncul</td>
-                           <td>5 - Meets / Sesuai</td>
+                           <td><?= konversi_nilai_general_competency($kinerja['inisiatif_inovasi_d']) ?></td>
                         </tr>
 
                         <tr>
@@ -320,22 +332,22 @@
                         <tr>
                            <td>A.</td>
                            <td>Mampu menjelaskan tujuan dan target kerja di wilayah kerjanya secara jelas</td>
-                           <td>10 - Exceeds / Melebihi</td>
+                           <td><?= konversi_nilai_general_competency($kinerja['professionalisme_a']) ?></td>
                         </tr>
                         <tr>
                            <td>B.</td>
                            <td>Mampu mempertanggung jawabkan pekerjaan yang menjadi tugasnya</td>
-                           <td>10 - Exceeds / Melebihi</td>
+                           <td><?= konversi_nilai_general_competency($kinerja['professionalisme_b']) ?></td>
                         </tr>
                         <tr>
                            <td>C.</td>
                            <td>Mampu mengatasi tugas sulit yang dihadapinya secara efektif</td>
-                           <td>5 - Meets / Sesuai</td>
+                           <td><?= konversi_nilai_general_competency($kinerja['professionalisme_c']) ?></td>
                         </tr>
                         <tr>
                            <td>D.</td>
                            <td>Mampu untuk tidak menyalahkan dan atau mengungkap keburukan rekan kerja kepada kelompok lainnya</td>
-                           <td>5 - Meets / Sesuai</td>
+                           <td><?= konversi_nilai_general_competency($kinerja['professionalisme_d']) ?></td>
                         </tr>
 
                         <tr>
@@ -351,23 +363,23 @@
                         <tr>
                            <td>A.</td>
                            <td>Mampu memahami peraturan dasar, khususnya yg berkaitan dengan hak dan kewajibannya sebagai karyawan</td>
-                           <td>5 - Meets / Sesuai</td>
+                           <td><?= konversi_nilai_general_competency($kinerja['organizational_awareness_a']) ?></td>
                         </tr>
                         <tr>
                            <td>B.</td>
                            <td>Mampu memanfaatkan struktur formal di Garas Holding untuk mendukung aktivitas kerjanya (misalnya dengan mengetahui alur perintah otoritas setiap posisi)</td>
-                           <td>1 - Develop / Perlu Dikembangkan</td>
+                           <td><?= konversi_nilai_general_competency($kinerja['organizational_awareness_b']) ?></td>
                         </tr>
                         <tr>
                            <td>C.</td>
                            <td>Mampu memahami SOP (Standart Operating Procedure) terhadap aktivitas pekerjaan yang dilakukannya </td>
-                           <td>10 - Exceeds / Melebihi</td>
+                           <td><?= konversi_nilai_general_competency($kinerja['organizational_awareness_c']) ?></td>
                         </tr>
                      </tbody>
                   </table>
                   <hr class="mt-4 mb-4" style="border-top: 3px solid black;">
                   <div class="text-center">
-                     <button type="submit" class="btn btn-primary">Simpan</button>
+                     <a href="/kinerja/daftar_kinerja_karyawan/<?= $user['id_user'] ?>" class="btn btn-primary">Tutup</a>
                   </div>
                </div>
             </div>

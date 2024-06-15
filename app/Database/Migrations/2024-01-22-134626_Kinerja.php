@@ -30,6 +30,12 @@ class Kinerja extends Migration
                 'constraint' => 2,
                 'null'       => true
             ],
+            'jumlah_hari_kerja' => [
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => true,
+                'null'  => true
+            ],
             'jumlah_kehadiran' => [
                 'type'           => 'INT',
                 'constraint'     => 11,

@@ -53,6 +53,40 @@ $routes->post('/pekerjaan/updatepekerjaan_status_pekerjaan', 'Pekerjaan::updatep
 //Untuk menghapus pekerjaan
 $routes->delete('/pekerjaan/delete_pekerjaan/(:num)', 'Pekerjaan::delete_pekerjaan/$1'); //Akses beres udah dibikin filter/middleware KhususHODandAdmin
 
+//Untuk download pekerjaan
+//Untuk menampilkan halaman download pekerjaan
+$routes->get('/pekerjaan/download_pekerjaan', 'Pekerjaan::download_pekerjaan'); //Akses beres tidak perlu diberi filter/middleware, hal ini karena semua orang bisa download pekerjaan tergantung session yang login
+//Untuk mendownload pekerjaan presales file excel dan pdf
+$routes->get('/pekerjaan/download_pekerjaan_presales_excel', 'Pekerjaan::download_pekerjaan_presales_excel'); //Akses beres middleware hanya pendukung autentikasi
+$routes->get('/pekerjaan/download_pekerjaan_presales_excel/(:num)', 'Pekerjaan::download_pekerjaan_presales_excel_by_year/$1'); //Akses beres middleware hanya pendukung autentikasi
+$routes->get('/pekerjaan/download_pekerjaan_presales_pdf', 'Pekerjaan::download_pekerjaan_presales_pdf'); //Akses beres middleware hanya pendukung autentikasi
+$routes->get('/pekerjaan/download_pekerjaan_presales_pdf/(:num)', 'Pekerjaan::download_pekerjaan_presales_pdf_by_year/$1'); //Akses beres middleware hanya pendukung autentikasi
+//Untuk mendownload pekerjaan on progress file excel dan pdf
+$routes->get('/pekerjaan/download_pekerjaan_onprogress_excel', 'Pekerjaan::download_pekerjaan_onprogress_excel'); //Akses beres middleware hanya pendukung autentikasi
+$routes->get('/pekerjaan/download_pekerjaan_onprogress_excel/(:num)', 'Pekerjaan::download_pekerjaan_onprogress_excel_by_year/$1'); //Akses beres middleware hanya pendukung autentikasi
+$routes->get('/pekerjaan/download_pekerjaan_onprogress_pdf', 'Pekerjaan::download_pekerjaan_onprogress_pdf'); //Akses beres middleware hanya pendukung autentikasi
+$routes->get('/pekerjaan/download_pekerjaan_onprogress_pdf/(:num)', 'Pekerjaan::download_pekerjaan_onprogress_pdf_by_year/$1'); //Akses beres middleware hanya pendukung autentikasi
+//Untuk mendownload pekerjaan bast file excel dan pdf
+$routes->get('/pekerjaan/download_pekerjaan_bast_excel', 'Pekerjaan::download_pekerjaan_bast_excel'); //Akses beres middleware hanya pendukung autentikasi
+$routes->get('/pekerjaan/download_pekerjaan_bast_excel/(:num)', 'Pekerjaan::download_pekerjaan_bast_excel_by_year/$1'); //Akses beres middleware hanya pendukung autentikasi
+$routes->get('/pekerjaan/download_pekerjaan_bast_pdf', 'Pekerjaan::download_pekerjaan_bast_pdf'); //Akses beres middleware hanya pendukung autentikasi
+$routes->get('/pekerjaan/download_pekerjaan_bast_pdf/(:num)', 'Pekerjaan::download_pekerjaan_bast_pdf_by_year/$1'); //Akses beres middleware hanya pendukung autentikasi
+//Untuk mendownload pekerjaan support file excel dan pdf
+$routes->get('/pekerjaan/download_pekerjaan_support_excel', 'Pekerjaan::download_pekerjaan_support_excel'); //Akses beres middleware hanya pendukung autentikasi
+$routes->get('/pekerjaan/download_pekerjaan_support_excel/(:num)', 'Pekerjaan::download_pekerjaan_support_excel_by_year/$1'); //Akses beres middleware hanya pendukung autentikasi
+$routes->get('/pekerjaan/download_pekerjaan_support_pdf', 'Pekerjaan::download_pekerjaan_support_pdf'); //Akses beres middleware hanya pendukung autentikasi
+$routes->get('/pekerjaan/download_pekerjaan_support_pdf/(:num)', 'Pekerjaan::download_pekerjaan_support_pdf_by_year/$1'); //Akses beres middleware hanya pendukung autentikasi
+//Untuk mendownload pekerjaaan cancel file excel dan pdf
+$routes->get('/pekerjaan/download_pekerjaan_cancel_excel', 'Pekerjaan::download_pekerjaan_cancel_excel'); //Akses beres middleware hanya pendukung autentikasi
+$routes->get('/pekerjaan/download_pekerjaan_cancel_excel/(:num)', 'Pekerjaan::download_pekerjaan_cancel_excel_by_year/$1'); //Akses beres middleware hanya pendukung autentikasi
+$routes->get('/pekerjaan/download_pekerjaan_cancel_pdf', 'Pekerjaan::download_pekerjaan_cancel_pdf'); //Akses beres middleware hanya pendukung autentikasi
+$routes->get('/pekerjaan/download_pekerjaan_cancel_pdf/(:num)', 'Pekerjaan::download_pekerjaan_cancel_pdf_by_year/$1'); //Akses beres middleware hanya pendukung autentikasi
+//Untuk mendownload pekerjaan semua pekerjaan file excel dan pdf
+$routes->get('/pekerjaan/download_pekerjaan_semua_pekerjaan_excel', 'Pekerjaan::download_pekerjaan_semua_pekerjaan_excel'); //Akses beres middleware hanya pendukung autentikasi
+$routes->get('/pekerjaan/download_pekerjaan_semua_pekerjaan_excel/(:num)', 'Pekerjaan::download_pekerjaan_semua_pekerjaan_excel_by_year/$1'); //Akses beres middleware hanya pendukung autentikasi
+$routes->get('/pekerjaan/download_pekerjaan_semua_pekerjaan_pdf', 'Pekerjaan::download_pekerjaan_semua_pekerjaan_pdf'); //Akses beres middleware hanya pendukung autentikasi
+$routes->get('/pekerjaan/download_pekerjaan_semua_pekerjaan_pdf/(:num)', 'Pekerjaan::download_pekerjaan_semua_pekerjaan_pdf_by_year/$1'); //Akses beres middleware hanya pendukung autentikasi
+
 //Rotes Task
 //Untuk menampilkan halaman daftar task
 $routes->get('/task/daftar_task/(:num)', 'Task::daftar_task/$1'); //Sudah beres masalah akses karena semua udah diatur di controller
@@ -84,17 +118,33 @@ $routes->post('/task/tolak_verifikasi_task', 'Task::tolak_verifikasi_task'); //S
 
 //Routes Kinerja
 //Untuk menampilkan halaman daftar kinerja karyawan
-$routes->get('/kinerja/daftar_kinerja_karyawan', 'Kinerja::daftar_kinerja_karyawan');
+$routes->get('/kinerja/daftar_kinerja_karyawan', 'Kinerja::daftar_kinerja_karyawan'); //Akses beres udah dibikin filter/middleware ExceptAdmin
 //Untuk memfilter halaman daftar kinerja karyawan
-$routes->get('/kinerja/filter_kinerja_karyawan', 'Kinerja::filter_kinerja_karyawan');
+$routes->get('/kinerja/filter_kinerja_karyawan', 'Kinerja::filter_kinerja_karyawan'); //Akses beres udah dibikin filter/middleware ExceptAdmin
 //Untuk melihat halaman daftar kinerja perkaryawan
-$routes->get('/kinerja/daftar_kinerja_karyawan/(:num)', 'Kinerja::daftar_kinerja_perkaryawan/$1');
+$routes->get('/kinerja/daftar_kinerja_karyawan/(:num)', 'Kinerja::daftar_kinerja_perkaryawan/$1'); //Akses beres udah dibikin filter/middleware ExceptAdmin
 //Untuk memfilter kinerja perkaryawan
-$routes->get('/kinerja/filter_kinerja_karyawan/(:num)', 'Kinerja::filter_kinerja_perkaryawan/$1');
+$routes->get('/kinerja/filter_kinerja_karyawan/(:num)', 'Kinerja::filter_kinerja_perkaryawan/$1'); //Akses beres udah dibikin filter/middleware ExceptAdmin
+//Untuk menampilkan form periode kinerja karyawan
+$routes->get('/kinerja/cek_periode_kinerja_karyawan/(:num)', 'Kinerja::cek_periode_kinerja_karyawan/$1'); //Akses beres udah dibikin filter/middleware KhususHOD
+$routes->post('/kinerja/pengecekan_periode_kinerja_karyawan', 'Kinerja::pengecekan_periode_kinerja_karyawan'); //Akses beres udah dibikin filter/middleware KhususHOD
 //Untuk menampilkan form tambah kinerja
-$routes->get('/kinerja/add_kinerja_karyawan/(:num)', 'Kinerja::add_kinerja_karyawan/$1');
+$routes->get('/kinerja/add_kinerja_karyawan/(:num)/(:num)/(:num)', 'Kinerja::add_kinerja_karyawan/$1/$2/$3'); //Akses beres udah dibikin filter/middleware KhususHOD
+//Untuk menambah kinerja karyawan
+$routes->post('/kinerja/tambah_kinerja_karyawan', 'Kinerja::tambah_kinerja_karyawan'); //Akses beres udah dibikin filter/middleware KhususHOD
+//Untuk mengedit kinerja karyawan
+$routes->get('/kinerja/edit_kinerja_karyawan/(:num)', 'Kinerja::edit_kinerja_karyawan/$1'); //Akses beres udah dibikin filter/middleware KhususHOD
+$routes->post('/kinerja/update_kinerja_karyawan', 'Kinerja::update_kinerja_karyawan'); //Akses beres udah dibikin filter/middleware KhususHOD
 //Untuk melihat detai kinerja
-$routes->get('/kinerja/detail_kinerja_karyawan/(:num)', 'Kinerja::detail_kinerja_karyawan/$1');
+$routes->get('/kinerja/detail_kinerja_karyawan/(:num)', 'Kinerja::detail_kinerja_karyawan/$1'); //Sudah beres masalah akses karena semua udah diatur di controller
+//Untuk menghapus kinerja karyawan
+$routes->delete('/kinerja/delete_kinerja_karyawan/(:num)/(:num)', 'Kinerja::delete_kinerja_karyawan/$1/$2'); //Akses beres udah dibikin filter/middleware KhususHOD
+
+//Routes Realisasi VS Target
+//Untuk menampilkan halaman realisasi vs target
+$routes->get('/realisasi_vs_target/daftar_realisasi_vs_target', 'RealisasiVsTarget::daftar_realisasi_vs_target'); //Akses sudah beres udah dibikin filter/middleware ExceptAdminandStaff
+//Untuk memfilter data yang ditampilkan
+$routes->get('/realisasi_vs_target/filter_realisasi_vs_target', 'RealisasiVsTarget::filter_realisasi_vs_target'); //Akses sudah beres udah dibikin filter/middleware ExceptAdminandStaff
 
 //Routes Personil
 //Untuk edit personil pm

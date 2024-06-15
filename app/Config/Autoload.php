@@ -98,5 +98,5 @@ class Autoload extends AutoloadConfig
      * @var string[]
      * @phpstan-var list<string>
      */
-    public $helpers = ['personil_add_task_helper', 'cek_idusergroup_dari_task_user_helper', 'persentase_pekerjaan_selesai_helper'];
+    public $helpers = ['personil_add_task_helper', 'cek_idusergroup_dari_task_user_helper', 'persentase_pekerjaan_selesai_helper', 'konversi_nilai_seragam_dan_penampilan_helper', 'kinerja_helper'];
 }
