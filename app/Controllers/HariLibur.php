@@ -4,14 +4,20 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\HariLiburModel;
+use App\Models\PekerjaanModel;
+use App\Models\TaskModel;
 
 class HariLibur extends BaseController
 {
     //Konstruktor agar semua method dapat menggunakan model
     protected $hariliburModel;
+    protected $pekerjaanModel;
+    protected $taskModel;
     public function __construct()
     {
         $this->hariliburModel = new HariLiburModel();
+        $this->pekerjaanModel = new PekerjaanModel();
+        $this->taskModel = new TaskModel();
         helper(['swal_helper']);
     }
 
@@ -51,6 +57,43 @@ class HariLibur extends BaseController
             //Mengambil data dari ajax
             $tanggal = date('Y-m-d', strtotime(strval($this->request->getPost('tanggal'))));
             $keterangan = preg_replace('/\s+/', ' ', trim(strval($this->request->getPost('keterangan'))));
+            //Pengecekan ada gak pekerjaan dengan dl di tanggal tersebut atau selesai di tanggal tersebut
+            $pekerjaan = $this->pekerjaanModel->getPekerjaan_By_Target_Waktu_Selesai($tanggal);
+            //Masukkan nama pekerjaan ke array
+            $nama_pekerjaan = [];
+            foreach ($pekerjaan as $p) {
+                array_push($nama_pekerjaan, $p['nama_pekerjaan']);
+            }
+            if ($pekerjaan) {
+                //Masukkan nama pekerjaan ke notif
+                $nama_pekerjaan = implode(', ', $nama_pekerjaan);
+                Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Tidak dapat menambahkan hari libur pada tanggal tersebut, hal ini karena terdapat pekerjaan dengan target waktu selesai pada tanggal tersebut, yaitu ' . $nama_pekerjaan . '. Silahkan rescedule target waktu selesai pekerjaan tersebut terlebih dahulu');
+                return redirect()->to('hari_libur/daftar_hari_libur');
+            }
+            //Pengecekan ada gak task dengan dl di tanggal tersebut
+            $task = $this->taskModel->getTaskByTglPlaning($tanggal);
+            //Masukkan nama task ke array dan pekerjaan ke array
+            $nama_task = [];
+            $id_pekerjaan = [];
+            foreach ($task as $t) {
+                array_push($nama_task, $t['deskripsi_task']);
+                array_push($id_pekerjaan, $t['id_pekerjaan']);
+            }
+            //mendapatkan nama pekerjaan
+            $nama_pekerjaan = [];
+            foreach ($id_pekerjaan as $id) {
+                $pekerjaan = $this->pekerjaanModel->getPekerjaan($id);
+                array_push($nama_pekerjaan, $pekerjaan['nama_pekerjaan']);
+            }
+            if ($task) {
+                //Masukkan nama task ke notif berdampingan dengan nama pekerjaan
+                $task_pekerjaan = array_map(function ($task, $pekerjaan) {
+                    return $task . ' pada pekerjaan ' . $pekerjaan;
+                }, $nama_task, $nama_pekerjaan);
+                $task_pekerjaan = implode(', ', $task_pekerjaan);
+                Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Tidak dapat menambahkan hari libur pada tanggal tersebut, hal ini karena terdapat task dengan target waktu selesai pada tanggal tersebut, yaitu ' . $task_pekerjaan . '. Silahkan hubungi PM pekerjaan tersebut untuk mereschedule target waktu selesai task tersebut terlebih dahulu');
+                return redirect()->to('hari_libur/daftar_hari_libur');
+            }
             //Proses memasukkan data ke database
             $data_hari_libur = [
                 'tanggal_libur' => $tanggal,

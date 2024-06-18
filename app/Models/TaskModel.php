@@ -516,6 +516,25 @@ class TaskModel extends Model
         return count($this->where(['YEAR(tgl_selesai)' => $tahun, 'MONTH(tgl_selesai)' => $bulan, 'id_user' => $id_user, 'deleted_at' => null, 'id_status_task' => 3])->findAll());
     }
 
+
+
+    //Fungsi untuk mendapatkan task berdasarkan id_kategori_task (untuk pengecekan kategori task, kalo ada task yang terkait dengan
+    //kategori task tertentu maka kategori task tersebut tidak bisa dihapus)
+    public function getTaskByIdKategoriTask($id_kategori_task)
+    {
+        return $this->where(['id_kategori_task' => $id_kategori_task, 'deleted_at' => null])->findAll();
+    }
+
+
+    //Fungsi untuk mendapatkan task berdasarkan tanggal planing, fungsi ini berguna untuk 
+    //pengecekan input hari libur, jadi kalo ada task yang terkait maka tidak bisa input hari libur 
+    //dan disuruh reschedule task tersebut
+    public function getTaskByTglPlaning($tgl_planing)
+    {
+        return $this->where(['tgl_planing' => $tgl_planing, 'deleted_at' => null])->findAll();
+    }
+
+
     //mobile
     public function getTaskByUserId($id_user)
     {
