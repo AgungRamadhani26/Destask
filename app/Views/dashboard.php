@@ -246,11 +246,6 @@
                                     <?php if (session()->get('user_level') == "hod" || session()->get('user_level') == "admin") : ?>
                                         <a href="/pekerjaan/edit_pekerjaan/<?= $pp['id_pekerjaan'] ?>" class="badge btn bg-warning" title="Klik untuk mengedit data pekerjaan"><i class="bi bi-pencil"></i></a>
                                         <a href="/pekerjaan/edit_personil_pekerjaan/<?= $pp['id_pekerjaan'] ?>" class="badge btn bg-warning bg-opacity-75" title="Klik untuk mengedit data personil"><i class="bi bi-person-fill-gear"></i></a>
-                                        <form action="/pekerjaan/delete_pekerjaan/<?= $pp['id_pekerjaan'] ?>" method="POST" class="d-inline">
-                                            <?= csrf_field(); ?>
-                                            <input type="hidden" name="_method" value="DELETE">
-                                            <button type="submit" class="badge btn bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?, jika iya maka data personil terkait pekerjaan juga akan terhapus.');"><i class="ri-delete-bin-5-line"></i></button>
-                                        </form>
                                         <button type="button" class="badge btn bg-warning" title="Klik untuk mengubah status pekerjaan ini" data-bs-toggle="modal" data-bs-target="#modal_editpekerjaan_status_pekerjaan" onclick="editpekerjaan_status_pekerjaan(<?php echo $pp['id_pekerjaan'] ?>)"><i class="bi bi-pencil-square"></i></button>
                                     <?php endif ?>
                                     <br>
@@ -305,11 +300,6 @@
                                     <?php if (session()->get('user_level') == "hod" || session()->get('user_level') == "admin") : ?>
                                         <a href="/pekerjaan/edit_pekerjaan/<?= $po['id_pekerjaan'] ?>" class="badge btn bg-warning" title="Klik untuk mengedit data pekerjaan"><i class="bi bi-pencil"></i></a>
                                         <a href="/pekerjaan/edit_personil_pekerjaan/<?= $po['id_pekerjaan'] ?>" class="badge btn bg-warning bg-opacity-75" title="Klik untuk mengedit data personil"><i class="bi bi-person-fill-gear"></i></a>
-                                        <form action="/pekerjaan/delete_pekerjaan/<?= $po['id_pekerjaan'] ?>" method="POST" class="d-inline">
-                                            <?= csrf_field(); ?>
-                                            <input type="hidden" name="_method" value="DELETE">
-                                            <button type="submit" class="badge btn bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?, jika iya maka data personil terkait pekerjaan juga akan terhapus.');"><i class="ri-delete-bin-5-line"></i></button>
-                                        </form>
                                         <button type="button" class="badge btn bg-warning" title="Klik untuk mengubah status pekerjaan ini" data-bs-toggle="modal" data-bs-target="#modal_editpekerjaan_status_pekerjaan" onclick="editpekerjaan_status_pekerjaan(<?php echo $po['id_pekerjaan'] ?>)"><i class="bi bi-pencil-square"></i></button>
                                     <?php endif ?>
                                     <br>
@@ -416,11 +406,6 @@
                                     <?php if (session()->get('user_level') == "hod" || session()->get('user_level') == "admin") : ?>
                                         <a href="/pekerjaan/edit_pekerjaan/<?= $psp['id_pekerjaan'] ?>" class="badge btn bg-warning" title="Klik untuk mengedit data pekerjaan"><i class="bi bi-pencil"></i></a>
                                         <a href="/pekerjaan/edit_personil_pekerjaan/<?= $psp['id_pekerjaan'] ?>" class="badge btn bg-warning bg-opacity-75" title="Klik untuk mengedit data personil"><i class="bi bi-person-fill-gear"></i></a>
-                                        <form action="/pekerjaan/delete_pekerjaan/<?= $psp['id_pekerjaan'] ?>" method="POST" class="d-inline">
-                                            <?= csrf_field(); ?>
-                                            <input type="hidden" name="_method" value="DELETE">
-                                            <button type="submit" class="badge btn bg-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data pekerjaan ?, jika iya maka data personil terkait pekerjaan juga akan terhapus.');"><i class="ri-delete-bin-5-line"></i></button>
-                                        </form>
                                         <button type="button" class="badge btn bg-warning" title="Klik untuk mengubah status pekerjaan ini" data-bs-toggle="modal" data-bs-target="#modal_editpekerjaan_status_pekerjaan" onclick="editpekerjaan_status_pekerjaan(<?php echo $psp['id_pekerjaan'] ?>)"><i class="bi bi-pencil-square"></i></button>
                                     <?php endif ?>
                                     <br>

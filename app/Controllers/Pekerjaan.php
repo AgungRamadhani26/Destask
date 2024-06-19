@@ -721,10 +721,10 @@ class Pekerjaan extends BaseController
 
     public function delete_pekerjaan($id_pekerjaan)
     {
-        //Kalau status pekerjaan adalah BAST gabisa dihapus
+        //Kalau status pekerjaan adalah selain cancel  maka tidak bisa dihapus
         $pekerjaan = $this->pekerjaanModel->getPekerjaan($id_pekerjaan);
-        if ($pekerjaan['id_status_pekerjaan'] == 3) {
-            Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Anda jangan nakal, pekerjaan dengan status BAST tidak dapat dihapus.');
+        if ($pekerjaan['id_status_pekerjaan'] != 5) {
+            Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Anda jangan nakal, pekerjaan dengan status selain Cancel tidak dapat dihapus.');
             return redirect()->to('/dashboard');
         } else {
             // Dapatkan semua personil terkait dengan pekerjaan yang akan dihapus
