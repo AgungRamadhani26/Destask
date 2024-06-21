@@ -290,6 +290,36 @@ class Kinerja extends BaseController
                     'required' => 'Periode bulan harus dipilih',
                 ]
             ],
+            'jumlah_kehadiran_kinerja_karyawann' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Jumlah kehadiran harus diisi',
+                ]
+            ],
+            'jumlah_izin_kinerja_karyawann' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Jumlah izin harus diisi',
+                ]
+            ],
+            'jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawann' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Jumlah sakit tanpa keterangan dokter harus diisi',
+                ]
+            ],
+            'jumlah_mangkir_kinerja_karyawann' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Jumlah mangkir harus diisi',
+                ]
+            ],
+            'jumlah_terlambat_kinerja_karyawann' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Jumlah terlambat harus diisi',
+                ]
+            ],
         ];
         $validasi->setRules($aturan);
         //Jika inputan valid
@@ -298,6 +328,11 @@ class Kinerja extends BaseController
             $user = $this->userModel->getUser($id_user);
             $tahun = $this->request->getPost('tahun_kinerja_karyawan');
             $bulan = $this->request->getPost('bulan_kinerja_karyawan');
+            $jumlah_kehadiran = (int) str_replace(' Hari', '', $this->request->getPost('jumlah_kehadiran_kinerja_karyawann'));
+            $jumlah_izin = (int) str_replace(' Kali', '', $this->request->getPost('jumlah_izin_kinerja_karyawann'));
+            $jumlah_sakit_tanpa_keterangan_dokter = (int) str_replace(' Kali', '', $this->request->getPost('jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawann'));
+            $jumlah_mangkir = (int) str_replace(' Kali', '', $this->request->getPost('jumlah_mangkir_kinerja_karyawann'));
+            $jumlah_terlambat = (int) str_replace(' Kali', '', $this->request->getPost('jumlah_terlambat_kinerja_karyawann'));
             $target_poin_harian = $this->targetpoinharianModel->getTargetPoinHarianByTahunBulanIdusergroup($tahun, $bulan, $user['id_usergroup']);
             //Cek apakah target poin harian sudah dibuat atau belum
             if ($target_poin_harian) {
@@ -307,6 +342,21 @@ class Kinerja extends BaseController
                     Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Kinerja karyawan pada periode tersebut sudah ada, silahkan pilih periode lain.');
                     return redirect()->withInput()->back();
                 }
+                //Pengecekan apakah hasil tambah jumlah kehadiran + jumlah izin + jumlah sakit tanpa keterangan dokter + jumlah mangkir sama dengan jumlah hari kerja
+                $jumlah_hari_kerja = (int) $target_poin_harian[0]['jumlah_hari_kerja'];
+                $jumlah_hari_kerja_inputan = $jumlah_kehadiran + $jumlah_izin + $jumlah_sakit_tanpa_keterangan_dokter + $jumlah_mangkir;
+                if ($jumlah_hari_kerja_inputan != $jumlah_hari_kerja) {
+                    Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Total jumlah kehadiran, izin, sakit tanpa keterangan dokter, dan mangkir tidak sesuai dengan jumlah hari kerja yang disetting pada target poin harian di periode tahun ' . $tahun . ' bulan ' . $bulan . '. Jumlah hari kerja yang ada di sistem adalah ' . $jumlah_hari_kerja . ' hari, sedangkan total jumlah kehadiran, izin, sakit tanpa keterangan dokter, dan mangkir yang anda inputkan adalah ' . $jumlah_hari_kerja_inputan . ' hari. Periksa kembali inputan anda.');
+                    return redirect()->withInput()->back();
+                }
+                $data = [
+                    'jumlah_kehadiran' => $jumlah_kehadiran,
+                    'jumlah_izin' => $jumlah_izin,
+                    'jumlah_sakit_tanpa_keterangan_dokter' => $jumlah_sakit_tanpa_keterangan_dokter,
+                    'jumlah_mangkir' => $jumlah_mangkir,
+                    'jumlah_terlambat' => $jumlah_terlambat,
+                ];
+                session()->set('data_kehadiran', $data);
                 return redirect()->to('/kinerja/add_kinerja_karyawan/' . $id_user . '/' . $tahun . '/' . $bulan);
             } else {
                 Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Target poin harian untuk bulan dan tahun tersebut belum dibuat, sehingga anda tidak dapat menambahkan kinerja karyawan pada periode tersebut.');
@@ -315,6 +365,11 @@ class Kinerja extends BaseController
         } else {
             session()->setFlashdata('err_tahun_kinerja_karyawan', $validasi->getError('tahun_kinerja_karyawan'));
             session()->setFlashdata('err_bulan_kinerja_karyawan', $validasi->getError('bulan_kinerja_karyawan'));
+            session()->setFlashdata('err_jumlah_kehadiran_kinerja_karyawann', $validasi->getError('jumlah_kehadiran_kinerja_karyawann'));
+            session()->setFlashdata('err_jumlah_izin_kinerja_karyawann', $validasi->getError('jumlah_izin_kinerja_karyawann'));
+            session()->setFlashdata('err_jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawann', $validasi->getError('jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawann'));
+            session()->setFlashdata('err_jumlah_mangkir_kinerja_karyawann', $validasi->getError('jumlah_mangkir_kinerja_karyawann'));
+            session()->setFlashdata('err_jumlah_terlambat_kinerja_karyawann', $validasi->getError('jumlah_terlambat_kinerja_karyawann'));
             Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Terdapat inputan yang kurang sesuai, periksa form cek periode kinerja');
             return redirect()->withInput()->back();
         }
@@ -326,6 +381,7 @@ class Kinerja extends BaseController
     {
         $user = $this->userModel->getUser($id_user);
         $target_poin_harian = $this->targetpoinharianModel->getTargetPoinHarianByTahunBulanIdusergroup($tahun, $bulan, $user['id_usergroup']);
+        $data_kehadiran = session()->get('data_kehadiran');
         //Cek apakah target poin harian sudah dibuat atau belum
         if ($target_poin_harian) {
             //Pengecekan apakah kinerja periode tersebut sudah ada atau belum
@@ -342,9 +398,13 @@ class Kinerja extends BaseController
                     $target_poin_harian = $this->targetpoinharianModel->getTargetPoinHarianByTahunBulanIdusergroup($tahun, $bulan, $user['id_usergroup']);
                     //Penentuan nilai ORIENTASI TERHADAP PENCAPAIAN TARGET poin a by system
                     $jumlah_hari_kerja = (int) $target_poin_harian[0]['jumlah_hari_kerja'];
-                    $jumlah_daily_task = $this->taskModel->countDailyTask_Selesai_By_IdUser_Tahun_Bulan($id_user, $tahun, $bulan);
+                    $jumlah_daily_task = $this->taskModel->countDailyTask_edited_By_IdUser_Tahunedit_Bulanedit($id_user, $tahun, $bulan) + $data_kehadiran['jumlah_izin'] + $data_kehadiran['jumlah_sakit_tanpa_keterangan_dokter'];
                     $persentase_daily_task1 = ($jumlah_daily_task / $jumlah_hari_kerja) * 100;
                     $persentase_daily_task = round($persentase_daily_task1, 2);
+                    if ($persentase_daily_task > 100) {
+                        $persentase_daily_task = 100;
+                    }
+                    //penentuan nilai
                     if ($persentase_daily_task == 100) {
                         $nilai_orientasi_thd_target_poin_a = 10;
                     } elseif ($persentase_daily_task >= 50 && $persentase_daily_task < 100) {
@@ -352,7 +412,7 @@ class Kinerja extends BaseController
                     } else {
                         $nilai_orientasi_thd_target_poin_a = 1;
                     }
-                    //Penentuan nilai ORIENTASI TERHADAP PENCAPAIAN TARGET poin b by system
+                    //Penentuan nilai ORIENTASI TERHADAP PENCAPAIAN TARGET poin b dan nilai PROFESSIONALISME poin b by system
                     $task_selesai_tidak_terlambat = $this->taskModel->getTaskSelesaiTidakTerlambat($id_user, $tahun, $bulan);
                     $bobot_kategori_task = $this->bobotkategoritaskModel->getBobotKategoriTaskByUsergroupTahun($tahun, $user['id_usergroup']);
                     //melakukan looping untuk mendapatkan target poin yang dicapai
@@ -386,6 +446,11 @@ class Kinerja extends BaseController
                         'nilai_orientasi_thd_target_poin_b' => $nilai_orientasi_thd_target_poin_b,
                         'nilai_professionalisme_poin_b' => $nilai_professionalisme_poin_b,
                         'jumlah_hari_kerja' => $jumlah_hari_kerja,
+                        'jumlah_kehadiran' => $data_kehadiran['jumlah_kehadiran'],
+                        'jumlah_izin' => $data_kehadiran['jumlah_izin'],
+                        'jumlah_sakit_tanpa_keterangan_dokter' => $data_kehadiran['jumlah_sakit_tanpa_keterangan_dokter'],
+                        'jumlah_mangkir' => $data_kehadiran['jumlah_mangkir'],
+                        'jumlah_terlambat' => $data_kehadiran['jumlah_terlambat'],
                         'usergroup' => $this->usergroupModel->getUserGroup($user['id_usergroup']),
                     ];
                     return view('kinerja_karyawan/add_kinerja_karyawan', $data);
@@ -1149,6 +1214,9 @@ class Kinerja extends BaseController
                         if ($tahun_kinerja_karyawan > date('Y') || ($tahun_kinerja_karyawan == date('Y') && $bulan_kinerja_karyawan >= date('n'))) {
                             Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Tidak dapat menambahkan kinerja karyawan pada periode yang belum selesai.');
                             return redirect()->to('/kinerja/daftar_kinerja_karyawan/' . $id_user);
+                        } elseif ($jumlah_kehadiran_kinerja_karyawan + $jumlah_izin_kinerja_karyawan + $jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawan + $jumlah_mangkir_kinerja_karyawan != $jumlah_hari_kerja_1periode_kinerja_karyawan) {
+                            Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Total jumlah kehadiran, izin, sakit tanpa keterangan dokter, dan mangkir tidak sesuai dengan jumlah hari kerja pada periode tahun ' . $tahun_kinerja_karyawan . ' bulan ' . $bulan_kinerja_karyawan . '. Jumlah hari kerja yang ada di sistem adalah ' . $jumlah_hari_kerja_1periode_kinerja_karyawan . ' hari, sedangkan total jumlah kehadiran, izin, sakit tanpa keterangan dokter, dan mangkir yang anda inputkan adalah ' . $jumlah_kehadiran_kinerja_karyawan + $jumlah_izin_kinerja_karyawan + $jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawan + $jumlah_mangkir_kinerja_karyawan . ' hari. Periksa kembali inputan anda.');
+                            return redirect()->withInput()->back();
                         } else {
                             //---------------------------------//
                             //---MENGHITUNG KINERJA DISIPLIN---//

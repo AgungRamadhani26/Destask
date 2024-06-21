@@ -150,6 +150,43 @@ class HariLibur extends BaseController
                 session()->setFlashdata('info', 'Data hari libur tidak ada yang anda ubah');
                 return redirect()->withInput()->with('modal', 'modaledit_harilibur')->back();
             } else {
+                //Pengecekan ada gak pekerjaan dengan dl di tanggal tersebut atau selesai di tanggal tersebut
+                $pekerjaann = $this->pekerjaanModel->getPekerjaan_By_Target_Waktu_Selesai($tanggal);
+                //Masukkan nama pekerjaan ke array
+                $nama_pekerjaann = [];
+                foreach ($pekerjaann as $p) {
+                    array_push($nama_pekerjaann, $p['nama_pekerjaan']);
+                }
+                if ($pekerjaann) {
+                    //Masukkan nama pekerjaan ke notif
+                    $nama_pekerjaan = implode(', ', $nama_pekerjaann);
+                    Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Tidak dapat mengedit hari libur pada tanggal tersebut, hal ini karena terdapat pekerjaan dengan target waktu selesai pada tanggal tersebut, yaitu ' . $nama_pekerjaan . '. Silahkan rescedule target waktu selesai pekerjaan tersebut terlebih dahulu');
+                    return redirect()->to('hari_libur/daftar_hari_libur');
+                }
+                //Pengecekan ada gak task dengan dl di tanggal tersebut
+                $taskk = $this->taskModel->getTaskByTglPlaning($tanggal);
+                //Masukkan nama task ke array dan pekerjaan ke array
+                $nama_taskk = [];
+                $id_pekerjaann = [];
+                foreach ($taskk as $t) {
+                    array_push($nama_taskk, $t['deskripsi_task']);
+                    array_push($id_pekerjaann, $t['id_pekerjaan']);
+                }
+                //mendapatkan nama pekerjaan
+                $nama_pekerjaan = [];
+                foreach ($id_pekerjaann as $id) {
+                    $pekerjaan = $this->pekerjaanModel->getPekerjaan($id);
+                    array_push($nama_pekerjaan, $pekerjaan['nama_pekerjaan']);
+                }
+                if ($taskk) {
+                    //Masukkan nama task ke notif berdampingan dengan nama pekerjaan
+                    $task_pekerjaan = array_map(function ($task, $pekerjaan) {
+                        return $task . ' pada pekerjaan ' . $pekerjaan;
+                    }, $nama_taskk, $nama_pekerjaan);
+                    $task_pekerjaan = implode(', ', $task_pekerjaan);
+                    Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Tidak dapat mengedit hari libur pada tanggal tersebut, hal ini karena terdapat task dengan target waktu selesai pada tanggal tersebut, yaitu ' . $task_pekerjaan . '. Silahkan hubungi PM pekerjaan tersebut untuk mereschedule target waktu selesai task tersebut terlebih dahulu');
+                    return redirect()->to('hari_libur/daftar_hari_libur');
+                }
                 // Proses memasukkan data ke database
                 $data_hari_libur = [
                     'id_hari_libur' => $id_hari_libur,

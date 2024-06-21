@@ -66,12 +66,18 @@ class TaskModel extends Model
         return count($this->getTaskByIdUserTahunBulan($id_user, $tahun, $bulan));
     }
 
-    //Fungsi untuk menghitung jumlah task berdasarkan id_user, tahun planing, dan bulan planing yang dibuat untuk dirinya sendiri dan selesai
-    public function countDailyTask_Selesai_By_IdUser_Tahun_Bulan($id_user, $tahun, $bulan)
+
+
+    //Fungsi untuk menghitung jumlah task berdasarkan id_user, tahun updated_at, dan bulan updated_at. dimana task yang dihitung
+    //adalah task yang persentase_selesainya lebih besar 0, dan distinct berdasarkan tanggal updated_at, updated_at bentuknya adalah datetime
+    //tapi yang didistinct adalah tanggalnya saja (dalam bentuk date)
+    public function countDailyTask_edited_By_IdUser_Tahunedit_Bulanedit($id_user, $tahun, $bulan)
     {
-        return count($this->where(['id_user' => $id_user, 'creator' => $id_user, 'YEAR(tgl_planing)' => $tahun, 'MONTH(tgl_planing)' => $bulan, 'id_status_task' => 3])
-            ->orderBy('tgl_planing', 'ASC')
-            ->findAll());
+        return $this->distinct()
+            ->select('DATE(updated_at) as date_updated_at')
+            ->where(['id_user' => $id_user, 'YEAR(updated_at)' => $tahun, 'MONTH(updated_at)' => $bulan])
+            ->where('persentase_selesai >', 0)
+            ->countAllResults();
     }
 
     //Fungsi untuk mendapatkan task selesai yang tidak terlambat

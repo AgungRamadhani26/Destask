@@ -488,7 +488,15 @@
                               <td>A.</td>
                               <td>Mampu menetapkan target kerjanya secara pribadi</td>
                               <td>
-                                 <input type="text" class="form-control <?= (session()->getFlashdata('err_orientasi_thd_target_a_kinerja_karyawan_e')) ? 'is-invalid' : ''; ?>" name="orientasi_thd_target_a_kinerja_karyawan_e" id="orientasi_thd_target_a_kinerja_karyawan_e" value="<?= $kinerja['orientasi_thd_target_a'] ?>" readonly style="background-color: #e9ecef;">
+                                 <select class="form-control <?= (session()->getFlashdata('err_orientasi_thd_target_a_kinerja_karyawan_e')) ? 'is-invalid' : ''; ?>" name="orientasi_thd_target_a_kinerja_karyawan_e" id="orientasi_thd_target_a_kinerja_karyawan_e">
+                                    <option value="">-- Pilih Nilai --</option>
+                                    <?php
+                                    $selectedValue_orientasi_thd_target_a = old('orientasi_thd_target_a_kinerja_karyawan_e') ?? $kinerja['orientasi_thd_target_a'] ?? '';
+                                    ?>
+                                    <option value="1" <?= ($selectedValue_orientasi_thd_target_a == '1') ? 'selected' : '' ?>>1 - Develop / Perlu Dikembangkan</option>
+                                    <option value="5" <?= ($selectedValue_orientasi_thd_target_a == '5') ? 'selected' : '' ?>>5 - Meets / Sesuai</option>
+                                    <option value="10" <?= ($selectedValue_orientasi_thd_target_a == '10') ? 'selected' : '' ?>>10 - Exceeds / Melebihi</option>
+                                 </select>
                                  <div class="invalid-feedback">
                                     <?= session()->getFlashdata('err_orientasi_thd_target_a_kinerja_karyawan_e') ?>
                                  </div>
@@ -498,7 +506,13 @@
                               <td>B.</td>
                               <td>Mampu berusaha memenuhi target kerja pribadi yang telah ditetapkan</td>
                               <td>
-                                 <input type="text" class="form-control <?= (session()->getFlashdata('err_orientasi_thd_target_b_kinerja_karyawan_e')) ? 'is-invalid' : ''; ?>" name="orientasi_thd_target_b_kinerja_karyawan_e" id="orientasi_thd_target_b_kinerja_karyawan_e" value="<?= $kinerja['orientasi_thd_target_b'] ?>" readonly style="background-color: #e9ecef;">
+                                 <input type="hidden" name="orientasi_thd_target_b_kinerja_karyawan_e" id="orientasi_thd_target_b_kinerja_karyawan_e" value="<?= $kinerja['orientasi_thd_target_b'] ?>">
+                                 <select class="form-control <?= (session()->getFlashdata('err_orientasi_thd_target_b_kinerja_karyawan_e')) ? 'is-invalid' : ''; ?>" name="orientasi_thd_target_b_kinerja_karyawan_tampil_e" id="orientasi_thd_target_b_kinerja_karyawan_tampil_e" disabled>
+                                    <option value="">-- Pilih Nilai --</option>
+                                    <option value="1" <?= ($kinerja['orientasi_thd_target_b'] == '1') ? 'selected' : '' ?>>1 - Develop / Perlu Dikembangkan</option>
+                                    <option value="5" <?= ($kinerja['orientasi_thd_target_b'] == '5') ? 'selected' : '' ?>>5 - Meets / Sesuai</option>
+                                    <option value="10" <?= ($kinerja['orientasi_thd_target_b'] == '10') ? 'selected' : '' ?>>10 - Exceeds / Melebihi</option>
+                                 </select>
                                  <div class="invalid-feedback">
                                     <?= session()->getFlashdata('err_orientasi_thd_target_b_kinerja_karyawan_e') ?>
                                  </div>
@@ -661,7 +675,13 @@
                               <td>B.</td>
                               <td>Mampu mempertanggung jawabkan pekerjaan yang menjadi tugasnya</td>
                               <td>
-                                 <input type="text" class="form-control <?= (session()->getFlashdata('err_professionalisme_b_kinerja_karyawan_e')) ? 'is-invalid' : ''; ?>" name="professionalisme_b_kinerja_karyawan_e" id="professionalisme_b_kinerja_karyawan_e" value="<?= $kinerja['professionalisme_b'] ?>" readonly style="background-color: #e9ecef;">
+                                 <input type="hidden" name="professionalisme_b_kinerja_karyawan_e" id="professionalisme_b_kinerja_karyawan_e" value="<?= $kinerja['professionalisme_b'] ?>">
+                                 <select class="form-control <?= (session()->getFlashdata('err_professionalisme_b_kinerja_karyawan_e')) ? 'is-invalid' : ''; ?>" name="professionalisme_b_kinerja_karyawan_tampil_e" id="professionalisme_b_kinerja_karyawan_tampil_e" disabled>
+                                    <option value="">-- Pilih Nilai --</option>
+                                    <option value="1" <?= ($kinerja['professionalisme_b'] == '1') ? 'selected' : '' ?>>1 - Develop / Perlu Dikembangkan</option>
+                                    <option value="5" <?= ($kinerja['professionalisme_b'] == '5') ? 'selected' : '' ?>>5 - Meets / Sesuai</option>
+                                    <option value="10" <?= ($kinerja['professionalisme_b'] == '10') ? 'selected' : '' ?>>10 - Exceeds / Melebihi</option>
+                                 </select>
                                  <div class="invalid-feedback">
                                     <?= session()->getFlashdata('err_professionalisme_b_kinerja_karyawan_e') ?>
                                  </div>

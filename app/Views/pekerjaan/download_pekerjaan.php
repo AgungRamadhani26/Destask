@@ -11,7 +11,7 @@
          <div class="card">
             <div class="card-body">
                <h5 class="card-title">Download Pekerjaan</h5>
-               <p><span style="font-weight: bold; color:red;">Noted : </span>Pilihlah tahun dimana pekerjaan ditargetkan selesai, selanjutnya pilih jenis file yang akan di download.</p>
+               <p><span style="font-weight: bold; color:red;">Noted : </span>Pilihlah tahun dimana pekerjaan ditargetkan selesai, selanjutnya pilih jenis file yang akan didownload.</p>
                <div class="row">
                   <div class="col-4">
                      <div class="kanban-column-header" style="background-color: <?= $status_pekerjaan_presales['color'] ?>;">

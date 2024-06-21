@@ -4,7 +4,7 @@
       <div class="modal-content">
          <form action="/usergroup/update_usergroup" method="POST" id="formUsergroup_e">
             <div class="modal-header bg-warning">
-               <h5 class="modal-title" style="font-weight: bold; color: white;">Edit User Group</h5>
+               <h5 class="modal-title" style="font-weight: bold; color: white;">Edit Usergroup</h5>
                <button type="button" class="btn-close tombol-tutup-usergroup" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
