@@ -43,7 +43,7 @@
    });
 
    $(document).ready(function() {
-      $('#jumlah_hari_kerja_1_periode_kinerja_karyawan, #jumlah_kehadiran_kinerja_karyawan').inputmask("numeric", {
+      $('#jumlah_hari_kerja_1_periode_kinerja_karyawan, #jumlah_kehadiran_kinerja_karyawan, #jumlah_kehadiran_kinerja_karyawann').inputmask("numeric", {
          digits: 0,
          suffix: " Hari", // Menambahkan kata 'hari' di akhir
          rightAlign: false, // Memastikan input diarahkan ke kiri
@@ -67,7 +67,7 @@
    });
 
    $(document).ready(function() {
-      $('#jumlah_izin_kinerja_karyawan, #jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawan, #jumlah_mangkir_kinerja_karyawan, #jumlah_terlambat_kinerja_karyawan').inputmask("numeric", {
+      $('#jumlah_izin_kinerja_karyawan, #jumlah_izin_kinerja_karyawann, #jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawan, #jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawann, #jumlah_mangkir_kinerja_karyawan, #jumlah_mangkir_kinerja_karyawann, #jumlah_terlambat_kinerja_karyawan, #jumlah_terlambat_kinerja_karyawann').inputmask("numeric", {
          digits: 0,
          suffix: " Kali", // Menambahkan kata 'hari' di akhir
          rightAlign: false, // Memastikan input diarahkan ke kiri

@@ -4,14 +4,17 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\KategoriTaskModel;
+use App\Models\TaskModel;
 
 class KategoriTask extends BaseController
 {
     //Konstruktor agar semua method dapat menggunakan model
     protected $kategoriTaskModel;
+    protected $taskModel;
     public function __construct()
     {
         $this->kategoriTaskModel = new KategoriTaskModel();
+        $this->taskModel = new TaskModel();
         helper(['swal_helper']);
     }
 
@@ -147,11 +150,14 @@ class KategoriTask extends BaseController
     {
         // $db = \Config\Database::connect();
         // $db->query('SET FOREIGN_KEY_CHECKS=0'); // Menonaktifkan pengecekan kunci asing
-
+        //Pengecekan apakah kategori task sudah digunakan di tabel task
+        $task = $this->taskModel->getTaskByIdKategoriTask($id_kategori_task);
+        if ($task) {
+            Set_notifikasi_swal_berhasil('error', 'Gagal :(', 'Data kategori task tidak dapat dihapus karena terdapat data task yang menggunakan kategori task ini');
+            return redirect()->to('/kategori_task/daftar_kategori_task');
+        }
         $this->kategoriTaskModel->delete($id_kategori_task);
-
         // $db->query('SET FOREIGN_KEY_CHECKS=1'); // Mengaktifkan kembali pengecekan kunci asing
-
         Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Data kategori task berhasil dihapus');
         return redirect()->to('/kategori_task/daftar_kategori_task');
     }

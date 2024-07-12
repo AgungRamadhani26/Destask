@@ -237,4 +237,13 @@ class PekerjaanModel extends Model
             ->orderBy('pekerjaan.id_pekerjaan', 'DESC')
             ->findAll();
     }
+
+    //Fungsi untuk mendapatkan pekerjaan berdasarkan tanggal target waktu selesai fungsi ini berguna untuk 
+    //pengecekan input hari libur, jadi kalo ada pekerjaan yang terkait maka tidak bisa input hari libur 
+    //dan disuruh reschedule pekerjaan tersebut
+    public function getPekerjaan_By_Target_Waktu_Selesai($target_waktu_selesai)
+    {
+        return $this->where('target_waktu_selesai', $target_waktu_selesai)
+            ->findAll();
+    }
 }

@@ -13,31 +13,31 @@
                <form action="/kinerja/pengecekan_periode_kinerja_karyawan" method="post">
                   <?= csrf_field(); ?>
                   <input type="hidden" id="id_user_kinerja_karyawan" name="id_user_kinerja_karyawan" value="<?= $user['id_user']; ?>">
-                  <h5 class="card-title">PERIODE DAN DATA <?= strtoupper($user['user_level']); ?></h5>
+                  <h5 class="card-title">PERIODE DAN DATA KEHADIRAN <?= strtoupper($user['user_level']); ?></h5>
                   <hr style="border-top: 3px solid black;">
                   <div class="row">
-                     <div class=" col-md-4 mb-3">
+                     <div class=" col-md-3 mb-3">
                         <label for="nama_user_kinerja_karyawan" class="form-label" style="font-weight: 600;">Nama</label>
                         <input type="text" class="form-control <?= (session()->getFlashdata('err_nama_user_kinerja_karyawan')) ? 'is-invalid' : ''; ?>" name="nama_user_kinerja_karyawan" id="nama_user_kinerja_karyawan" value="<?= $user['nama'] ?>" disabled>
                         <div class="invalid-feedback">
                            <?= session()->getFlashdata('err_nama_user_kinerja_karyawan') ?>
                         </div>
                      </div>
-                     <div class=" col-md-4 mb-3">
+                     <div class=" col-md-3 mb-3">
                         <label for="email_user_kinerja_karyawan" class="form-label" style="font-weight: 600;">Email</label>
                         <input type="text" class="form-control <?= (session()->getFlashdata('err_email_user_kinerja_karyawan')) ? 'is-invalid' : ''; ?>" name="email_user_kinerja_karyawan" id="email_user_kinerja_karyawan" value="<?= $user['email'] ?>" disabled>
                         <div class="invalid-feedback">
                            <?= session()->getFlashdata('err_email_user_kinerja_karyawan') ?>
                         </div>
                      </div>
-                     <div class=" col-md-4 mb-3">
+                     <div class=" col-md-3 mb-3">
                         <label for="usergroup_user_kinerja_karyawan" class="form-label" style="font-weight: 600;">Usergroup</label>
                         <input type="text" class="form-control <?= (session()->getFlashdata('err_usergroup_user_kinerja_karyawan')) ? 'is-invalid' : ''; ?>" name="usergroup_user_kinerja_karyawan" id="usergroup_user_kinerja_karyawan" value="<?= $usergroup['nama_usergroup'] ?>" disabled>
                         <div class="invalid-feedback">
                            <?= session()->getFlashdata('err_usergroup_user_kinerja_karyawan') ?>
                         </div>
                      </div>
-                     <div class="col-md-6 mb-3">
+                     <div class="col-md-3 mb-3">
                         <?php
                         $current_year = date('Y');
                         $previous_year = $current_year - 1;
@@ -55,7 +55,7 @@
                            <?= session()->getFlashdata('err_tahun_kinerja_karyawan') ?>
                         </div>
                      </div>
-                     <div class=" col-md-6 mb-3">
+                     <div class=" col-md-4 mb-3">
                         <?php
                         $current_month = date('n');
                         $previous_month = $current_month == 1 ? 12 : $current_month - 1;
@@ -78,6 +78,41 @@
                         </select>
                         <div class="invalid-feedback">
                            <?= session()->getFlashdata('err_bulan_kinerja_karyawan') ?>
+                        </div>
+                     </div>
+                     <div class="col-md-4 mb-3">
+                        <label for="jumlah_kehadiran_kinerja_karyawann" class="form-label" style="font-weight: 600;">Jumlah Kehadiran</label>
+                        <input type="text" class="form-control <?= (session()->getFlashdata('err_jumlah_kehadiran_kinerja_karyawann')) ? 'is-invalid' : ''; ?>" name="jumlah_kehadiran_kinerja_karyawann" id="jumlah_kehadiran_kinerja_karyawann" value="<?= old('jumlah_kehadiran_kinerja_karyawann') ?>">
+                        <div class="invalid-feedback">
+                           <?= session()->getFlashdata('err_jumlah_kehadiran_kinerja_karyawann') ?>
+                        </div>
+                     </div>
+                     <div class="col-md-4 mb-3">
+                        <label for="jumlah_izin_kinerja_karyawann" class="form-label" style="font-weight: 600;">Jumlah Izin</label>
+                        <input type="text" class="form-control <?= (session()->getFlashdata('err_jumlah_izin_kinerja_karyawann')) ? 'is-invalid' : ''; ?>" name="jumlah_izin_kinerja_karyawann" id="jumlah_izin_kinerja_karyawann" value="<?= old('jumlah_izin_kinerja_karyawann') ?>">
+                        <div class="invalid-feedback">
+                           <?= session()->getFlashdata('err_jumlah_izin_kinerja_karyawann') ?>
+                        </div>
+                     </div>
+                     <div class="col-md-4 mb-3">
+                        <label for="jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawann" class="form-label" style="font-weight: 600;">Jumlah Sakit Tanpa Keterangan Dokter</label>
+                        <input type="text" class="form-control <?= (session()->getFlashdata('err_jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawann')) ? 'is-invalid' : ''; ?>" name="jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawann" id="jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawann" value="<?= old('jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawann') ?>">
+                        <div class="invalid-feedback">
+                           <?= session()->getFlashdata('err_jumlah_sakit_tanpa_keterangan_dokter_kinerja_karyawann') ?>
+                        </div>
+                     </div>
+                     <div class="col-md-4 mb-3">
+                        <label for="jumlah_mangkir_kinerja_karyawann" class="form-label" style="font-weight: 600;">Jumlah Mangkir</label>
+                        <input type="text" class="form-control <?= (session()->getFlashdata('err_jumlah_mangkir_kinerja_karyawann')) ? 'is-invalid' : ''; ?>" name="jumlah_mangkir_kinerja_karyawann" id="jumlah_mangkir_kinerja_karyawann" value="<?= old('jumlah_mangkir_kinerja_karyawann') ?>">
+                        <div class="invalid-feedback">
+                           <?= session()->getFlashdata('err_jumlah_mangkir_kinerja_karyawann') ?>
+                        </div>
+                     </div>
+                     <div class="col-md-4 mb-3">
+                        <label for="jumlah_terlambat_kinerja_karyawann" class="form-label" style="font-weight: 600;">Jumlah Terlambat</label>
+                        <input type="text" class="form-control <?= (session()->getFlashdata('err_jumlah_terlambat_kinerja_karyawann')) ? 'is-invalid' : ''; ?>" name="jumlah_terlambat_kinerja_karyawann" id="jumlah_terlambat_kinerja_karyawann" value="<?= old('jumlah_terlambat_kinerja_karyawann') ?>">
+                        <div class="invalid-feedback">
+                           <?= session()->getFlashdata('err_jumlah_terlambat_kinerja_karyawann') ?>
                         </div>
                      </div>
                      <hr class="mt-4 mb-4" style="border-top: 3px solid black;">

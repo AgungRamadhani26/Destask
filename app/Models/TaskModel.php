@@ -13,7 +13,7 @@ class TaskModel extends Model
     protected $allowedFields    = [
         'id_pekerjaan', 'id_user', 'creator', 'id_status_task', 'id_kategori_task', 'tgl_planing',
         'tgl_selesai', 'tgl_verifikasi_diterima', 'persentase_selesai',
-        'deskripsi_task', 'alasan_verifikasi', 'bukti_selesai', 'tautan_task'
+        'deskripsi_task', 'alasan_verifikasi', 'bukti_selesai', 'tautan_task', 'verifikator'
     ];
 
     //Fungsi untuk mendapatkan data task berdasarkan id_task
@@ -61,12 +61,26 @@ class TaskModel extends Model
             ->orderBy('tgl_planing', 'ASC')
             ->findAll();
     }
-    //Fungsi untuk menghitung jumlah task berdasarkan id_user, tahun planing, dan bulan planing
     public function countTaskByIdUserTahunBulan($id_user, $tahun, $bulan)
     {
         return count($this->getTaskByIdUserTahunBulan($id_user, $tahun, $bulan));
     }
-    //Fungdi untuk mendapatkan task selesai yang tidak terlambat
+
+
+
+    //Fungsi untuk menghitung jumlah task berdasarkan id_user, tahun updated_at, dan bulan updated_at. dimana task yang dihitung
+    //adalah task yang persentase_selesainya lebih besar 0, dan distinct berdasarkan tanggal updated_at, updated_at bentuknya adalah datetime
+    //tapi yang didistinct adalah tanggalnya saja (dalam bentuk date)
+    public function countDailyTask_edited_By_IdUser_Tahunedit_Bulanedit($id_user, $tahun, $bulan)
+    {
+        return $this->distinct()
+            ->select('DATE(updated_at) as date_updated_at')
+            ->where(['id_user' => $id_user, 'YEAR(updated_at)' => $tahun, 'MONTH(updated_at)' => $bulan])
+            ->where('persentase_selesai >', 0)
+            ->countAllResults();
+    }
+
+    //Fungsi untuk mendapatkan task selesai yang tidak terlambat
     public function getTaskSelesaiTidakTerlambat($id_user, $tahun, $bulan)
     {
         return $this->where(['id_user' => $id_user, 'YEAR(tgl_selesai)' => $tahun, 'MONTH(tgl_selesai)' => $bulan, 'id_status_task' => 3])
@@ -507,6 +521,25 @@ class TaskModel extends Model
     {
         return count($this->where(['YEAR(tgl_selesai)' => $tahun, 'MONTH(tgl_selesai)' => $bulan, 'id_user' => $id_user, 'deleted_at' => null, 'id_status_task' => 3])->findAll());
     }
+
+
+
+    //Fungsi untuk mendapatkan task berdasarkan id_kategori_task (untuk pengecekan kategori task, kalo ada task yang terkait dengan
+    //kategori task tertentu maka kategori task tersebut tidak bisa dihapus)
+    public function getTaskByIdKategoriTask($id_kategori_task)
+    {
+        return $this->where(['id_kategori_task' => $id_kategori_task, 'deleted_at' => null])->findAll();
+    }
+
+
+    //Fungsi untuk mendapatkan task berdasarkan tanggal planing, fungsi ini berguna untuk 
+    //pengecekan input hari libur, jadi kalo ada task yang terkait maka tidak bisa input hari libur 
+    //dan disuruh reschedule task tersebut
+    public function getTaskByTglPlaning($tgl_planing)
+    {
+        return $this->where(['tgl_planing' => $tgl_planing, 'deleted_at' => null])->findAll();
+    }
+
 
     //mobile
     public function getTaskByUserId($id_user)

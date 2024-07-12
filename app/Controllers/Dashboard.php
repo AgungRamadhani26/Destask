@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\BobotKategoriTaskModel;
 use App\Models\HariLiburModel;
 use App\Models\KategoriPekerjaanModel;
 use App\Models\PekerjaanModel;
@@ -25,6 +26,7 @@ class Dashboard extends BaseController
     protected $hariliburModel;
     protected $targetpoinharianModel;
     protected $taskModel;
+    protected $bobotkategoritaskModel;
     public function __construct()
     {
         $this->pekerjaanModel = new PekerjaanModel();
@@ -36,6 +38,7 @@ class Dashboard extends BaseController
         $this->hariliburModel = new HariLiburModel();
         $this->targetpoinharianModel = new TargetPoinHarianModel();
         $this->taskModel = new TaskModel();
+        $this->bobotkategoritaskModel = new BobotKategoriTaskModel();
         helper(['swal_helper', 'option_helper']);
     }
 
@@ -148,6 +151,21 @@ class Dashboard extends BaseController
             $target_poin_harian_helpdesk1 = 'Belum diset';
         }
 
+        if (session()->get('user_level') == 'staff' || session()->get('user_level') == 'supervisi') {
+            $task_selesai_tidak_terlambat_bulan_ini = $this->taskModel->getTaskSelesaiTidakTerlambat(session()->get('id_user'), date("Y"), date("n"));
+            $bobot_kategori_task = $this->bobotkategoritaskModel->getBobotKategoriTaskByUsergroupTahun(date("Y"), session()->get('id_usergroup'));
+            $total_bobot_poin_bulan_ini = 0;
+            foreach ($task_selesai_tidak_terlambat_bulan_ini as $ts) {
+                foreach ($bobot_kategori_task as $b) {
+                    if ($ts['id_kategori_task'] == $b['id_kategori_task']) {
+                        $total_bobot_poin_bulan_ini += $b['bobot_poin'];
+                    }
+                }
+            }
+        } else {
+            $total_bobot_poin_bulan_ini = "";
+        }
+
         //Dashboard task selesai bulan ini
         $Tahun_sekarang = date("Y");
         $Bulan_sekarang = date("n");
@@ -184,6 +202,7 @@ class Dashboard extends BaseController
             'status_pekerjaan_support' => $this->statusPekerjaanModel->getStatusPekerjaan(4),
             'status_pekerjaan_cancle' => $this->statusPekerjaanModel->getStatusPekerjaan(5),
             'personil' => $this->personilModel->getPersonil(),
+            'total_bobot_poin_bulan_ini' => $total_bobot_poin_bulan_ini,
             'user' => $this->userModel->getUser(),
             'url1' => '/dashboard',
             'url' => '/dashboard'
