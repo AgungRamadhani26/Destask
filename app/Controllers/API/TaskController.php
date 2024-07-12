@@ -346,7 +346,7 @@ class TaskController extends ResourceController{
     public function showTaskByPekerjaan($idpekerjaan)
     {
         $model = new $this->modelName();
-        $data = $model->where(['id_pekerjaan' => $idpekerjaan, 'deleted_at' => null])->orderBy('id_task', 'ASC')->findAll();
+        $data = $model->where(['id_pekerjaan' => $idpekerjaan, 'deleted_at' => null])->orderBy('tgl_planing', 'ASC')->findAll();
         $result = [];
 
         $modelUser = new $this->modelUser();
@@ -381,7 +381,7 @@ class TaskController extends ResourceController{
     //mengambil data task berdasarkan user
     public function showTaskByUser($iduser) {
         $model = new $this->modelName();
-        $data = $model->where(['id_user' => $iduser, 'deleted_at' => null])->findAll();
+        $data = $model->where(['id_user' => $iduser, 'deleted_at' => null])->orderBy('tgl_planing', 'ASC')->findAll();
         $result = [];
 
         $modelUser = new $this->modelUser();
@@ -466,6 +466,41 @@ class TaskController extends ResourceController{
             }
         }
     
+        // Mengirimkan data pekerjaan yang telah di-update sebagai response JSON
+        return $this->response->setJSON($result);
+    }
+
+    public function showTaskVerifikator($iduser) {
+        $model = new $this->modelName();
+        $data = $model->where(['verifikator' => $iduser, 'deleted_at' => null])->orderBy('tgl_planing', 'ASC')->findAll();
+        $result = [];
+
+        $modelUser = new $this->modelUser();
+        $pekerjaanModel = new $this->modelPekerjaan();
+        $statusModel = new $this->modelStatus();
+        $kategoriModel = new $this->modelKategori();
+
+        foreach ($data as $taskItem) {
+            // Fetch user data based on id_user
+            $userData = $modelUser->find($taskItem['id_user']);
+            $creatorData = $modelUser->find($taskItem['creator']);
+            $pekerjaanData = $pekerjaanModel->find($taskItem['id_pekerjaan']);
+            $statusData = $statusModel->find($taskItem['id_status_task']);
+            $kategoriData = $kategoriModel->find($taskItem['id_kategori_task']);
+
+            // Add user's name to the task item
+            $taskItem['data_tambahan'] = [
+                'nama_user' => $userData['nama'],
+                'nama_creator' => $creatorData['nama'],
+                'nama_pekerjaan' => $pekerjaanData['nama_pekerjaan'],
+                'target_waktu_selesai' => $pekerjaanData['target_waktu_selesai'],
+                'nama_status_task' => $statusData['nama_status_task'],
+                'nama_kategori_task' => $kategoriData['nama_kategori_task']
+            ];
+
+            $result[] = $taskItem;
+        }
+
         // Mengirimkan data pekerjaan yang telah di-update sebagai response JSON
         return $this->response->setJSON($result);
     }

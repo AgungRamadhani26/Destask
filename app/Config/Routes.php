@@ -322,6 +322,7 @@ $routes->group('api', ['filter' => 'jwtfilter', 'namespace' => 'App\Controllers\
    $routes->get('pekerjaanbyuser/(:num)', 'PekerjaanController::showPekerjaan/$1');
    $routes->put('pekerjaan/(:num)', 'PekerjaanController::update/$1'); //edit pekerjaan
    $routes->get('pekerjaan/verifikasi/(:num)', 'PekerjaanController::showPekerjaanVerifikasi/$1'); //data task yang perlu diverifikasi
+   $routes->get('pekerjaan/verifikator/(:num)', 'PekerjaanController::showPekerjaanVerifikator/$1'); //data task yang perlu diverifikasi
 
    //task
    $routes->get('task', 'TaskController::index');
@@ -329,7 +330,8 @@ $routes->group('api', ['filter' => 'jwtfilter', 'namespace' => 'App\Controllers\
    $routes->get('taskbypekerjaan/(:num)', 'TaskController::showTaskByPekerjaan/$1'); //data task berdasarkan pekerjaan
    $routes->get('taskbyuser/(:num)', 'TaskController::showTaskByUser/$1'); //data task berdasarkan user
    $routes->get('task/verifikasitask/(:num)', 'TaskController::showTaskVerifikasi/$1'); //data task yang perlu diverifikasi
-   $routes->put('task/verifikasi/(:num)', 'TaskController::updateverifikasi/$1'); //data task yang perlu diverifikasi
+   $routes->put('task/verifikasitask/(:num)', 'TaskController::updateverifikasi/$1'); //data task yang perlu diverifikasi
+   $routes->get('task/verifikator/(:num)', 'TaskController::showTaskVerifikator/$1'); //data task yang perlu diverifikasi
    $routes->post('task', 'TaskController::create');
    $routes->put('task/(:num)', 'TaskController::update/$1'); //edit task
    $routes->post('task/submit', 'TaskController::submit'); //submit bukti selesai task
@@ -355,7 +357,7 @@ $routes->group('api', ['filter' => 'jwtfilter', 'namespace' => 'App\Controllers\
    //kinerja
    $routes->get('kinerja', 'KinerjaController::index');
    $routes->get('kinerja/(:num)', 'KinerjaController::show/$1');
-   $routes->get('kinerjauser/(:num)', 'KinerjaController::getKinerjaUser/$1');
+   $routes->get('kinerjauser/(:num)', 'KinerjaController::kinerjauser/$1');
 
    //notifikasi
    $routes->get('notifikasi', 'NotifikasiController::index');

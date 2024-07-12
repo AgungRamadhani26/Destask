@@ -1,6 +1,7 @@
-kinerja
 <?php
+
 namespace App\Controllers\API;
+
 use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\API\ResponseTrait;
 
@@ -32,9 +33,9 @@ class KinerjaController extends ResourceController {
         }
     }
 
-    public function getKinerjaUser($iduser = null){
+    public function kinerjauser($iduser = null){
         $model = new $this->modelName();
-        $data = $model->where(['id_user' => $iduser, 'deleted_at' => null])->orderBy('id_kinerja', 'ASC')->findAll();
+        $data = $model->where(['id_user' => $iduser, 'deleted_at' => null])->orderBy('id_kinerja', 'DESC')->findAll();
         return $this->respond($data, 200);
     }
 }

@@ -103,9 +103,9 @@ class Filters extends BaseConfig
         'jwtfilter' => [
             'before' => [
                 'api/*',
-                'authlogin',
-                'cekuser',
-                'lupapassword/*',
+                // 'authlogin',
+                // 'cekuser',
+                // 'lupapassword/*',
             ]
         ],
         'cors' => [
