@@ -13,7 +13,7 @@ class TaskModel extends Model
     protected $allowedFields    = [
         'id_pekerjaan', 'id_user', 'creator', 'id_status_task', 'id_kategori_task', 'tgl_planing',
         'tgl_selesai', 'tgl_verifikasi_diterima', 'persentase_selesai',
-        'deskripsi_task', 'alasan_verifikasi', 'bukti_selesai', 'tautan_task'
+        'deskripsi_task', 'alasan_verifikasi', 'bukti_selesai', 'tautan_task', 'verifikator'
     ];
 
     //Fungsi untuk mendapatkan data task berdasarkan id_task

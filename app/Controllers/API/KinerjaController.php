@@ -1,22 +1,26 @@
-kinerja
 <?php
+
 namespace App\Controllers\API;
+
 use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\API\ResponseTrait;
 
-class KinerjaController extends ResourceController {
+class KinerjaController extends ResourceController
+{
     use ResponseTrait;
 
     protected $modelName = 'App\Models\KinerjaModel';
     protected $format    = 'json';
 
-    public function index() {
+    public function index()
+    {
         $model = new $this->modelName();
         $data = $model->where(['deleted_at' => null])->orderBy('id_kinerja', 'ASC')->findAll();
         return $this->respond($data, 200);
     }
 
-    public function show($id = null) {
+    public function show($id = null)
+    {
         $model = new $this->modelName();
         $data = $model->getWhere(['id_kinerja' => $id, 'deleted_at' => null])->getResult();
 
@@ -32,10 +36,10 @@ class KinerjaController extends ResourceController {
         }
     }
 
-    public function getKinerjaUser($iduser = null){
+    public function getKinerjaUser($iduser = null)
+    {
         $model = new $this->modelName();
         $data = $model->where(['id_user' => $iduser, 'deleted_at' => null])->orderBy('id_kinerja', 'ASC')->findAll();
         return $this->respond($data, 200);
     }
 }
-?>

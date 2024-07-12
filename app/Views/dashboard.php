@@ -213,6 +213,12 @@
                         <div class="row mt-2">
                             <div class="col-12">
                                 <div class="input-group">
+                                    <?php if (session()->get('user_level') == "staff" || session()->get('user_level') == "supervisi") : ?>
+                                        <button class="btn me-2 btn-success" style="border-radius: 5px">Poin anda bulan ini : <?= $total_bobot_poin_bulan_ini ?></button>
+                                    <?php endif ?>
+                                    <?php if (session()->get('user_level') == "supervisi") : ?>
+                                        <a class="btn me-2 btn-secondary" style="border-radius: 5px">Task yang sudah anda verifikasi</a>
+                                    <?php endif ?>
                                     <div class="input-group-append">
                                         <span class="input-group-text" id="search-addon">
                                             <i class="bi bi-search"></i>

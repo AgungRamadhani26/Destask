@@ -1411,7 +1411,7 @@ class Kinerja extends BaseController
             'kinerja' => $kinerja,
             'nama_bulan' => $nama_bulan,
         ];
-        return view('Kinerja_karyawan/detail_kinerja_karyawan', $data);
+        return view('kinerja_karyawan/detail_kinerja_karyawan', $data);
     }
 
 
