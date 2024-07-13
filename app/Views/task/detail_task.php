@@ -49,6 +49,18 @@
                                  </div>
                               </div>
                            <?php endif; ?>
+                           <?php if ($task['verifikator'] !== null) : ?>
+                              <div class="col-md-12 mb-3">
+                                 <label for="verifikator_task" class="form-label" style="font-weight: 600;">Supervisi Yang Memeriksa Task</label>
+                                 <div class="form-control">
+                                    <?php foreach ($user as $usr) : ?>
+                                       <?php if ($task['verifikator'] == $usr['id_user']) : ?>
+                                          <?= $usr['nama'] ?>
+                                       <?php endif; ?>
+                                    <?php endforeach; ?>
+                                 </div>
+                              </div>
+                           <?php endif; ?>
                            <div class="col-md-12 mb-3">
                               <label for="deskripsi_task" class="form-label" style="font-weight: 600;">Deskripsi Task</label>
                               <div class="form-control"><?= $task['deskripsi_task'] ?></div>

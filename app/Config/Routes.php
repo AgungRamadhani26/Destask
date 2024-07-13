@@ -107,6 +107,9 @@ $routes->post('/task/save_submit_task', 'Task::save_submit_task'); //Sudah beres
 $routes->get('/task/detail_task/(:num)', 'Task::detail_task/$1'); //Sudah beres masalah akses karena semua udah diatur di controller
 //Untuk memfilter data yang ditampilkan
 $routes->get('/task/filter_task/(:num)', 'Task::filter_task/$1'); //Sudah beres masalah akses karena semua udah diatur di controller
+
+//Untuk menampilkan halaman daftar task yang harus diverivikasi
+$routes->get('/task/daftar_verifikasi_task', 'Task::daftar_verifikasi_task');
 //Untuk menampilkan verifikasi task
 $routes->get('/task/verifikasi_task/(:num)', 'Task::verifikasi_task/$1'); //Sudah beres masalah akses karena semua udah diatur di controller
 //Untuk melihat alasan verifikasi task

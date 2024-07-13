@@ -214,10 +214,12 @@
                             <div class="col-12">
                                 <div class="input-group">
                                     <?php if (session()->get('user_level') == "staff" || session()->get('user_level') == "supervisi") : ?>
-                                        <button class="btn me-2 btn-success" style="border-radius: 5px">Poin anda bulan ini : <?= $total_bobot_poin_bulan_ini ?></button>
+                                        <button type="button" class="btn btn-primary me-2" style="border-radius: 5px; cursor:default; background-color: #007bff; border-color: #007bff;" onfocus="this.style.backgroundColor='#007bff'; this.style.borderColor='#007bff';">
+                                            Poin anda bulan ini : <span class="badge text-bg-secondary"><?= $total_bobot_poin_bulan_ini ?></span>
+                                        </button>
                                     <?php endif ?>
                                     <?php if (session()->get('user_level') == "supervisi") : ?>
-                                        <a class="btn me-2 btn-secondary" style="border-radius: 5px">Task yang sudah anda verifikasi</a>
+                                        <a href="/task/daftar_verifikasi_task" class="btn me-2 btn-secondary" style="border-radius: 5px"><i class="bi bi-patch-check"></i> Verifikasi Task</a>
                                     <?php endif ?>
                                     <div class="input-group-append">
                                         <span class="input-group-text" id="search-addon">

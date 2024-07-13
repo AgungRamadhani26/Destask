@@ -127,7 +127,7 @@
                      <button class="nav-link" data-bs-toggle="tab" title="Jika anda seorang Staff non PM atau Supervisi non PM maka data yang muncul adalah data task anda sendiri yang ditolak, Jika anda Staff PM, Supervisi PM, Direksi, HOD, atau Admin maka data yang muncul adalah semua data task yang ditolak." data-bs-target="#task-ditolak">Ditolak</button>
                   </li>
                   <li class="nav-item">
-                     <button class="nav-link" data-bs-toggle="tab" title="Jika anda seorang Staff non PM maka data yang akan muncul adalah data task anda sendiri yang menunggu verifikasi, Jika anda Supervisi non PM maka data yang muncul adalah data task dari user yang memiliki usergroup yang sama dengan anda, dan Jika anda Staff PM, Supervisi PM, Direksi, HOD, atau Admin maka data yang muncul adalah semua data task yang menunggu verifikasi." data-bs-target="#task-menunggu-verifikasi">Menunggu Verifikasi</button>
+                     <button class="nav-link" data-bs-toggle="tab" title="Jika anda seorang Staff non PM atau Supervisi non PM maka data yang muncul adalah data task anda sendiri yang menunggu verifikasi, Jika anda Staff PM, Supervisi PM, Direksi, HOD, atau Admin maka data yang muncul adalah semua data task yang menunggu verifikasi" data-bs-target="#task-menunggu-verifikasi">Menunggu Verifikasi</button>
                   </li>
                   <li class="nav-item">
                      <button class="nav-link" data-bs-toggle="tab" title="Jika anda seorang Staff non PM atau Supervisi non PM maka data yang muncul adalah data task anda sendiri yang sudah selesai diverifikasi, Jika anda Staff PM, Supervisi PM, Direksi, HOD, atau Admin maka data yang muncul adalah semua data task yang sudah selesai diverifikasi." data-bs-target="#task-sudah-verifikasi" id="edit-profil">Sudah Diverifikasi</button>
@@ -831,13 +831,6 @@
                                           <div>
                                              <a href="/task/detail_task/<?= $task_mv['id_task'] ?>" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
                                           </div>
-                                          <?php if ((session()->get('user_level') == 'supervisi') && ($task_mv['id_user'] != session()->get('id_user'))) : ?>
-                                             <?php if (cek_idusergroup_dari_task_user(session()->get('id_usergroup'), $task_mv['id_task']) == true) : ?>
-                                                <div>
-                                                   <a href="/task/verifikasi_task/<?= $task_mv['id_task'] ?>" class="btn btn-primary"><i class="bi bi-check2-square"></i> Verifikasi</a>
-                                                </div>
-                                             <?php endif ?>
-                                          <?php endif ?>
                                        </div>
                                     </td>
                                     <td>

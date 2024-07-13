@@ -38,7 +38,7 @@ class Pekerjaan extends BaseController
     //Fungsi daftar_pekerjaan
     public function daftar_pekerjaan()
     {
-        if ((session()->get('user_level') == 'staff')) {
+        if ((session()->get('user_level') == 'staff') || (session()->get('user_level') == 'supervisi')) {
             $pekerjaan = $this->pekerjaanModel->getPekerjaanByUserId(session()->get('id_user'));
         } else {
             $pekerjaan = $this->pekerjaanModel->getPekerjaan();
@@ -67,8 +67,8 @@ class Pekerjaan extends BaseController
         $filter_pekerjaan_jenislayanan = $this->request->getGet('filter_pekerjaan_jenislayanan');
         $filter_pekerjaan_kategori_pekerjaan = $this->request->getGet('filter_pekerjaan_kategori_pekerjaan');
         $filter_pekerjaan_status_pekerjaan = $this->request->getGet('filter_pekerjaan_status_pekerjaan');
-        if ((session()->get('user_level') == 'staff')) {
-            $pekerjaan_filtered = $this->pekerjaanModel->getFilteredPekerjaanforStaff($filter_pekerjaan_kategori_pekerjaan, $filter_pekerjaan_status_pekerjaan, $filter_pekerjaan_jenislayanan, $filter_pekerjaan_pm, session()->get('id_user'));
+        if ((session()->get('user_level') == 'staff') || (session()->get('user_level') == 'supervisi')) {
+            $pekerjaan_filtered = $this->pekerjaanModel->getFilteredPekerjaanforStaffSupervisi($filter_pekerjaan_kategori_pekerjaan, $filter_pekerjaan_status_pekerjaan, $filter_pekerjaan_jenislayanan, $filter_pekerjaan_pm, session()->get('id_user'));
         } else {
             $pekerjaan_filtered = $this->pekerjaanModel->getFilteredPekerjaan($filter_pekerjaan_kategori_pekerjaan, $filter_pekerjaan_status_pekerjaan, $filter_pekerjaan_jenislayanan, $filter_pekerjaan_pm);
         }
@@ -95,7 +95,7 @@ class Pekerjaan extends BaseController
         //Pengecekan apakah yang login adalah staff jika staff maka akan di cek apakah terdaftar pada pekerjaan
         //Jika tidak maka tidak boleh melihat halaman ini, karena data pekerjaan pada halaman hanya boleh dibuka
         //oleh staff yang terdaftar sebagai personil. Jika yang login selain staff maka boleh membuka pekerjaan apapun
-        if (session()->get('user_level') == 'staff') {
+        if (session()->get('user_level') == 'staff' || session()->get('user_level') == 'supervisi') {
             $personil = $this->personilModel->getPersonilByIdPekerjaanIdUser($id_pekerjaan, session()->get('id_user'));
             if (!$personil) {
                 Set_notifikasi_swal_berhasil('error', 'Gagal &#128511;', 'Anda jangan nakal, anda tidak berhak melihat detail pekerjaan tersebut !');
@@ -765,7 +765,7 @@ class Pekerjaan extends BaseController
     //Untuk mendownload data pekerjaan presales
     public function download_pekerjaan_presales_excel()
     {
-        if (session()->get('user_level') != 'staff') {
+        if (session()->get('user_level') != 'staff' && session()->get('user_level') != 'supervisi') {
             $data_pekerjaan_presales = $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(1);
             $file_name = 'Data_Pekerjaan_Presales_All.xlsx';
         } else {
@@ -779,7 +779,7 @@ class Pekerjaan extends BaseController
     //Untuk mendownload data pekerjaan presales pdf
     public function download_pekerjaan_presales_pdf()
     {
-        if (session()->get('user_level') != 'staff') {
+        if (session()->get('user_level') != 'staff' && session()->get('user_level') != 'supervisi') {
             $data_pekerjaan_presales = $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(1);
             $file_name = 'Data_Pekerjaan_Presales_All.pdf';
         } else {
@@ -799,7 +799,7 @@ class Pekerjaan extends BaseController
     //Untuk mendownload data pekerjaan presales berdasarkan tahun
     public function download_pekerjaan_presales_excel_by_year($tahun)
     {
-        if (session()->get('user_level') != 'staff') {
+        if (session()->get('user_level') != 'staff' && session()->get('user_level') != 'supervisi') {
             $data_pekerjaan_presales = $this->pekerjaanModel->getPekerjaanPresales_by_tahun_target_waktu_selesai($tahun);
             $file_name = 'Data_Pekerjaan_Presales_' . $tahun . '_All.xlsx';
         } else {
@@ -813,7 +813,7 @@ class Pekerjaan extends BaseController
     //Untuk mendownload data pekerjaan presales berdasarkan tahun berformat pdf
     public function download_pekerjaan_presales_pdf_by_year($tahun)
     {
-        if (session()->get('user_level') != 'staff') {
+        if (session()->get('user_level') != 'staff' && session()->get('user_level') != 'supervisi') {
             $data_pekerjaan_presales = $this->pekerjaanModel->getPekerjaanPresales_by_tahun_target_waktu_selesai($tahun);
             $file_name = 'Data_Pekerjaan_Presales_' . $tahun . '_All.pdf';
         } else {
@@ -836,7 +836,7 @@ class Pekerjaan extends BaseController
     //Untuk mendownload data pekerjaan onprogress
     public function download_pekerjaan_onprogress_excel()
     {
-        if (session()->get('user_level') != 'staff') {
+        if (session()->get('user_level') != 'staff' && session()->get('user_level') != 'supervisi') {
             $data_pekerjaan_onprogres = $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(2);
             $file_name = 'Data_Pekerjaan_Onprogres_All.xlsx';
         } else {
@@ -850,7 +850,7 @@ class Pekerjaan extends BaseController
     //Untuk mendownload data pekerjaan onprogress pdf
     public function download_pekerjaan_onprogress_pdf()
     {
-        if (session()->get('user_level') != 'staff') {
+        if (session()->get('user_level') != 'staff' && session()->get('user_level') != 'supervisi') {
             $data_pekerjaan_onprogres = $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(2);
             $file_name = 'Data_Pekerjaan_Onprogres_All.pdf';
         } else {
@@ -870,7 +870,7 @@ class Pekerjaan extends BaseController
     //Untuk mendownload data pekerjaan onprogres berdasarkan tahun
     public function download_pekerjaan_onprogress_excel_by_year($tahun)
     {
-        if (session()->get('user_level') != 'staff') {
+        if (session()->get('user_level') != 'staff' && session()->get('user_level') != 'supervisi') {
             $data_pekerjaan_onprogres = $this->pekerjaanModel->getPekerjaanOnprogress_by_tahun_target_waktu_selesai($tahun);
             $file_name = 'Data_Pekerjaan_Onprogres_' . $tahun . '_All.xlsx';
         } else {
@@ -884,7 +884,7 @@ class Pekerjaan extends BaseController
     //Untuk mendownload data pekerjaan onprogres berdasarkan tahun berformat pdf
     public function download_pekerjaan_onprogress_pdf_by_year($tahun)
     {
-        if (session()->get('user_level') != 'staff') {
+        if (session()->get('user_level') != 'staff' && session()->get('user_level') != 'supervisi') {
             $data_pekerjaan_onprogres = $this->pekerjaanModel->getPekerjaanOnprogress_by_tahun_target_waktu_selesai($tahun);
             $file_name = 'Data_Pekerjaan_Onprogres_' . $tahun . '_All.pdf';
         } else {
@@ -907,7 +907,7 @@ class Pekerjaan extends BaseController
     //Untuk mendownload data pekerjaan bast
     public function download_pekerjaan_bast_excel()
     {
-        if (session()->get('user_level') != 'staff') {
+        if (session()->get('user_level') != 'staff' && session()->get('user_level') != 'supervisi') {
             $data_pekerjaan_bast = $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(3);
             $file_name = 'Data_Pekerjaan_BAST_All.xlsx';
         } else {
@@ -921,7 +921,7 @@ class Pekerjaan extends BaseController
     //Untuk mendownload data pekerjaan bast pdf
     public function download_pekerjaan_bast_pdf()
     {
-        if (session()->get('user_level') != 'staff') {
+        if (session()->get('user_level') != 'staff' && session()->get('user_level') != 'supervisi') {
             $data_pekerjaan_bast = $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(3);
             $file_name = 'Data_Pekerjaan_BAST_All.pdf';
         } else {
@@ -941,7 +941,7 @@ class Pekerjaan extends BaseController
     //Untuk mendownload data pekerjaan bast berdasarkan tahun
     public function download_pekerjaan_bast_excel_by_year($tahun)
     {
-        if (session()->get('user_level') != 'staff') {
+        if (session()->get('user_level') != 'staff' && session()->get('user_level') != 'supervisi') {
             $data_pekerjaan_bast = $this->pekerjaanModel->getPekerjaanBast_by_tahun_target_waktu_selesai($tahun);
             $file_name = 'Data_Pekerjaan_BAST_' . $tahun . '_All.xlsx';
         } else {
@@ -955,7 +955,7 @@ class Pekerjaan extends BaseController
     //Untuk mendownload data pekerjaan bast berdasarkan tahun berformat pdf
     public function download_pekerjaan_bast_pdf_by_year($tahun)
     {
-        if (session()->get('user_level') != 'staff') {
+        if (session()->get('user_level') != 'staff' && session()->get('user_level') != 'supervisi') {
             $data_pekerjaan_bast = $this->pekerjaanModel->getPekerjaanBast_by_tahun_target_waktu_selesai($tahun);
             $file_name = 'Data_Pekerjaan_BAST_' . $tahun . '_All.pdf';
         } else {
@@ -978,7 +978,7 @@ class Pekerjaan extends BaseController
     //Untuk mendownload data pekerjaan support
     public function download_pekerjaan_support_excel()
     {
-        if (session()->get('user_level') != 'staff') {
+        if (session()->get('user_level') != 'staff' && session()->get('user_level') != 'supervisi') {
             $data_pekerjaan_support = $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(4);
             $file_name = 'Data_Pekerjaan_Support_All.xlsx';
         } else {
@@ -992,7 +992,7 @@ class Pekerjaan extends BaseController
     //Untuk mendownload data pekerjaan support pdf
     public function download_pekerjaan_support_pdf()
     {
-        if (session()->get('user_level') != 'staff') {
+        if (session()->get('user_level') != 'staff' && session()->get('user_level') != 'supervisi') {
             $data_pekerjaan_support = $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(4);
             $file_name = 'Data_Pekerjaan_Support_All.pdf';
         } else {
@@ -1012,7 +1012,7 @@ class Pekerjaan extends BaseController
     //Untuk mendownload data pekerjaan support berdasarkan tahun
     public function download_pekerjaan_support_excel_by_year($tahun)
     {
-        if (session()->get('user_level') != 'staff') {
+        if (session()->get('user_level') != 'staff' && session()->get('user_level') != 'supervisi') {
             $data_pekerjaan_support = $this->pekerjaanModel->getPekerjaanSupport_by_tahun_target_waktu_selesai($tahun);
             $file_name = 'Data_Pekerjaan_Support_' . $tahun . '_All.xlsx';
         } else {
@@ -1026,7 +1026,7 @@ class Pekerjaan extends BaseController
     //Untuk mendownload data pekerjaan support berdasarkan tahun berformat pdf
     public function download_pekerjaan_support_pdf_by_year($tahun)
     {
-        if (session()->get('user_level') != 'staff') {
+        if (session()->get('user_level') != 'staff' && session()->get('user_level') != 'supervisi') {
             $data_pekerjaan_support = $this->pekerjaanModel->getPekerjaanSupport_by_tahun_target_waktu_selesai($tahun);
             $file_name = 'Data_Pekerjaan_Support_' . $tahun . '_All.pdf';
         } else {
@@ -1049,7 +1049,7 @@ class Pekerjaan extends BaseController
     //Untuk mendownload data pekerjaan cancel
     public function download_pekerjaan_cancel_excel()
     {
-        if (session()->get('user_level') != 'staff') {
+        if (session()->get('user_level') != 'staff' && session()->get('user_level') != 'supervisi') {
             $data_pekerjaan_cancel = $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(5);
             $file_name = 'Data_Pekerjaan_Cancel_All.xlsx';
         } else {
@@ -1063,7 +1063,7 @@ class Pekerjaan extends BaseController
     //Untuk mendownload data pekerjaan cancel pdf
     public function download_pekerjaan_cancel_pdf()
     {
-        if (session()->get('user_level') != 'staff') {
+        if (session()->get('user_level') != 'staff' && session()->get('user_level') != 'supervisi') {
             $data_pekerjaan_cancel = $this->pekerjaanModel->getPekerjaanByIdStatusPekerjaan(5);
             $file_name = 'Data_Pekerjaan_Cancel_All.pdf';
         } else {
@@ -1083,7 +1083,7 @@ class Pekerjaan extends BaseController
     //Untuk mendownload data pekerjaan cancel berdasarkan tahun
     public function download_pekerjaan_cancel_excel_by_year($tahun)
     {
-        if (session()->get('user_level') != 'staff') {
+        if (session()->get('user_level') != 'staff' && session()->get('user_level') != 'supervisi') {
             $data_pekerjaan_cancel = $this->pekerjaanModel->getPekerjaanCancel_by_tahun_target_waktu_selesai($tahun);
             $file_name = 'Data_Pekerjaan_Cancel_' . $tahun . '_All.xlsx';
         } else {
@@ -1097,7 +1097,7 @@ class Pekerjaan extends BaseController
     //Untuk mendownload data pekerjaan cancel berdasarkan tahun berformat pdf
     public function download_pekerjaan_cancel_pdf_by_year($tahun)
     {
-        if (session()->get('user_level') != 'staff') {
+        if (session()->get('user_level') != 'staff' && session()->get('user_level') != 'supervisi') {
             $data_pekerjaan_cancel = $this->pekerjaanModel->getPekerjaanCancel_by_tahun_target_waktu_selesai($tahun);
             $file_name = 'Data_Pekerjaan_Cancel_' . $tahun . '_All.pdf';
         } else {
@@ -1120,7 +1120,7 @@ class Pekerjaan extends BaseController
     //Untuk mendownload data semua pekerjaan
     public function download_pekerjaan_semua_pekerjaan_excel()
     {
-        if (session()->get('user_level') != 'staff') {
+        if (session()->get('user_level') != 'staff' && session()->get('user_level') != 'supervisi') {
             $data_pekerjaan_all = $this->pekerjaanModel->getPekerjaan();
             $file_name = 'Data_Pekerjaan_All.xlsx';
         } else {
@@ -1134,7 +1134,7 @@ class Pekerjaan extends BaseController
     //Untuk mendownload data semua pekerjaan berformat pdf
     public function download_pekerjaan_semua_pekerjaan_pdf()
     {
-        if (session()->get('user_level') != 'staff') {
+        if (session()->get('user_level') != 'staff' && session()->get('user_level') != 'supervisi') {
             $data_pekerjaan_all = $this->pekerjaanModel->getPekerjaan();
             $file_name = 'Data_Pekerjaan_All.pdf';
         } else {
@@ -1154,7 +1154,7 @@ class Pekerjaan extends BaseController
     //Untuk mendownload data semua pekerjaan berdasarkan tahun
     public function download_pekerjaan_semua_pekerjaan_excel_by_year($tahun)
     {
-        if (session()->get('user_level') != 'staff') {
+        if (session()->get('user_level') != 'staff' && session()->get('user_level') != 'supervisi') {
             $data_pekerjaan_all = $this->pekerjaanModel->getAllPekerjaan_by_tahun_target_waktu_selesai($tahun);
             $file_name = 'Data_Pekerjaan_' . $tahun . '_All.xlsx';
         } else {
@@ -1168,7 +1168,7 @@ class Pekerjaan extends BaseController
     //Untuk mendownload data semua pekerjaan berdasarkan tahun berformat pdf
     public function download_pekerjaan_semua_pekerjaan_pdf_by_year($tahun)
     {
-        if (session()->get('user_level') != 'staff') {
+        if (session()->get('user_level') != 'staff' && session()->get('user_level') != 'supervisi') {
             $data_pekerjaan_all = $this->pekerjaanModel->getAllPekerjaan_by_tahun_target_waktu_selesai($tahun);
             $file_name = 'Data_Pekerjaan_' . $tahun . '_All.pdf';
         } else {
