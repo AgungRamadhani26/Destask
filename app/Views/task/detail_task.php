@@ -178,7 +178,7 @@
                   </div>
                   <hr style="border-top: 3px solid black;">
                   <div class="text-center">
-                     <a href="/task/daftar_task/<?= $pekerjaan['id_pekerjaan'] ?>" class="btn btn-primary">Tutup</a>
+                     <a href="<?= $_SERVER['HTTP_REFERER'] ?>" class="btn btn-primary">Tutup</a>
                   </div>
                </div>
             </div>

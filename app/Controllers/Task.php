@@ -303,9 +303,13 @@ class Task extends BaseController
         $data = [
             'pekerjaan_belum_verifikasi' => $task_dan_pekerjaan_belum_verifikasi['data_pekerjaan'],
             'task_belum_verifikasi' => $task_dan_pekerjaan_belum_verifikasi['data_task'],
+            'task_anda_tolak' => $this->taskModel->get_TaskDitolak_ByVrifikatorSupervisi(session()->get('id_user')),
+            'task_anda_terima' => $this->taskModel->get_TaskVerifikasi_ByVrifikatorSupervisi(session()->get('id_user')),
             'personil' => $this->personilModel->getPersonil(),
+            'pekerjaan' => $this->pekerjaanModel->getPekerjaan(),
             'kategori_task' => $this->kategoriTaskModel->getKategoriTask(),
             'status_task' => $this->statusTaskModel->getStatusTask(),
+            'kategori_pekerjaan' => $this->kategoriPekerjaanModel->getKategoriPekerjaan(),
             'user' => $this->userModel->getUser(),
             'url1' => '/dashboard',
             'url' => '/dashboard',
@@ -834,7 +838,7 @@ class Task extends BaseController
         ];
         $this->taskModel->save($data_task);
         Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil memverifikasi task (TERIMA).');
-        return redirect()->to('task/daftar_task/' . $task['id_pekerjaan']);
+        return redirect()->to('/task/daftar_verifikasi_task');
     }
 
     //Fungsi untuk menolak verifikasi task
@@ -875,7 +879,7 @@ class Task extends BaseController
             ];
             $this->taskModel->save($data_task);
             Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil memverifikasi task (TOLAK).');
-            return redirect()->to('task/daftar_task/' . $task['id_pekerjaan']);
+            return redirect()->to('/task/daftar_verifikasi_task');
         } else {
             session()->setFlashdata('error', $validasi->listErrors());
             return redirect()->withInput()->with('modal', 'modalalasan_verifikasi_ditolak')->back();

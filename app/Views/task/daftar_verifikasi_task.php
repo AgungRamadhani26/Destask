@@ -29,18 +29,24 @@
                            <div class="card-head">
                               <div class="circle"><?= $pbv['persentase_pekerjaan_selesai'] ?>%</div>
                               <span class="card-title">
-                                 <?= $pbv['nama_pekerjaan'] ?> - <i class="bi bi-person-fill"><?php
-                                                                                                foreach ($personil as $per) {
-                                                                                                   if ($pbv['id_pekerjaan'] == $per['id_pekerjaan'] && $per['role_personil'] == 'project_manager') {
-                                                                                                      foreach ($user as $usr) {
-                                                                                                         if ($per['id_user'] == $usr['id_user']) {
-                                                                                                            echo $usr['nama'] . ' (PM)';
-                                                                                                            break; // Keluar dari loop setelah menemukan nilai yang cocok
-                                                                                                         }
-                                                                                                      }
-                                                                                                   }
-                                                                                                }
-                                                                                                ?></i>
+                                 <?= $pbv['nama_pekerjaan'] ?> - <i class="bi bi-person-fill">
+                                    <?php
+                                    foreach ($personil as $per) {
+                                       if ($pbv['id_pekerjaan'] == $per['id_pekerjaan'] && $per['role_personil'] == 'project_manager') {
+                                          foreach ($user as $usr) {
+                                             if ($per['id_user'] == $usr['id_user']) {
+                                                echo $usr['nama'] . ' (PM)';
+                                                break; // Keluar dari loop setelah menemukan nilai yang cocok
+                                             }
+                                          }
+                                       }
+                                    }
+                                    ?></i> -
+                                 <?php foreach ($kategori_pekerjaan as $kpn) : ?>
+                                    <?php if ($pbv['id_kategori_pekerjaan'] == $kpn['id_kategori_pekerjaan']) : ?>
+                                       <span title="<?= $kpn['deskripsi_kategori_pekerjaan'] ?>" style="background-color: <?= $kpn['color'] ?>; color:white" class="badge rounded-pill"><?= $kpn['nama_kategori_pekerjaan'] ?></span>
+                                    <?php endif; ?>
+                                 <?php endforeach; ?>
                               </span>
                               <span class="icon-burger" onclick="toggleDetails(this)">&#x2630;</span>
                            </div>
@@ -49,8 +55,8 @@
                                  <thead>
                                     <tr>
                                        <th style="background-color: blue;">No</th>
-                                       <th style="background-color: blue;">Persentase Selesai</th>
                                        <th style="background-color: blue;">Aksi</th>
+                                       <th style="background-color: blue;">Persentase Selesai</th>
                                        <th style="background-color: blue;">Deskripsi Task</th>
                                        <th style="background-color: blue;">Nama Personil</th>
                                        <th style="background-color: blue;">Kategori Task</th>
@@ -144,38 +150,59 @@
                                  <th style="background-color: rgb(212, 2, 2);">Nama Personil</th>
                                  <th style="background-color: rgb(212, 2, 2);">Kategori Task</th>
                                  <th style="background-color: rgb(212, 2, 2);">Status Task</th>
-                                 <th style="background-color: rgb(212, 2, 2);">Keterangan Tambahan</th>
                               </tr>
                            </thead>
                            <tbody>
-                              <tr>
-                                 <td>1</td>
-                                 <td>
-                                    <div class="btn-group" role="group">
-                                       <div>
-                                          <a href="/task/detail_task/1" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
+                              <?php $c = 1 ?>
+                              <?php foreach ($task_anda_tolak as $tat) : ?>
+                                 <tr>
+                                    <td><?= $c++ ?></td>
+                                    <td>
+                                       <div class="btn-group" role="group">
+                                          <div>
+                                             <a href="/task/detail_task/<?= $tat['id_task'] ?>" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
+                                          </div>
                                        </div>
-                                    </div>
-                                 </td>
-                                 <td>
-                                    Pekerjaan ABC
-                                 </td>
-                                 <td>
-                                    Pembuatan Menu x pada halam y
-                                 </td>
-                                 <td>
-                                    Agung Ramadhani
-                                 </td>
-                                 <td>
-                                    Coding
-                                 </td>
-                                 <td>
-                                    Ditolak
-                                 </td>
-                                 <td>
-                                    Terlambat
-                                 </td>
-                              </tr>
+                                    </td>
+                                    <td>
+                                       <?php
+                                       foreach ($pekerjaan as $pkrjn) {
+                                          if ($pkrjn['id_pekerjaan'] == $tat['id_pekerjaan']) {
+                                             echo $pkrjn['nama_pekerjaan'];
+                                             break; // Keluar dari loop setelah menemukan nilai yang cocok
+                                          }
+                                       }
+                                       ?>
+                                    </td>
+                                    <td>
+                                       <?= $tat['deskripsi_task'] ?>
+                                    </td>
+                                    <td>
+                                       <?php
+                                       foreach ($user as $usrr) {
+                                          if ($tat['id_user'] == $usrr['id_user']) {
+                                             echo $usrr['nama'];
+                                             break; // Keluar dari loop setelah menemukan nilai yang cocok
+                                          }
+                                       }
+                                       ?>
+                                    </td>
+                                    <td>
+                                       <?php foreach ($kategori_task as $kt) : ?>
+                                          <?php if ($tat['id_kategori_task'] == $kt['id_kategori_task']) : ?>
+                                             <span style="background-color: <?= $kt['color'] ?>;" class="badge rounded-pill"><?= $kt['nama_kategori_task'] ?></span>
+                                          <?php endif; ?>
+                                       <?php endforeach; ?>
+                                    </td>
+                                    <td>
+                                       <?php foreach ($status_task as $st) : ?>
+                                          <?php if ($tat['id_status_task'] == $st['id_status_task']) : ?>
+                                             <span style="background-color: <?= $st['color'] ?>;" class="badge rounded-pill"><?= $st['nama_status_task'] ?></span>
+                                          <?php endif; ?>
+                                       <?php endforeach; ?>
+                                    </td>
+                                 </tr>
+                              <?php endforeach; ?>
                            </tbody>
                         </table>
                      </div>
@@ -200,34 +227,65 @@
                               </tr>
                            </thead>
                            <tbody>
-                              <tr>
-                                 <td>1</td>
-                                 <td>
-                                    <div class="btn-group" role="group">
-                                       <div>
-                                          <a href="/task/detail_task/1" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
+                              <?php $d = 1 ?>
+                              <?php foreach ($task_anda_terima as $tatm) : ?>
+                                 <tr>
+                                    <td><?= $d++ ?></td>
+                                    <td>
+                                       <div class="btn-group" role="group">
+                                          <div>
+                                             <a href="/task/detail_task/<?= $tatm['id_task'] ?>" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
+                                          </div>
                                        </div>
-                                    </div>
-                                 </td>
-                                 <td>
-                                    Pekerjaan ABC
-                                 </td>
-                                 <td>
-                                    Pembuatan Menu x pada halam y
-                                 </td>
-                                 <td>
-                                    Agung Ramadhani
-                                 </td>
-                                 <td>
-                                    Coding
-                                 </td>
-                                 <td>
-                                    Ditolak
-                                 </td>
-                                 <td>
-                                    Terlambat
-                                 </td>
-                              </tr>
+                                    </td>
+                                    <td>
+                                       <?php
+                                       foreach ($pekerjaan as $pkrjn) {
+                                          if ($pkrjn['id_pekerjaan'] == $tatm['id_pekerjaan']) {
+                                             echo $pkrjn['nama_pekerjaan'];
+                                             break; // Keluar dari loop setelah menemukan nilai yang cocok
+                                          }
+                                       }
+                                       ?>
+                                    </td>
+                                    <td>
+                                       <?= $tatm['deskripsi_task'] ?>
+                                    </td>
+                                    <td>
+                                       <?php
+                                       foreach ($user as $usrr) {
+                                          if ($tatm['id_user'] == $usrr['id_user']) {
+                                             echo $usrr['nama'];
+                                             break; // Keluar dari loop setelah menemukan nilai yang cocok
+                                          }
+                                       }
+                                       ?>
+                                    </td>
+                                    <td>
+                                       <?php foreach ($kategori_task as $kt) : ?>
+                                          <?php if ($tatm['id_kategori_task'] == $kt['id_kategori_task']) : ?>
+                                             <span style="background-color: <?= $kt['color'] ?>;" class="badge rounded-pill"><?= $kt['nama_kategori_task'] ?></span>
+                                          <?php endif; ?>
+                                       <?php endforeach; ?>
+                                    </td>
+                                    <td>
+                                       <?php foreach ($status_task as $st) : ?>
+                                          <?php if ($tatm['id_status_task'] == $st['id_status_task']) : ?>
+                                             <span style="background-color: <?= $st['color'] ?>;" class="badge rounded-pill"><?= $st['nama_status_task'] ?></span>
+                                          <?php endif; ?>
+                                       <?php endforeach; ?>
+                                    </td>
+                                    <td>
+                                       <?php if ($tatm['tgl_selesai'] < $tatm['tgl_planing']) : ?>
+                                          <span style="background-color:green" class="badge rounded-pill">Lebih Awal</span>
+                                       <?php elseif ($tatm['tgl_selesai'] == $tatm['tgl_planing']) : ?>
+                                          <span style="background-color:blue" class="badge rounded-pill">Tepat Waktu</span>
+                                       <?php else : ?>
+                                          <span style="background-color:red" class="badge rounded-pill">Terlambat</span>
+                                       <?php endif; ?>
+                                    </td>
+                                 </tr>
+                              <?php endforeach; ?>
                            </tbody>
                         </table>
                      </div>
@@ -250,7 +308,7 @@
       align-items: center;
       justify-content: center;
       color: white;
-      font-size: 16px;
+      font-size: 14px;
       font-weight: bold;
       text-align: center;
    }

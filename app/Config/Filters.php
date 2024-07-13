@@ -17,6 +17,7 @@ use App\Filters\KhususHOD;
 use App\Filters\KhususHODandAdmin;
 use App\Filters\KhususHODandDireksi;
 use App\Filters\KhususPengguna;
+use App\Filters\KhususSupervisi;
 use App\Filters\PendukungAutentikasi;
 
 class Filters extends BaseConfig
@@ -45,6 +46,7 @@ class Filters extends BaseConfig
         'khususHODandAdmin'    => KhususHODandAdmin::class,
         'exceptAdmin'          => ExceptAdmin::class,
         'exceptAdminandStaff'  => ExceptAdminandStaff::class,
+        'khususSupervisi'      => KhususSupervisi::class,
     ];
 
     /**
@@ -156,6 +158,11 @@ class Filters extends BaseConfig
             'before' => [
                 '/realisasi_vs_target/daftar_realisasi_vs_target', '/realisasi_vs_target/filter_realisasi_vs_target',
             ]
-        ]
+        ],
+        'khususSupervisi' => [
+            'before' => [
+                '/task/daftar_verifikasi_task',
+            ]
+        ],
     ];
 }

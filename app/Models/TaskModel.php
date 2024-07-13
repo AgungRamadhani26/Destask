@@ -436,6 +436,21 @@ class TaskModel extends Model
         ];
         return $data_pekerjaan_dan_task_yang_harus_diverifikasi;
     }
+    //Fungsi untuk mendapatkan data task yang ditolak oleh supervisi, berdasarkan id user dari verifikator supervisi
+    public function get_TaskDitolak_ByVrifikatorSupervisi($verifikator)
+    {
+        return $this->where(['verifikator' => $verifikator, 'deleted_at' => null, 'id_status_task' => 4])
+            ->orderBy('updated_at', 'ASC')
+            ->findAll();
+    }
+    //Fungsi untuk mendapatkan data task yang sudah verifikasi oleh supervisi, berdasarkan id user dari verifikator supervisi
+    public function get_TaskVerifikasi_ByVrifikatorSupervisi($verifikator)
+    {
+        return $this->where(['verifikator' => $verifikator, 'deleted_at' => null, 'id_status_task' => 3])
+            ->orderBy('updated_at', 'ASC')
+            ->findAll();
+    }
+
 
 
 
