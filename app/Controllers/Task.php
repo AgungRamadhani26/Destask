@@ -310,6 +310,7 @@ class Task extends BaseController
             'kategori_task' => $this->kategoriTaskModel->getKategoriTask(),
             'status_task' => $this->statusTaskModel->getStatusTask(),
             'kategori_pekerjaan' => $this->kategoriPekerjaanModel->getKategoriPekerjaan(),
+            'status_pekerjaan' => $this->statusPekerjaanModel->getStatusPekerjaan(),
             'user' => $this->userModel->getUser(),
             'url1' => '/dashboard',
             'url' => '/dashboard',

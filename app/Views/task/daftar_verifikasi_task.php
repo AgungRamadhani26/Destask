@@ -46,90 +46,97 @@
                                     <?php if ($pbv['id_kategori_pekerjaan'] == $kpn['id_kategori_pekerjaan']) : ?>
                                        <span title="<?= $kpn['deskripsi_kategori_pekerjaan'] ?>" style="background-color: <?= $kpn['color'] ?>; color:white" class="badge rounded-pill"><?= $kpn['nama_kategori_pekerjaan'] ?></span>
                                     <?php endif; ?>
+                                 <?php endforeach; ?> -
+                                 <?php foreach ($status_pekerjaan as $spn) : ?>
+                                    <?php if ($pbv['id_status_pekerjaan'] == $spn['id_status_pekerjaan']) : ?>
+                                       <span title="<?= $spn['deskripsi_status_pekerjaan'] ?>" style="background-color: <?= $spn['color'] ?>; color:white" class="badge rounded-pill"><?= $spn['nama_status_pekerjaan'] ?></span>
+                                    <?php endif; ?>
                                  <?php endforeach; ?>
                               </span>
                               <span class="icon-burger" onclick="toggleDetails(this)">&#x2630;</span>
                            </div>
                            <div class="card-details" style="display: none;">
-                              <table class="table table-striped table-bordered" id="myTableMenungguVerifikasi">
-                                 <thead>
-                                    <tr>
-                                       <th style="background-color: blue;">No</th>
-                                       <th style="background-color: blue;">Aksi</th>
-                                       <th style="background-color: blue;">Persentase Selesai</th>
-                                       <th style="background-color: blue;">Deskripsi Task</th>
-                                       <th style="background-color: blue;">Nama Personil</th>
-                                       <th style="background-color: blue;">Kategori Task</th>
-                                       <th style="background-color: blue;">Status Task</th>
-                                       <th style="background-color: blue;">Keterangan Tambahan</th>
-                                    </tr>
-                                 </thead>
-                                 <tbody>
-                                    <?php $i = 1 ?>
-                                    <?php foreach ($task_belum_verifikasi as $tbv) : ?>
-                                       <?php if ($pbv['id_pekerjaan'] == $tbv['id_pekerjaan']) : ?>
-                                          <tr>
-                                             <td><?= $i++ ?></td>
-                                             <td>
-                                                <div class="btn-group" role="group">
-                                                   <div>
-                                                      <a href="/task/detail_task/<?= $tbv['id_task'] ?>" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
-                                                   </div>
-                                                   <?php if ((session()->get('user_level') == 'supervisi') && ($tbv['id_user'] != session()->get('id_user'))) : ?>
-                                                      <?php if (cek_idusergroup_dari_task_user(session()->get('id_usergroup'), $tbv['id_task']) == true) : ?>
-                                                         <div>
-                                                            <a href="/task/verifikasi_task/<?= $tbv['id_task'] ?>" class="btn btn-primary"><i class="bi bi-check2-square"></i> Verifikasi</a>
-                                                         </div>
+                              <div class="table-responsive" id="TableMenungguVerifikasi">
+                                 <table class="table table-striped table-bordered" id="myTableMenungguVerifikasi">
+                                    <thead>
+                                       <tr>
+                                          <th style="background-color: blue;">No</th>
+                                          <th style="background-color: blue;">Aksi</th>
+                                          <th style="background-color: blue;">Persentase Selesai</th>
+                                          <th style="background-color: blue;">Deskripsi Task</th>
+                                          <th style="background-color: blue;">Nama Personil</th>
+                                          <th style="background-color: blue;">Kategori Task</th>
+                                          <th style="background-color: blue;">Status Task</th>
+                                          <th style="background-color: blue;">Keterangan Tambahan</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <?php $i = 1 ?>
+                                       <?php foreach ($task_belum_verifikasi as $tbv) : ?>
+                                          <?php if ($pbv['id_pekerjaan'] == $tbv['id_pekerjaan']) : ?>
+                                             <tr>
+                                                <td><?= $i++ ?></td>
+                                                <td>
+                                                   <div class="btn-group" role="group">
+                                                      <div>
+                                                         <a href="/task/detail_task/<?= $tbv['id_task'] ?>" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
+                                                      </div>
+                                                      <?php if ((session()->get('user_level') == 'supervisi') && ($tbv['id_user'] != session()->get('id_user'))) : ?>
+                                                         <?php if (cek_idusergroup_dari_task_user(session()->get('id_usergroup'), $tbv['id_task']) == true) : ?>
+                                                            <div>
+                                                               <a href="/task/verifikasi_task/<?= $tbv['id_task'] ?>" class="btn btn-primary"><i class="bi bi-check2-square"></i> Verifikasi</a>
+                                                            </div>
+                                                         <?php endif ?>
                                                       <?php endif ?>
-                                                   <?php endif ?>
-                                                </div>
-                                             </td>
-                                             <td>
-                                                <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="<?= $tbv['persentase_selesai'] ?>" aria-valuemin="0" aria-valuemax="100" style="height: 20px">
-                                                   <div class="progress-bar progress-bar-striped progress-bar-animated overflow-visible text-dark" style="background-color: #73ff85; width: <?= $tbv['persentase_selesai'] ?>%"><b><?= $tbv['persentase_selesai'] ?>%</b></div>
-                                                </div>
-                                             </td>
-                                             <td>
-                                                <?= $tbv['deskripsi_task'] ?>
-                                             </td>
-                                             <td>
-                                                <?php
-                                                foreach ($user as $usr) {
-                                                   if ($tbv['id_user'] == $usr['id_user']) {
-                                                      echo $usr['nama'];
-                                                      break; // Keluar dari loop setelah menemukan nilai yang cocok
+                                                   </div>
+                                                </td>
+                                                <td>
+                                                   <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="<?= $tbv['persentase_selesai'] ?>" aria-valuemin="0" aria-valuemax="100" style="height: 20px">
+                                                      <div class="progress-bar progress-bar-striped progress-bar-animated overflow-visible text-dark" style="background-color: #73ff85; width: <?= $tbv['persentase_selesai'] ?>%"><b><?= $tbv['persentase_selesai'] ?>%</b></div>
+                                                   </div>
+                                                </td>
+                                                <td>
+                                                   <?= $tbv['deskripsi_task'] ?>
+                                                </td>
+                                                <td>
+                                                   <?php
+                                                   foreach ($user as $usr) {
+                                                      if ($tbv['id_user'] == $usr['id_user']) {
+                                                         echo $usr['nama'];
+                                                         break; // Keluar dari loop setelah menemukan nilai yang cocok
+                                                      }
                                                    }
-                                                }
-                                                ?>
-                                             </td>
-                                             <td>
-                                                <?php foreach ($kategori_task as $kt) : ?>
-                                                   <?php if ($tbv['id_kategori_task'] == $kt['id_kategori_task']) : ?>
-                                                      <span style="background-color: <?= $kt['color'] ?>;" class="badge rounded-pill"><?= $kt['nama_kategori_task'] ?></span>
+                                                   ?>
+                                                </td>
+                                                <td>
+                                                   <?php foreach ($kategori_task as $kt) : ?>
+                                                      <?php if ($tbv['id_kategori_task'] == $kt['id_kategori_task']) : ?>
+                                                         <span style="background-color: <?= $kt['color'] ?>;" class="badge rounded-pill"><?= $kt['nama_kategori_task'] ?></span>
+                                                      <?php endif; ?>
+                                                   <?php endforeach; ?>
+                                                </td>
+                                                <td>
+                                                   <?php foreach ($status_task as $st) : ?>
+                                                      <?php if ($tbv['id_status_task'] == $st['id_status_task']) : ?>
+                                                         <span style="background-color: <?= $st['color'] ?>;" class="badge rounded-pill"><?= $st['nama_status_task'] ?></span>
+                                                      <?php endif; ?>
+                                                   <?php endforeach; ?>
+                                                </td>
+                                                <td>
+                                                   <?php if ($tbv['tgl_selesai'] < $tbv['tgl_planing']) : ?>
+                                                      <span style="background-color:green" class="badge rounded-pill">Lebih Awal</span>
+                                                   <?php elseif ($tbv['tgl_selesai'] == $tbv['tgl_planing']) : ?>
+                                                      <span style="background-color:blue" class="badge rounded-pill">Tepat Waktu</span>
+                                                   <?php else : ?>
+                                                      <span style="background-color:red" class="badge rounded-pill">Terlambat</span>
                                                    <?php endif; ?>
-                                                <?php endforeach; ?>
-                                             </td>
-                                             <td>
-                                                <?php foreach ($status_task as $st) : ?>
-                                                   <?php if ($tbv['id_status_task'] == $st['id_status_task']) : ?>
-                                                      <span style="background-color: <?= $st['color'] ?>;" class="badge rounded-pill"><?= $st['nama_status_task'] ?></span>
-                                                   <?php endif; ?>
-                                                <?php endforeach; ?>
-                                             </td>
-                                             <td>
-                                                <?php if ($tbv['tgl_selesai'] < $tbv['tgl_planing']) : ?>
-                                                   <span style="background-color:green" class="badge rounded-pill">Lebih Awal</span>
-                                                <?php elseif ($tbv['tgl_selesai'] == $tbv['tgl_planing']) : ?>
-                                                   <span style="background-color:blue" class="badge rounded-pill">Tepat Waktu</span>
-                                                <?php else : ?>
-                                                   <span style="background-color:red" class="badge rounded-pill">Terlambat</span>
-                                                <?php endif; ?>
-                                             </td>
-                                          </tr>
-                                       <?php endif; ?>
-                                    <?php endforeach; ?>
-                                 </tbody>
-                              </table>
+                                                </td>
+                                             </tr>
+                                          <?php endif; ?>
+                                       <?php endforeach; ?>
+                                    </tbody>
+                                 </table>
+                              </div>
                            </div>
                         </div>
                      <?php endforeach; ?>
