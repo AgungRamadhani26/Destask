@@ -207,19 +207,19 @@
                             <?php if (session()->get('user_level') == "hod" || session()->get('user_level') == "admin") : ?>
                                 <a href="/pekerjaan/add_pekerjaan" class="btn btn-primary"><i class="bi bi-journal-plus"></i> Pekerjaan Baru</a>
                             <?php endif ?>
-                            <a href="/pekerjaan/daftar_pekerjaan" class="btn btn-info"><i class="bi bi-question-diamond"></i> Detail Pekerjaan</a>
+                            <a href="/pekerjaan/daftar_pekerjaan" class="btn btn-info"><i class="ri-file-info-line"></i> Detail Pekerjaan</a>
                             <a href="/pekerjaan/download_pekerjaan" class="btn btn-warning"><i class="bi bi-download"></i> Download Pekerjaan</a>
                         </div>
                         <div class="row mt-2">
                             <div class="col-12">
                                 <div class="input-group">
                                     <?php if (session()->get('user_level') == "staff" || session()->get('user_level') == "supervisi") : ?>
-                                        <button type="button" class="btn btn-primary me-2" style="border-radius: 5px; cursor:default; background-color: #007bff; border-color: #007bff;" onfocus="this.style.backgroundColor='#007bff'; this.style.borderColor='#007bff';">
+                                        <button type="button" class="btn btn-success me-2" style="border-radius: 5px; cursor:default; background-color: #28a745; border-color: #28a745;" onfocus="this.style.backgroundColor='#28a745'; this.style.borderColor='#28a745';">
                                             Poin anda bulan ini : <span class="badge text-bg-secondary"><?= $total_bobot_poin_bulan_ini ?></span>
                                         </button>
                                     <?php endif ?>
                                     <?php if (session()->get('user_level') == "supervisi") : ?>
-                                        <a href="/task/daftar_verifikasi_task" class="btn me-2 btn-secondary" style="border-radius: 5px"><i class="bi bi-patch-check"></i> Verifikasi Task</a>
+                                        <a href="/task/daftar_verifikasi_task" class="btn me-2 btn-primary" style="border-radius: 5px"><i class="bi bi-patch-check"></i> Verifikasi Task</a>
                                     <?php endif ?>
                                     <div class="input-group-append">
                                         <span class="input-group-text" id="search-addon">

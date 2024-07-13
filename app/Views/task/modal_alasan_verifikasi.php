@@ -19,7 +19,7 @@
                </div>
             </div>
             <div class="modal-footer">
-               <button type="button" class="btn btn-secondary tombol-tutup-user" data-bs-dismiss="modal">Tutup</button>
+               <button type="button" class="btn btn-secondary tombol-tutup-user" data-bs-dismiss="modal"><i class="bi bi-x-square"></i> Tutup</button>
             </div>
          </div>
       </div>

@@ -124,8 +124,8 @@
                         </p>
                      </div>
                      <div class="text-center">
-                        <a href="/kinerja/daftar_kinerja_karyawan/<?= $user['id_user'] ?>" class="btn btn-primary">Kembali ke daftar kinerja</a>
-                        <button type="submit" class="btn btn-primary">Lakukan Pengecekan</button>
+                        <a href="/kinerja/daftar_kinerja_karyawan/<?= $user['id_user'] ?>" class="btn btn-secondary"><i class="ri-arrow-left-line"></i> Kembali ke daftar kinerja</a>
+                        <button type="submit" class="btn btn-primary"><i class="ri-arrow-right-line"></i> Lakukan Pengecekan</button>
                      </div>
                   </div>
                </form>

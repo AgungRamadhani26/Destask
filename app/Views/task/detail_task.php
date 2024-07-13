@@ -178,7 +178,7 @@
                   </div>
                   <hr style="border-top: 3px solid black;">
                   <div class="text-center">
-                     <a href="<?= $_SERVER['HTTP_REFERER'] ?>" class="btn btn-primary">Tutup</a>
+                     <a href="<?= $_SERVER['HTTP_REFERER'] ?>" class="btn btn-secondary"><i class="bi bi-x-square"></i> Tutup</a>
                   </div>
                </div>
             </div>

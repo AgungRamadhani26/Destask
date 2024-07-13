@@ -413,20 +413,21 @@ class TaskModel extends Model
         foreach ($data_task_yang_harus_diverifikasi as $task) {
             $pekerjaanModel = new \App\Models\PekerjaanModel();
             $data_pekerjaan = $pekerjaanModel->getPekerjaan($task['id_pekerjaan']);
+            //Cek apakah pekerjaan ada atau tidak
+            if ($data_pekerjaan != null) {
+                // Hitung persentase pekerjaan selesai
+                $jumlah_semua_task_di_pekerjaan_ini = $this->countTaskAll_ByIdPekerjaan($task['id_pekerjaan']);
+                $jumlah_task_selesai_di_pekerjaan_ini = $this->countTaskSelesai_ByIdPekerjaan($task['id_pekerjaan']);
 
-            // Hitung persentase pekerjaan selesai
-            $jumlah_semua_task_di_pekerjaan_ini = $this->countTaskAll_ByIdPekerjaan($task['id_pekerjaan']);
-            $jumlah_task_selesai_di_pekerjaan_ini = $this->countTaskSelesai_ByIdPekerjaan($task['id_pekerjaan']);
-
-            if ($jumlah_semua_task_di_pekerjaan_ini > 0) {
-                $persentase_selesai = ($jumlah_task_selesai_di_pekerjaan_ini / $jumlah_semua_task_di_pekerjaan_ini) * 100;
-            } else {
-                $persentase_selesai = 0; // Jika tidak ada task, persentasenya 0
+                if ($jumlah_semua_task_di_pekerjaan_ini > 0) {
+                    $persentase_selesai = ($jumlah_task_selesai_di_pekerjaan_ini / $jumlah_semua_task_di_pekerjaan_ini) * 100;
+                } else {
+                    $persentase_selesai = 0; // Jika tidak ada task, persentasenya 0
+                }
+                $data_pekerjaan['persentase_pekerjaan_selesai'] = number_format($persentase_selesai, 2);
+                // Gunakan id_pekerjaan sebagai kunci untuk menghindari duplikasi
+                $result_pekerjaan[$task['id_pekerjaan']] = $data_pekerjaan;
             }
-            $data_pekerjaan['persentase_pekerjaan_selesai'] = number_format($persentase_selesai, 2);
-
-            // Gunakan id_pekerjaan sebagai kunci untuk menghindari duplikasi
-            $result_pekerjaan[$task['id_pekerjaan']] = $data_pekerjaan;
         }
         // Ubah array asosiatif kembali menjadi array numerik
         $result_pekerjaan = array_values($result_pekerjaan);

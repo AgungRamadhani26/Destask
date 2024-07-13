@@ -73,8 +73,8 @@
             </div>
             <div class="modal-footer">
                <p>Keterangan : <span style="color: red; font-size: 13px;">password dan username dari user baru akan sama dengan email secara default</span></p>
-               <button type="button" class="btn btn-secondary tombol-tutup-user" data-bs-dismiss="modal">Tutup</button>
-               <button type="submit" class="btn btn-primary">Simpan</button>
+               <button type="button" class="btn btn-secondary tombol-tutup-user" data-bs-dismiss="modal"><i class="bi bi-x-square"></i> Tutup</button>
+               <button type="submit" class="btn btn-primary"><i class="bi bi-floppy"></i> Simpan</button>
             </div>
          </form>
       </div>
