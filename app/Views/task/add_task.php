@@ -119,7 +119,7 @@
                      </div>
                      <hr style="border-top: 3px solid black;">
                      <div class="text-center">
-                        <button type="submit" class="btn btn-primary" <?= ($dapat_tambah_task == false) ? 'disabled' : '' ?>>Simpan</button>
+                        <button type="submit" class="btn btn-primary" <?= ($dapat_tambah_task == false) ? 'disabled' : '' ?>><i class="bi bi-floppy"></i> Simpan</button>
                      </div>
                   </div>
                </form>

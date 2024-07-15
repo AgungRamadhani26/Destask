@@ -346,15 +346,15 @@ class TaskModel extends Model
 
 
 
-    //Fungsi untuk mendapatkan data task menunggu verifikasi berdasarkan id pekerjaan (untuk staff pm, hod, admin, direksi)
-    public function get_TaskMenungguVerifikasi_ByIdPekerjaan($id_pekerjaan)
+    //Fungsi untuk mendapatkan data task menunggu verifikasi berdasarkan id pekerjaan (untuk staff pm, supervisi pm, hod, admin, direksi)
+    public function getTaskMenungguVerifikasi_ByIdPekerjaan($id_pekerjaan)
     {
         return $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'id_status_task' => 2])
             ->orderBy('tgl_planing', 'ASC')
             ->findAll();
     }
-    //Fungsi untuk mendapatkan data task menunggu verifikasi berdasarkan id pekerjaan, dan id user (untuk staff non pm)
-    public function get_TaskMenungguVerifikasi_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
+    //Fungsi untuk mendapatkan data task menunggu verifikasi berdasarkan id pekerjaan, dan id user (untuk staff non pm, supervisi non pm)
+    public function getTaskMenungguVerifikasi_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
     {
         return $this->where(['id_pekerjaan' => $id_pekerjaan, 'id_user' => $id_user, 'deleted_at' => null, 'id_status_task' => 2])
             ->orderBy('tgl_planing', 'ASC')
@@ -372,8 +372,21 @@ class TaskModel extends Model
         }
         return $query->orderBy('tgl_planing', 'ASC')->findAll();
     }
-    //Fungsi untuk mendapatkan data task menunggu verifikasi (untuk supervisi non pm)
-    public function get_TaskMenungguVerifikasi_ByIdPekerjaanIdUsergroupIdUser($id_pekerjaan, $id_usergroup, $id_user)
+    // Fungsi untuk menghitung jumlah task menunggu verifikasi berdasarkan id pekerjaan (untuk staff pm, supervisi pm, hod, admin, direksi)
+    public function countTaskMenungguVerifikasi_ByIdPekerjaan($id_pekerjaan)
+    {
+        return count($this->getTaskMenungguVerifikasi_ByIdPekerjaan($id_pekerjaan));
+    }
+    // Fungsi untuk menghitung jumlah task menunggu verifikasi berdasarkan id pekerjaan dan id user (untuk staff non pm, supervisi non pm)
+    public function countTaskMenungguVerifikasi_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
+    {
+        return count($this->getTaskMenungguVerifikasi_ByIdPekerjaanIdUser($id_pekerjaan, $id_user));
+    }
+
+
+
+    // Fungsi untuk mendapatkan data task menunggu verifikasi untuk supervisi agar dapat memverifikasi task
+    public function get_TaskMenungguVerifikasi_ByIdUsergroupIdUser($id_usergroup, $id_user)
     {
         $userModel = new \App\Models\UserModel();
         // Dapatkan semua user yang memiliki id user group yang sama dan bukan user yang sedang login
@@ -385,90 +398,60 @@ class TaskModel extends Model
             }
         }
         // Dapatkan semua task yang memiliki id pekerjaan yang sama dan id_usergroup yang sama
-        $result = [];
+        $data_task_yang_harus_diverifikasi = [];
         foreach ($id_users_except_currentUser as $idUser) {
             $data_tasks = $this->where([
                 'id_user' => $idUser,
-                'id_pekerjaan' => $id_pekerjaan,
                 'deleted_at' => null,
                 'id_status_task' => 2
             ])->orderBy('tgl_planing', 'ASC')->findAll();
 
             // Gabungkan hasil task ke dalam array result
-            $result = array_merge($result, $data_tasks);
+            $data_task_yang_harus_diverifikasi = array_merge($data_task_yang_harus_diverifikasi, $data_tasks);
         }
-        return $result;
-    }
-    //Fungsi untuk mendapatkan data task menunggu verifikasi berdasarkan id pekerjaan, id user, dan id_kategori_task ( untuk supervisi non pm)
-    public function getFiltered_TaskMenungguVerifikasi_ByIdPekerjaanIdUsergroupIdUserKategoriTask($id_pekerjaan, $id_usergroup, $id_user, $id_kategori_task)
-    {
-        $userModel = new \App\Models\UserModel();
-        // Dapatkan semua user yang memiliki id user group yang sama dan bukan user yang sedang login
-        $users_in_usergroup = $userModel->where('id_usergroup', $id_usergroup)->findAll();
-        $id_users_except_currentUser = [];
-        foreach ($users_in_usergroup as $user) {
-            if ($user['id_user'] != $id_user) {
-                $id_users_except_currentUser[] = $user['id_user'];
-            }
-        }
-        // Dapatkan semua task yang memiliki id pekerjaan yang sama dan id_usergroup yang sama
-        $result = [];
-        if ($id_kategori_task !== '') {
-            foreach ($id_users_except_currentUser as $idUser) {
-                $data_tasks = $this->where([
-                    'id_user' => $idUser,
-                    'id_pekerjaan' => $id_pekerjaan,
-                    'id_kategori_task' => $id_kategori_task,
-                    'deleted_at' => null,
-                    'id_status_task' => 2
-                ])->orderBy('tgl_planing', 'ASC')->findAll();
+        $result_pekerjaan = [];
+        foreach ($data_task_yang_harus_diverifikasi as $task) {
+            $pekerjaanModel = new \App\Models\PekerjaanModel();
+            $data_pekerjaan = $pekerjaanModel->getPekerjaan($task['id_pekerjaan']);
+            //Cek apakah pekerjaan ada atau tidak
+            if ($data_pekerjaan != null) {
+                // Hitung persentase pekerjaan selesai
+                $jumlah_semua_task_di_pekerjaan_ini = $this->countTaskAll_ByIdPekerjaan($task['id_pekerjaan']);
+                $jumlah_task_selesai_di_pekerjaan_ini = $this->countTaskSelesai_ByIdPekerjaan($task['id_pekerjaan']);
 
-                // Gabungkan hasil task ke dalam array result
-                $result = array_merge($result, $data_tasks);
-            }
-        } else {
-            foreach ($id_users_except_currentUser as $idUser) {
-                $data_tasks = $this->where([
-                    'id_user' => $idUser,
-                    'id_pekerjaan' => $id_pekerjaan,
-                    'deleted_at' => null,
-                    'id_status_task' => 2
-                ])->orderBy('tgl_planing', 'ASC')->findAll();
-
-                // Gabungkan hasil task ke dalam array result
-                $result = array_merge($result, $data_tasks);
+                if ($jumlah_semua_task_di_pekerjaan_ini > 0) {
+                    $persentase_selesai = ($jumlah_task_selesai_di_pekerjaan_ini / $jumlah_semua_task_di_pekerjaan_ini) * 100;
+                } else {
+                    $persentase_selesai = 0; // Jika tidak ada task, persentasenya 0
+                }
+                $data_pekerjaan['persentase_pekerjaan_selesai'] = number_format($persentase_selesai, 2);
+                // Gunakan id_pekerjaan sebagai kunci untuk menghindari duplikasi
+                $result_pekerjaan[$task['id_pekerjaan']] = $data_pekerjaan;
             }
         }
-        return $result;
+        // Ubah array asosiatif kembali menjadi array numerik
+        $result_pekerjaan = array_values($result_pekerjaan);
+        $data_pekerjaan_dan_task_yang_harus_diverifikasi = [
+            'data_pekerjaan' => $result_pekerjaan,
+            'data_task' => $data_task_yang_harus_diverifikasi
+        ];
+        return $data_pekerjaan_dan_task_yang_harus_diverifikasi;
     }
-    //Fungsi untuk mendapatkan data task menunggu verifikasi (untuk supervisi pm)
-    public function get_TaskMenungguVerifikasi_ByIdPekerjaanIdUserPm($id_pekerjaan, $id_user)
+    //Fungsi untuk mendapatkan data task yang ditolak oleh supervisi, berdasarkan id user dari verifikator supervisi
+    public function get_TaskDitolak_ByVrifikatorSupervisi($verifikator)
     {
-        return $this->where(['id_pekerjaan' => $id_pekerjaan, 'deleted_at' => null, 'id_status_task' => 2])
-            ->where('id_user !=', $id_user)
-            ->orderBy('tgl_planing', 'ASC')
+        return $this->where(['verifikator' => $verifikator, 'deleted_at' => null, 'id_status_task' => 4])
+            ->orderBy('updated_at', 'ASC')
             ->findAll();
     }
-    // Fungsi untuk menghitung jumlah task menunggu verifikasi berdasarkan id pekerjaan (untuk staff pm, hod, admin, direksi)
-    public function count_TaskMenungguVerifikasi_ByIdPekerjaan($id_pekerjaan)
+    //Fungsi untuk mendapatkan data task yang sudah verifikasi oleh supervisi, berdasarkan id user dari verifikator supervisi
+    public function get_TaskVerifikasi_ByVrifikatorSupervisi($verifikator)
     {
-        return count($this->get_TaskMenungguVerifikasi_ByIdPekerjaan($id_pekerjaan));
+        return $this->where(['verifikator' => $verifikator, 'deleted_at' => null, 'id_status_task' => 3])
+            ->orderBy('updated_at', 'ASC')
+            ->findAll();
     }
-    // Fungsi untuk menghitung jumlah task menunggu verifikasi berdasarkan id pekerjaan dan id user (untuk staff non pm)
-    public function count_TaskMenungguVerifikasi_ByIdPekerjaanIdUser($id_pekerjaan, $id_user)
-    {
-        return count($this->get_TaskMenungguVerifikasi_ByIdPekerjaanIdUser($id_pekerjaan, $id_user));
-    }
-    //Fungsi untuk menghitung jumlah task menunggu verifikasi (untuk supervisi non pm)
-    public function count_TaskMenungguVerifikasi_ByIdPekerjaanIdUsergroupIdUser($id_pekerjaan, $id_usergroup, $id_user)
-    {
-        return count($this->get_TaskMenungguVerifikasi_ByIdPekerjaanIdUsergroupIdUser($id_pekerjaan, $id_usergroup, $id_user));
-    }
-    //Fungsi untuk menghitung jumlah task menunggu verifikasi (untuk supervisi pm)
-    public function count_TaskMenungguVerifikasi_ByIdPekerjaanIdUserPm($id_pekerjaan, $id_user)
-    {
-        return count($this->get_TaskMenungguVerifikasi_ByIdPekerjaanIdUserPm($id_pekerjaan, $id_user));
-    }
+
 
 
 

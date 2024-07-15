@@ -379,7 +379,7 @@
                   </table>
                   <hr class="mt-4 mb-4" style="border-top: 3px solid black;">
                   <div class="text-center">
-                     <a href="/kinerja/daftar_kinerja_karyawan/<?= $user['id_user'] ?>" class="btn btn-primary">Tutup</a>
+                     <a href="/kinerja/daftar_kinerja_karyawan/<?= $user['id_user'] ?>" class="btn btn-secondary"><i class="bi bi-x-square"></i> Tutup</a>
                   </div>
                </div>
             </div>

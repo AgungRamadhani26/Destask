@@ -154,7 +154,7 @@
                                     <input type="hidden" name="id_task_terima" value="<?= $task['id_task'] ?>">
                                     <button type="submit" class="btn btn-success"><i class="bi bi-check2-circle"></i> Terima</button>
                                  </form>
-                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalalasan_verifikasi_ditolak"><i class="bi bi-x-circle"></i> Tolak</button>
+                                 <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalalasan_verifikasi_ditolak"><i class="bi bi-x-circle"></i> Tolak</button>
                               </div>
                            </div>
                         </div>

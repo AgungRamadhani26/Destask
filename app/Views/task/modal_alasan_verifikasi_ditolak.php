@@ -33,8 +33,8 @@
                </div>
             </div>
             <div class="modal-footer">
-               <button type="button" class="btn btn-secondary tombol-alasan-penolakan" data-bs-dismiss="modal">Tutup</button>
-               <button type="submit" class="btn btn-primary">Simpan</button>
+               <button type="button" class="btn btn-secondary tombol-alasan-penolakan" data-bs-dismiss="modal"><i class="bi bi-x-square"></i> Tutup</button>
+               <button type="submit" class="btn btn-primary"><i class="bi bi-floppy"></i> Simpan</button>
             </div>
          </form>
       </div>

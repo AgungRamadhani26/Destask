@@ -90,7 +90,7 @@
                   </div>
                   <hr style="border-top: 3px solid black;">
                   <div class="text-center">
-                     <button type="submit" class="btn btn-primary">Simpan</button>
+                     <button type="submit" class="btn btn-primary"><i class="bi bi-floppy"></i> Simpan</button>
                   </div>
                </form>
             </div>

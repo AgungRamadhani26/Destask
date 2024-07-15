@@ -332,7 +332,7 @@
                   <p>Keterangan: <span style="color: red;">* Wajib diisi</span></p>
                </div>
                <div class="text-center">
-                  <a href="/dashboard" class="btn btn-primary">Tutup</a>
+                  <a href="/dashboard" class="btn btn-secondary"><i class="bi bi-x-square"></i> Tutup</a>
                </div>
             </div>
          </div>

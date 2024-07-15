@@ -327,7 +327,7 @@
                   </div>
                   <hr style="border-top: 3px solid black;">
                   <div class="text-center">
-                     <a href="/pekerjaan/daftar_pekerjaan" class="btn btn-primary">Tutup</a>
+                     <a href="/pekerjaan/daftar_pekerjaan" class="btn btn-secondary"><i class="bi bi-x-square"></i> Tutup</a>
                   </div>
                </form>
             </div>

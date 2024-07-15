@@ -7,18 +7,6 @@
 
 <section class="section">
    <div class="row">
-      <div class="col-lg-12">
-         <div class="card">
-            <div class="card_title_firter_poin_harian bg-warning">
-               <h4 class="card-title" style="color: white;">Keterangan</h4>
-            </div>
-            <div class="card-body">
-               Saat memilih personil jika muncul 2 nama personil yang sama dengan role personil yang berbeda, seperti contoh dibawah :<br>
-               <b>-Agung Ramadhani-backend_web</b>, <b>-Agung Ramadhani-frontend_web</b>. Maka ketika pengguna memilih salah satunya,
-               task akan tetap ter-assign ke personil yang sama.
-            </div>
-         </div>
-      </div>
 
       <div class="col-lg-4">
          <div class="card">
@@ -76,26 +64,7 @@
                                  <?= session()->getFlashdata('err_kategori_task_add_task_e') ?>
                               </div>
                            </div>
-                           <div class="col-md-4 mb-3">
-                              <label for="personil_add_task_e" class="form-label" style="font-weight: 600;">Personil</label>
-                              <select class="form-control <?= (session()->getFlashdata('err_personil_add_task_e')) ? 'is-invalid' : ''; ?>" name="personil_add_task_e" id="personil_add_task_e">
-                                 <option value="">-- Pilih personil --</option>
-                                 <?php
-                                 $selectedpersonil = old('personil_add_task_e') ?? $task['id_user'] ?? '';
-                                 ?>
-                                 <?php foreach ($personil as $per) : ?>
-                                    <?php foreach ($user as $usr) : ?>
-                                       <?php if ($per['id_user'] == $usr['id_user']) : ?>
-                                          <option value="<?= $usr['id_user'] ?>" <?= ($usr['id_user'] == $selectedpersonil) ? 'selected' : '' ?>><?= $usr['nama'] . '-' . $per['role_personil'] ?></option>
-                                       <?php endif; ?>
-                                    <?php endforeach; ?>
-                                 <?php endforeach; ?>
-                              </select>
-                              <div class="invalid-feedback">
-                                 <?= session()->getFlashdata('err_personil_add_task_e') ?>
-                              </div>
-                           </div>
-                           <div class=" col-md-4 mb-3">
+                           <div class=" col-md-8 mb-3">
                               <label for="persentase_selesai_add_task_e" class="form-label" style="font-weight: 600;">Persentase Selesai</label>
                               <input type="text" class="form-control <?= (session()->getFlashdata('err_persentase_selesai_add_task_e')) ? 'is-invalid' : ''; ?>" name="persentase_selesai_add_task_e" id="persentase_selesai_add_task_e" value="<?= old('persentase_selesai_add_task_e') ?? $task['persentase_selesai'] ?? '' ?>">
                               <div class=" invalid-feedback">
@@ -120,7 +89,7 @@
                      </div>
                      <hr style="border-top: 3px solid black;">
                      <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="submit" class="btn btn-primary"><i class="bi bi-floppy"></i> Simpan</button>
                      </div>
                   </div>
                </form>

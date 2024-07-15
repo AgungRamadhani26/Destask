@@ -71,8 +71,8 @@
                </div>
             </div>
             <div class="modal-footer">
-               <button type="button" class="btn btn-secondary tombol-tutup-bobot-kategori-task_e" data-bs-dismiss="modal" onclick="resetForm_bobot_kategori_task()">Tutup</button>
-               <button type="submit" class="btn btn-primary">Simpan</button>
+               <button type="button" class="btn btn-secondary tombol-tutup-bobot-kategori-task_e" data-bs-dismiss="modal" onclick="resetForm_bobot_kategori_task()"><i class="bi bi-x-square"></i> Tutup</button>
+               <button type="submit" class="btn btn-primary"><i class="bi bi-floppy"></i> Simpan</button>
             </div>
          </form>
       </div>
