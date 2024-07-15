@@ -77,148 +77,11 @@ class PekerjaanController extends ResourceController
         $result = [];
     
         if ($pekerjaan) {
-            $idPekerjaan = array_column($pekerjaan, 'id_pekerjaan');
-            $data = $model->whereIn('id_pekerjaan', $idPekerjaan)->findAll();
-            //data tambahan
-            $taskModel = new $this->modelTask();
-            $statusModel = new $this->modelStatusPekerjaan();
-            $kategoriModel = new $this->modelKategoriPePekerjaan();
-            $personilModel = new $this->modelPersonil();
-            $userModel = new $this->modelUser();
-            foreach ($data as $pekerjaanItem) {
-                $status = $statusModel->find($pekerjaanItem['id_status_pekerjaan']);
-                $kategori = $kategoriModel->find($pekerjaanItem['id_kategori_pekerjaan']);
-                $personil = $personilModel->where(['id_pekerjaan' => $pekerjaanItem['id_pekerjaan']])->findAll();
-                $data_tambahan = [
-                    'nama_status_pekerjaan' => $status['nama_status_pekerjaan'],
-                    'nama_kategori_pekerjaan' => $kategori['nama_kategori_pekerjaan']
-                ];
-                $pm = [];
-                $desainer = [];
-                $backend_web = [];
-                $backend_mobile = [];
-                $frontend_web = [];
-                $frontend_mobile = [];
-                $tester = [];
-                $admin = [];
-                $helpdesk = [];
-                foreach ($personil as $personilItem) {
-                    $user = $userModel->find($personilItem['id_user']);
-                    if ($personilItem['role_personil'] === 'project_manager') {
-                        $pm[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    } elseif ($personilItem['role_personil'] === 'desainer') {
-                        $desainer[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    } elseif ($personilItem['role_personil'] === 'backend_web') {
-                        $backend_web[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    } elseif ($personilItem['role_personil'] === 'backend_mobile') {
-                        $backend_mobile[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    } elseif ($personilItem['role_personil'] === 'frontend_web') {
-                        $frontend_web[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    } elseif ($personilItem['role_personil'] === 'frontend_mobile') {
-                        $frontend_mobile[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    } else if ($personilItem['role_personil'] === 'tester') {
-                        $tester[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    } else if ($personilItem['role_personil'] === 'admin') {
-                        $admin[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    } else if ($personilItem['role_personil'] === 'helpdesk') {
-                        $helpdesk[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    }
+            foreach ($pekerjaan as $pekerjaanItem) {
+                $dataTambahan = $model->dataTambahanPekerjaan($pekerjaanItem['id_pekerjaan']);
+                if ($dataTambahan !== null) {
+                    array_push($result, $dataTambahan);
                 }
-                
-                $data_tambahan['pm'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $pm);
-                
-                $data_tambahan['desainer'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $desainer);
-                
-                $data_tambahan['backend_web'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $backend_web);
-                $data_tambahan['backend_mobile'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $backend_mobile);
-                $data_tambahan['frontend_web'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $frontend_web);
-                $data_tambahan['frontend_mobile'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $frontend_mobile);
-                $data_tambahan['tester'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $tester);
-                $data_tambahan['admin'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $admin);
-                $data_tambahan['helpdesk'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $helpdesk);
-                
-                // Menghitung jumlah task untuk pekerjaan ini
-                // Menghitung jumlah task selesai untuk pekerjaan ini
-                #id task = 2 = selesai
-                // Menghitung jumlah task selesai untuk pekerjaan ini
-                $jumlah_task_selesai = $taskModel
-                ->where([
-                    'id_pekerjaan' => $pekerjaanItem['id_pekerjaan'],
-                    'id_status_task' => '3',
-                    'deleted_at' => null
-                ])
-                ->countAllResults();
-            
-            // Menghitung jumlah task total untuk pekerjaan ini
-                $jumlah_task_total = $taskModel
-                ->where(['id_pekerjaan' => $pekerjaanItem['id_pekerjaan'], 'deleted_at' => null])
-                ->countAllResults();
-                // Menghitung persentase task yang selesai
-                $persentase_selesai = ($jumlah_task_total > 0) ? ($jumlah_task_selesai / $jumlah_task_total) * 100 : 0;
-
-                // Format persentase selesai menjadi 3 angka saja (1 digit setelah desimal)
-                $persentase_selesai = number_format($persentase_selesai, 1);
-
-                $data_tambahan['persentase_task_selesai'] = $persentase_selesai;
-
-
-
-                $pekerjaanItem['data_tambahan'] = $data_tambahan;
-                array_push($result, $pekerjaanItem);
             }
             return $this->response->setJSON($result);
         } else {
@@ -238,145 +101,11 @@ class PekerjaanController extends ResourceController
         $pekerjaan = $personilModel->where('id_user', $iduser)->orderBy('id_pekerjaan', 'DESC')->findAll();
         if ($pekerjaan) {
             $idPekerjaan = array_column($pekerjaan, 'id_pekerjaan');
-            $data = $pekerjaanModel->whereIn('id_pekerjaan', $idPekerjaan)->findAll();
-            //data tambahan
-
-            foreach ($data as $pekerjaanItem) {
-                $status = $statusModel->find($pekerjaanItem['id_status_pekerjaan']);
-                $kategori = $kategoriModel->find($pekerjaanItem['id_kategori_pekerjaan']);
-                $personil = $personilModel->where(['id_pekerjaan' => $pekerjaanItem['id_pekerjaan']])->findAll();
-                $data_tambahan = [
-                    'nama_status_pekerjaan' => $status['nama_status_pekerjaan'],
-                    'nama_kategori_pekerjaan' => $kategori['nama_kategori_pekerjaan']
-                    
-                ];
-                $pm = [];
-                $desainer = [];
-                $backend_web = [];
-                $backend_mobile = [];
-                $frontend_web = [];
-                $frontend_mobile = [];
-                $tester = [];
-                $admin = [];
-                $helpdesk = [];
-                foreach ($personil as $personilItem) {
-                    $user = $userModel->find($personilItem['id_user']);
-                    if ($personilItem['role_personil'] === 'project_manager') {
-                        $pm[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    } else if ($personilItem['role_personil'] === 'desainer') {
-                        $desainer[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    } else if ($personilItem['role_personil'] === 'backend_web') {
-                        $backend_web[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    } else if ($personilItem['role_personil'] === 'backend_mobile') {
-                        $backend_mobile[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    } else if ($personilItem['role_personil'] === 'frontend_web') {
-                        $frontend_web[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    } else if ($personilItem['role_personil'] === 'frontend_mobile') {
-                        $frontend_mobile[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    } else if ($personilItem['role_personil'] === 'tester') {
-                        $tester[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    } else if ($personilItem['role_personil'] === 'admin') {
-                        $admin[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    } else if ($personilItem['role_personil'] === 'helpdesk') {
-                        $helpdesk[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    }
+            foreach ($idPekerjaan as $id) {
+                $pekerjaanItem = $pekerjaanModel->dataPekerjaanTambahan($id);
+                if ($pekerjaanItem) {
+                    $result[] = $pekerjaanItem;
                 }
-                
-                $data_tambahan['pm'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $pm);
-                
-                $data_tambahan['desainer'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $desainer);
-                
-                $data_tambahan['backend_web'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $backend_web);
-                $data_tambahan['backend_mobile'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $backend_mobile);
-                $data_tambahan['frontend_web'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $frontend_web);
-                $data_tambahan['frontend_mobile'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $frontend_mobile);
-                $data_tambahan['tester'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $tester);
-                $data_tambahan['admin'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $admin);
-                $data_tambahan['helpdesk'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $helpdesk);
-
-                // Menghitung jumlah task untuk pekerjaan ini
-                // Menghitung jumlah task selesai untuk pekerjaan ini
-                #id task = 2 = selesai
-                // Menghitung jumlah task selesai untuk pekerjaan ini
-                $jumlah_task_selesai = $taskModel
-                ->where([
-                    'id_pekerjaan' => $pekerjaanItem['id_pekerjaan'],
-                    'id_status_task' => '3',
-                    'deleted_at' => null
-                ])
-                ->countAllResults();
-            
-            // Menghitung jumlah task total untuk pekerjaan ini
-                $jumlah_task_total = $taskModel
-                ->where(['id_pekerjaan' => $pekerjaanItem['id_pekerjaan'], 'deleted_at' => null])
-                
-                ->countAllResults();
-                // Menghitung persentase task yang selesai
-                $persentase_selesai = ($jumlah_task_total > 0) ? ($jumlah_task_selesai / $jumlah_task_total) * 100 : 0;
-
-                // Format persentase selesai menjadi 3 angka saja (1 digit setelah desimal)
-                $persentase_selesai = number_format($persentase_selesai, 1);
-
-                $data_tambahan['persentase_task_selesai'] = $persentase_selesai;
-
-
-
-                $pekerjaanItem['data_tambahan'] = $data_tambahan;
-                array_push($result, $pekerjaanItem);
             }
             return $this->response->setJSON($result);
         } else {
@@ -437,13 +166,10 @@ class PekerjaanController extends ResourceController
     }
 
     public function showPekerjaanVerifikasi($iduser)
-{
-    $modelTask = new $this->modelTask();
-    $modelUser = new $this->modelUser();
-    $pekerjaanModel = new $this->modelPekerjaan();
-    $statusModel = new $this->modelStatusPekerjaan();
-    $kategoriModel = new $this->modelKategoriPePekerjaan();
-    $modelPersonil = new $this->modelPersonil();
+    {
+        $model = new $this->modelPekerjaan();
+        $modelTask = new $this->modelTask();
+        $modelUser = new $this->modelUser();
 
         // Dapatkan id user group dari user yang login
         $user = $modelUser->getUserById($iduser);
@@ -451,333 +177,66 @@ class PekerjaanController extends ResourceController
 
         // Dapatkan semua user yang memiliki id user group yang sama dan bukan user yang login
         $usersInGroup = $modelUser->where('id_usergroup', $idUserGroup)->findAll();
-        $usersExceptCurrentUser = [];
-        foreach ($usersInGroup as $user) {
-            if ($user['id_user'] != $iduser) {
-                $usersExceptCurrentUser[] = $user['id_user'];
+        $usersExceptCurrentUser = array_filter($usersInGroup, fn($user) => $user['id_user'] != $iduser);
+
+        $idPekerjaanList = [];
+        foreach ($usersExceptCurrentUser as $user) {
+            $tasks = $modelTask->where([
+                'id_user' => $user['id_user'],
+                'id_status_task' => 2,
+            ])->findAll();
+
+            $idPekerjaan = array_column($tasks, 'id_pekerjaan');
+            $idPekerjaanList = array_merge($idPekerjaanList, $idPekerjaan);
+        }
+
+        $idPekerjaanList = array_unique($idPekerjaanList);
+
+        $result = [];
+        foreach ($idPekerjaanList as $idPekerjaan) {
+            $pekerjaanItem = $model->dataTambahanPekerjaan($idPekerjaan);
+            if ($pekerjaanItem !== null) {
+                $result[] = $pekerjaanItem;
             }
         }
 
-    $result = [];
-    foreach ($usersExceptCurrentUser as $idUser) {
-        $data = $modelTask->where([
-            'id_user' => $idUser,
-            'id_status_task' => 2,
-            // 'persentase_selesai' => '100',
-        ])->findAll();
-        // Ambil id pekerjaan dari task yang ada
-        $idPekerjaan = [];
-        foreach ($data as $taskItem) {
-            $idPekerjaan[] = $taskItem['id_pekerjaan'];
-        }
-
-        if (count($idPekerjaan) > 0) {
-            $data = $pekerjaanModel->whereIn('id_pekerjaan', $idPekerjaan)->findAll();
-            // Data tambahan
-            foreach ($data as $pekerjaanItem) {
-                $status = $statusModel->find($pekerjaanItem['id_status_pekerjaan']);
-                $kategori = $kategoriModel->find($pekerjaanItem['id_kategori_pekerjaan']);
-                $personil = $modelPersonil->where(['id_pekerjaan' => $pekerjaanItem['id_pekerjaan']])->findAll();
-                $data_tambahan = [
-                    'nama_status_pekerjaan' => $status['nama_status_pekerjaan'],
-                    'nama_kategori_pekerjaan' => $kategori['nama_kategori_pekerjaan']
-                    
-                ];
-                $pm = [];
-                $desainer = [];
-                $backend_web = [];
-                $backend_mobile = [];
-                $frontend_web = [];
-                $frontend_mobile = [];
-                $tester = [];
-                $admin = [];
-                $helpdesk = [];
-                foreach ($personil as $personilItem) {
-                    $user = $modelUser->find($personilItem['id_user']);
-                    if ($personilItem['role_personil'] === 'project_manager') {
-                        $pm[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    } else if ($personilItem['role_personil'] === 'desainer') {
-                        $desainer[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    } else if ($personilItem['role_personil'] === 'backend_web') {
-                        $backend_web[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    } else if ($personilItem['role_personil'] === 'backend_mobile') {
-                        $backend_mobile[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    } else if ($personilItem['role_personil'] === 'frontend_web') {
-                        $frontend_web[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    } else if ($personilItem['role_personil'] === 'frontend_mobile') {
-                        $frontend_mobile[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    } else if ($personilItem['role_personil'] === 'tester') {
-                        $tester[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    } else if ($personilItem['role_personil'] === 'admin') {
-                        $admin[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    } else if ($personilItem['role_personil'] === 'helpdesk') {
-                        $helpdesk[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    }
-                }
-                
-                $data_tambahan['pm'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $pm);
-                
-                $data_tambahan['desainer'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $desainer);
-                
-                $data_tambahan['backend_web'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $backend_web);
-                $data_tambahan['backend_mobile'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $backend_mobile);
-                $data_tambahan['frontend_web'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $frontend_web);
-                $data_tambahan['frontend_mobile'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $frontend_mobile);
-                $data_tambahan['tester'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $tester);
-                $data_tambahan['admin'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $admin);
-                $data_tambahan['helpdesk'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $helpdesk);
-
-                // Menghitung jumlah task untuk pekerjaan ini
-                // Menghitung jumlah task selesai untuk pekerjaan ini
-                #id task = 2 = selesai
-                // Menghitung jumlah task selesai untuk pekerjaan ini
-                $jumlah_task_selesai = $modelTask
-                ->where([
-                    'id_pekerjaan' => $pekerjaanItem['id_pekerjaan'],
-                    'id_status_task' => '3',
-                    'deleted_at' => null
-                ])
-                ->countAllResults();
-            
-            // Menghitung jumlah task total untuk pekerjaan ini
-                $jumlah_task_total = $modelTask
-                ->where(['id_pekerjaan' => $pekerjaanItem['id_pekerjaan'], 'deleted_at' => null])
-                
-                ->countAllResults();
-            
-                // Menghitung persentase task yang selesai
-                $persentase_selesai = ($jumlah_task_total > 0) ? ($jumlah_task_selesai / $jumlah_task_total) * 100 : 0;
-
-                // Format persentase selesai menjadi 3 angka saja (1 digit setelah desimal)
-                $persentase_selesai = number_format($persentase_selesai, 1);
-
-                $data_tambahan['persentase_task_selesai'] = $persentase_selesai;
-
-
-
-
-                $pekerjaanItem['data_tambahan'] = $data_tambahan;
-                array_push($result, $pekerjaanItem);
-            }
-        }
+        return $this->response->setJSON($result);
     }
-    return $this->response->setJSON($result);
-    }  
 
     public function showPekerjaanVerifikator($iduser)
-    {
-        // Membuat instance dari model PekerjaanModel dan PersonilModel
-        $pekerjaanModel = new $this->modelPekerjaan();
-        $personilModel = new $this->modelPersonil();
-        $userModel = new $this->modelUser();
-        $statusModel = new $this->modelStatusPekerjaan();
-        $kategoriModel = new $this->modelKategoriPePekerjaan();
-        $taskModel = new $this->modelTask();
-        $result = [];
+        {
+            $modelTask = new $this->modelTask();
+            $modelUser = new $this->modelUser();
+            $pekerjaanModel = new $this->modelPekerjaan();
 
-        //jika id user = role personil maka id pekerjaan dimasukan ke pekerjaan
-        $pekerjaan = $personilModel->where('verifikator', $iduser)->orderBy('id_pekerjaan', 'DESC')->findAll();
-        if ($pekerjaan) {
-            $idPekerjaan = array_column($pekerjaan, 'id_pekerjaan');
-            $data = $pekerjaanModel->whereIn('id_pekerjaan', $idPekerjaan)->findAll();
-            //data tambahan
+            // Dapatkan id user group dari user yang login
+            $user = $modelUser->getUserById($iduser);
+            $idUserGroup = $user['id_usergroup'];
 
-            foreach ($data as $pekerjaanItem) {
-                $status = $statusModel->find($pekerjaanItem['id_status_pekerjaan']);
-                $kategori = $kategoriModel->find($pekerjaanItem['id_kategori_pekerjaan']);
-                $personil = $personilModel->where(['id_pekerjaan' => $pekerjaanItem['id_pekerjaan']])->findAll();
-                $data_tambahan = [
-                    'nama_status_pekerjaan' => $status['nama_status_pekerjaan'],
-                    'nama_kategori_pekerjaan' => $kategori['nama_kategori_pekerjaan']
-                    
-                ];
-                $pm = [];
-                $desainer = [];
-                $backend_web = [];
-                $backend_mobile = [];
-                $frontend_web = [];
-                $frontend_mobile = [];
-                $tester = [];
-                $admin = [];
-                $helpdesk = [];
-                foreach ($personil as $personilItem) {
-                    $user = $userModel->find($personilItem['id_user']);
-                    if ($personilItem['role_personil'] === 'project_manager') {
-                        $pm[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    } else if ($personilItem['role_personil'] === 'desainer') {
-                        $desainer[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    } else if ($personilItem['role_personil'] === 'backend_web') {
-                        $backend_web[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    } else if ($personilItem['role_personil'] === 'backend_mobile') {
-                        $backend_mobile[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    } else if ($personilItem['role_personil'] === 'frontend_web') {
-                        $frontend_web[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    } else if ($personilItem['role_personil'] === 'frontend_mobile') {
-                        $frontend_mobile[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    } else if ($personilItem['role_personil'] === 'tester') {
-                        $tester[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    } else if ($personilItem['role_personil'] === 'admin') {
-                        $admin[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
-                    } else if ($personilItem['role_personil'] === 'helpdesk') {
-                        $helpdesk[] = [
-                            'id_user' => $user['id_user'],
-                            'nama' => $user['nama'],
-                            'role_personil' => $personilItem['role_personil'],
-                        ];
+            // Dapatkan semua user yang memiliki id user group yang sama dan bukan user yang login
+            $usersInGroup = $modelUser->where('id_usergroup', $idUserGroup)->findAll();
+            $usersExceptCurrentUser = [];
+            foreach ($usersInGroup as $user) {
+                if ($user['id_user'] != $iduser) {
+                    $usersExceptCurrentUser[] = $user['id_user'];
+                }
+            }
+
+            $result = [];
+            foreach ($usersExceptCurrentUser as $idUser) {
+                $tasks = $modelTask->where(['verifikator' => $idUser])->findAll();
+                $idPekerjaan = array_unique(array_column($tasks, 'id_pekerjaan'));
+
+                if (count($idPekerjaan) > 0) {
+                    foreach ($idPekerjaan as $id) {
+                        $pekerjaanItem = $pekerjaanModel->dataTambahanPekerjaan($id);
+                        if ($pekerjaanItem) {
+                            $result[] = $pekerjaanItem;
+                        }
                     }
                 }
-                
-                $data_tambahan['pm'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $pm);
-                
-                $data_tambahan['desainer'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $desainer);
-                
-                $data_tambahan['backend_web'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $backend_web);
-                $data_tambahan['backend_mobile'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $backend_mobile);
-                $data_tambahan['frontend_web'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $frontend_web);
-                $data_tambahan['frontend_mobile'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $frontend_mobile);
-                $data_tambahan['tester'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $tester);
-                $data_tambahan['admin'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $admin);
-                $data_tambahan['helpdesk'] = array_map(function($item) {
-                    return ['id_user' => $item['id_user'], 'nama' => $item['nama'], 'role_personil' => $item['role_personil']];
-                }, $helpdesk);
-
-                // Menghitung jumlah task untuk pekerjaan ini
-                // Menghitung jumlah task selesai untuk pekerjaan ini
-                #id task = 2 = selesai
-                // Menghitung jumlah task selesai untuk pekerjaan ini
-                $jumlah_task_selesai = $taskModel
-                ->where([
-                    'id_pekerjaan' => $pekerjaanItem['id_pekerjaan'],
-                    'id_status_task' => '3',
-                    'deleted_at' => null
-                ])
-                ->countAllResults();
-            
-            // Menghitung jumlah task total untuk pekerjaan ini
-                $jumlah_task_total = $taskModel
-                ->where(['id_pekerjaan' => $pekerjaanItem['id_pekerjaan'], 'deleted_at' => null])
-                
-                ->countAllResults();
-                // Menghitung persentase task yang selesai
-                $persentase_selesai = ($jumlah_task_total > 0) ? ($jumlah_task_selesai / $jumlah_task_total) * 100 : 0;
-
-                // Format persentase selesai menjadi 3 angka saja (1 digit setelah desimal)
-                $persentase_selesai = number_format($persentase_selesai, 1);
-
-                $data_tambahan['persentase_task_selesai'] = $persentase_selesai;
-
-
-
-                $pekerjaanItem['data_tambahan'] = $data_tambahan;
-                array_push($result, $pekerjaanItem);
             }
+            
             return $this->response->setJSON($result);
-        } else {
-            return $this->failNotFound('Data tidak ditemukan');
         }
-    }
-
-
 }

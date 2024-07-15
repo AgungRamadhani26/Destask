@@ -246,4 +246,69 @@ class PekerjaanModel extends Model
         return $this->where('target_waktu_selesai', $target_waktu_selesai)
             ->findAll();
     }
+
+
+
+    //MOBIILE
+    public function dataTambahanPekerjaan($idPekerjaan)
+    {
+        $statusModel = new \App\Models\StatusPekerjaanModel();
+        $kategoriModel = new \App\Models\KategoriPekerjaanModel();
+        $personilModel = new \App\Models\PersonilModel();
+        $userModel = new \App\Models\UserModel();
+        $taskModel = new \App\Models\TaskModel();
+        
+        $pekerjaanItem = $this->find($idPekerjaan);
+        if (!$pekerjaanItem) {
+            return null;
+        }
+
+        $status = $statusModel->find($pekerjaanItem['id_status_pekerjaan']);
+        $kategori = $kategoriModel->find($pekerjaanItem['id_kategori_pekerjaan']);
+        $personil = $personilModel->where(['id_pekerjaan' => $pekerjaanItem['id_pekerjaan']])->findAll();
+        
+        $data_tambahan = [
+            'nama_status_pekerjaan' => $status['nama_status_pekerjaan'],
+            'nama_kategori_pekerjaan' => $kategori['nama_kategori_pekerjaan'],
+            'project_manager' => [],
+            'desainer' => [],
+            'backend_web' => [],
+            'backend_mobile' => [],
+            'frontend_web' => [],
+            'frontend_mobile' => [],
+            'tester' => [],
+            'admin' => [],
+            'helpdesk' => [],
+        ];
+
+        foreach ($personil as $personilItem) {
+            $user = $userModel->find($personilItem['id_user']);
+            $data_tambahan[$personilItem['role_personil']][] = [
+                'id_user' => $user['id_user'],
+                'nama' => $user['nama'],
+                'role_personil' => $personilItem['role_personil'],
+            ];
+        }
+
+        $jumlah_task_selesai = $taskModel
+            ->where([
+                'id_pekerjaan' => $pekerjaanItem['id_pekerjaan'],
+                'id_status_task' => '3',
+                'deleted_at' => null
+            ])
+            ->countAllResults();
+
+        $jumlah_task_total = $taskModel
+            ->where(['id_pekerjaan' => $pekerjaanItem['id_pekerjaan'], 'deleted_at' => null])
+            ->countAllResults();
+
+        $persentase_selesai = ($jumlah_task_total > 0) ? ($jumlah_task_selesai / $jumlah_task_total) * 100 : 0;
+        $persentase_selesai = number_format($persentase_selesai, 1);
+
+        $data_tambahan['persentase_task_selesai'] = $persentase_selesai;
+
+        $pekerjaanItem['data_tambahan'] = $data_tambahan;
+
+        return $pekerjaanItem;
+    }
 }

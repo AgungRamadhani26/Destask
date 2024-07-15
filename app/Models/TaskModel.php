@@ -524,9 +524,76 @@ class TaskModel extends Model
     }
 
 
-    //mobile
-    public function getTaskByUserId($id_user)
+//MOBILE API
+
+    //Fungsi untuk mendapatkan data task berdasarkan id task
+    public function dataTambahanTask($tasks)
     {
-        return $this->where(['id_user' => $id_user])->findAll();
+        $result = [];
+        $userModel = new \App\Models\UserModel();
+        $pekerjaanModel = new \App\Models\PekerjaanModel();
+        $statusModel = new \App\Models\StatusTaskModel();
+        $kategoriModel = new \App\Models\KategoriTaskModel();
+
+        foreach ($tasks as $taskItem) {
+            $userData = $userModel->find($taskItem['id_user']);
+            $creatorData = $userModel->find($taskItem['creator']);
+            $pekerjaanData = $pekerjaanModel->find($taskItem['id_pekerjaan']);
+            $statusData = $statusModel->find($taskItem['id_status_task']);
+            $kategoriData = $kategoriModel->find($taskItem['id_kategori_task']);
+
+            $taskItem['data_tambahan'] = [
+                'nama_user' => $userData['nama'],
+                'nama_creator' => $creatorData['nama'],
+                'nama_pekerjaan' => $pekerjaanData['nama_pekerjaan'],
+                'target_waktu_selesai' => $pekerjaanData['target_waktu_selesai'],
+                'nama_status_task' => $statusData['nama_status_task'],
+                'nama_kategori_task' => $kategoriData['nama_kategori_task'],
+                'nama_verifikator' => $taskItem['verifikator'] == null ? null : $userModel->find($taskItem['verifikator'])['nama']
+            ];
+
+            $result[] = $taskItem;
+        }
+
+        return $result;
+    }
+
+    public function getTasksForVerifikator($idverifikator)
+    {
+        return $this->where([
+            'verifikator' => $idverifikator,
+            'deleted_at' => null
+        ])->orderBy('tgl_planing', 'ASC')->findAll();
+    }
+
+    // Method to get tasks for verification
+    public function getTasksForVerification($iduser)
+    {
+        $userModel = new \App\Models\UserModel();
+
+        // Get user group ID of the current user
+        $user = $userModel->find($iduser);
+        $idUserGroup = $user['id_usergroup'];
+
+        // Get all users in the same user group except the current user
+        $usersInGroup = $userModel->where('id_usergroup', $idUserGroup)->findAll();
+        $usersExceptCurrentUser = array_filter($usersInGroup, function($user) use ($iduser) {
+            return $user['id_user'] != $iduser;
+        });
+
+        // Get tasks for all users in the same group except the current user
+        $result = [];
+        foreach ($usersExceptCurrentUser as $user) {
+            $tasks = $this->where([
+                'id_user' => $user['id_user'],
+                'id_status_task' => 2,
+            ])->findAll();
+
+            // Add additional data to each task
+            $tasksWithDetails = $this->dataTambahanTask($tasks);
+            $result = array_merge($result, $tasksWithDetails);
+        }
+
+        return $result;
     }
 }
