@@ -4,7 +4,7 @@ use CodeIgniter\RESTful\ResourceController;
 use DateTime;
 
 class TaskController extends ResourceController{
-    protected $modelName = 'App\Models\TaskModel';
+    protected $modelTask = 'App\Models\TaskModel';
     protected $modelUser = 'App\Models\UserModel';
     protected $modelUserGroup = 'App\Models\UserGroupModel';
     protected $modelPekerjaan = 'App\Models\PekerjaanModel';
@@ -15,56 +15,38 @@ class TaskController extends ResourceController{
 
     //mengambil semua data task
     public function index(){
-        $model = new $this->modelName();
+        $model = new $this->modelTask();
         $data = $model->where(['deleted_at' => null])->orderBy('id_task', 'DESC')->findAll();
         return $this->respond($data, 200);
     }
     //mengambil data task berdasarkan id task
-    public function show($id = null){
-        try {
-            $model = new $this->modelName();
-            $data = $model->where(['id_task' => $id, 'deleted_at' => null])->findAll();
-    
-            if($data){
-                $userModel = new $this->modelUser();
-                $pekerjaanModel = new $this->modelPekerjaan();
-                $statusModel = new $this->modelStatus();
-                $kategoriModel = new $this->modelKategori();
+    // TaskController.php
 
-                $result = [];
-                foreach ($data as $taskItem) {
-                    $userData = $userModel->find($taskItem['id_user']);
-                    $creatorData = $userModel->find($taskItem['creator']);
-                    $pekerjaanData = $pekerjaanModel->find($taskItem['id_pekerjaan']);
-                    $statusData = $statusModel->find($taskItem['id_status_task']);
-                    $kategoriData = $kategoriModel->find($taskItem['id_kategori_task']);
-                    $taskItem['data_tambahan'] = [
-                        'nama_user' => $userData['nama'],
-                        'nama_creator' => $creatorData['nama'],
-                        'nama_pekerjaan' => $pekerjaanData['nama_pekerjaan'],
-                        'target_waktu_selesai' => $pekerjaanData['target_waktu_selesai'],
-                        'nama_status_task' => $statusData['nama_status_task'],
-                        'nama_kategori_task' => $kategoriData['nama_kategori_task']
-                    ];
-                    $result[] = $taskItem;
-                }
-                return $this->response->setJSON($result);
-            }else{
-                $response = [
-                    'status' => 404,
-                    'error' => true,
-                    'messages' => 'Data tidak ditemukan'
-                ];
-                return $this->respond($response, 404);
-            }
-        } catch (\Throwable $th) {
-            return $this->failNotFound("Data tidak ditemukan");
+public function show($id = null)
+{
+    try {
+        $model = new $this->modelTask();
+        $tasks = $model->where(['id_task' => $id, 'deleted_at' => null])->findAll();
+        if ($tasks) {
+            $tasksWithDetails = $model->dataTambahanTask($tasks);
+            return $this->response->setJSON($tasksWithDetails);
+        } else {
+            $response = [
+                'status' => 404,
+                'error' => true,
+                'messages' => 'Data tidak ditemukan'
+            ];
+            return $this->respond($response, 404);
         }
+    } catch (\Throwable $th) {
+        return $this->failNotFound("Data tidak ditemukan");
     }
+}
+
 
     //tambah task
     public function create(){
-        $model = new $this->modelName();
+        $model = new $this->modelTask();
         $id_pekerjaan = $this->request->getVar('id_pekerjaan');
         $id_user = $this->request->getVar('id_user');
         $creator = $this->request->getVar('creator');
@@ -116,7 +98,7 @@ class TaskController extends ResourceController{
 
     //edit task
     public function update($id = null){
-        $model = new $this->modelName();
+        $model = new $this->modelTask();
         $id_pekerjaan = $this->request->getVar('id_pekerjaan');
         $id_user = $this->request->getVar('id_user');
         $id_kategori_task = $this->request->getVar('id_kategori_task');
@@ -182,18 +164,20 @@ class TaskController extends ResourceController{
 
     //submit verifikasitask
     public function updateverifikasi($id = null){
-        $model = new $this->modelName();
+        $model = new $this->modelTask();
         $alasan_verifikasi = $this->request->getVar('alasan_verifikasi');
         $id_status_task = $this->request->getVar('id_status_task');
         $tgl_planing = $this->request->getVar('tgl_planing');
         $tgl_verifikasi_diterima = $this->request->getVar('tgl_verifikasi_diterima');
         $tgl_selesai = $this->request->getVar('tgl_selesai');
+        $verifikator = $this->request->getVar('verifikator');
 
         //validasi
         $validation = $this->validate([
             'id_task' => 'required',
             'alasan_verifikasi' => 'required',
             'id_status_task' => 'required',
+            'verifikator' => 'required',
         ]);
         if(!$validation){
             $response = [
@@ -210,6 +194,7 @@ class TaskController extends ResourceController{
             'tgl_planing' => $tgl_planing,
             'tgl_selesai' => $tgl_selesai,
             'tgl_verifikasi_diterima' => $tgl_verifikasi_diterima,
+            'verifikator' => $verifikator,
         ];
         $isExist = $model->getWhere(['id_task' => $id, 'deleted_at' => null])->getResult();
         if($isExist){
@@ -251,6 +236,7 @@ class TaskController extends ResourceController{
         $BuktiSelesai = $this->request->getFile('bukti_selesai');
         $tglSelesai = $this->request->getVar('tgl_selesai');
         $persentase_selesai = $this->request->getVar('persentase_selesai');
+        $verifikator = $this->request->getVar('verifikator');
         if ($BuktiSelesai == null) {
         return $this->respond([
             'status' => 400,
@@ -269,6 +255,7 @@ class TaskController extends ResourceController{
                 'id_task' => 'required',
                 'id_status_task' => 'required',
                 'tgl_selesai' => 'required',
+                'tautan_task' => 'required',
                 'bukti_selesai'    => [
                     'label' => 'Foto Profil',
                     'rules' => 'uploaded[bukti_selesai]|max_size[bukti_selesai,8012]',
@@ -296,6 +283,7 @@ class TaskController extends ResourceController{
                         'tgl_selesai' => $tglSelesai,
                         'tgl_verifikasi_diterima' => $tglSelesai,
                         'persentase_selesai' => $persentase_selesai,
+                        'verifikator' => $verifikator
                     ];
                 } else {
                     $data = [
@@ -304,7 +292,8 @@ class TaskController extends ResourceController{
                         'tautan_task' => $tautan_task,
                         'bukti_selesai' => $namaBuktiSelesai,
                         'tgl_selesai' => $tglSelesai,
-                        'persentase_selesai' => $persentase_selesai
+                        'persentase_selesai' => $persentase_selesai,
+                        'verifikator' => null
                     ];
                 }
 
@@ -321,7 +310,7 @@ class TaskController extends ResourceController{
 
     //delete task
     public function delete($id = null){
-        $model = new $this->modelName();
+        $model = new $this->modelTask();
         $data = $model->find($id);
     
         if ($data) {
@@ -343,166 +332,107 @@ class TaskController extends ResourceController{
     }
     
     //mengambil data task berdasarkan id pekerjaan
-    public function showTaskByPekerjaan($idpekerjaan)
-    {
-        $model = new $this->modelName();
-        $data = $model->where(['id_pekerjaan' => $idpekerjaan, 'deleted_at' => null])->orderBy('tgl_planing', 'ASC')->findAll();
-        $result = [];
+    // TaskController.php
 
-        $modelUser = new $this->modelUser();
-        $pekerjaanModel = new $this->modelPekerjaan();
-        $statusModel = new $this->modelStatus();
-        $kategoriModel = new $this->modelKategori();
-
-        foreach ($data as $taskItem) {
-            // Fetch user data based on id_user
-            $userData = $modelUser->find($taskItem['id_user']);
-            $creatorData = $modelUser->find($taskItem['creator']);
-            $pekerjaanData = $pekerjaanModel->find($taskItem['id_pekerjaan']);
-            $statusData = $statusModel->find($taskItem['id_status_task']);
-            $kategoriData = $kategoriModel->find($taskItem['id_kategori_task']);
-
-            // Add user's name to the task item
-            $taskItem['data_tambahan'] = [
-                'nama_user' => $userData['nama'],
-                'nama_creator' => $creatorData['nama'],
-                'nama_pekerjaan' => $pekerjaanData['nama_pekerjaan'],
-                'target_waktu_selesai' => $pekerjaanData['target_waktu_selesai'],
-                'nama_status_task' => $statusData['nama_status_task'],
-                'nama_kategori_task' => $kategoriData['nama_kategori_task']
+public function showTaskByPekerjaan($idpekerjaan)
+{
+    try {
+        $model = new $this->modelTask();
+        $tasks = $model->where(['id_pekerjaan' => $idpekerjaan, 'deleted_at' => null])
+                      ->orderBy('tgl_planing', 'ASC')
+                      ->findAll();
+        if ($tasks) {
+            $tasksWithDetails = $model->dataTambahanTask($tasks);
+            return $this->response->setJSON($tasksWithDetails);
+        } else {
+            $response = [
+                'status' => 404,
+                'error' => true,
+                'messages' => 'Data tidak ditemukan'
             ];
-
-            $result[] = $taskItem;
+            return $this->respond($response, 404);
         }
-
-        // Mengirimkan data pekerjaan yang telah di-update sebagai response JSON
-        return $this->response->setJSON($result);
+    } catch (\Throwable $th) {
+        return $this->failNotFound("Data tidak ditemukan");
     }
+}
+
     //mengambil data task berdasarkan user
-    public function showTaskByUser($iduser) {
-        $model = new $this->modelName();
-        $data = $model->where(['id_user' => $iduser, 'deleted_at' => null])->orderBy('tgl_planing', 'ASC')->findAll();
-        $result = [];
+    // TaskController.php
 
-        $modelUser = new $this->modelUser();
-        $pekerjaanModel = new $this->modelPekerjaan();
-        $statusModel = new $this->modelStatus();
-        $kategoriModel = new $this->modelKategori();
+    public function showTaskByUser($iduser)
+    {
+        try {
+            $model = new $this->modelTask();
+            $tasks = $model->where(['id_user' => $iduser, 'deleted_at' => null])
+                        ->orderBy('tgl_planing', 'ASC')
+                        ->findAll();
 
-        foreach ($data as $taskItem) {
-            // Fetch user data based on id_user
-            $userData = $modelUser->find($taskItem['id_user']);
-            $creatorData = $modelUser->find($taskItem['creator']);
-            $pekerjaanData = $pekerjaanModel->find($taskItem['id_pekerjaan']);
-            $statusData = $statusModel->find($taskItem['id_status_task']);
-            $kategoriData = $kategoriModel->find($taskItem['id_kategori_task']);
-
-            // Add user's name to the task item
-            $taskItem['data_tambahan'] = [
-                'nama_user' => $userData['nama'],
-                'nama_creator' => $creatorData['nama'],
-                'nama_pekerjaan' => $pekerjaanData['nama_pekerjaan'],
-                'target_waktu_selesai' => $pekerjaanData['target_waktu_selesai'],
-                'nama_status_task' => $statusData['nama_status_task'],
-                'nama_kategori_task' => $kategoriData['nama_kategori_task']
-            ];
-
-            $result[] = $taskItem;
-        }
-
-        // Mengirimkan data pekerjaan yang telah di-update sebagai response JSON
-        return $this->response->setJSON($result);
-    }
-
-    public function showTaskVerifikasi($iduser) {
-        $modelTask = new $this->modelName();
-        $modelUser = new $this->modelUser();
-        $pekerjaanModel = new $this->modelPekerjaan();
-        $statusModel = new $this->modelStatus();
-        $kategoriModel = new $this->modelKategori();
-    
-        // Dapatkan id user group dari user yang sedang login
-        $user = $modelUser->getUserById($iduser);
-        $idUserGroup = $user['id_usergroup'];
-    
-        // Dapatkan semua user yang memiliki id user group yang sama dan bukan user yang sedang login
-        $usersInGroup = $modelUser->where('id_usergroup', $idUserGroup)->findAll();
-        $usersExceptCurrentUser = [];
-        foreach ($usersInGroup as $user) {
-            if ($user['id_user'] != $iduser) {
-                $usersExceptCurrentUser[] = $user['id_user'];
-            }
-        }
-    
-        // Dapatkan semua task yang dimiliki oleh user dalam daftar tersebut
-        $result = [];
-        foreach ($usersExceptCurrentUser as $idUser) {
-            $data = $modelTask->where([
-                'id_user' => $idUser,
-                'id_status_task' => 2,
-                // 'persentase_selesai' => '100',
-            ])->findAll();
-    
-            // Tambahkan data tambahan ke result
-            foreach ($data as $taskItem) {
-                // Fetch user data based on id_user
-                $userData = $modelUser->find($taskItem['id_user']);
-                $creatorData = $modelUser->find($taskItem['creator']);
-                $pekerjaanData = $pekerjaanModel->find($taskItem['id_pekerjaan']);
-                $statusData = $statusModel->find($taskItem['id_status_task']);
-                $kategoriData = $kategoriModel->find($taskItem['id_kategori_task']);
-    
-                // Add user's name to the task item
-                $taskItem['data_tambahan'] = [
-                    'nama_user' => $userData['nama'],
-                    'nama_creator' => $creatorData['nama'],
-                    'nama_pekerjaan' => $pekerjaanData['nama_pekerjaan'],
-                    'target_waktu_selesai' => $pekerjaanData['target_waktu_selesai'],
-                    'nama_status_task' => $statusData['nama_status_task'],
-                    'nama_kategori_task' => $kategoriData['nama_kategori_task']
+            if ($tasks) {
+                $tasksWithDetails = $model->dataTambahanTask($tasks);
+                return $this->response->setJSON($tasksWithDetails);
+            } else {
+                $response = [
+                    'status' => 404,
+                    'error' => true,
+                    'messages' => 'Data tidak ditemukan'
                 ];
-    
-                $result[] = $taskItem;
+                return $this->respond($response, 404);
             }
+        } catch (\Throwable $th) {
+            return $this->failNotFound("Data tidak ditemukan");
         }
-    
-        // Mengirimkan data pekerjaan yang telah di-update sebagai response JSON
-        return $this->response->setJSON($result);
     }
+
+
+    // TaskController.php
+    public function showTaskVerifikasi($iduser)
+    {
+        try {
+            $modelTask = new $this->modelTask();
+
+            // Dapatkan semua task yang perlu diverifikasi oleh user
+            $tasks = $modelTask->getTasksForVerification($iduser);
+
+            if (!empty($tasks)) {
+                return $this->response->setJSON($tasks);
+            } else {
+                $response = [
+                    'status' => 404,
+                    'error' => true,
+                    'messages' => 'Data tidak ditemukan'
+                ];
+                return $this->respond($response, 404);
+            }
+        } catch (\Throwable $th) {
+            return $this->failNotFound("Data tidak ditemukan");
+        }
+    }
+
 
     public function showTaskVerifikator($iduser) {
-        $model = new $this->modelName();
-        $data = $model->where(['verifikator' => $iduser, 'deleted_at' => null])->orderBy('tgl_planing', 'ASC')->findAll();
-        $result = [];
-
-        $modelUser = new $this->modelUser();
-        $pekerjaanModel = new $this->modelPekerjaan();
-        $statusModel = new $this->modelStatus();
-        $kategoriModel = new $this->modelKategori();
-
-        foreach ($data as $taskItem) {
-            // Fetch user data based on id_user
-            $userData = $modelUser->find($taskItem['id_user']);
-            $creatorData = $modelUser->find($taskItem['creator']);
-            $pekerjaanData = $pekerjaanModel->find($taskItem['id_pekerjaan']);
-            $statusData = $statusModel->find($taskItem['id_status_task']);
-            $kategoriData = $kategoriModel->find($taskItem['id_kategori_task']);
-
-            // Add user's name to the task item
-            $taskItem['data_tambahan'] = [
-                'nama_user' => $userData['nama'],
-                'nama_creator' => $creatorData['nama'],
-                'nama_pekerjaan' => $pekerjaanData['nama_pekerjaan'],
-                'target_waktu_selesai' => $pekerjaanData['target_waktu_selesai'],
-                'nama_status_task' => $statusData['nama_status_task'],
-                'nama_kategori_task' => $kategoriData['nama_kategori_task']
-            ];
-
-            $result[] = $taskItem;
+        try {
+            $modelTask = new $this->modelTask();
+    
+            // Dapatkan semua task yang perlu diverifikasi oleh verifikator
+            $tasks = $modelTask->getTasksForVerifikator($iduser);
+    
+            // Tambahkan data tambahan ke setiap task
+            $tasksWithDetails = $modelTask->dataTambahanTask($tasks);
+    
+            if (!empty($tasksWithDetails)) {
+                return $this->response->setJSON($tasksWithDetails);
+            } else {
+                $response = [
+                    'status' => 404,
+                    'error' => true,
+                    'messages' => 'Data tidak ditemukan'
+                ];
+                return $this->respond($response, 404);
+            }
+        } catch (\Throwable $th) {
+            return $this->failNotFound("Data tidak ditemukan");
         }
-
-        // Mengirimkan data pekerjaan yang telah di-update sebagai response JSON
-        return $this->response->setJSON($result);
     }
     
     

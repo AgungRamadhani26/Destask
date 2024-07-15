@@ -7,7 +7,7 @@ use CodeIgniter\API\ResponseTrait;
 
 class GantiPasswordController extends ResourceController {
     use ResponseTrait;
-    protected $modelName = 'App\Models\UserModel';
+    protected $modelUser = 'App\Models\UserModel';
     protected $format    = 'json';
 
     public function index() {
@@ -30,7 +30,7 @@ class GantiPasswordController extends ResourceController {
             }
 
             // Check if the user exists
-            $userModel = new $this->modelName();
+            $userModel = new $this->modelUser();
             $user = $userModel->find($userId);
 
             if (!$user) {

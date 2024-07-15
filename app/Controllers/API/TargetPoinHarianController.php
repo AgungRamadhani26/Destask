@@ -6,19 +6,19 @@ use CodeIgniter\API\ResponseTrait;
 class TargetPoinHarianController extends ResourceController {
     use ResponseTrait;
 
-    protected $modelName = 'App\Models\TargetPoinHarianModel';
+    protected $modelTargetPoinHarian = 'App\Models\TargetPoinHarianModel';
     protected $modelUser = 'App\Models\UserModel';
     protected $modelUserGroup = 'App\Models\UserGroupModel';
     protected $format    = 'json';
 
     public function index() {
-        $model = new $this->modelName();
+        $model = new $this->modelTargetPoinHarian();
         $data = $model->where(['deleted_at' => null])->orderBy('id_target_poin_harian', 'ASC')->findAll();
         return $this->respond($data, 200);
     }
 
     public function show($id = null) {
-        $model = new $this->modelName();
+        $model = new $this->modelTargetPoinHarian();
         $data = $model->getWhere(['id_target_poin_harian' => $id, 'deleted_at' => null])->getResult();
 
         if ($data) {
@@ -35,7 +35,7 @@ class TargetPoinHarianController extends ResourceController {
 
     //target poin harian by usergroup
     public function targetpoinharianbyuser($iduser) {
-        $model = new $this->modelName();
+        $model = new $this->modelTargetPoinHarian();
         $modeluser = new $this->modelUser();
         //cek id user group
         $user = $modeluser->getWhere(['id_user' => $iduser, 'deleted_at' => null])->getRow();
@@ -68,7 +68,7 @@ class TargetPoinHarianController extends ResourceController {
     }
 
     public function cektargetpoinharian() {
-        $modelbobot = new $this->modelName();
+        $modelbobot = new $this->modelTargetPoinHarian();
         $modelusergroup = new $this->modelUserGroup();
         $tahun = date('Y');
         $bulan = ltrim(date('m'), '0');

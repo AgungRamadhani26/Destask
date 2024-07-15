@@ -3,7 +3,7 @@ namespace App\Controllers\API;
 use CodeIgniter\RESTful\ResourceController;
 
 class UserController extends ResourceController{
-    protected $modelName = 'App\Models\UserModel';
+    protected $modelUser = 'App\Models\UserModel';
     protected $format = 'json';
     protected $validation;
 
@@ -13,13 +13,13 @@ class UserController extends ResourceController{
     }
 
     public function index(){
-        $model = new $this->modelName();
+        $model = new $this->modelUser();
         $data = $model->where(['deleted_at' => null])->orderBy('id_user', 'ASC')->findAll();
         return $this->respond($data, 200);
     }
 
     public function show($id = null){
-        $model = new $this->modelName();
+        $model = new $this->modelUser();
         $data = $model->getWhere(['id_user' => $id, 'deleted_at' => null])->getResult();
 
         if($data){
@@ -35,7 +35,7 @@ class UserController extends ResourceController{
     }
 
     public function create(){
-        $model = new $this->modelName();
+        $model = new $this->modelUser();
         $data = $this->request->getRawInput();
         
         $simpan = $model->insert($data);
@@ -45,7 +45,7 @@ class UserController extends ResourceController{
     }
 
     public function update($id = null){
-        $model = new $this->modelName();
+        $model = new $this->modelUser();
         $id_user = $this->request->getVar('id_user');
         $username = $this->request->getVar('username');
         $email = $this->request->getVar('email');
@@ -102,7 +102,7 @@ class UserController extends ResourceController{
 
 
     function delete($id = null){
-        $model = new $this->modelName();
+        $model = new $this->modelUser();
         $data = $model->getWhere(['id_user' => $id])->getRow();
         if($data){
             $hapus = $model->delete($id);

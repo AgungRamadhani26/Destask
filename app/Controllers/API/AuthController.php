@@ -9,7 +9,7 @@ class AuthController extends ResourceController
 {
   use ResponseTrait;
 
-  protected $modelName = 'App\Models\UserModel';
+  protected $modelUser = 'App\Models\UserModel';
   protected $format    = 'json';
 
   // constructor
@@ -27,7 +27,7 @@ class AuthController extends ResourceController
     $identitas = $this->request->getVar('identitas');
     $password = $this->request->getVar('password');
 
-    $model = new $this->modelName();
+    $model = new $this->modelUser();
     $data = $model->getIdentitas($identitas);
 
     if (!$data) {
@@ -82,7 +82,7 @@ class AuthController extends ResourceController
 
   public function cekuser()
   {
-    $model = new $this->modelName();
+    $model = new $this->modelUser();
     $email = $this->request->getVar('email');
     $data = $model->where(['email' => $email])->first();
     $response = [

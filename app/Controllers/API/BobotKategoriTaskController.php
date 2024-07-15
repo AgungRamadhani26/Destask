@@ -6,18 +6,18 @@ use CodeIgniter\API\ResponseTrait;
 class BobotKategoriTaskController extends ResourceController {
     use ResponseTrait;
 
-    protected $modelName = 'App\Models\BobotKategoriTaskModel';
+    protected $modelBobotKategoriTask = 'App\Models\BobotKategoriTaskModel';
     protected $modelUserGroup = 'App\Models\UserGroupModel';
     protected $format    = 'json';
 
     public function index() {
-        $model = new $this->modelName();
+        $model = new $this->modelBobotKategoriTask();
         $data = $model->where(['deleted_at' => null])->orderBy('id_bobot_kategori_task', 'ASC')->findAll();
         return $this->respond($data, 200);
     }
 
     public function show($id = null) {
-        $model = new $this->modelName();
+        $model = new $this->modelBobotKategoriTask();
         $data = $model->getWhere(['id_bobot_kategori_task' => $id, 'deleted_at' => null])->getResult();
 
         if ($data) {
@@ -33,7 +33,7 @@ class BobotKategoriTaskController extends ResourceController {
     }
 
     public function cekbobot() {
-        $modelbobot = new $this->modelName();
+        $modelbobot = new $this->modelBobotKategoriTask();
         $modelusergroup = new $this->modelUserGroup();
         $tahun = date('Y');
         $id_usergroups = $modelusergroup->select('id_usergroup')->findAll();

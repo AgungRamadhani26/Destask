@@ -9,12 +9,12 @@ class LupaPasswordController extends ResourceController
 {
     use ResponseTrait;
 
-    protected $modelName = 'App\Models\UserModel';
+    protected $modelUser = 'App\Models\UserModel';
     protected $format    = 'json';
 
     public function lupaPassword()
     {
-        $model = new $this->modelName();
+        $model = new $this->modelUser();
         $emailverif = $this->request->getVar('email');
         $user = $model->where('email', $emailverif)->first();
         if ($user) {
@@ -60,7 +60,7 @@ class LupaPasswordController extends ResourceController
     //verifikasi token
     public function verifikasiToken()
     {
-        $model = new $this->modelName();
+        $model = new $this->modelUser();
         $email = $this->request->getVar('email');
         $token = $this->request->getVar('token');
         $user = $model->where(['email' => $email,'reset_password_token' => $token])->first();
@@ -84,7 +84,7 @@ class LupaPasswordController extends ResourceController
     //reset password
     public function resetPassword()
     {
-        $model = new $this->modelName();
+        $model = new $this->modelUser();
         $token = $this->request->getVar('token');
         $password = $this->request->getVar('password');
         //cek id user

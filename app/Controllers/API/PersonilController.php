@@ -3,17 +3,17 @@ namespace App\Controllers\API;
 use CodeIgniter\RESTful\ResourceController;
 
 class PersonilController extends ResourceController {
-    protected $modelName = 'App\Models\PersonilModel';
+    protected $modelPersonil = 'App\Models\PersonilModel';
     protected $format    = 'json';
 
     public function index() {
-        $model = new $this->modelName();
+        $model = new $this->modelPersonil();
         $data = $model->where(['deleted_at' => null])->orderBy('id_personil', 'ASC')->findAll();
         return $this->respond($data, 200);
     }
 
     public function show($id = null) {
-        $model = new $this->modelName();
+        $model = new $this->modelPersonil();
         $data = $model->getWhere(['id_personil' => $id, 'deleted_at' => null])->getResult();
 
         if ($data) {
@@ -31,7 +31,7 @@ class PersonilController extends ResourceController {
     public function showPersonilByUser($iduser)
     {
         // Membuat instance dari model PekerjaanModel dan PersonilModel
-        $personilModel = new $this->modelName();
+        $personilModel = new $this->modelPersonil();
 
         // Mendapatkan id personil yang terkait dengan id user
         $idPersonil = $personilModel->getIdPersonilByIdUser($iduser);
