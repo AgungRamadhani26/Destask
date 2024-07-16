@@ -524,7 +524,7 @@ class TaskModel extends Model
     }
 
 
-//MOBILE API
+    //MOBILE API
 
     //Fungsi untuk mendapatkan data task berdasarkan id task
     public function dataTambahanTask($tasks)
@@ -578,7 +578,7 @@ class TaskModel extends Model
 
         // Get all users in the same user group except the current user
         $usersInGroup = $userModel->where('id_usergroup', $idUserGroup)->findAll();
-        $usersExceptCurrentUser = array_filter($usersInGroup, function($user) use ($iduser) {
+        $usersExceptCurrentUser = array_filter($usersInGroup, function ($user) use ($iduser) {
             return $user['id_user'] != $iduser;
         });
 
