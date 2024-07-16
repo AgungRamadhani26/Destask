@@ -563,7 +563,8 @@ class TaskModel extends Model
         return $this->where([
             'verifikator' => $idverifikator,
             'deleted_at' => null
-        ])->orderBy('tgl_planing', 'ASC')->findAll();
+        ])
+        ->orderBy('tgl_planing', 'ASC')->findAll();
     }
 
     // Method to get tasks for verification

@@ -60,16 +60,6 @@ class AuthController extends ResourceController
       return $this->respond($response, 401);
     }
 
-    // if (password_verify($password, $data['password']) == false) {
-    //   $response = [
-    //     'status' => 401,
-    //     'error' => true,
-    //     'messages' => 'Password Salah!'
-    //   ];
-    //   return $this->respond($response, 401);
-    // }
-
-
     helper('jwt');
     $response = [
       'message' => 'Autentikasi / login berhasil',

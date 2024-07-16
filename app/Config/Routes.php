@@ -305,12 +305,9 @@ $routes->post('lupapassword/resetpassword', 'API\LupaPasswordController::resetPa
 
 $routes->group('api', ['filter' => 'jwtfilter', 'namespace' => 'App\Controllers\API'], function ($routes) {
    //user
-   $routes->get('user', 'UserController::index');
    $routes->get('user/(:num)', 'UserController::show/$1');
-   $routes->post('user', 'UserController::create');
    $routes->put('user/(:num)', 'UserController::update/$1');
-   $routes->delete('user/(:num)', 'UserController::delete/$1');
-   $routes->post('user/fotoprofil', 'FotoProfilController::upload');
+   $routes->post('user/fotoprofil', 'UserController::uploadfoto');
 
    //ganti password
    $routes->put('gantipassword', 'GantiPasswordController::index');
@@ -327,65 +324,39 @@ $routes->group('api', ['filter' => 'jwtfilter', 'namespace' => 'App\Controllers\
    $routes->get('pekerjaan/verifikator/(:num)', 'PekerjaanController::showPekerjaanVerifikator/$1'); //data task yang perlu diverifikasi
 
    //task
-   $routes->get('task', 'TaskController::index');
    $routes->get('task/(:num)', 'TaskController::show/$1');
    $routes->get('taskbypekerjaan/(:num)', 'TaskController::showTaskByPekerjaan/$1'); //data task berdasarkan pekerjaan
    $routes->get('taskbyuser/(:num)', 'TaskController::showTaskByUser/$1'); //data task berdasarkan user
    $routes->get('task/verifikasi/(:num)', 'TaskController::showTaskVerifikasi/$1'); //data task yang perlu diverifikasi
-   $routes->put('task/verifikasi/(:num)', 'TaskController::updateverifikasi/$1'); //data task yang perlu diverifikasi
+   $routes->put('task/verifikasi/tolak/(:num)', 'TaskController::tolakverifikasi/$1'); //data task yang perlu diverifikasi
+   $routes->put('task/verifikasi/terima/(:num)', 'TaskController::terimaverifikasi/$1'); //data task yang perlu diverifikasi
    $routes->get('task/verifikator/(:num)', 'TaskController::showTaskVerifikator/$1'); //data task yang perlu diverifikasi
+   $routes->get('task/rekappoint/(:num)', 'TaskController::rekappoint/$1');
    $routes->post('task', 'TaskController::create');
    $routes->put('task/(:num)', 'TaskController::update/$1'); //edit task
    $routes->post('task/submit', 'TaskController::submit'); //submit bukti selesai task
    $routes->delete('task/(:num)', 'TaskController::delete/$1');
 
    //bobot kategori task
-   $routes->get('bobotkategoritask', 'BobotKategoriTaskController::index');
    $routes->get('bobotkategoritask/(:num)', 'BobotKategoriTaskController::show/$1');
-   $routes->get('cekbobotkategoritask', 'BobotKategoriTaskController::cekbobot');
 
    //hari libur
    $routes->get('harilibur', 'HariLiburController::index');
-   $routes->get('harilibur/(:num)', 'HariLiburController::show/$1');
-
-   //kategori pekerjaan
-   $routes->get('kategoripekerjaan', 'KategoriPekerjaanController::index');
-   $routes->get('kategoripekerjaan/(:num)', 'KategoriPekerjaanController::show/$1');
 
    //kategori task
    $routes->get('kategoritask', 'KategoriTaskController::index');
-   $routes->get('kategoritask/(:num)', 'KategoriTaskController::show/$1');
 
    //kinerja
-   $routes->get('kinerja', 'KinerjaController::index');
    $routes->get('kinerja/(:num)', 'KinerjaController::show/$1');
    $routes->get('kinerjauser/(:num)', 'KinerjaController::kinerjauser/$1');
 
-   //notifikasi
-   $routes->get('notifikasi', 'NotifikasiController::index');
-   $routes->get('notifikasi/(:num)', 'NotifikasiController::show/$1');
-   $routes->get('notifikasi/user/(:num)', 'NotifikasiController::showNotifikasiToUser/$1');
-   $routes->put('notifikasi/(:num)', 'NotifikasiController::update/$1');
-
-   //personil
-   $routes->get('personil', 'PersonilController::index');
-   $routes->get('personil/(:num)', 'PersonilController::show/$1');
-   $routes->get('personilbyuser/(:num)', 'PersonilController::showPersonilByUser/$1');
-
    //status pekerjaan
    $routes->get('statuspekerjaan', 'StatusPekerjaanController::index');
-   $routes->get('statuspekerjaan/(:num)', 'StatusPekerjaanController::show/$1');
 
    //status task
    $routes->get('statustask', 'StatusTaskController::index');
    $routes->get('statustask/(:num)', 'StatusTaskController::show/$1');
 
-   //target poin harian
-   $routes->get('targetpoinharian', 'TargetPoinHarianController::index');
-   $routes->get('targetpoinharian/(:num)', 'TargetPoinHarianController::show/$1');
-   $routes->get('targetpoinharianbyuser/(:num)', 'TargetPoinHarianController::targetpoinharianbyuser/$1');
-   $routes->get('cektargetpoinharian', 'TargetPoinHarianController::cektargetpoinharian');
-
-   //rekap point
-   $routes->get('rekappoint/(:num)', 'RekapPointController::rekappoint/$1');
+   //target poin harian\
+   $routes->get('target/(:num)', 'TargetPoinHarianController::targetpoinharianbyuser/$1');
 });

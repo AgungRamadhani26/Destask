@@ -10,7 +10,7 @@ class TaskController extends ResourceController{
     protected $modelPekerjaan = 'App\Models\PekerjaanModel';
     protected $modelStatus = 'App\Models\StatusTaskModel';
     protected $modelKategori = 'App\Models\KategoriTaskModel';
-    protected $modelBobot = 'App\Models\BobotKategoriTaskModel';
+    protected $modelBobotKategori = 'App\Models\BobotKategoriTaskModel';
     protected $format = 'json';
 
     //mengambil semua data task
@@ -50,16 +50,18 @@ public function show($id = null)
         $id_pekerjaan = $this->request->getVar('id_pekerjaan');
         $id_user = $this->request->getVar('id_user');
         $creator = $this->request->getVar('creator');
-        $id_status_task = $this->request->getVar('id_status_task');
         $id_kategori_task = $this->request->getVar('id_kategori_task');
         $tgl_planing = $this->request->getVar('tgl_planing');
         $deskripsi_task = $this->request->getVar('deskripsi_task');
-        $persentase_selesai = $this->request->getVar('persentase_selesai');
 
         //validasi input
         $validation = $this->validate([
             'id_pekerjaan' => 'required',
             'id_user' => 'required',
+            'id_kategori_task' => 'required',
+            'deskripsi_task' => 'required',
+            'tgl_planing' => 'required',
+
         ]);
 
         if(!$validation){
@@ -74,11 +76,17 @@ public function show($id = null)
                 'id_pekerjaan' => $id_pekerjaan,
                 'id_user' => $id_user,
                 'creator' => $creator,
-                'id_status_task' => $id_status_task,
+                'id_status_task' => 1,
                 'id_kategori_task' => $id_kategori_task,
                 'tgl_planing' => $tgl_planing,
-                'persentase_selesai' => $persentase_selesai,
+                'tgl_selesai' => null,
+                'tgl_verifikasi_diterima' => null,
+                'persentase_selesai' => 0,
                 'deskripsi_task' => $deskripsi_task,
+                'alasan_verifikasi' => null,
+                'bukti_selesai' => null,
+                'tautan_task' => null,
+                'verifikator' => null,
             ];
             $simpan = $model->insert($data);
             if($simpan){
@@ -128,10 +136,17 @@ public function show($id = null)
             'id_task' => $id,
             'id_pekerjaan' => $id_pekerjaan,
             'id_user' => $id_user,
+            'id_status_task' => 1,
             'id_kategori_task' => $id_kategori_task,
             'tgl_planing' => $tgl_planing,
+            'tgl_selesai' => null,
+            'tgl_verifikasi_diterima' => null,
             'deskripsi_task' => $deskripsi_task,
             'persentase_selesai' => $persentase_selesai,
+            'alasan_verifikasi' => null,
+            'bukti_selesai' => null,
+            'tautan_task' => null,
+            'verifikator' => null,
         ];
         $isExist = $model->getWhere(['id_task' => $id, 'deleted_at' => null])->getResult();
         if($isExist){
@@ -162,21 +177,16 @@ public function show($id = null)
         }
     }
 
-    //submit verifikasitask
-    public function updateverifikasi($id = null){
+    //tolak verifikasi
+    public function tolakVerifikasi($id = null){
         $model = new $this->modelTask();
         $alasan_verifikasi = $this->request->getVar('alasan_verifikasi');
-        $id_status_task = $this->request->getVar('id_status_task');
-        $tgl_planing = $this->request->getVar('tgl_planing');
-        $tgl_verifikasi_diterima = $this->request->getVar('tgl_verifikasi_diterima');
-        $tgl_selesai = $this->request->getVar('tgl_selesai');
         $verifikator = $this->request->getVar('verifikator');
 
         //validasi
         $validation = $this->validate([
             'id_task' => 'required',
             'alasan_verifikasi' => 'required',
-            'id_status_task' => 'required',
             'verifikator' => 'required',
         ]);
         if(!$validation){
@@ -190,10 +200,65 @@ public function show($id = null)
         $data = [
             'id_task' => $id,
             'alasan_verifikasi' => $alasan_verifikasi,
-            'id_status_task' => $id_status_task,
-            'tgl_planing' => $tgl_planing,
-            'tgl_selesai' => $tgl_selesai,
-            'tgl_verifikasi_diterima' => $tgl_verifikasi_diterima,
+            'id_status_task' => 4,
+            'persentase_selesai' => 0,
+            'tgl_selesai' => null,
+            'tgl_verifikasi_diterima' => null,
+            'verifikator' => $verifikator,
+        ];
+        $isExist = $model->getWhere(['id_task' => $id, 'deleted_at' => null])->getResult();
+        if($isExist){
+            if($model->update($id, $data)){
+                $response = [
+                    'status' => 200,
+                    'error' => null,
+                    'messages' => [
+                        'success' => 'Data berhasil diupdate'
+                    ]
+                ];
+                return $this->respond($response, 200);
+            } else {
+                $response = [
+                    'status' => 500,
+                    'error' => true,
+                    'messages' => 'Data gagal diupdate'
+                ];
+                return $this->respond($response, 500);
+            }
+        } else {
+            $response = [
+                'status' => 404,
+                'error' => true,
+                'id' => $id,
+                'messages' => 'Data tidak ditemukan'
+            ];
+            return $this->respond($response, 404);
+        }
+    }
+
+    public function terimaVerifikasi($id = null){
+        $model = new $this->modelTask();
+        $verifikator = $this->request->getVar('verifikator');
+
+        //validasi
+        $validation = $this->validate([
+            'id_task' => 'required',
+            'verifikator' => 'required',
+        ]);
+        if(!$validation){
+            $response = [
+                'status' => 400,
+                'error' => true,
+                'messages' => 'Validasi gagal'
+            ];
+            return $this->validator->getErrors();
+        }
+        $data = [
+            'id_task' => $id,
+            'alasan_verifikasi' => null,
+            'id_status_task' => 3,
+            'persentase_selesai' => 100,
+            'tgl_verifikasi_diterima' => date("Y-m-d H:i:s"),
             'verifikator' => $verifikator,
         ];
         $isExist = $model->getWhere(['id_task' => $id, 'deleted_at' => null])->getResult();
@@ -229,13 +294,11 @@ public function show($id = null)
     //submit
     public function submit()
     {
+        $model = new $this->modelTask();
         $id = $this->request->getVar('id_task');
         $user_level = $this->request->getVar('user_level');
-        $id_status_task = $this->request->getVar('id_status_task');
         $tautan_task = $this->request->getVar('tautan_task');
         $BuktiSelesai = $this->request->getFile('bukti_selesai');
-        $tglSelesai = $this->request->getVar('tgl_selesai');
-        $persentase_selesai = $this->request->getVar('persentase_selesai');
         $verifikator = $this->request->getVar('verifikator');
         if ($BuktiSelesai == null) {
         return $this->respond([
@@ -248,13 +311,10 @@ public function show($id = null)
             /* -------------------------------------------------------------------------- */
             // Jika ada bukti selesai
             /* -------------------------------------------------------------------------- */
-            $timestamp = date('YmdHis'); // Current timestamp in the format YYYYMMDDHHMMSS
-            $randomNumber = rand(1000000, 9999999); // Generate a random 7-digit number
-            $namaBuktiSelesai = $timestamp . $randomNumber . '.' . $BuktiSelesai->getExtension();
+            $namaBuktiSelesai = $BuktiSelesai->getRandomName(); // Generate a random name
             $validation = $this->validate([
                 'id_task' => 'required',
-                'id_status_task' => 'required',
-                'tgl_selesai' => 'required',
+                'user_level' => 'required',
                 'tautan_task' => 'required',
                 'bukti_selesai'    => [
                     'label' => 'Foto Profil',
@@ -277,27 +337,33 @@ public function show($id = null)
                 if ($user_level == 'supervisi') {
                     $data = [
                         'id_task' => $id,
-                        'id_status_task' => '3',//selesai
+                        'id_status_task' => 3,//selesai
                         'tautan_task' => $tautan_task,
                         'bukti_selesai' => $namaBuktiSelesai,
-                        'tgl_selesai' => $tglSelesai,
-                        'tgl_verifikasi_diterima' => $tglSelesai,
-                        'persentase_selesai' => $persentase_selesai,
+                        'tgl_selesai' => date("Y-m-d"),
+                        'tgl_verifikasi_diterima' => date("Y-m-d H:i:s"),
+                        'persentase_selesai' => 100,
                         'verifikator' => $verifikator
                     ];
-                } else {
+                } else if ($user_level == 'staff') {
                     $data = [
                         'id_task' => $id,
-                        'id_status_task' => $id_status_task,
+                        'id_status_task' => 2,
                         'tautan_task' => $tautan_task,
                         'bukti_selesai' => $namaBuktiSelesai,
-                        'tgl_selesai' => $tglSelesai,
-                        'persentase_selesai' => $persentase_selesai,
+                        'tgl_selesai' => date("Y-m-d"),
+                        'persentase_selesai' => 100,
                         'verifikator' => null
                     ];
+                } else {
+                    return $this->respond([
+                        'status' => 400,
+                        'error' => 'User Level tidak valid',
+                        'message' => 'Validasi gagal'
+                    ], 400);
                 }
 
-                $this->model->update($id, $data);
+                $model->update($id, $data);
                 return $this->respond([
                     'status' => 200,
                     'error' => null,
@@ -339,18 +405,15 @@ public function showTaskByPekerjaan($idpekerjaan)
     try {
         $model = new $this->modelTask();
         $tasks = $model->where(['id_pekerjaan' => $idpekerjaan, 'deleted_at' => null])
+                      ->orderBy('id_status_task', 'ASC')
                       ->orderBy('tgl_planing', 'ASC')
                       ->findAll();
         if ($tasks) {
             $tasksWithDetails = $model->dataTambahanTask($tasks);
             return $this->response->setJSON($tasksWithDetails);
         } else {
-            $response = [
-                'status' => 404,
-                'error' => true,
-                'messages' => 'Data tidak ditemukan'
-            ];
-            return $this->respond($response, 404);
+            $result = [];
+            return $this->respond($result, 200);
         }
     } catch (\Throwable $th) {
         return $this->failNotFound("Data tidak ditemukan");
@@ -365,6 +428,7 @@ public function showTaskByPekerjaan($idpekerjaan)
         try {
             $model = new $this->modelTask();
             $tasks = $model->where(['id_user' => $iduser, 'deleted_at' => null])
+                        ->orderBy('id_status_task', 'ASC')
                         ->orderBy('tgl_planing', 'ASC')
                         ->findAll();
 
@@ -395,6 +459,10 @@ public function showTaskByPekerjaan($idpekerjaan)
             $tasks = $modelTask->getTasksForVerification($iduser);
 
             if (!empty($tasks)) {
+                //diurutkan berdasarkan siapa yg pertama submit
+                usort($tasks, function ($a, $b) {
+                    return strtotime($a['updated_at']) - strtotime($b['updated_at']);
+                });
                 return $this->response->setJSON($tasks);
             } else {
                 $response = [
@@ -418,10 +486,13 @@ public function showTaskByPekerjaan($idpekerjaan)
             $tasks = $modelTask->getTasksForVerifikator($iduser);
     
             // Tambahkan data tambahan ke setiap task
-            $tasksWithDetails = $modelTask->dataTambahanTask($tasks);
+            $result = $modelTask->dataTambahanTask($tasks);
     
-            if (!empty($tasksWithDetails)) {
-                return $this->response->setJSON($tasksWithDetails);
+            if (!empty($result)) {
+                usort($result, function ($a, $b) {
+                    return strtotime($b['updated_at']) - strtotime($a['updated_at']);
+                });
+                return $this->response->setJSON($result);
             } else {
                 $response = [
                     'status' => 404,
@@ -434,6 +505,25 @@ public function showTaskByPekerjaan($idpekerjaan)
             return $this->failNotFound("Data tidak ditemukan");
         }
     }
+
+    public function rekappoint($idUser) {
+        $taskModel = new $this->modelTask();
+        $kategoriTaskModel = new $this->modelKategori();
+        $bobotKategoriTaskModel = new $this->modelBobotKategori();
+    
+        $tasks = $taskModel->getTaskByUserId($idUser);
+        $result = [];
+        foreach ($tasks as $taskItem) {
+            // Check if tgl_selesai is not null and less than tgl_planing
+            if (($taskItem['tgl_selesai'] != null && strtotime($taskItem['tgl_selesai']) <= strtotime($taskItem['tgl_planing']))) {
+                $kategoriTask = $kategoriTaskModel->getKategoriTaskById($taskItem['id_kategori_task']);
+                $bobotKategoriTask = $bobotKategoriTaskModel->getBobotKategoriTaskById($kategoriTask['id_kategori_task']);
+                $taskItem['bobot_point'] = $bobotKategoriTask['bobot_poin'];
+                $result[] = $taskItem;
+            }
+        }
+        return $this->response->setJSON($result);
+    } 
     
     
 }

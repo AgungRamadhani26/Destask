@@ -102,66 +102,17 @@ class PekerjaanController extends ResourceController
         if ($pekerjaan) {
             $idPekerjaan = array_column($pekerjaan, 'id_pekerjaan');
             foreach ($idPekerjaan as $id) {
-                $pekerjaanItem = $pekerjaanModel->dataPekerjaanTambahan($id);
+                $pekerjaanItem = $pekerjaanModel->dataTambahanPekerjaan($id);
                 if ($pekerjaanItem) {
                     $result[] = $pekerjaanItem;
                 }
             }
+            usort($result, function ($a, $b) {
+                return strtotime($a['target_waktu_selesai']) - strtotime($b['target_waktu_selesai']);
+            });
             return $this->response->setJSON($result);
         } else {
             return $this->failNotFound('Data tidak ditemukan');
-        }
-    }
-
-
-
-
-    public function update($id = null)
-    {
-        $model = new $this->modelPekerjaan();
-        $id_status_pekerjaan = $this->request->getVar('id_status_pekerjaan');
-
-        //validasi
-        $validation = $this->validate([
-            'id_status_pekerjaan' => 'required'
-        ]);
-        if (!$validation) {
-            $response = [
-                'status' => 400,
-                'error' => true,
-                'messages' => 'Validasi gagal'
-            ];
-            return $this->validator->getErrors();
-        }
-        $data = [
-            'id_status_pekerjaan' => $id_status_pekerjaan
-        ];
-        $isExist = $model->getWhere(['id_pekerjaan' => $id, 'deleted_at' => null])->getResult();
-        if ($isExist) {
-            if ($model->update($id, $data)) {
-                $response = [
-                    'status' => 200,
-                    'error' => null,
-                    'messages' => [
-                        'success' => 'Data berhasil diupdate'
-                    ]
-                ];
-                return $this->respond($response, 200);
-            } else {
-                $response = [
-                    'status' => 500,
-                    'error' => true,
-                    'messages' => 'Data gagal diupdate'
-                ];
-                return $this->respond($response, 500);
-            }
-        } else {
-            $response = [
-                'status' => 404,
-                'error' => true,
-                'messages' => 'Data tidak ditemukan'
-            ];
-            return $this->respond($response, 404);
         }
     }
 
@@ -199,6 +150,11 @@ class PekerjaanController extends ResourceController
                 $result[] = $pekerjaanItem;
             }
         }
+        
+        usort($result, function ($a, $b) {
+            return strtotime($a['target_waktu_selesai']) - strtotime($b['target_waktu_selesai']);
+        });
+        
 
         return $this->response->setJSON($result);
     }
@@ -236,6 +192,11 @@ class PekerjaanController extends ResourceController
                     }
                 }
             }
+            //diurutkan dari target waktu selesai terdekat
+            usort($result, function ($a, $b) {
+                return strtotime($a['target_waktu_selesai']) - strtotime($b['target_waktu_selesai']);
+            });
+            
             
             return $this->response->setJSON($result);
         }

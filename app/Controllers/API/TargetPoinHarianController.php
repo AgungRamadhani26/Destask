@@ -43,7 +43,7 @@ class TargetPoinHarianController extends ResourceController {
         $tahun = date('Y');
         if ($user) {
             //cek target poin harian by usergroup
-            $data = $model->where(['id_usergroup' => $user->id_usergroup, 'bulan' => $bulan, 'tahun' => $tahun, 'deleted_at' => null])->orderBy('id_target_poin_harian', 'ASC')->first();
+            $data = $model->where(['id_usergroup' => $user->id_usergroup, 'bulan' => $bulan, 'tahun' => $tahun, 'deleted_at' => null])->orderBy('id_target_poin_harian', 'ASC')->findAll();
             if ($data) {
                 return $this->respond($data, 200);
             } else {
