@@ -72,7 +72,7 @@
                            </div>
                            <div class="col-md-12 mb-3">
                               <label for="tautan_task_submit_task" class="form-label" style="font-weight: 600;">Tautan Task<span style="color: red; font-size: 13px;"> *Berupa url pengerjaan task, seperti link GitHub, Drive, dsb. jika tidak ada isi dengan keterangan kenapa tidak ada.</span></label>
-                              <input type="url" class="form-control <?= (session()->getFlashdata('err_tautan_task_submit_task')) ? 'is-invalid' : ''; ?>" name="tautan_task_submit_task" id="tautan_task_submit_task" value="<?= old('tautan_task_submit_task'); ?>">
+                              <input type="text" class="form-control <?= (session()->getFlashdata('err_tautan_task_submit_task')) ? 'is-invalid' : ''; ?>" name="tautan_task_submit_task" id="tautan_task_submit_task" value="<?= old('tautan_task_submit_task'); ?>">
                               <div class="invalid-feedback">
                                  <?= session()->getFlashdata('err_tautan_task_submit_task') ?>
                               </div>
