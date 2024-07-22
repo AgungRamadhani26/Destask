@@ -525,6 +525,10 @@ class TaskModel extends Model
 
 
     //MOBILE API
+    public function getTaskByUserId($id_user)
+    {
+        return $this->where(['id_user' => $id_user])->findAll();
+    }
 
     //Fungsi untuk mendapatkan data task berdasarkan id task
     public function dataTambahanTask($tasks)
@@ -564,7 +568,7 @@ class TaskModel extends Model
             'verifikator' => $idverifikator,
             'deleted_at' => null
         ])
-        ->orderBy('tgl_planing', 'ASC')->findAll();
+            ->orderBy('tgl_planing', 'ASC')->findAll();
     }
 
     // Method to get tasks for verification

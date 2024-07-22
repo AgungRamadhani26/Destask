@@ -71,11 +71,12 @@ class PekerjaanController extends ResourceController
         }
     }
 
-    public function show($id = null) {
+    public function show($id = null)
+    {
         $model = new $this->modelPekerjaan();
         $pekerjaan = $model->where(['id_pekerjaan' => $id, 'deleted_at' => null])->findAll();
         $result = [];
-    
+
         if ($pekerjaan) {
             foreach ($pekerjaan as $pekerjaanItem) {
                 $dataTambahan = $model->dataTambahanPekerjaan($pekerjaanItem['id_pekerjaan']);
@@ -96,15 +97,19 @@ class PekerjaanController extends ResourceController
         $pekerjaanModel = new $this->modelPekerjaan();
         $personilModel = new $this->modelPersonil();
         $result = [];
+        $seenPekerjaan = [];
 
-        //jika id user = role personil maka id pekerjaan dimasukan ke pekerjaan
+        // Jika id user = role personil maka id pekerjaan dimasukkan ke pekerjaan
         $pekerjaan = $personilModel->where('id_user', $iduser)->orderBy('id_pekerjaan', 'DESC')->findAll();
         if ($pekerjaan) {
             $idPekerjaan = array_column($pekerjaan, 'id_pekerjaan');
             foreach ($idPekerjaan as $id) {
-                $pekerjaanItem = $pekerjaanModel->dataTambahanPekerjaan($id);
-                if ($pekerjaanItem) {
-                    $result[] = $pekerjaanItem;
+                if (!in_array($id, $seenPekerjaan)) {
+                    $pekerjaanItem = $pekerjaanModel->dataTambahanPekerjaan($id);
+                    if ($pekerjaanItem) {
+                        $result[] = $pekerjaanItem;
+                        $seenPekerjaan[] = $id;
+                    }
                 }
             }
             usort($result, function ($a, $b) {
@@ -115,6 +120,7 @@ class PekerjaanController extends ResourceController
             return $this->failNotFound('Data tidak ditemukan');
         }
     }
+
 
     public function showPekerjaanVerifikasi($iduser)
     {
@@ -128,7 +134,7 @@ class PekerjaanController extends ResourceController
 
         // Dapatkan semua user yang memiliki id user group yang sama dan bukan user yang login
         $usersInGroup = $modelUser->where('id_usergroup', $idUserGroup)->findAll();
-        $usersExceptCurrentUser = array_filter($usersInGroup, fn($user) => $user['id_user'] != $iduser);
+        $usersExceptCurrentUser = array_filter($usersInGroup, fn ($user) => $user['id_user'] != $iduser);
 
         $idPekerjaanList = [];
         foreach ($usersExceptCurrentUser as $user) {
@@ -150,54 +156,42 @@ class PekerjaanController extends ResourceController
                 $result[] = $pekerjaanItem;
             }
         }
-        
+
         usort($result, function ($a, $b) {
             return strtotime($a['target_waktu_selesai']) - strtotime($b['target_waktu_selesai']);
         });
-        
+
 
         return $this->response->setJSON($result);
     }
 
     public function showPekerjaanVerifikator($iduser)
-        {
-            $modelTask = new $this->modelTask();
-            $modelUser = new $this->modelUser();
-            $pekerjaanModel = new $this->modelPekerjaan();
+    {
+        // Membuat instance dari model PekerjaanModel dan PersonilModel
+        $pekerjaanModel = new $this->modelPekerjaan();
+        $taskModel = new $this->modelTask();
+        $result = [];
+        $seenPekerjaan = [];
 
-            // Dapatkan id user group dari user yang login
-            $user = $modelUser->getUserById($iduser);
-            $idUserGroup = $user['id_usergroup'];
-
-            // Dapatkan semua user yang memiliki id user group yang sama dan bukan user yang login
-            $usersInGroup = $modelUser->where('id_usergroup', $idUserGroup)->findAll();
-            $usersExceptCurrentUser = [];
-            foreach ($usersInGroup as $user) {
-                if ($user['id_user'] != $iduser) {
-                    $usersExceptCurrentUser[] = $user['id_user'];
-                }
-            }
-
-            $result = [];
-            foreach ($usersExceptCurrentUser as $idUser) {
-                $tasks = $modelTask->where(['verifikator' => $idUser])->findAll();
-                $idPekerjaan = array_unique(array_column($tasks, 'id_pekerjaan'));
-
-                if (count($idPekerjaan) > 0) {
-                    foreach ($idPekerjaan as $id) {
-                        $pekerjaanItem = $pekerjaanModel->dataTambahanPekerjaan($id);
-                        if ($pekerjaanItem) {
-                            $result[] = $pekerjaanItem;
-                        }
+        // Jika id user = role personil maka id pekerjaan dimasukkan ke pekerjaan
+        $pekerjaan = $taskModel->where('verifikator', $iduser)->orderBy('id_pekerjaan', 'DESC')->findAll();
+        if ($pekerjaan) {
+            $idPekerjaan = array_column($pekerjaan, 'id_pekerjaan');
+            foreach ($idPekerjaan as $id) {
+                if (!in_array($id, $seenPekerjaan)) {
+                    $pekerjaanItem = $pekerjaanModel->dataTambahanPekerjaan($id);
+                    if ($pekerjaanItem) {
+                        $result[] = $pekerjaanItem;
+                        $seenPekerjaan[] = $id;
                     }
                 }
             }
-            //diurutkan dari target waktu selesai terdekat
             usort($result, function ($a, $b) {
                 return strtotime($a['target_waktu_selesai']) - strtotime($b['target_waktu_selesai']);
             });
-            
-            
             return $this->response->setJSON($result);
+        } else {
+            return $this->failNotFound('Data tidak ditemukan');
         }
+    }
 }
