@@ -56,7 +56,7 @@
                      </div>
                      <div class=" col-md-4 mb-3">
                         <label for="nowa_pic" class="form-label" style="font-weight: 600;">Nomor Wa PIC<span style="color: red;">*</span></label>
-                        <input type="text" class="form-control <?= (session()->getFlashdata('err_nowa_pic')) ? 'is-invalid' : ''; ?>" name="nowa_pic" id="nowa_pic" value="<?= old('nowa_pic'); ?>">
+                        <input type="text" class="form-control <?= (session()->getFlashdata('err_nowa_pic')) ? 'is-invalid' : ''; ?>" name="nowa_pic" id="nowa_pic" value="<?= old('nowa_pic'); ?>" pattern="08\d{8,11}" title="No Wa PIC harus dimulai dengan 08 dan memiliki panjang antara 10 hingga 13 digit">
                         <div class="invalid-feedback">
                            <?= session()->getFlashdata('err_nowa_pic') ?>
                         </div>

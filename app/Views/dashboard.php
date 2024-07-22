@@ -99,10 +99,10 @@
                         <div class="body_card">
                             <div class="d-flex align-items-center">
                                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                    <i class="bi bi-person-fill-check"></i>
+                                    <i class="bi bi-clipboard-check-fill"></i>
                                 </div>
                                 <div class="ps-3 pt-2 pb-2">
-                                    <h5 class="judul_card">Level User</h5>
+                                    <h5 class="judul_card">Task Overdue</h5>
                                     <span class="text-danger small fw-bold"><?= session()->get('user_level'); ?></span>
                                 </div>
                             </div>
@@ -117,8 +117,8 @@
                                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                     <i class="bi bi-briefcase-fill"></i>
                                 </div>
-                                <div class="ps-3 pt-2 pb-2">
-                                    <h5 class="judul_card">Total Pekerjaan</h5>
+                                <div class="ps-3">
+                                    <h5 class="judul_card">Total Pekerjaan On Progress</h5>
                                     <span class="text-danger small fw-bold"><?= $jumlah_pekerjaan ?> pekerjaan</span>
                                 </div>
                             </div>
@@ -213,6 +213,9 @@
                         <div class="row mt-2">
                             <div class="col-12">
                                 <div class="input-group">
+                                    <button type="button" class="btn btn-warning me-2" style="border-radius: 5px; cursor:default; background-color: #ffc107; border-color: #ffc107;" onfocus="this.style.backgroundColor='#ffc107'; this.style.borderColor='#ffc107';">
+                                        Level User : <span class="badge text-bg-success"><i class="bi bi-person-fill-check"></i> <?= session()->get('user_level'); ?></span>
+                                    </button>
                                     <?php if (session()->get('user_level') == "staff" || session()->get('user_level') == "supervisi") : ?>
                                         <button type="button" class="btn btn-success me-2" style="border-radius: 5px; cursor:default; background-color: #28a745; border-color: #28a745;" onfocus="this.style.backgroundColor='#28a745'; this.style.borderColor='#28a745';">
                                             Poin anda bulan ini : <span class="badge text-bg-secondary"><?= $total_bobot_poin_bulan_ini ?></span>

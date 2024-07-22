@@ -64,11 +64,12 @@ class PekerjaanController extends ResourceController
         }
     }
 
-    public function show($id = null) {
+    public function show($id = null)
+    {
         $model = new $this->modelPekerjaan();
         $pekerjaan = $model->where(['id_pekerjaan' => $id, 'deleted_at' => null])->findAll();
         $result = [];
-    
+
         if ($pekerjaan) {
             foreach ($pekerjaan as $pekerjaanItem) {
                 $dataTambahan = $model->dataTambahanPekerjaan($pekerjaanItem['id_pekerjaan']);
@@ -126,7 +127,7 @@ class PekerjaanController extends ResourceController
 
         // Dapatkan semua user yang memiliki id user group yang sama dan bukan user yang login
         $usersInGroup = $modelUser->where('id_usergroup', $idUserGroup)->findAll();
-        $usersExceptCurrentUser = array_filter($usersInGroup, fn($user) => $user['id_user'] != $iduser);
+        $usersExceptCurrentUser = array_filter($usersInGroup, fn ($user) => $user['id_user'] != $iduser);
 
         $idPekerjaanList = [];
         foreach ($usersExceptCurrentUser as $user) {
@@ -148,11 +149,11 @@ class PekerjaanController extends ResourceController
                 $result[] = $pekerjaanItem;
             }
         }
-        
+
         usort($result, function ($a, $b) {
             return strtotime($a['target_waktu_selesai']) - strtotime($b['target_waktu_selesai']);
         });
-        
+
 
         return $this->response->setJSON($result);
     }
