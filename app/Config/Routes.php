@@ -308,6 +308,7 @@ $routes->group('api', ['filter' => 'jwtfilter', 'namespace' => 'App\Controllers\
    $routes->get('user/(:num)', 'UserController::show/$1');
    $routes->put('user/(:num)', 'UserController::update/$1');
    $routes->post('user/fotoprofil', 'UserController::uploadfoto');
+   $routes->post('user/cekemail', 'UserController::cekemail');
 
    //ganti password
    $routes->put('gantipassword', 'GantiPasswordController::index');
@@ -327,11 +328,14 @@ $routes->group('api', ['filter' => 'jwtfilter', 'namespace' => 'App\Controllers\
    $routes->get('task/(:num)', 'TaskController::show/$1');
    $routes->get('taskbypekerjaan/(:num)', 'TaskController::showTaskByPekerjaan/$1'); //data task berdasarkan pekerjaan
    $routes->get('taskbyuser/(:num)', 'TaskController::showTaskByUser/$1'); //data task berdasarkan user
+   $routes->get('taskbyuser/overdue/(:num)', 'TaskController::showTaskOverdueByUser/$1'); //data task berdasarkan user
    $routes->get('task/verifikasi/(:num)', 'TaskController::showTaskVerifikasi/$1'); //data task yang perlu diverifikasi
    $routes->put('task/verifikasi/tolak/(:num)', 'TaskController::tolakverifikasi/$1'); //data task yang perlu diverifikasi
    $routes->put('task/verifikasi/terima/(:num)', 'TaskController::terimaverifikasi/$1'); //data task yang perlu diverifikasi
-   $routes->get('task/verifikator/(:num)', 'TaskController::showTaskVerifikator/$1'); //data task yang perlu diverifikasi
+   $routes->get('task/verifikator/(:num)', 'TaskController::showTaskByVerifikator/$1'); //data task yang perlu diverifikasi
    $routes->get('task/rekappoint/(:num)', 'TaskController::rekappoint/$1');
+   // $routes->get('task/rekappoint/user/(:num)', 'TaskController::rekappointUser/$1');
+   // $routes->get('task/rekappoint/usergroup/(:num)', 'TaskController::rekappointUserGroup/$1');
    $routes->post('task', 'TaskController::create');
    $routes->put('task/(:num)', 'TaskController::update/$1'); //edit task
    $routes->post('task/submit', 'TaskController::submit'); //submit bukti selesai task
@@ -339,6 +343,8 @@ $routes->group('api', ['filter' => 'jwtfilter', 'namespace' => 'App\Controllers\
 
    //bobot kategori task
    $routes->get('bobotkategoritask/(:num)', 'BobotKategoriTaskController::show/$1');
+   $routes->get('bobotkategoritask/cekbobot/pm', 'BobotKategoriTaskController::cekbobotpm');
+   $routes->get('bobotkategoritask/cekbobot/individu/(:num)', 'BobotKategoriTaskController::cekbobotindividu/$1');
 
    //hari libur
    $routes->get('harilibur', 'HariLiburController::index');
@@ -358,5 +364,7 @@ $routes->group('api', ['filter' => 'jwtfilter', 'namespace' => 'App\Controllers\
    $routes->get('statustask/(:num)', 'StatusTaskController::show/$1');
 
    //target poin harian\
-   $routes->get('target/(:num)', 'TargetPoinHarianController::targetpoinharianbyuser/$1');
+   $routes->get('targetpoinharian/(:num)', 'TargetPoinHarianController::targetpoinharianbyuser/$1');
+   $routes->get('targetpoinharian/cek/pm', 'TargetPoinHarianController::cektargetpoinharianpm');
+   $routes->get('targetpoinharian/cek/individu/(:num)', 'TargetPoinHarianController::cektargetpoinharianindividu/$1');
 });

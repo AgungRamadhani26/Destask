@@ -48,15 +48,13 @@ class UserController extends ResourceController{
     public function update($id = null){
         $model = new $this->modelUser();
         $id_user = $this->request->getVar('id_user');
-        $username = $this->request->getVar('username');
         $email = $this->request->getVar('email');
         $nama = $this->request->getVar('nama');
     
         //validasi
         $validation = $this->validate([
             'id_user' => 'required',
-            'username' => 'required',
-            'email' => 'required',
+            'email' => 'required|valid_email|is_unique[user.email,id_user,{id_user}]',
             'nama' => 'required'
         ]);
     
@@ -76,7 +74,6 @@ class UserController extends ResourceController{
             return $this->respond($response, 400);
         } else {
             $data = [
-                'username' => $username,
                 'email' => $email,
                 'nama' => $nama
             ];
@@ -176,6 +173,39 @@ class UserController extends ResourceController{
                 'message' => 'Internal Server Error'
             ], 500);
         }
-    }    
+    }
+    
+    //buatkan fungsi untuk mengecek email jika mau ganti email untuk memastikan tidak ada email yang sama
+    public function cekemail()
+    {
+        $model = new $this->modelUser();
+        $emailbaru = $this->request->getVar('emailbaru');
+        $emaillama = $this->request->getVar('emaillama');
+        $data = $model->where(['email' => $emailbaru])->first();
+        if ($data) {
+            if ($emaillama == $emailbaru) {
+                $response = [
+                    'status' => 200,
+                    'error' => false,
+                    'messages' => 'Email belum diganti'
+                ];
+                return $this->respond($response, 200);
+            } else {
+                $response = [
+                    'status' => 400,
+                    'error' => true,
+                    'messages' => 'Email sudah digunakan'
+                ];
+                return $this->respond($response, 400);
+            }
+        } else {
+            $response = [
+                'status' => 200,
+                'error' => false,
+                'messages' => 'Email belum digunakan'
+            ];
+            return $this->respond($response, 200);
+        }
+    }
 }
 ?>

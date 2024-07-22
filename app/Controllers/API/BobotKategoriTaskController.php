@@ -7,6 +7,7 @@ class BobotKategoriTaskController extends ResourceController {
     use ResponseTrait;
 
     protected $modelBobotKategoriTask = 'App\Models\BobotKategoriTaskModel';
+    protected $modelKategoriTask = 'App\Models\KategoriTaskModel';
     protected $modelUserGroup = 'App\Models\UserGroupModel';
     protected $format    = 'json';
 
@@ -32,21 +33,26 @@ class BobotKategoriTaskController extends ResourceController {
         }
     }
 
-    public function cekbobot() {
+    public function cekbobotpm() {
         $modelbobot = new $this->modelBobotKategoriTask();
+        $modelkategori = new $this->modelKategoriTask();
         $modelusergroup = new $this->modelUserGroup();
         $tahun = date('Y');
+        $id_kategoris = $modelkategori->select('id_kategori_task')->findAll();
         $id_usergroups = $modelusergroup->select('id_usergroup')->findAll();
         //jika id usergroup dan tahun sudah ada di tabel bobot_kategori_task dan memiliki bobot poin maka masuk data
         $data = [];
         foreach ($id_usergroups as $id) {
             $id_usergroup = $id['id_usergroup'];
-            $cek = $modelbobot->where(['id_usergroup' => $id_usergroup, 'tahun' => $tahun])->first();
-            if ($cek) {
-                $data[] = $cek;
+            foreach ($id_kategoris as $id) {
+                $id_kategori_task = $id['id_kategori_task'];
+                $cek = $modelbobot->where(['id_usergroup' => $id_usergroup, 'id_kategori_task' => $id_kategori_task, 'tahun' => $tahun, 'deleted_at' => null])->first();
+                if ($cek) {
+                    $data[] = $cek;
+                }
             }
         }
-        if (count($data) === count($id_usergroups)) {
+        if (count($data) === count($id_kategoris) * count($id_usergroups)) {
             $response = [
                 'status' => 200,
                 'error' => false,
@@ -57,12 +63,47 @@ class BobotKategoriTaskController extends ResourceController {
             $response = [
                 'status' => 404,
                 'error' => true,
-                // 'count' => count($data),
-                // 'id_usergroups' => count($id_usergroups),
+                'count' => count($data),
+                'id_kategoris' => count($id_kategoris),
+                'id_usergroups' => count($id_usergroups),
                 'messages' => 'Data bobot kategori task belum lengkap',
             ];
             return $this->respond($response, 404);
         }
+    }
+
+    public function cekbobotindividu($id_usergroup) {
+        $modelbobot = new $this->modelBobotKategoriTask();
+        $modelkategori = new $this->modelKategoriTask();
+        $tahun = date('Y');
+        $id_kategoris = $modelkategori->select('id_kategori_task')->findAll();
+        //jika id kategori task dan tahun sudah ada di tabel bobot_kategori_task dan memiliki bobot poin maka masuk data
+        $data = [];
+        foreach ($id_kategoris as $id) {
+            $id_kategori_task = $id['id_kategori_task'];
+            $cek = $modelbobot->where(['id_usergroup' => $id_usergroup, 'id_kategori_task' => $id_kategori_task, 'tahun' => $tahun, 'deleted_at' => null])->first();
+            if ($cek) {
+                $data[] = $cek;
+            }
+        }
+        if (count($data) === count($id_kategoris)) {
+            $response = [
+                'status' => 200,
+                'error' => false,
+                'messages' => 'Data bobot kategori task sudah ada'
+            ];
+            return $this->respond($response, 200);
+        } else {
+            $response = [
+                'status' => 404,
+                'error' => true,
+                'count' => count($data),
+                'id_kategoris' => count($id_kategoris),
+                'messages' => 'Data bobot kategori task belum lengkap',
+            ];
+            return $this->respond($response, 404);
+        }
+
     }
     
 }

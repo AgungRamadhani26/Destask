@@ -60,14 +60,25 @@ class AuthController extends ResourceController
       return $this->respond($response, 401);
     }
 
-    helper('jwt');
-    $response = [
-      'message' => 'Autentikasi / login berhasil',
-      'data' => $alldata,
-      'token' => createJWT($identitas),
-    ];
+    //cek jika user level != supervisi maka gagal
+    if ($data['user_level'] == 'supervisi' || $data['user_level'] == 'staff') {
+      helper('jwt');
+      $response = [
+        'message' => 'Autentikasi / login berhasil',
+        'data' => $alldata,
+        'token' => createJWT($identitas),
+      ];
+      return $this->respond($response, 200);
+    } else {
+      $response = [
+        'status' => 401,
+        'error' => true,
+        'messages' => 'Anda tidak memiliki akses!'
+      ];
+      return $this->respond($response, 401);
+    }
 
-    return $this->respond($response, 200);
+
   }
 
   public function cekuser()
@@ -75,12 +86,18 @@ class AuthController extends ResourceController
     $model = new $this->modelUser();
     $email = $this->request->getVar('email');
     $data = $model->where(['email' => $email])->first();
-    $response = [
-      'status' => 200,
-      'error' => false,
-      'data' => $data,
-      'messages' => 'Data berhasil ditemukan'
-    ];
-    return $this->respond($response, 200);
+    if ($data) {
+      return $this->respond($data, 200);
+    } else {
+      $response = [
+        'status' => 404,
+        'error' => true,
+        'messages' => 'User tidak ditemukan'
+      ];
+      return $this->respond($response, 404);
+    }
   }
+
+  
+
 }

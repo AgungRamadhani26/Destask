@@ -13,35 +13,52 @@ class TaskController extends ResourceController{
     protected $modelBobotKategori = 'App\Models\BobotKategoriTaskModel';
     protected $format = 'json';
 
-    //mengambil semua data task
-    public function index(){
-        $model = new $this->modelTask();
-        $data = $model->where(['deleted_at' => null])->orderBy('id_task', 'DESC')->findAll();
-        return $this->respond($data, 200);
+    private function formatTaskDetails($task)
+    {
+        $dataTambahan = [
+            'nama_user' => $task['nama_user'],
+            'nama_creator' => $task['nama_creator'],
+            'nama_pekerjaan' => $task['nama_pekerjaan'],
+            'target_waktu_selesai' => $task['target_waktu_selesai'],
+            'nama_status_task' => $task['nama_status_task'],
+            'nama_kategori_task' => $task['nama_kategori_task'],
+            'nama_verifikator' => $task['nama_verifikator']
+        ];
+    
+        unset($task['nama_user'], $task['nama_creator'], $task['nama_pekerjaan'], $task['target_waktu_selesai'], $task['nama_status_task'], $task['nama_kategori_task'], $task['nama_verifikator']);
+    
+        $task['data_tambahan'] = $dataTambahan;
+    
+        return $task;
     }
-    //mengambil data task berdasarkan id task
-    // TaskController.php
+    
 
-public function show($id = null)
-{
-    try {
-        $model = new $this->modelTask();
-        $tasks = $model->where(['id_task' => $id, 'deleted_at' => null])->findAll();
-        if ($tasks) {
-            $tasksWithDetails = $model->dataTambahanTask($tasks);
-            return $this->response->setJSON($tasksWithDetails);
-        } else {
-            $response = [
-                'status' => 404,
-                'error' => true,
-                'messages' => 'Data tidak ditemukan'
-            ];
-            return $this->respond($response, 404);
+    //mengambil data task berdasarkan id task
+    public function show($id = null)
+    {
+        try {
+            $model = new $this->modelTask();
+            $tasks = $model->dataTaskById($id);
+    
+            if ($tasks) {
+                $tasksWithDetails = array_map([$this, 'formatTaskDetails'], $tasks);
+                return $this->response->setJSON($tasksWithDetails);
+            } else {
+                $response = [
+                    'status' => 404,
+                    'error' => true,
+                    'messages' => 'Data tidak ditemukan'
+                ];
+                return $this->respond($response, 404);
+            }
+        } catch (\Throwable $th) {
+            return $this->failNotFound("Data tidak ditemukan");
         }
-    } catch (\Throwable $th) {
-        return $this->failNotFound("Data tidak ditemukan");
     }
-}
+    
+    
+
+    
 
 
     //tambah task
@@ -400,48 +417,17 @@ public function show($id = null)
     //mengambil data task berdasarkan id pekerjaan
     // TaskController.php
 
-public function showTaskByPekerjaan($idpekerjaan)
-{
-    try {
-        $model = new $this->modelTask();
-        $tasks = $model->where(['id_pekerjaan' => $idpekerjaan, 'deleted_at' => null])
-                      ->orderBy('id_status_task', 'ASC')
-                      ->orderBy('tgl_planing', 'ASC')
-                      ->findAll();
-        if ($tasks) {
-            $tasksWithDetails = $model->dataTambahanTask($tasks);
-            return $this->response->setJSON($tasksWithDetails);
-        } else {
-            $result = [];
-            return $this->respond($result, 200);
-        }
-    } catch (\Throwable $th) {
-        return $this->failNotFound("Data tidak ditemukan");
-    }
-}
-
-    //mengambil data task berdasarkan user
-    // TaskController.php
-
-    public function showTaskByUser($iduser)
+    public function showTaskByPekerjaan($id = null)
     {
         try {
             $model = new $this->modelTask();
-            $tasks = $model->where(['id_user' => $iduser, 'deleted_at' => null])
-                        ->orderBy('id_status_task', 'ASC')
-                        ->orderBy('tgl_planing', 'ASC')
-                        ->findAll();
-
+            $tasks = $model->dataTaskByPekerjaan($id);
+    
             if ($tasks) {
-                $tasksWithDetails = $model->dataTambahanTask($tasks);
+                $tasksWithDetails = array_map([$this, 'formatTaskDetails'], $tasks);
                 return $this->response->setJSON($tasksWithDetails);
             } else {
-                $response = [
-                    'status' => 404,
-                    'error' => true,
-                    'messages' => 'Data tidak ditemukan'
-                ];
-                return $this->respond($response, 404);
+                return $this->response->setJSON($tasks);
             }
         } catch (\Throwable $th) {
             return $this->failNotFound("Data tidak ditemukan");
@@ -449,7 +435,25 @@ public function showTaskByPekerjaan($idpekerjaan)
     }
 
 
-    // TaskController.php
+    //task by user
+    public function showTaskByUser($id = null)
+    {
+        try {
+            $model = new $this->modelTask();
+            $tasks = $model->dataTaskByUser($id);
+    
+            if ($tasks) {
+                $tasksWithDetails = array_map([$this, 'formatTaskDetails'], $tasks);
+                return $this->response->setJSON($tasksWithDetails);
+            } else {
+                return $this->response->setJSON($tasks);
+            }
+        } catch (\Throwable $th) {
+            return $this->failNotFound("Data tidak ditemukan");
+        }
+    }
+
+    //task yang perlu diverifikasi oleh user
     public function showTaskVerifikasi($iduser)
     {
         try {
@@ -478,33 +482,42 @@ public function showTaskByPekerjaan($idpekerjaan)
     }
 
 
-    public function showTaskVerifikator($iduser) {
+    //task yang sudah diverifikasi oleh verifikator
+    public function showTaskByVerifikator($id)
+    {
         try {
-            $modelTask = new $this->modelTask();
+            $model = new $this->modelTask();
+            $tasks = $model->dataTaskByVerifikator($id);
     
-            // Dapatkan semua task yang perlu diverifikasi oleh verifikator
-            $tasks = $modelTask->getTasksForVerifikator($iduser);
-    
-            // Tambahkan data tambahan ke setiap task
-            $result = $modelTask->dataTambahanTask($tasks);
-    
-            if (!empty($result)) {
-                usort($result, function ($a, $b) {
-                    return strtotime($b['updated_at']) - strtotime($a['updated_at']);
-                });
-                return $this->response->setJSON($result);
+            if ($tasks) {
+                $tasksWithDetails = array_map([$this, 'formatTaskDetails'], $tasks);
+                return $this->response->setJSON($tasksWithDetails);
             } else {
-                $response = [
-                    'status' => 404,
-                    'error' => true,
-                    'messages' => 'Data tidak ditemukan'
-                ];
-                return $this->respond($response, 404);
+                return $this->response->setJSON($tasks);
             }
         } catch (\Throwable $th) {
             return $this->failNotFound("Data tidak ditemukan");
         }
     }
+
+    //task overdue by user
+    public function showTaskOverdueByUser($id)
+    {
+        try {
+            $model = new $this->modelTask();
+            $tasks = $model->dataTaskOverdueByUser($id);
+    
+            if ($tasks) {
+                $tasksWithDetails = array_map([$this, 'formatTaskDetails'], $tasks);
+                return $this->response->setJSON($tasksWithDetails);
+            } else {
+                return $this->response->setJSON($tasks);
+            }
+        } catch (\Throwable $th) {
+            return $this->failNotFound("Data tidak ditemukan");
+        }
+    }
+
 
     public function rekappoint($idUser) {
         $taskModel = new $this->modelTask();
@@ -524,6 +537,9 @@ public function showTaskByPekerjaan($idpekerjaan)
         }
         return $this->response->setJSON($result);
     } 
+    
+    
+     
     
     
 }

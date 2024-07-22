@@ -524,51 +524,22 @@ class TaskModel extends Model
     }
 
 
+
+
+
+
+
+
+    
+
     //MOBILE API
+    public function getTaskByUserId($id_user)
+    {
+        return $this->where(['id_user' => $id_user])->findAll();
+    }
 
     //Fungsi untuk mendapatkan data task berdasarkan id task
-    public function dataTambahanTask($tasks)
-    {
-        $result = [];
-        $userModel = new \App\Models\UserModel();
-        $pekerjaanModel = new \App\Models\PekerjaanModel();
-        $statusModel = new \App\Models\StatusTaskModel();
-        $kategoriModel = new \App\Models\KategoriTaskModel();
-
-        foreach ($tasks as $taskItem) {
-            $userData = $userModel->find($taskItem['id_user']);
-            $creatorData = $userModel->find($taskItem['creator']);
-            $pekerjaanData = $pekerjaanModel->find($taskItem['id_pekerjaan']);
-            $statusData = $statusModel->find($taskItem['id_status_task']);
-            $kategoriData = $kategoriModel->find($taskItem['id_kategori_task']);
-
-            $taskItem['data_tambahan'] = [
-                'nama_user' => $userData['nama'],
-                'nama_creator' => $creatorData['nama'],
-                'nama_pekerjaan' => $pekerjaanData['nama_pekerjaan'],
-                'target_waktu_selesai' => $pekerjaanData['target_waktu_selesai'],
-                'nama_status_task' => $statusData['nama_status_task'],
-                'nama_kategori_task' => $kategoriData['nama_kategori_task'],
-                'nama_verifikator' => $taskItem['verifikator'] == null ? null : $userModel->find($taskItem['verifikator'])['nama']
-            ];
-
-            $result[] = $taskItem;
-        }
-
-        return $result;
-    }
-
-    public function getTasksForVerifikator($idverifikator)
-    {
-        return $this->where([
-            'verifikator' => $idverifikator,
-            'deleted_at' => null
-        ])
-        ->orderBy('tgl_planing', 'ASC')->findAll();
-    }
-
-    // Method to get tasks for verification
-    public function getTasksForVerification($iduser)
+    public function dataTaskVerifikasi($iduser)
     {
         $userModel = new \App\Models\UserModel();
 
@@ -576,25 +547,159 @@ class TaskModel extends Model
         $user = $userModel->find($iduser);
         $idUserGroup = $user['id_usergroup'];
 
-        // Get all users in the same user group except the current user
-        $usersInGroup = $userModel->where('id_usergroup', $idUserGroup)->findAll();
-        $usersExceptCurrentUser = array_filter($usersInGroup, function ($user) use ($iduser) {
-            return $user['id_user'] != $iduser;
-        });
+        // Build the query to fetch tasks
+        $tasks = $this->select('
+                task.*,
+                u1.nama as nama_user,
+                u2.nama as nama_creator,
+                p.nama_pekerjaan,
+                p.target_waktu_selesai,
+                s.nama_status_task,
+                k.nama_kategori_task,
+                u3.nama as nama_verifikator
+            ')
+            ->join('user u1', 'u1.id_user = task.id_user', 'left')
+            ->join('user u2', 'u2.id_user = task.creator', 'left')
+            ->join('pekerjaan p', 'p.id_pekerjaan = task.id_pekerjaan', 'left')
+            ->join('status_task s', 's.id_status_task = task.id_status_task', 'left')
+            ->join('kategori_task k', 'k.id_kategori_task = task.id_kategori_task', 'left')
+            ->join('user u3', 'u3.id_user = task.verifikator', 'left')
+            ->where([
+                'task.id_status_task' => 2, // Filter by status_task = 2 (for verification)
+                'task.deleted_at' => null
+            ])
+            ->whereIn('task.id_user', function ($builder) use ($idUserGroup, $iduser) {
+                $builder->select('id_user')
+                        ->from('user')
+                        ->where('id_usergroup', $idUserGroup)
+                        ->where('id_user !=', $iduser);
+            })
+            ->orderBy('task.updated_at', 'ASC')
+            ->findAll();
 
-        // Get tasks for all users in the same group except the current user
-        $result = [];
-        foreach ($usersExceptCurrentUser as $user) {
-            $tasks = $this->where([
-                'id_user' => $user['id_user'],
-                'id_status_task' => 2,
-            ])->findAll();
-
-            // Add additional data to each task
-            $tasksWithDetails = $this->dataTambahanTask($tasks);
-            $result = array_merge($result, $tasksWithDetails);
-        }
-
-        return $result;
+        return $tasks;
     }
+
+
+    public function dataTaskByUser($id)
+    {
+        return $this->select('
+            task.*, 
+            u1.nama as nama_user, 
+            u2.nama as nama_creator, 
+            p.nama_pekerjaan, 
+            p.target_waktu_selesai, 
+            s.nama_status_task, 
+            k.nama_kategori_task,
+            u3.nama as nama_verifikator
+        ')
+        ->join('user u1', 'u1.id_user = task.id_user', 'left')
+        ->join('user u2', 'u2.id_user = task.creator', 'left')
+        ->join('pekerjaan p', 'p.id_pekerjaan = task.id_pekerjaan', 'left')
+        ->join('status_task s', 's.id_status_task = task.id_status_task', 'left')
+        ->join('kategori_task k', 'k.id_kategori_task = task.id_kategori_task', 'left')
+        ->join('user u3', 'u3.id_user = task.verifikator', 'left')
+        ->where(['task.id_user' => $id, 'task.deleted_at' => null])
+        ->orderBy('task.id_status_task', 'ASC')
+        ->orderBy('task.tgl_planing', 'ASC')
+        ->findAll();
+    }
+    public function dataTaskByPekerjaan($id)
+    {
+        return $this->select('
+            task.*, 
+            u1.nama as nama_user, 
+            u2.nama as nama_creator, 
+            p.nama_pekerjaan, 
+            p.target_waktu_selesai, 
+            s.nama_status_task, 
+            k.nama_kategori_task,
+            u3.nama as nama_verifikator
+        ')
+        ->join('user u1', 'u1.id_user = task.id_user', 'left')
+        ->join('user u2', 'u2.id_user = task.creator', 'left')
+        ->join('pekerjaan p', 'p.id_pekerjaan = task.id_pekerjaan', 'left')
+        ->join('status_task s', 's.id_status_task = task.id_status_task', 'left')
+        ->join('kategori_task k', 'k.id_kategori_task = task.id_kategori_task', 'left')
+        ->join('user u3', 'u3.id_user = task.verifikator', 'left')
+        ->where(['task.id_pekerjaan' => $id, 'task.deleted_at' => null])
+        ->orderBy('task.id_status_task', 'ASC')
+        ->orderBy('task.tgl_planing', 'ASC')
+        ->findAll();
+    }
+
+    public function dataTaskById($id)
+    {
+        return $this->select('
+                task.*,
+                u1.nama as nama_user,
+                u2.nama as nama_creator,
+                p.nama_pekerjaan,
+                p.target_waktu_selesai,
+                s.nama_status_task,
+                k.nama_kategori_task,
+                u3.nama as nama_verifikator
+            ')
+            ->join('user u1', 'u1.id_user = task.id_user', 'left')
+            ->join('user u2', 'u2.id_user = task.creator', 'left')
+            ->join('pekerjaan p', 'p.id_pekerjaan = task.id_pekerjaan', 'left')
+            ->join('status_task s', 's.id_status_task = task.id_status_task', 'left')
+            ->join('kategori_task k', 'k.id_kategori_task = task.id_kategori_task', 'left')
+            ->join('user u3', 'u3.id_user = task.verifikator', 'left')
+            ->where(['task.id_task' => $id, 'task.deleted_at' => null])
+            ->findAll();
+    }
+    
+    public function dataTaskByVerifikator($id)
+    {
+        return $this->select('
+                task.*,
+                u1.nama as nama_user,
+                u2.nama as nama_creator,
+                p.nama_pekerjaan,
+                p.target_waktu_selesai,
+                s.nama_status_task,
+                k.nama_kategori_task,
+                u3.nama as nama_verifikator
+            ')
+            ->join('user u1', 'u1.id_user = task.id_user', 'left')
+            ->join('user u2', 'u2.id_user = task.creator', 'left')
+            ->join('pekerjaan p', 'p.id_pekerjaan = task.id_pekerjaan', 'left')
+            ->join('status_task s', 's.id_status_task = task.id_status_task', 'left')
+            ->join('kategori_task k', 'k.id_kategori_task = task.id_kategori_task', 'left')
+            ->join('user u3', 'u3.id_user = task.verifikator', 'left')
+            ->where(['task.verifikator' => $id, 'task.deleted_at' => null])
+            ->orderBy('task.updated_at', 'ASC')
+            ->findAll();
+    }
+
+    public function dataTaskOverdueByUser($id)
+    {   
+        $currentDate = date('Y-m-d');
+        return $this->select('
+                task.*,
+                u1.nama as nama_user,
+                u2.nama as nama_creator,
+                p.nama_pekerjaan,
+                p.target_waktu_selesai,
+                s.nama_status_task,
+                k.nama_kategori_task,
+                u3.nama as nama_verifikator
+            ')
+            ->join('user u1', 'u1.id_user = task.id_user', 'left')
+            ->join('user u2', 'u2.id_user = task.creator', 'left')
+            ->join('pekerjaan p', 'p.id_pekerjaan = task.id_pekerjaan', 'left')
+            ->join('status_task s', 's.id_status_task = task.id_status_task', 'left')
+            ->join('kategori_task k', 'k.id_kategori_task = task.id_kategori_task', 'left')
+            ->join('user u3', 'u3.id_user = task.verifikator', 'left')
+            ->where([
+                'task.id_user' => $id,
+                'task.id_status_task' => 1, // Filter by status_task = 1
+                'task.deleted_at' => null
+            ])
+            ->where("DATE(task.tgl_planing) < '{$currentDate}'") // Filter tasks overdue by current date
+            ->orderBy('task.tgl_planing', 'ASC')
+            ->findAll();
+    }
+
 }

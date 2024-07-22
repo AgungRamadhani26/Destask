@@ -11,27 +11,6 @@ class TargetPoinHarianController extends ResourceController {
     protected $modelUserGroup = 'App\Models\UserGroupModel';
     protected $format    = 'json';
 
-    public function index() {
-        $model = new $this->modelTargetPoinHarian();
-        $data = $model->where(['deleted_at' => null])->orderBy('id_target_poin_harian', 'ASC')->findAll();
-        return $this->respond($data, 200);
-    }
-
-    public function show($id = null) {
-        $model = new $this->modelTargetPoinHarian();
-        $data = $model->getWhere(['id_target_poin_harian' => $id, 'deleted_at' => null])->getResult();
-
-        if ($data) {
-            return $this->respond($data, 200);
-        } else {
-            $response = [
-                'status' => 404,
-                'error' => true,
-                'messages' => 'Data tidak ditemukan'
-            ];
-            return $this->respond($response, 404);
-        }
-    }
 
     //target poin harian by usergroup
     public function targetpoinharianbyuser($iduser) {
@@ -66,8 +45,8 @@ class TargetPoinHarianController extends ResourceController {
             return $this->respond($response, 404);
         }
     }
-
-    public function cektargetpoinharian() {
+    //target poin harian by pm
+    public function cektargetpoinharianpm() {
         $modelbobot = new $this->modelTargetPoinHarian();
         $modelusergroup = new $this->modelUserGroup();
         $tahun = date('Y');
@@ -77,7 +56,7 @@ class TargetPoinHarianController extends ResourceController {
         $data = [];
         foreach ($id_usergroups as $id) {
             $id_usergroup = $id['id_usergroup'];
-            $cek = $modelbobot->where(['id_usergroup' => $id_usergroup, 'tahun' => $tahun, 'bulan' => $bulan])->first();
+            $cek = $modelbobot->where(['id_usergroup' => $id_usergroup, 'tahun' => $tahun, 'bulan' => $bulan, 'deleted_at' => null])->first();
             if ($cek) {
                 $data[] = $cek;
             }
@@ -99,6 +78,42 @@ class TargetPoinHarianController extends ResourceController {
             ];
             return $this->respond($response, 404);
         }
+    }
+
+    //cek target poin harian individu
+    public function cektargetpoinharianindividu($id_usergroup) {
+        $modelbobot = new $this->modelTargetPoinHarian();
+        $tahun = date('Y');
+        $bulan = ltrim(date('m'), '0');
+        //jika id usergroup dan tahun sudah ada di tabel bobot_kategori_task dan memiliki bobot poin maka masuk data
+        $data = [];
+        $cek = $modelbobot->where(['id_usergroup' => $id_usergroup, 'tahun' => $tahun, 'bulan' => $bulan, 'deleted_at' => null])->first();
+        if ($cek) {
+            $data[] = $cek;
+        }
+        if (count($data) === 1) {
+            $response = [
+                'status' => 200,
+                'error' => false,
+                'messages' => 'Data target poin harian sudah ada'
+            ];
+            return $this->respond($response, 200);
+        } else {
+            $response = [
+                'status' => 404,
+                'error' => true,
+                'count' => count($data),
+                'messages' => 'Data target poin harian belum lengkap',
+            ];
+            return $this->respond($response, 404);
+        }
+        
+    }
+
+    public function targetHarian() {
+        $model = new $this->modelTargetPoinHarian();
+        $data = $model->findAll();
+        return $this->respond($data, 200);
     }
     
     

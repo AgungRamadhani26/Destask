@@ -258,18 +258,35 @@ class PekerjaanModel extends Model
         $userModel = new \App\Models\UserModel();
         $taskModel = new \App\Models\TaskModel();
         
-        $pekerjaanItem = $this->find($idPekerjaan);
+        // Fetch main pekerjaan data
+        $pekerjaanItem = $this->select('
+                pekerjaan.*,
+                sp.nama_status_pekerjaan,
+                kp.nama_kategori_pekerjaan
+            ')
+            ->join('status_pekerjaan sp', 'sp.id_status_pekerjaan = pekerjaan.id_status_pekerjaan', 'left')
+            ->join('kategori_pekerjaan kp', 'kp.id_kategori_pekerjaan = pekerjaan.id_kategori_pekerjaan', 'left')
+            ->where('pekerjaan.id_pekerjaan', $idPekerjaan)
+            ->first();
+
         if (!$pekerjaanItem) {
             return null;
         }
 
-        $status = $statusModel->find($pekerjaanItem['id_status_pekerjaan']);
-        $kategori = $kategoriModel->find($pekerjaanItem['id_kategori_pekerjaan']);
-        $personil = $personilModel->where(['id_pekerjaan' => $pekerjaanItem['id_pekerjaan']])->findAll();
-        
+        // Fetch personnel data
+        $personil = $personilModel->select('
+                personil.id_user,
+                personil.role_personil,
+                u.nama
+            ')
+            ->join('user u', 'u.id_user = personil.id_user', 'left')
+            ->where('personil.id_pekerjaan', $idPekerjaan)
+            ->findAll();
+
+        // Group personnel by role
         $data_tambahan = [
-            'nama_status_pekerjaan' => $status['nama_status_pekerjaan'],
-            'nama_kategori_pekerjaan' => $kategori['nama_kategori_pekerjaan'],
+            'nama_status_pekerjaan' => $pekerjaanItem['nama_status_pekerjaan'],
+            'nama_kategori_pekerjaan' => $pekerjaanItem['nama_kategori_pekerjaan'],
             'project_manager' => [],
             'desainer' => [],
             'backend_web' => [],
@@ -282,24 +299,24 @@ class PekerjaanModel extends Model
         ];
 
         foreach ($personil as $personilItem) {
-            $user = $userModel->find($personilItem['id_user']);
             $data_tambahan[$personilItem['role_personil']][] = [
-                'id_user' => $user['id_user'],
-                'nama' => $user['nama'],
+                'id_user' => $personilItem['id_user'],
+                'nama' => $personilItem['nama'],
                 'role_personil' => $personilItem['role_personil'],
             ];
         }
 
+        // Calculate task completion percentage
         $jumlah_task_selesai = $taskModel
             ->where([
-                'id_pekerjaan' => $pekerjaanItem['id_pekerjaan'],
+                'id_pekerjaan' => $idPekerjaan,
                 'id_status_task' => '3',
                 'deleted_at' => null
             ])
             ->countAllResults();
 
         $jumlah_task_total = $taskModel
-            ->where(['id_pekerjaan' => $pekerjaanItem['id_pekerjaan'], 'deleted_at' => null])
+            ->where(['id_pekerjaan' => $idPekerjaan, 'deleted_at' => null])
             ->countAllResults();
 
         $persentase_selesai = ($jumlah_task_total > 0) ? ($jumlah_task_selesai / $jumlah_task_total) * 100 : 0;
@@ -311,4 +328,5 @@ class PekerjaanModel extends Model
 
         return $pekerjaanItem;
     }
+
 }
