@@ -97,6 +97,9 @@ $routes->post('/task/tambah_task', 'Task::tambah_task'); //Sudah beres masalah a
 //Untuk menampilkan form edit task
 $routes->get('/task/edit_task/(:num)', 'Task::edit_task/$1'); //Sudah beres masalah akses karena semua udah diatur di controller
 $routes->post('/task/update_task', 'Task::update_task'); //Sudah beres masalah akses karena semua udah diatur di controller
+//Untuk update progress task
+$routes->get('/task/edit_progress_task/(:num)', 'Task::edit_progress_task/$1'); //Sudah beres masalah akses karena semua udah diatur di controller
+$routes->post('/task/update_progress_task', 'Task::update_progress_task'); //Sudah beres masalah akses karena semua udah diatur di controller
 //Untuk menghapus task
 $routes->delete('/task/delete_task/(:num)', 'Task::delete_task/$1'); //Sudah beres masalah akses karena semua udah diatur di controller
 //Untuk menampilkan form submit task

@@ -108,6 +108,30 @@ function editpekerjaan_status_pekerjaan($id){
    });
 }
 
+
+//Proses membersikan form edit pekerjaan status pekerjaan
+$('.tombol-tutup-progress-task').on('click', function() {
+   $('.alert').hide();
+   $('#id_task_e').val('');
+   $('#progres_task_e').val('');
+});
+
+//Proses edit_progress_task
+function edit_progress_task($id){
+   $.ajax({
+      url: "/task/edit_progress_task/" + $id,
+      type: "GET",
+      success: function(hasil){
+         var $obj = $.parseJSON(hasil);
+         if ($obj.id_task != ''){
+            $('.alert').hide();
+            $('#id_task_e').val($obj.id_task);
+            $('#progress_task_e').val($obj.persentase_selesai);
+         }
+      }
+   });
+}
+
 //Proses membersikan form personil
 $('.tombol-tutup-personil').on('click', function() {
    $('.alert').hide();
