@@ -67,7 +67,6 @@ class TaskModel extends Model
     }
 
 
-
     //Fungsi untuk menghitung jumlah task berdasarkan id_user, tahun updated_at, dan bulan updated_at. dimana task yang dihitung
     //adalah task yang persentase_selesainya lebih besar 0, dan distinct berdasarkan tanggal updated_at, updated_at bentuknya adalah datetime
     //tapi yang didistinct adalah tanggalnya saja (dalam bentuk date)
@@ -507,6 +506,7 @@ class TaskModel extends Model
 
 
 
+
     //Fungsi untuk mendapatkan task berdasarkan id_kategori_task (untuk pengecekan kategori task, kalo ada task yang terkait dengan
     //kategori task tertentu maka kategori task tersebut tidak bisa dihapus)
     public function getTaskByIdKategoriTask($id_kategori_task)
@@ -525,12 +525,47 @@ class TaskModel extends Model
 
 
 
+    // Fungsi untuk menghitung jumlah semua task overdue yang status task nya (1) onprogress dan (4) cancel
+    // pada pekerjaan yang status pekerjaanya (1) presales (2) on progress, (4) support
+    public function countTaskOverdue_OnProgress_Cancel_At_Pekerjaan_Presales_OnProgress_Support($id_user = false)
+    {
+        $today = date('Y-m-d'); // Mendapatkan tanggal hari ini
+        //Mendapatkan semua pekerjaan yang statusnya presales, on progress, dan support
+        $pekerjaanModel = new \App\Models\PekerjaanModel();
+        $pekerjaan_presales = $pekerjaanModel->getPekerjaanByIdStatusPekerjaan(1);
+        $pekerjaan_onprogress = $pekerjaanModel->getPekerjaanByIdStatusPekerjaan(2);
+        $pekerjaan_support = $pekerjaanModel->getPekerjaanByIdStatusPekerjaan(4);
+        //Menggabungkan semua pekejaan
+        $pekerjaan = array_merge($pekerjaan_presales, $pekerjaan_onprogress, $pekerjaan_support);
+        //Mendapatkan semua id pekerjaan
+        $id_pekerjaan = [];
+        foreach ($pekerjaan as $p) {
+            $id_pekerjaan[] = $p['id_pekerjaan'];
+        }
+        if ($id_user) {
+            //Mendapatkan semua task yang status task nya onprogress dan cancel yang overdue berdasarkan id user
+            return count($this->whereIn('id_pekerjaan', $id_pekerjaan)
+                ->where('tgl_planing <', $today)
+                ->whereIn('id_status_task', [1, 4])
+                ->where('id_user', $id_user)
+                ->findAll());
+        } else {
+            //Mendapatkan semua task yang status task nya onprogress dan cancel yang overdue
+            return count($this->whereIn('id_pekerjaan', $id_pekerjaan)
+                ->where('tgl_planing <', $today)
+                ->whereIn('id_status_task', [1, 4])
+                ->findAll());
+        }
+    }
 
 
 
 
 
-    
+
+
+
+
 
     //MOBILE API
     public function getTaskByUserId($id_user)
@@ -570,9 +605,9 @@ class TaskModel extends Model
             ])
             ->whereIn('task.id_user', function ($builder) use ($idUserGroup, $iduser) {
                 $builder->select('id_user')
-                        ->from('user')
-                        ->where('id_usergroup', $idUserGroup)
-                        ->where('id_user !=', $iduser);
+                    ->from('user')
+                    ->where('id_usergroup', $idUserGroup)
+                    ->where('id_user !=', $iduser);
             })
             ->orderBy('task.updated_at', 'ASC')
             ->findAll();
@@ -593,16 +628,16 @@ class TaskModel extends Model
             k.nama_kategori_task,
             u3.nama as nama_verifikator
         ')
-        ->join('user u1', 'u1.id_user = task.id_user', 'left')
-        ->join('user u2', 'u2.id_user = task.creator', 'left')
-        ->join('pekerjaan p', 'p.id_pekerjaan = task.id_pekerjaan', 'left')
-        ->join('status_task s', 's.id_status_task = task.id_status_task', 'left')
-        ->join('kategori_task k', 'k.id_kategori_task = task.id_kategori_task', 'left')
-        ->join('user u3', 'u3.id_user = task.verifikator', 'left')
-        ->where(['task.id_user' => $id, 'task.deleted_at' => null])
-        ->orderBy('task.id_status_task', 'ASC')
-        ->orderBy('task.tgl_planing', 'ASC')
-        ->findAll();
+            ->join('user u1', 'u1.id_user = task.id_user', 'left')
+            ->join('user u2', 'u2.id_user = task.creator', 'left')
+            ->join('pekerjaan p', 'p.id_pekerjaan = task.id_pekerjaan', 'left')
+            ->join('status_task s', 's.id_status_task = task.id_status_task', 'left')
+            ->join('kategori_task k', 'k.id_kategori_task = task.id_kategori_task', 'left')
+            ->join('user u3', 'u3.id_user = task.verifikator', 'left')
+            ->where(['task.id_user' => $id, 'task.deleted_at' => null])
+            ->orderBy('task.id_status_task', 'ASC')
+            ->orderBy('task.tgl_planing', 'ASC')
+            ->findAll();
     }
     public function dataTaskByPekerjaan($id)
     {
@@ -616,16 +651,16 @@ class TaskModel extends Model
             k.nama_kategori_task,
             u3.nama as nama_verifikator
         ')
-        ->join('user u1', 'u1.id_user = task.id_user', 'left')
-        ->join('user u2', 'u2.id_user = task.creator', 'left')
-        ->join('pekerjaan p', 'p.id_pekerjaan = task.id_pekerjaan', 'left')
-        ->join('status_task s', 's.id_status_task = task.id_status_task', 'left')
-        ->join('kategori_task k', 'k.id_kategori_task = task.id_kategori_task', 'left')
-        ->join('user u3', 'u3.id_user = task.verifikator', 'left')
-        ->where(['task.id_pekerjaan' => $id, 'task.deleted_at' => null])
-        ->orderBy('task.id_status_task', 'ASC')
-        ->orderBy('task.tgl_planing', 'ASC')
-        ->findAll();
+            ->join('user u1', 'u1.id_user = task.id_user', 'left')
+            ->join('user u2', 'u2.id_user = task.creator', 'left')
+            ->join('pekerjaan p', 'p.id_pekerjaan = task.id_pekerjaan', 'left')
+            ->join('status_task s', 's.id_status_task = task.id_status_task', 'left')
+            ->join('kategori_task k', 'k.id_kategori_task = task.id_kategori_task', 'left')
+            ->join('user u3', 'u3.id_user = task.verifikator', 'left')
+            ->where(['task.id_pekerjaan' => $id, 'task.deleted_at' => null])
+            ->orderBy('task.id_status_task', 'ASC')
+            ->orderBy('task.tgl_planing', 'ASC')
+            ->findAll();
     }
 
     public function dataTaskById($id)
@@ -649,7 +684,7 @@ class TaskModel extends Model
             ->where(['task.id_task' => $id, 'task.deleted_at' => null])
             ->findAll();
     }
-    
+
     public function dataTaskByVerifikator($id)
     {
         return $this->select('
@@ -674,7 +709,7 @@ class TaskModel extends Model
     }
 
     public function dataTaskOverdueByUser($id)
-    {   
+    {
         $currentDate = date('Y-m-d');
         return $this->select('
                 task.*,
@@ -701,5 +736,4 @@ class TaskModel extends Model
             ->orderBy('task.tgl_planing', 'ASC')
             ->findAll();
     }
-
 }

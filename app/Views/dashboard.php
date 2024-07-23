@@ -101,9 +101,9 @@
                                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                     <i class="bi bi-clipboard-check-fill"></i>
                                 </div>
-                                <div class="ps-3 pt-2 pb-2">
-                                    <h5 class="judul_card">Task Overdue</h5>
-                                    <span class="text-danger small fw-bold"><?= session()->get('user_level'); ?></span>
+                                <div class="ps-3">
+                                    <h5 class="judul_card">Task Overdue Belum disubmit</h5>
+                                    <span class="text-danger small fw-bold"><?= $jumlah_task_overdue_yang_belum_disubmit; ?> Task</span>
                                 </div>
                             </div>
                         </div>
@@ -117,8 +117,8 @@
                                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                     <i class="bi bi-briefcase-fill"></i>
                                 </div>
-                                <div class="ps-3">
-                                    <h5 class="judul_card">Total Pekerjaan On Progress</h5>
+                                <div class="ps-3 pt-2 pb-2">
+                                    <h5 class="judul_card">Total Pekerjaan</h5>
                                     <span class="text-danger small fw-bold"><?= $jumlah_pekerjaan ?> pekerjaan</span>
                                 </div>
                             </div>
