@@ -68,7 +68,7 @@ class Task extends Migration
             ],
             'bukti_selesai' => [
                 'type'       => 'VARCHAR',
-                'constraint' => 100,
+                'constraint' => 200,
                 'null'       => true
             ],
             'tautan_task' => [
