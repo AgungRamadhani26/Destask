@@ -5,17 +5,19 @@ namespace App\Controllers\API;
 use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\API\ResponseTrait;
 
-class GantiPasswordController extends ResourceController {
+class GantiPasswordController extends ResourceController
+{
     use ResponseTrait;
     protected $modelUser = 'App\Models\UserModel';
     protected $format    = 'json';
 
-    public function index() {
+    public function index()
+    {
         try {
             $userId = $this->request->getVar('id_user');
             $oldPassword = $this->request->getVar('old_password');
             $newPassword = $this->request->getVar('new_password');
-            
+
             // Validate user input
             if (empty($userId) || empty($oldPassword) || empty($newPassword)) {
                 $response = [
@@ -34,12 +36,12 @@ class GantiPasswordController extends ResourceController {
             $user = $userModel->find($userId);
 
             if (!$user) {
-            return $this->fail('User not found.');
+                return $this->fail('User not found.');
             }
 
             // Verify the old password
             if (md5($oldPassword) != $user['password']) {
-            return $this->fail('Password Lama Salah.');
+                return $this->fail('Password Lama Salah.');
             }
 
             // Update the user's password
@@ -61,4 +63,3 @@ class GantiPasswordController extends ResourceController {
         }
     }
 }
-?>
