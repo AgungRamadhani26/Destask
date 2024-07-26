@@ -24,8 +24,8 @@ class PekerjaanSeeder extends Seeder
                 'jenis_layanan' => 'produk',
                 'nominal_harga' => 25000000,
                 'deskripsi_pekerjaan' => 'Aplikasi Pembukuan PT Jaya Sukses adalah aplikasi berbasis web dan aplikasi berbasis mobile yang dapat mencetak pembukuan dari penjualan setiap bulannya dan dapat melihat rekap penjualan pertahun.',
-                'target_waktu_selesai' => '2024-01-05',
-                'waktu_selesai' => '2024-01-05',
+                'target_waktu_selesai' => '2024-02-05',
+                'waktu_selesai' => '2024-02-05',
                 'created_at'       => Time::now(),
                 'updated_at'       => Time::now()
             ],
@@ -42,7 +42,7 @@ class PekerjaanSeeder extends Seeder
                 'jenis_layanan' => 'produk',
                 'nominal_harga' => 30000000,
                 'deskripsi_pekerjaan' => 'Aplikasi Absensin SMAN 1 Bandar terdiri atas aplikasi web sebagai monitoring admin yang dapat menggenerate qr-absen, selanjutnya aplikasi berbasis android yang digunakan siswa dan pegawai untuk melakukan scan untuk absensi',
-                'target_waktu_selesai' => '2024-09-30',
+                'target_waktu_selesai' => '2024-10-07',
                 'waktu_selesai' => null,
                 'created_at'          => Time::now(),
                 'updated_at'          => Time::now()
@@ -78,7 +78,7 @@ class PekerjaanSeeder extends Seeder
                 'jenis_layanan' => 'produk',
                 'nominal_harga' => 112000000,
                 'deskripsi_pekerjaan' => 'Website Recruitement Pegawai diharapkan dapat digunakan dalam melakukan recruitment pegawai baru, selain itu website ini digunakan sebagai wadah ujian dalam melakukan rekrutment.',
-                'target_waktu_selesai' => '2024-09-27',
+                'target_waktu_selesai' => '2024-09-30',
                 'waktu_selesai' => null,
                 'created_at'       => Time::now(),
                 'updated_at'       => Time::now()
@@ -96,7 +96,7 @@ class PekerjaanSeeder extends Seeder
                 'jenis_layanan' => 'boutique',
                 'nominal_harga' => 113000000,
                 'deskripsi_pekerjaan' => 'Sistem informasi monitoring kompetensi guru diharapkan dapat bermanfaat sebagai pantauan kompetensi guru yang mengajar di setap sekolah di kota Semarang.',
-                'target_waktu_selesai' => '2024-07-31',
+                'target_waktu_selesai' => '2024-09-25',
                 'waktu_selesai' => null,
                 'created_at'       => Time::now(),
                 'updated_at'       => Time::now()
@@ -114,7 +114,7 @@ class PekerjaanSeeder extends Seeder
                 'jenis_layanan' => 'boutique',
                 'nominal_harga' => 100000000,
                 'deskripsi_pekerjaan' => 'Sistem informasi diharapkan dapat mendata setiap alat yang ada di PT Kurnia lestari, serta dapat mencatat data data pengadaan barang.',
-                'target_waktu_selesai' => '2024-07-29',
+                'target_waktu_selesai' => '2024-09-24',
                 'waktu_selesai' => null,
                 'created_at'       => Time::now(),
                 'updated_at'       => Time::now()

@@ -13,7 +13,7 @@ class StatusTaskSeeder extends Seeder
         $data = [
             [
                 'id_status_task' => 1,
-                'nama_status_task'      => 'On Progres',
+                'nama_status_task'      => 'On Progress',
                 'deskripsi_status_task' => 'Task sedang dalam proses pengerjaan atau pelaksanaan, biasanya, task dalam status ini sedang berada di tengah-tengah proses dan memerlukan waktu untuk diselesaikan.',
                 'color'               => '#ffc107',
                 'created_at'          => Time::now(),

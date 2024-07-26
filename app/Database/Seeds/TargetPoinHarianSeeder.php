@@ -613,6 +613,82 @@ class TargetPoinHarianSeeder extends Seeder
                 'created_at'                 => Time::now(),
                 'updated_at'                 => Time::now()
             ],
+
+
+
+            //Agustus 2024
+            [
+                'id_target_poin_harian'      => 49,
+                'id_usergroup'               => 1,
+                'tahun'                      => '2024',
+                'bulan'                      => '8',
+                'jumlah_target_poin_harian'  => 32,
+                'jumlah_hari_kerja'          => 22,
+                'jumlah_hari_libur'          => 9,
+                'jumlah_target_poin_sebulan' => 704,
+                'created_at'                 => Time::now(),
+                'updated_at'                 => Time::now()
+            ],
+            [
+                'id_target_poin_harian'      => 50,
+                'id_usergroup'               => 2,
+                'tahun'                      => '2024',
+                'bulan'                      => '8',
+                'jumlah_target_poin_harian'  => 31,
+                'jumlah_hari_kerja'          => 22,
+                'jumlah_hari_libur'          => 9,
+                'jumlah_target_poin_sebulan' => 682,
+                'created_at'                 => Time::now(),
+                'updated_at'                 => Time::now()
+            ],
+            [
+                'id_target_poin_harian'      => 51,
+                'id_usergroup'               => 3,
+                'tahun'                      => '2024',
+                'bulan'                      => '8',
+                'jumlah_target_poin_harian'  => 31,
+                'jumlah_hari_kerja'          => 22,
+                'jumlah_hari_libur'          => 9,
+                'jumlah_target_poin_sebulan' => 682,
+                'created_at'                 => Time::now(),
+                'updated_at'                 => Time::now()
+            ],
+            [
+                'id_target_poin_harian'      => 52,
+                'id_usergroup'               => 4,
+                'tahun'                      => '2024',
+                'bulan'                      => '8',
+                'jumlah_target_poin_harian'  => 31,
+                'jumlah_hari_kerja'          => 22,
+                'jumlah_hari_libur'          => 9,
+                'jumlah_target_poin_sebulan' => 682,
+                'created_at'                 => Time::now(),
+                'updated_at'                 => Time::now()
+            ],
+            [
+                'id_target_poin_harian'      => 53,
+                'id_usergroup'               => 5,
+                'tahun'                      => '2024',
+                'bulan'                      => '8',
+                'jumlah_target_poin_harian'  => 32,
+                'jumlah_hari_kerja'          => 22,
+                'jumlah_hari_libur'          => 9,
+                'jumlah_target_poin_sebulan' => 704,
+                'created_at'                 => Time::now(),
+                'updated_at'                 => Time::now()
+            ],
+            [
+                'id_target_poin_harian'      => 54,
+                'id_usergroup'               => 6,
+                'tahun'                      => '2024',
+                'bulan'                      => '8',
+                'jumlah_target_poin_harian'  => 32,
+                'jumlah_hari_kerja'          => 22,
+                'jumlah_hari_libur'          => 9,
+                'jumlah_target_poin_sebulan' => 704,
+                'created_at'                 => Time::now(),
+                'updated_at'                 => Time::now()
+            ],
         ];
         $this->db->table('target_poin_harian')->insertBatch($data);
     }

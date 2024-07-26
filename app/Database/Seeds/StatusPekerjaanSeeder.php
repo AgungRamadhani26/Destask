@@ -21,7 +21,7 @@ class StatusPekerjaanSeeder extends Seeder
             ],
             [
                 'id_status_pekerjaan' => 2,
-                'nama_status_pekerjaan'      => 'On Progres',
+                'nama_status_pekerjaan'      => 'On Progress',
                 'deskripsi_status_pekerjaan' => 'Pekerjaan sedang dalam proses pengerjaan atau pelaksanaan. Tim atau individu sedang aktif dalam menyelesaikan tugas yang ditugaskan.',
                 'color'               => '#ffc107',
                 'created_at'          => Time::now(),
