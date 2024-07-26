@@ -1,9 +1,12 @@
 <?php
+
 namespace App\Controllers\API;
+
 use CodeIgniter\RESTful\ResourceController;
 use DateTime;
 
-class TaskController extends ResourceController{
+class TaskController extends ResourceController
+{
     protected $modelTask = 'App\Models\TaskModel';
     protected $modelUser = 'App\Models\UserModel';
     protected $modelUserGroup = 'App\Models\UserGroupModel';
@@ -24,14 +27,14 @@ class TaskController extends ResourceController{
             'nama_kategori_task' => $task['nama_kategori_task'],
             'nama_verifikator' => $task['nama_verifikator']
         ];
-    
+
         unset($task['nama_user'], $task['nama_creator'], $task['nama_pekerjaan'], $task['target_waktu_selesai'], $task['nama_status_task'], $task['nama_kategori_task'], $task['nama_verifikator']);
-    
+
         $task['data_tambahan'] = $dataTambahan;
-    
+
         return $task;
     }
-    
+
 
     //mengambil data task berdasarkan id task
     public function show($id = null)
@@ -39,7 +42,7 @@ class TaskController extends ResourceController{
         try {
             $model = new $this->modelTask();
             $tasks = $model->dataTaskById($id);
-    
+
             if ($tasks) {
                 $tasksWithDetails = array_map([$this, 'formatTaskDetails'], $tasks);
                 return $this->response->setJSON($tasksWithDetails);
@@ -55,14 +58,15 @@ class TaskController extends ResourceController{
             return $this->failNotFound("Data tidak ditemukan");
         }
     }
-    
-    
 
-    
+
+
+
 
 
     //tambah task
-    public function create(){
+    public function create()
+    {
         $model = new $this->modelTask();
         $id_pekerjaan = $this->request->getVar('id_pekerjaan');
         $id_user = $this->request->getVar('id_user');
@@ -81,7 +85,7 @@ class TaskController extends ResourceController{
 
         ]);
 
-        if(!$validation){
+        if (!$validation) {
             $response = [
                 'status' => 400,
                 'error' => true,
@@ -106,7 +110,7 @@ class TaskController extends ResourceController{
                 'verifikator' => null,
             ];
             $simpan = $model->insert($data);
-            if($simpan){
+            if ($simpan) {
                 $response = [
                     'status' => 200,
                     'error' => null,
@@ -122,7 +126,8 @@ class TaskController extends ResourceController{
     }
 
     //edit task
-    public function update($id = null){
+    public function update($id = null)
+    {
         $model = new $this->modelTask();
         $id_pekerjaan = $this->request->getVar('id_pekerjaan');
         $id_user = $this->request->getVar('id_user');
@@ -141,7 +146,7 @@ class TaskController extends ResourceController{
             'deskripsi_task' => 'required',
             'persentase_selesai' => 'required',
         ]);
-        if(!$validation){
+        if (!$validation) {
             $response = [
                 'status' => 400,
                 'error' => true,
@@ -166,8 +171,8 @@ class TaskController extends ResourceController{
             'verifikator' => null,
         ];
         $isExist = $model->getWhere(['id_task' => $id, 'deleted_at' => null])->getResult();
-        if($isExist){
-            if($model->update($id, $data)){
+        if ($isExist) {
+            if ($model->update($id, $data)) {
                 $response = [
                     'status' => 200,
                     'error' => null,
@@ -195,7 +200,8 @@ class TaskController extends ResourceController{
     }
 
     //tolak verifikasi
-    public function tolakVerifikasi($id = null){
+    public function tolakVerifikasi($id = null)
+    {
         $model = new $this->modelTask();
         $alasan_verifikasi = $this->request->getVar('alasan_verifikasi');
         $verifikator = $this->request->getVar('verifikator');
@@ -206,7 +212,7 @@ class TaskController extends ResourceController{
             'alasan_verifikasi' => 'required',
             'verifikator' => 'required',
         ]);
-        if(!$validation){
+        if (!$validation) {
             $response = [
                 'status' => 400,
                 'error' => true,
@@ -224,8 +230,8 @@ class TaskController extends ResourceController{
             'verifikator' => $verifikator,
         ];
         $isExist = $model->getWhere(['id_task' => $id, 'deleted_at' => null])->getResult();
-        if($isExist){
-            if($model->update($id, $data)){
+        if ($isExist) {
+            if ($model->update($id, $data)) {
                 $response = [
                     'status' => 200,
                     'error' => null,
@@ -253,7 +259,8 @@ class TaskController extends ResourceController{
         }
     }
 
-    public function terimaVerifikasi($id = null){
+    public function terimaVerifikasi($id = null)
+    {
         $model = new $this->modelTask();
         $verifikator = $this->request->getVar('verifikator');
 
@@ -262,7 +269,7 @@ class TaskController extends ResourceController{
             'id_task' => 'required',
             'verifikator' => 'required',
         ]);
-        if(!$validation){
+        if (!$validation) {
             $response = [
                 'status' => 400,
                 'error' => true,
@@ -279,8 +286,8 @@ class TaskController extends ResourceController{
             'verifikator' => $verifikator,
         ];
         $isExist = $model->getWhere(['id_task' => $id, 'deleted_at' => null])->getResult();
-        if($isExist){
-            if($model->update($id, $data)){
+        if ($isExist) {
+            if ($model->update($id, $data)) {
                 $response = [
                     'status' => 200,
                     'error' => null,
@@ -318,13 +325,12 @@ class TaskController extends ResourceController{
         $BuktiSelesai = $this->request->getFile('bukti_selesai');
         $verifikator = $this->request->getVar('verifikator');
         if ($BuktiSelesai == null) {
-        return $this->respond([
-            'status' => 400,
-            'error' => 'Bukti Selesai tidak boleh kosong',
-            'message' => 'Validasi gagal'
-        ], 400);
-        }
-        else {
+            return $this->respond([
+                'status' => 400,
+                'error' => 'Bukti Selesai tidak boleh kosong',
+                'message' => 'Validasi gagal'
+            ], 400);
+        } else {
             /* -------------------------------------------------------------------------- */
             // Jika ada bukti selesai
             /* -------------------------------------------------------------------------- */
@@ -354,7 +360,7 @@ class TaskController extends ResourceController{
                 if ($user_level == 'supervisi') {
                     $data = [
                         'id_task' => $id,
-                        'id_status_task' => 3,//selesai
+                        'id_status_task' => 3, //selesai
                         'tautan_task' => $tautan_task,
                         'bukti_selesai' => $namaBuktiSelesai,
                         'tgl_selesai' => date("Y-m-d"),
@@ -392,10 +398,11 @@ class TaskController extends ResourceController{
 
 
     //delete task
-    public function delete($id = null){
+    public function delete($id = null)
+    {
         $model = new $this->modelTask();
         $data = $model->find($id);
-    
+
         if ($data) {
             if ($model->delete($id)) {
                 $response = [
@@ -413,7 +420,7 @@ class TaskController extends ResourceController{
             return $this->failNotFound("Data tidak ditemukan");
         }
     }
-    
+
     //mengambil data task berdasarkan id pekerjaan
     // TaskController.php
 
@@ -422,7 +429,7 @@ class TaskController extends ResourceController{
         try {
             $model = new $this->modelTask();
             $tasks = $model->dataTaskByPekerjaan($id);
-    
+
             if ($tasks) {
                 $tasksWithDetails = array_map([$this, 'formatTaskDetails'], $tasks);
                 return $this->response->setJSON($tasksWithDetails);
@@ -441,7 +448,7 @@ class TaskController extends ResourceController{
         try {
             $model = new $this->modelTask();
             $tasks = $model->dataTaskByUser($id);
-    
+
             if ($tasks) {
                 $tasksWithDetails = array_map([$this, 'formatTaskDetails'], $tasks);
                 return $this->response->setJSON($tasksWithDetails);
@@ -482,7 +489,7 @@ class TaskController extends ResourceController{
         try {
             $model = new $this->modelTask();
             $tasks = $model->dataTaskByVerifikator($id);
-    
+
             if ($tasks) {
                 $tasksWithDetails = array_map([$this, 'formatTaskDetails'], $tasks);
                 return $this->response->setJSON($tasksWithDetails);
@@ -500,7 +507,7 @@ class TaskController extends ResourceController{
         try {
             $model = new $this->modelTask();
             $tasks = $model->dataTaskOverdueByUser($id);
-    
+
             if ($tasks) {
                 $tasksWithDetails = array_map([$this, 'formatTaskDetails'], $tasks);
                 return $this->response->setJSON($tasksWithDetails);
@@ -513,11 +520,12 @@ class TaskController extends ResourceController{
     }
 
 
-    public function rekappoint($idUser) {
+    public function rekappoint($idUser)
+    {
         $taskModel = new $this->modelTask();
         $kategoriTaskModel = new $this->modelKategori();
         $bobotKategoriTaskModel = new $this->modelBobotKategori();
-    
+
         $tasks = $taskModel->getTaskByUserId($idUser);
         $result = [];
         foreach ($tasks as $taskItem) {
@@ -530,12 +538,5 @@ class TaskController extends ResourceController{
             }
         }
         return $this->response->setJSON($result);
-    } 
-    
-    
-     
-    
-    
+    }
 }
-
-?>

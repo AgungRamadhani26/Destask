@@ -170,8 +170,10 @@ class Dashboard extends BaseController
         $Tahun_sekarang = date("Y");
         $Bulan_sekarang = date("n");
         if (session()->get('user_level') == 'staff' || session()->get('user_level') == 'supervisi') {
+            $jumlah_task_overdue_yang_belum_disubmit = $this->taskModel->countTaskOverdue_OnProgress_Cancel_At_Pekerjaan_Presales_OnProgress_Support(session()->get('id_user'));
             $jumlah_task_selesai_bulan_ini = $this->taskModel->countTaskSelesai_TahunIni_BulanIni_ByIdUser($Tahun_sekarang, $Bulan_sekarang, session()->get('id_user'));
         } else {
+            $jumlah_task_overdue_yang_belum_disubmit = $this->taskModel->countTaskOverdue_OnProgress_Cancel_At_Pekerjaan_Presales_OnProgress_Support();
             $jumlah_task_selesai_bulan_ini = $this->taskModel->countTaskSelesai_TahunIni_BulanIni($Tahun_sekarang, $Bulan_sekarang);
         }
         $data = [
@@ -183,6 +185,7 @@ class Dashboard extends BaseController
             'target_poin_harian_tester' => $target_poin_harian_tester1,
             'target_poin_harian_admin' => $target_poin_harian_admin1,
             'target_poin_harian_helpdesk' => $target_poin_harian_helpdesk1,
+            'jumlah_task_overdue_yang_belum_disubmit' => $jumlah_task_overdue_yang_belum_disubmit,
             'jumlah_task_selesai_bulan_ini' => $jumlah_task_selesai_bulan_ini,
             'jumlah_pekerjaan' => $jumlah_pekerjaan,
             'jumlah_pekerjaan_presales' => $jumlah_pekerjaan_presales,

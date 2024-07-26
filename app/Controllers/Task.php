@@ -580,6 +580,78 @@ class Task extends BaseController
         }
     }
 
+    public function edit_progress_task($id_task)
+    {
+        return json_encode($this->taskModel->find($id_task));
+    }
+
+    public function update_progress_task()
+    {
+        $validasi = \Config\Services::validation();
+        $task_lama = $this->taskModel->getTask($this->request->getPost('id_task_e'));
+        $aturan = [
+            'progress_task_e' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Persentase selesai harus diisi',
+                ]
+            ],
+        ];
+        $validasi->setRules($aturan);
+        if ($validasi->withRequest($this->request)->run()) {
+            //Mengambil data untuk tabel task
+            $id_task = $this->request->getPost('id_task_e');
+            $task = $this->taskModel->getTask($id_task);
+            $persentase_selesai = str_replace(' %', '', $this->request->getPost('progress_task_e'));
+            // Memeriksa apakah data baru sama dengan data yang sudah ada
+            if ($task_lama['persentase_selesai'] == $persentase_selesai) {
+                session()->setFlashdata('info', 'Tidak ada data yang anda ubah, kembali ke form update progress task jika ingin mengubah data');
+                return redirect()->withInput()->with('modal', 'modal_edit_progress_task')->back();
+            }
+            //Cek apakah pekerjaan statusnya BAST atau Cancle, kalau iya tidak bisa mengupdate progress
+            $pekerjaan_dr_task = $this->pekerjaanModel->getPekerjaan($task_lama['id_pekerjaan']);
+            if ($pekerjaan_dr_task['id_status_pekerjaan'] == 3 || $pekerjaan_dr_task['id_status_pekerjaan'] == 5) {
+                session()->setFlashdata('error', 'Anda tidak dapat mengupdate progress task dari pekerjaan dengan status BAST dan Cancle');
+                return redirect()->withInput()->with('modal', 'modal_edit_progress_task')->back();
+            }
+            // kalau bukan bast dan cancle
+            if ($task['id_user'] != session()->get('id_user')) {
+                session()->setFlashdata('error', 'Anda tidak berhak mengupdate progress task tersebut !');
+                return redirect()->withInput()->with('modal', 'modal_edit_progress_task')->back();
+            } else {
+                if ($task['id_status_task'] == 2 || $task['id_status_task'] == 3) {
+                    session()->setFlashdata('error', 'Task yang sudah diverifikasi atau sedang menunggu verifikasi tidak bisa di update progress !');
+                    return redirect()->withInput()->with('modal', 'modal_edit_progress_task')->back();
+                } else {
+                    //Proses memasukkan data ke database
+                    $data_task = [
+                        'id_task' => $id_task,
+                        'id_pekerjaan' => $task['id_pekerjaan'],
+                        'id_user' => $task['id_user'],
+                        'creator' => $task['creator'],
+                        'id_kategori_task' => $task['id_kategori_task'],
+                        'id_status_task' => $task['id_status_task'],
+                        'tgl_planing' => $task['tgl_planing'],
+                        'tgl_selesai' => null,
+                        'tgl_verifikasi_diterima' => null,
+                        'persentase_selesai' => $persentase_selesai,
+                        'deskripsi_task' => $task['deskripsi_task'],
+                        'alasan_verifikasi' => null,
+                        'bukti_selesai' => null,
+                        'tautan_task' => null,
+                        'verifikator' => null,
+                    ];
+                    $this->taskModel->save($data_task);
+                    Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Berhasil mengupdate progress task');
+                    return redirect()->to('task/daftar_task/' . $task['id_pekerjaan']);
+                }
+            }
+        } else {
+            session()->setFlashdata('error', $validasi->listErrors());
+            return redirect()->withInput()->with('modal', 'modal_edit_progress_task')->back();
+        }
+    }
+
     //Fungsi untuk menghapus Task
     public function delete_task($id_task)
     {

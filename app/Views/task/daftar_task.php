@@ -231,8 +231,14 @@
                                     <td><?= $i++ ?></td>
                                     <?php if (session()->get('user_level') == 'staff' || session()->get('user_level') == 'supervisi') : ?>
                                        <td>
-                                          <?php if ($task_hi_bs['creator'] == session()->get('id_user') || $project_manager['id_user'] == session()->get('id_user')) : ?>
-                                             <div class="btn-group" role="group">
+
+                                          <div class="btn-group" role="group">
+                                             <?php if ($task_hi_bs['id_user'] == session()->get('id_user')) : ?>
+                                                <div>
+                                                   <button type="button" class="btn btn-success opacity-75" title="Klik untuk mengupdate progress" data-bs-toggle="modal" data-bs-target="#modal_edit_progress_task" onclick="edit_progress_task(<?php echo $task_hi_bs['id_task'] ?>)"><i class="bi bi-percent"></i></button>
+                                                </div>
+                                             <?php endif ?>
+                                             <?php if ($task_hi_bs['creator'] == session()->get('id_user') || $project_manager['id_user'] == session()->get('id_user')) : ?>
                                                 <div>
                                                    <a href="/task/edit_task/<?= $task_hi_bs['id_task'] ?>" class="btn btn-warning" title="Klik untuk mengedit"><i class=" ri-edit-2-line"></i></a>
                                                 </div>
@@ -241,8 +247,8 @@
                                                    <input type="hidden" name="_method" value="DELETE">
                                                    <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data task ?');"><i class="ri-delete-bin-5-line"></i></button>
                                                 </form>
-                                             </div>
-                                          <?php endif ?>
+                                             <?php endif ?>
+                                          </div>
 
                                           <?php if ($task_hi_bs['id_user'] == session()->get('id_user')) : ?>
                                              <div class="btn-group mt-1" role="group">
@@ -328,8 +334,13 @@
                                     <td><?= $a++ ?></td>
                                     <?php if (session()->get('user_level') == 'staff' || session()->get('user_level') == 'supervisi') : ?>
                                        <td>
-                                          <?php if ($task_pl_bs['creator'] == session()->get('id_user') || $project_manager['id_user'] == session()->get('id_user')) : ?>
-                                             <div class="btn-group" role="group">
+                                          <div class="btn-group" role="group">
+                                             <?php if ($task_pl_bs['id_user'] == session()->get('id_user')) : ?>
+                                                <div>
+                                                   <button type="button" class="btn btn-success opacity-75" title="Klik untuk mengupdate progress" data-bs-toggle="modal" data-bs-target="#modal_edit_progress_task" onclick="edit_progress_task(<?php echo $task_pl_bs['id_task'] ?>)"><i class="bi bi-percent"></i></button>
+                                                </div>
+                                             <?php endif ?>
+                                             <?php if ($task_pl_bs['creator'] == session()->get('id_user') || $project_manager['id_user'] == session()->get('id_user')) : ?>
                                                 <div>
                                                    <a href="/task/edit_task/<?= $task_pl_bs['id_task'] ?>" class="btn btn-warning" title="Klik untuk mengedit"><i class=" ri-edit-2-line"></i></a>
                                                 </div>
@@ -338,8 +349,8 @@
                                                    <input type="hidden" name="_method" value="DELETE">
                                                    <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data task ?');"><i class="ri-delete-bin-5-line"></i></button>
                                                 </form>
-                                             </div>
-                                          <?php endif ?>
+                                             <?php endif ?>
+                                          </div>
 
                                           <?php if ($task_pl_bs['id_user'] == session()->get('id_user')) : ?>
                                              <div class="btn-group mt-1" role="group">
@@ -425,8 +436,13 @@
                                     <td><?= $b++ ?></td>
                                     <?php if (session()->get('user_level') == 'staff' || session()->get('user_level') == 'supervisi') : ?>
                                        <td>
-                                          <?php if ($task_ov_bs['creator'] == session()->get('id_user') || $project_manager['id_user'] == session()->get('id_user')) : ?>
-                                             <div class="btn-group" role="group">
+                                          <div class="btn-group" role="group">
+                                             <?php if ($task_ov_bs['id_user'] == session()->get('id_user')) : ?>
+                                                <div>
+                                                   <button type="button" class="btn btn-success opacity-75" title="Klik untuk mengupdate progress" data-bs-toggle="modal" data-bs-target="#modal_edit_progress_task" onclick="edit_progress_task(<?php echo $task_ov_bs['id_task'] ?>)"><i class="bi bi-percent"></i></button>
+                                                </div>
+                                             <?php endif ?>
+                                             <?php if ($task_ov_bs['creator'] == session()->get('id_user') || $project_manager['id_user'] == session()->get('id_user')) : ?>
                                                 <div>
                                                    <a href="/task/edit_task/<?= $task_ov_bs['id_task'] ?>" class="btn btn-warning" title="Klik untuk mengedit"><i class=" ri-edit-2-line"></i></a>
                                                 </div>
@@ -435,8 +451,8 @@
                                                    <input type="hidden" name="_method" value="DELETE">
                                                    <button type="submit" class="btn btn-danger" title="Klik untuk menghapus" onclick="return confirm('Apakah anda yakin menghapus data task ?');"><i class="ri-delete-bin-5-line"></i></button>
                                                 </form>
-                                             </div>
-                                          <?php endif ?>
+                                             <?php endif ?>
+                                          </div>
 
                                           <?php if ($task_ov_bs['id_user'] == session()->get('id_user')) : ?>
                                              <div class="btn-group mt-1" role="group">
@@ -524,6 +540,11 @@
                                     <td>
                                        <?php if (session()->get('user_level') == 'staff' || session()->get('user_level') == 'supervisi') : ?>
                                           <div class="btn-group" role="group">
+                                             <?php if ($task_hi_d['id_user'] == session()->get('id_user')) : ?>
+                                                <div>
+                                                   <button type="button" class="btn btn-success opacity-75" title="Klik untuk mengupdate progress" data-bs-toggle="modal" data-bs-target="#modal_edit_progress_task" onclick="edit_progress_task(<?php echo $task_hi_d['id_task'] ?>)"><i class="bi bi-percent"></i></button>
+                                                </div>
+                                             <?php endif ?>
                                              <div>
                                                 <a href="/task/detail_task/<?= $task_hi_d['id_task'] ?>" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
                                              </div>
@@ -625,6 +646,11 @@
                                     <td>
                                        <?php if (session()->get('user_level') == 'staff' || session()->get('user_level') == 'supervisi') : ?>
                                           <div class="btn-group" role="group">
+                                             <?php if ($task_pl_d['id_user'] == session()->get('id_user')) : ?>
+                                                <div>
+                                                   <button type="button" class="btn btn-success opacity-75" title="Klik untuk mengupdate progress" data-bs-toggle="modal" data-bs-target="#modal_edit_progress_task" onclick="edit_progress_task(<?php echo $task_pl_d['id_task'] ?>)"><i class="bi bi-percent"></i></button>
+                                                </div>
+                                             <?php endif ?>
                                              <div>
                                                 <a href="/task/detail_task/<?= $task_pl_d['id_task'] ?>" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
                                              </div>
@@ -726,6 +752,11 @@
                                     <td>
                                        <?php if (session()->get('user_level') == 'staff' || session()->get('user_level') == 'supervisi') : ?>
                                           <div class="btn-group" role="group">
+                                             <?php if ($task_ov_d['id_user'] == session()->get('id_user')) : ?>
+                                                <div>
+                                                   <button type="button" class="btn btn-success opacity-75" title="Klik untuk mengupdate progress" data-bs-toggle="modal" data-bs-target="#modal_edit_progress_task" onclick="edit_progress_task(<?php echo $task_ov_d['id_task'] ?>)"><i class="bi bi-percent"></i></button>
+                                                </div>
+                                             <?php endif ?>
                                              <div>
                                                 <a href="/task/detail_task/<?= $task_ov_d['id_task'] ?>" class="btn btn-info" title="Klik untuk melihat detail"><i class="ri-information-line"></i></a>
                                              </div>
@@ -985,6 +1016,10 @@
       </div>
    </div>
 </section>
+
+<!--include Modal untuk mengedit data pekerjaan-->
+<?= $this->include('/task/modal_edit_progress_task'); ?>
+
 
 <script>
    //                       //

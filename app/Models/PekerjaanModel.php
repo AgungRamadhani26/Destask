@@ -257,7 +257,7 @@ class PekerjaanModel extends Model
         $personilModel = new \App\Models\PersonilModel();
         $userModel = new \App\Models\UserModel();
         $taskModel = new \App\Models\TaskModel();
-        
+
         // Fetch main pekerjaan data
         $pekerjaanItem = $this->select('
                 pekerjaan.*,
@@ -328,5 +328,4 @@ class PekerjaanModel extends Model
 
         return $pekerjaanItem;
     }
-
 }
