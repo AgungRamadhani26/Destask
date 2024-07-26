@@ -299,54 +299,59 @@ $routes->post('/profile/update_profile', 'Profile::update_profile'); //Akses ber
  */
 //login
 $routes->post('authlogin', 'API\AuthController::login');
+//untuk cek email ketika lupa password apakah email sudah terdaftar atau belum
 $routes->post('authcekuser', 'API\AuthController::cekuser');
 
-//lupapassword
+//untuk lupa password berupa mengirimkan token ke email
 $routes->post('lupapassword', 'API\LupaPasswordController::lupaPassword');
+//untuk verifikasi token
 $routes->post('lupapassword/verifikasitoken', 'API\LupaPasswordController::verifikasiToken');
+//untuk reset password
 $routes->post('lupapassword/resetpassword', 'API\LupaPasswordController::resetPassword');
 
 $routes->group('api', ['filter' => 'jwtfilter', 'namespace' => 'App\Controllers\API'], function ($routes) {
-   //user
+   //menampilkan data user berdasarkan id
    $routes->get('user/(:num)', 'UserController::show/$1');
+   //update data user
    $routes->put('user/(:num)', 'UserController::update/$1');
+   //update foto profil
    $routes->post('user/fotoprofil', 'UserController::uploadfoto');
+   //cek email ketika update email
    $routes->post('user/cekemail', 'UserController::cekemail');
 
    //ganti password
    $routes->put('gantipassword', 'GantiPasswordController::index');
+   //cek pasword lama ketika ganti password
+   $routes->post('cekpassword', 'GantiPasswordController::cekpassword');
 
 
 
    //pekerjaan
-   // $routes->get('pekerjaan', 'PekerjaanController::index');
-   $routes->get('pekerjaan/(:num)', 'PekerjaanController::show/$1');
-   $routes->get('pekerjaanpersonil/(:num)', 'PekerjaanController::personil/$1');
-   $routes->get('pekerjaanbyuser/(:num)', 'PekerjaanController::showPekerjaan/$1');
-   $routes->put('pekerjaan/(:num)', 'PekerjaanController::update/$1'); //edit pekerjaan
-   $routes->get('pekerjaan/verifikasi/(:num)', 'PekerjaanController::showPekerjaanVerifikasi/$1'); //data task yang perlu diverifikasi
-   $routes->get('pekerjaan/verifikator/(:num)', 'PekerjaanController::showPekerjaanVerifikator/$1'); //data task yang perlu diverifikasi
+   $routes->get('pekerjaan/(:num)', 'PekerjaanController::show/$1'); //pekerjaan by id
+   $routes->get('pekerjaanpersonil/(:num)', 'PekerjaanController::personil/$1'); //personil by id pekerjaan
+   $routes->get('pekerjaanbyuser/(:num)', 'PekerjaanController::showPekerjaan/$1'); //data pekerjaan berdasarkan user
+   $routes->get('pekerjaan/verifikasi/(:num)', 'PekerjaanController::showPekerjaanVerifikasi/$1'); //data pekerjaan yang perlu diverifikasi
+   $routes->get('pekerjaan/verifikator/(:num)', 'PekerjaanController::showPekerjaanVerifikator/$1'); //data pekerjaan yang diverifikasi oleh verifikator
 
    //task
-   $routes->get('task/(:num)', 'TaskController::show/$1');
+   $routes->get('task/(:num)', 'TaskController::show/$1'); //task by id
    $routes->get('taskbypekerjaan/(:num)', 'TaskController::showTaskByPekerjaan/$1'); //data task berdasarkan pekerjaan
    $routes->get('taskbyuser/(:num)', 'TaskController::showTaskByUser/$1'); //data task berdasarkan user
-   $routes->get('taskbyuser/overdue/(:num)', 'TaskController::showTaskOverdueByUser/$1'); //data task berdasarkan user
+   $routes->get('taskbyuser/overdue/(:num)', 'TaskController::showTaskOverdueByUser/$1'); //data task overdue berdasarkan user
    $routes->get('task/verifikasi/(:num)', 'TaskController::showTaskVerifikasi/$1'); //data task yang perlu diverifikasi
-   $routes->put('task/verifikasi/tolak/(:num)', 'TaskController::tolakverifikasi/$1'); //data task yang perlu diverifikasi
-   $routes->put('task/verifikasi/terima/(:num)', 'TaskController::terimaverifikasi/$1'); //data task yang perlu diverifikasi
-   $routes->get('task/verifikator/(:num)', 'TaskController::showTaskByVerifikator/$1'); //data task yang perlu diverifikasi
-   $routes->get('task/rekappoint/(:num)', 'TaskController::rekappoint/$1');
-   // $routes->get('task/rekappoint/user/(:num)', 'TaskController::rekappointUser/$1');
-   // $routes->get('task/rekappoint/usergroup/(:num)', 'TaskController::rekappointUserGroup/$1');
-   $routes->post('task', 'TaskController::create');
+   $routes->put('task/verifikasi/tolak/(:num)', 'TaskController::tolakverifikasi/$1'); //tolak verifikasi task
+   $routes->put('task/verifikasi/terima/(:num)', 'TaskController::terimaverifikasi/$1'); //terima verifikasi task
+   $routes->get('task/verifikator/(:num)', 'TaskController::showTaskByVerifikator/$1'); //data task yang devirifikasi oleh verifikator
+   $routes->get('task/rekappoint/(:num)', 'TaskController::rekappoint/$1'); //data rekap point task
+   $routes->post('task', 'TaskController::create'); //create task
    $routes->put('task/(:num)', 'TaskController::update/$1'); //edit task
    $routes->post('task/submit', 'TaskController::submit'); //submit bukti selesai task
-   $routes->delete('task/(:num)', 'TaskController::delete/$1');
+   $routes->delete('task/(:num)', 'TaskController::delete/$1'); //delete task
 
    //bobot kategori task
-   $routes->get('bobotkategoritask/(:num)', 'BobotKategoriTaskController::show/$1');
+   //cek bobot kategori task untk pm
    $routes->get('bobotkategoritask/cekbobot/pm', 'BobotKategoriTaskController::cekbobotpm');
+   //cek bobot kategori task untuk individu
    $routes->get('bobotkategoritask/cekbobot/individu/(:num)', 'BobotKategoriTaskController::cekbobotindividu/$1');
 
    //hari libur
@@ -356,7 +361,9 @@ $routes->group('api', ['filter' => 'jwtfilter', 'namespace' => 'App\Controllers\
    $routes->get('kategoritask', 'KategoriTaskController::index');
 
    //kinerja
+   //kinerja by id
    $routes->get('kinerja/(:num)', 'KinerjaController::show/$1');
+   //kinerja by user
    $routes->get('kinerjauser/(:num)', 'KinerjaController::kinerjauser/$1');
 
    //status pekerjaan
@@ -364,10 +371,12 @@ $routes->group('api', ['filter' => 'jwtfilter', 'namespace' => 'App\Controllers\
 
    //status task
    $routes->get('statustask', 'StatusTaskController::index');
-   $routes->get('statustask/(:num)', 'StatusTaskController::show/$1');
 
    //target poin harian\
+   //target poin harian by usergroup dari user
    $routes->get('targetpoinharian/(:num)', 'TargetPoinHarianController::targetpoinharianbyuser/$1');
+   //cek target poin harian untuk pm
    $routes->get('targetpoinharian/cek/pm', 'TargetPoinHarianController::cektargetpoinharianpm');
+   //cek target poin harian untuk individu
    $routes->get('targetpoinharian/cek/individu/(:num)', 'TargetPoinHarianController::cektargetpoinharianindividu/$1');
 });

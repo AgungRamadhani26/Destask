@@ -62,4 +62,28 @@ class GantiPasswordController extends ResourceController
             return $this->respond($response, 500);
         }
     }
+
+    //cek password
+    public function cekpassword()
+    {
+        $model = new $this->modelUser();
+        $id_user = $this->request->getVar('id_user');
+        $password = $this->request->getVar('password');
+        $data = $model->where(['id_user' => $id_user])->first();
+        if (md5($password) == $data['password']) {
+            $response = [
+                'status' => 200,
+                'error' => false,
+                'messages' => 'Password benar'
+            ];
+            return $this->respond($response, 200);
+        } else {
+            $response = [
+                'status' => 400,
+                'error' => true,
+                'messages' => 'Password salah'
+            ];
+            return $this->respond($response, 400);
+        }
+    }
 }
