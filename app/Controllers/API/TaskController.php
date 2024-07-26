@@ -460,21 +460,15 @@ class TaskController extends ResourceController{
             $modelTask = new $this->modelTask();
 
             // Dapatkan semua task yang perlu diverifikasi oleh user
-            $tasks = $modelTask->getTasksForVerification($iduser);
-
-            if (!empty($tasks)) {
-                //diurutkan berdasarkan siapa yg pertama submit
+            $tasks = $modelTask->dataTaskVerifikasi($iduser);
+            if ($tasks) {
                 usort($tasks, function ($a, $b) {
                     return strtotime($a['updated_at']) - strtotime($b['updated_at']);
                 });
-                return $this->response->setJSON($tasks);
+                $tasksWithDetails = array_map([$this, 'formatTaskDetails'], $tasks);
+                return $this->response->setJSON($tasksWithDetails);
             } else {
-                $response = [
-                    'status' => 404,
-                    'error' => true,
-                    'messages' => 'Data tidak ditemukan'
-                ];
-                return $this->respond($response, 404);
+                return $this->response->setJSON($tasks);
             }
         } catch (\Throwable $th) {
             return $this->failNotFound("Data tidak ditemukan");
