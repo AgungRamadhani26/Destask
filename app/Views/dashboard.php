@@ -298,7 +298,7 @@
                 </div>
                 <div class="col-4">
                     <div class="kanban-column-header" style="background-color: <?= $status_pekerjaan_onprogres['color'] ?>;">
-                        <h5 style="font-weight: bold;">On Progres <span class="badge bg-white text-primary"><?= $jumlah_pekerjaan_onprogres ?></span></h5>
+                        <h5 style="font-weight: bold;">On Progress <span class="badge bg-white text-primary"><?= $jumlah_pekerjaan_onprogres ?></span></h5>
                     </div>
                     <div class="kanban-column">
                         <div class="kanban-droppable" id="todo">

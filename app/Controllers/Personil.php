@@ -139,7 +139,7 @@ class Personil extends BaseController
             $jumlah_personil_desainer = $this->personilModel->countPersonilByIdPekerjaanRolePersonil($id_pekerjaan, 'desainer');
             //Mengecek apakah ada personil desainer yang sama dengan data yang ditambah
             $personil_desainer_tidak_unik = $this->personilModel->getPersonilByIdPekerjaanIdUserRolePersonil($id_pekerjaan, $id_user, 'desainer');
-            if ($jumlah_personil_desainer > 5) {
+            if ($jumlah_personil_desainer >= 5) {
                 session()->setFlashdata('error', 'Maaf jumlah personil desainer sudah maksimal 5, sehingga tidak dapat menambah data lagi');
                 return redirect()->withInput()->with('modal', 'modal_add_personil_desainer')->back();
             } elseif ($personil_desainer_tidak_unik != null) {
