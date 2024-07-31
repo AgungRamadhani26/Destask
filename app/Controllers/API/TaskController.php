@@ -528,9 +528,20 @@ class TaskController extends ResourceController
 
         $tasks = $taskModel->getTaskByUserId($idUser);
         $result = [];
+
+        $now = new DateTime();
+
         foreach ($tasks as $taskItem) {
-            // Check if tgl_selesai is not null and less than tgl_planing
-            if (($taskItem['tgl_selesai'] != null && strtotime($taskItem['tgl_selesai']) <= strtotime($taskItem['tgl_planing']))) {
+            $createdAt = new DateTime($taskItem['created_at']);
+            $tglSelesai = new DateTime($taskItem['tgl_selesai']);
+
+            if (
+                $taskItem['tgl_selesai'] != null &&
+                $taskItem['tgl_verifikasi_diterima'] != null &&
+                $createdAt->format('Y-m') === $now->format('Y-m') &&
+                $tglSelesai->format('Y-m') === $now->format('Y-m') &&
+                strtotime($taskItem['tgl_selesai']) <= strtotime($taskItem['tgl_planing'])
+            ) {
                 $kategoriTask = $kategoriTaskModel->getKategoriTaskById($taskItem['id_kategori_task']);
                 $bobotKategoriTask = $bobotKategoriTaskModel->getBobotKategoriTaskById($kategoriTask['id_kategori_task']);
                 $taskItem['bobot_point'] = $bobotKategoriTask['bobot_poin'];
