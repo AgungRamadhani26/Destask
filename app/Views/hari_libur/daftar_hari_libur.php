@@ -22,7 +22,7 @@
                      <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                         <div class="accordion-body bg-info" style="text-align: justify;">
                            Inputlah tanggal hari libur kecuali tanggal di hari <strong>Sabtu</strong> dan <strong>Minggu</strong>, Penginputan hari libur ini
-                           berguna agar pengguna tidak dapat membuat <strong>Pekerjaan</strong> dan <strong>Task</strong> di hari libur tersebut.
+                           berguna agar pengguna tidak dapat membuat dateline <strong>Pekerjaan</strong> dan <strong>Task</strong> di hari libur tersebut.
                         </div>
                      </div>
                   </div>

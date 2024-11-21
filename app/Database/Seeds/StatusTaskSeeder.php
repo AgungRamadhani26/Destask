@@ -22,7 +22,7 @@ class StatusTaskSeeder extends Seeder
             [
                 'id_status_task' => 2,
                 'nama_status_task'      => 'Pending',
-                'deskripsi_status_task' => 'Task sedang dalam proses menunggu verifikasi. Proses verifikasi dilakukan oleh supervisi yang terdaftar pada pekerjaan yang berkaitan dengan task tersebut.',
+                'deskripsi_status_task' => 'Task sedang dalam proses menunggu verifikasi. Proses verifikasi dilakukan oleh supervisi yang memiliki usergroup yang sama dengan pemilik task.',
                 'color'               => '#fd7e14',
                 'created_at'          => Time::now(),
                 'updated_at'          => Time::now()
