@@ -11,8 +11,13 @@ class TargetPoinHarianModel extends Model
     protected $useSoftDeletes   = true;
     protected $useTimestamps    = true;
     protected $allowedFields    = [
-        'id_usergroup', 'tahun', 'bulan', 'jumlah_target_poin_harian',
-        'jumlah_hari_kerja', 'jumlah_hari_libur', 'jumlah_target_poin_sebulan'
+        'id_usergroup',
+        'tahun',
+        'bulan',
+        'jumlah_target_poin_harian',
+        'jumlah_hari_kerja',
+        'jumlah_hari_libur',
+        'jumlah_target_poin_sebulan'
     ];
 
     //Fungsi untuk mendapatkan data target poin harian
@@ -20,7 +25,7 @@ class TargetPoinHarianModel extends Model
     {
         if ($id_target_poin_harian === false) {
             return $this->orderBy('tahun', 'DESC')
-                ->orderBy('bulan', 'DESC')
+                ->orderBy('CAST(bulan AS UNSIGNED)', 'DESC')
                 ->orderBy('id_usergroup', 'DESC')
                 ->findAll();
         }
@@ -36,22 +41,22 @@ class TargetPoinHarianModel extends Model
     {
         if ($bulan === '' && $tahun === '') {
             return $this->orderBy('tahun', 'DESC')
-                ->orderBy('bulan', 'DESC')
+                ->orderBy('CAST(bulan AS UNSIGNED)', 'DESC')
                 ->orderBy('id_usergroup', 'DESC')
                 ->findAll();
         } elseif ($bulan === '') {
             return $this->where(['tahun' => $tahun])->orderBy('tahun', 'DESC')
-                ->orderBy('bulan', 'DESC')
+                ->orderBy('CAST(bulan AS UNSIGNED)', 'DESC')
                 ->orderBy('id_usergroup', 'DESC')
                 ->findAll();
         } elseif ($tahun === '') {
             return $this->where(['bulan' => $bulan])->orderBy('tahun', 'DESC')
-                ->orderBy('bulan', 'DESC')
+                ->orderBy('CAST(bulan AS UNSIGNED)', 'DESC')
                 ->orderBy('id_usergroup', 'DESC')
                 ->findAll();
         } else {
             return $this->where(['bulan' => $bulan, 'tahun' => $tahun])->orderBy('tahun', 'DESC')
-                ->orderBy('bulan', 'DESC')
+                ->orderBy('CAST(bulan AS UNSIGNED)', 'DESC')
                 ->orderBy('id_usergroup', 'DESC')
                 ->findAll();
         }

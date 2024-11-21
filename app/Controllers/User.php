@@ -238,8 +238,14 @@ class User extends BaseController
     //Fungsi delete_user
     public function delete_user($id_user)
     {
-        $this->userModel->delete($id_user);
-        Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Data user berhasil dihapus');
+        //Mengecek apakah user terdaftar sebagai personil dari suatu pekerjaan
+        $personil = $this->personilModel->getPersonilByIdUser($id_user);
+        if ($personil) {
+            Set_notifikasi_swal_berhasil('error', 'Gagal', 'Data user gagal dihapus, hal ini karena user masih terdaftar sebagai personil dari pekerjaan yang ada pada sistem');
+        } else {
+            $this->userModel->delete($id_user);
+            Set_notifikasi_swal_berhasil('success', 'Sukses :)', 'Data user berhasil dihapus');
+        }
         return redirect()->to('/user/daftar_user');
     }
 }

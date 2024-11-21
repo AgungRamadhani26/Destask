@@ -11,10 +11,19 @@ class PekerjaanModel extends Model
     protected $useSoftDeletes   = true;
     protected $useTimestamps    = true;
     protected $allowedFields    = [
-        'id_status_pekerjaan', 'id_kategori_pekerjaan', 'nama_pekerjaan',
-        'pelanggan', 'jenis_pelanggan', 'nama_pic', 'email_pic', 'nowa_pic',
-        'jenis_layanan', 'nominal_harga', 'deskripsi_pekerjaan',
-        'target_waktu_selesai', 'waktu_selesai'
+        'id_status_pekerjaan',
+        'id_kategori_pekerjaan',
+        'nama_pekerjaan',
+        'pelanggan',
+        'jenis_pelanggan',
+        'nama_pic',
+        'email_pic',
+        'nowa_pic',
+        'jenis_layanan',
+        'nominal_harga',
+        'deskripsi_pekerjaan',
+        'target_waktu_selesai',
+        'waktu_selesai'
     ];
 
     //Fungsi untuk mendapatkan data pekerjaan (lebih ke admin, hod, direksi)

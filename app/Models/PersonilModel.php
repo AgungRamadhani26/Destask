@@ -11,7 +11,9 @@ class PersonilModel extends Model
     protected $useSoftDeletes   = true;
     protected $useTimestamps    = true;
     protected $allowedFields    = [
-        'id_pekerjaan', 'id_user', 'role_personil'
+        'id_pekerjaan',
+        'id_user',
+        'role_personil'
     ];
 
     //Fungsi untuk mendapatkan data personil
@@ -51,5 +53,11 @@ class PersonilModel extends Model
     public function getPersonilByIdPekerjaanIdUserRolePersonil($id_pekerjaan, $id_user, $role_personil)
     {
         return $this->where(['deleted_at' => null, 'id_pekerjaan' => $id_pekerjaan, 'id_user' => $id_user, 'role_personil' => $role_personil])->first();
+    }
+
+    //Fungsi untuk mendapatkan personil berdasarkan id user
+    public function getPersonilByIdUser($id_user)
+    {
+        return $this->where(['deleted_at' => null, 'id_user' => $id_user])->findAll();
     }
 }

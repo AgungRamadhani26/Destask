@@ -818,7 +818,7 @@ class TaskSeeder extends Seeder
                 'creator'                 => 34,
                 'id_status_task'          => 1, //task onprogress
                 'id_kategori_task'        => 1,
-                'tgl_planing'             => '2024-10-06',
+                'tgl_planing'             => '2024-10-07',
                 'tgl_selesai'             => null,
                 'tgl_verifikasi_diterima' => null,
                 'persentase_selesai'      => 0,
@@ -860,7 +860,7 @@ class TaskSeeder extends Seeder
                 'creator'                 => 12,
                 'id_status_task'          => 1, //task onprogress
                 'id_kategori_task'        => 3,
-                'tgl_planing'             => '2024-10-06',
+                'tgl_planing'             => '2024-10-07',
                 'tgl_selesai'             => null,
                 'tgl_verifikasi_diterima' => null,
                 'persentase_selesai'      => 0,
