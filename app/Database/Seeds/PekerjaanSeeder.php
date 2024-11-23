@@ -42,7 +42,7 @@ class PekerjaanSeeder extends Seeder
                 'jenis_layanan' => 'produk',
                 'nominal_harga' => 30000000,
                 'deskripsi_pekerjaan' => 'Aplikasi Absensin SMAN 1 Bandar terdiri atas aplikasi web sebagai monitoring admin yang dapat menggenerate qr-absen, selanjutnya aplikasi berbasis android yang digunakan siswa dan pegawai untuk melakukan scan untuk absensi',
-                'target_waktu_selesai' => '2024-10-07',
+                'target_waktu_selesai' => '2025-02-27',
                 'waktu_selesai' => null,
                 'created_at'          => Time::now(),
                 'updated_at'          => Time::now()
@@ -60,7 +60,7 @@ class PekerjaanSeeder extends Seeder
                 'jenis_layanan' => 'produk',
                 'nominal_harga' => 10000000,
                 'deskripsi_pekerjaan' => 'Web Profile Dinas Kesehatan Kota Semarang menyediakan informasi publik dan publikasi aktifitas yang ada dalam lingkup kerja dinas kesehatan kota Semarang.',
-                'target_waktu_selesai' => '2024-10-03',
+                'target_waktu_selesai' => '2025-01-30',
                 'waktu_selesai' => null,
                 'created_at'       => Time::now(),
                 'updated_at'       => Time::now()
@@ -78,7 +78,7 @@ class PekerjaanSeeder extends Seeder
                 'jenis_layanan' => 'produk',
                 'nominal_harga' => 112000000,
                 'deskripsi_pekerjaan' => 'Website Recruitement Pegawai diharapkan dapat digunakan dalam melakukan recruitment pegawai baru, selain itu website ini digunakan sebagai wadah ujian dalam melakukan rekrutment.',
-                'target_waktu_selesai' => '2024-09-30',
+                'target_waktu_selesai' => '2024-12-31',
                 'waktu_selesai' => null,
                 'created_at'       => Time::now(),
                 'updated_at'       => Time::now()
@@ -96,7 +96,7 @@ class PekerjaanSeeder extends Seeder
                 'jenis_layanan' => 'boutique',
                 'nominal_harga' => 113000000,
                 'deskripsi_pekerjaan' => 'Sistem informasi monitoring kompetensi guru diharapkan dapat bermanfaat sebagai pantauan kompetensi guru yang mengajar di setap sekolah di kota Semarang.',
-                'target_waktu_selesai' => '2024-09-25',
+                'target_waktu_selesai' => '2024-12-25',
                 'waktu_selesai' => null,
                 'created_at'       => Time::now(),
                 'updated_at'       => Time::now()
