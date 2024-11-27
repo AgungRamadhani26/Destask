@@ -78,7 +78,7 @@ class PekerjaanSeeder extends Seeder
                 'jenis_layanan' => 'produk',
                 'nominal_harga' => 112000000,
                 'deskripsi_pekerjaan' => 'Website Recruitement Pegawai diharapkan dapat digunakan dalam melakukan recruitment pegawai baru, selain itu website ini digunakan sebagai wadah ujian dalam melakukan rekrutment.',
-                'target_waktu_selesai' => '2024-12-31',
+                'target_waktu_selesai' => '2025-02-27',
                 'waktu_selesai' => null,
                 'created_at'       => Time::now(),
                 'updated_at'       => Time::now()
